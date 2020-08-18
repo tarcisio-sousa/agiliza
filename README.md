@@ -1,5 +1,5 @@
 # agiliza
-Agiliza
+Agiliza - Sistema para gerenciamente de projetos de engenharia
 
 
 [![Build Status](https://travis-ci.org/tarcisio-sousa/agiliza.svg?branch=master)](https://travis-ci.org/tarcisio-sousa/agiliza)
