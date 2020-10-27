@@ -13,6 +13,7 @@ codecov = "*"
 django = "*"
 gunicorn = "*"
 python-decouple = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.6"
