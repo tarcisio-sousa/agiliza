@@ -21,7 +21,7 @@ install:
   - cp contrib/env-sample .env
 
 before_script:
-  - psql -c "CREATE DATABASE agilizadb;" -U prostgres
+  - psql -c "CREATE DATABASE agilizadb;" -U postgres
 
 script:
   - pipenv run flake8 .
