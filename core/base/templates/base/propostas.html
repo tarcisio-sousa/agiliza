@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+
+{% block body %}
+	<h1>Página de propostas</h1>
+	<div class="row">
+		<div class="col-md-12 text-right mb-2">
+			<a href="/proposta" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			{% if propostas %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Ações</th>
+						<th>Prefeitura</th>
+						<th>Número da proposta</th>
+						<th>Objeto</th>
+						<th>Valor R$</th>
+						<th>Situação</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for proposta in propostas %}
+					<tr>
+						<td>
+							<ul class="navbar-nav mr-auto">
+								<li class="nav-item dropdown">
+									<a href="#" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
+									<div class="dropdown-menu">
+										<a href="/proposta/{{ proposta.id }}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
+										<div class="dropdown-divider"></div>
+										<a href="#" class="dropdown-item"> <i class="fas fa-check-circle"></i> Autorizar</a>
+										<a href="/proposta/documento/{{ proposta.id }}" class="dropdown-item"> <i class="fas fa-certificate"></i> Visualizar</a>
+									</div>
+								</li>
+							</ul>
+						</td>
+						<td>{{ proposta.prefeitura }}</td>
+						<td>{{ proposta.numero_proposta }}</td>
+						<td>{{ proposta.objeto }}</td>
+						<td>{{ proposta.valor_contrapartida }}</td>
+						<td> - </td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+			<div class="alert alert-info">Nenhum proposta cadastrada!</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

@@ -1,3 +1,11 @@
-* {
+h1, .nav, .btn {
 	font-family: 'Viga', sans-serif;
+}
+
+table {
+	font-size: 12px;
+}
+
+.dropdown-item {
+	font-size: 12px;
 }

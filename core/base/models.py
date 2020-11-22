@@ -74,6 +74,7 @@ class SecretarioFinanceiro(Profissional):
 
 
 class Proposta(models.Model):
+    prefeitura = models.ForeignKey('Prefeitura', models.DO_NOTHING, blank=False, null=False)
     lei_complementar = models.CharField(max_length=200, blank=False, null=False)
     data_lei = models.DateField(_('Data da lei'), blank=False, null=False)
     valor_contrapartida = models.FloatField(_('Valor da contrapartida'), blank=False, null=False)
