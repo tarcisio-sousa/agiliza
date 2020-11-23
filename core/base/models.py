@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class Cliente(models.Model):
     nome = models.CharField(max_length=250, blank=False, null=False)
     email = models.CharField(max_length=200, blank=False, null=False)

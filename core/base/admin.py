@@ -1,6 +1,7 @@
 from django.contrib import admin
 from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta
 
+
 @admin.register(Prefeitura)
 class PrefeituraAdmin(admin.ModelAdmin):
     list_display = ['nome', 'email', 'prefeito', 'secretario_de_obras', 'secretario_financeiro']

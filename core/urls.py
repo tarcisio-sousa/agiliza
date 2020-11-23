@@ -23,7 +23,6 @@ from core.base.views import home, signin, signout, propostas, proposta, proposta
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('', home, name='home'),
     path('signin', signin, name='signin'),
     path('signout', signout, name='signout'),
     path('propostas', propostas, name='propostas'),
