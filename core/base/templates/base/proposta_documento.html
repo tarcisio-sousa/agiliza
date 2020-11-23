@@ -1,55 +1,42 @@
 {% extends 'base/base.html' %}
 
 {% block body %}
-	<h1>Página de propostas</h1>
-	<img src="/media/{{ proposta.prefeitura.timbre }}" alt="Declaração" width="595" height="842" />
+	<!--<img src="/media/{# proposta.prefeitura.timbre #}" alt="Declaração" width="595" height="842" />-->
+	<div></div>
+	<div class="row" style="background: no-repeat url('/media/{{ proposta.prefeitura.timbre }}'); background-size: 1110px 1571px; height: 1571px;">
+		<div class="col-md-12" style="padding: 184px;">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1 class="titulo" style="margin-top: 150px;">DECLARAÇÃO DE PREVISÃO ORÇAMENTÁRIA DE CONTRAPARTIDA</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h5 class="subtitulo" style="margin-top: 100px;">Declaração</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="texto" style="margin-top: 50px;">Declaro, sob as penas da Lei, e em conformidade com a Lei de Diretrizes Orçamentárias vigente e com a Lei Complementar nº 101, de 4 de maio de 2000, que dispomos dos recursos orçamentários, no valor de R$: 24.000,00 (Vinte e quatro mil reais), para participação, a título de contrapartida, no repasse de recursos destinados a Pavimentação em paralelepípedo para o Município de João Costa-PI, proposta de número 013920/2018.</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="data_proposta text-right" style="margin-top: 100px;">João Costa – PI, 16 de Fevereiro de 2018.</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="rodape text-right" style="margin-top: 470px;">
+						Prefeitura de João Costa<br>
+						Praça Central, s/nº. - Centro – 64.765-000 - João Costa – PI. CNPJ: 01612580/0001-30 <br>
+						Telefone (89) 3486-0034/3486-0025<br>
+						Email: prefeituramunicipaljoaocosta@gmail.com<br>
+						gabinetepmjpi@hotmail.com<br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<form method="post" class="form">
-		{% csrf_token %}
-		<br />
-		<div class="row">
-			<div class="col-md-5">
-				<label for="id_prefeitura">Prefeitura</label>
-				{{ proposta_form.prefeitura }}
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="col-md-9">
-				<label for="id_lei_complementar">Lei Complementar</label>
-				{{ proposta_form.lei_complementar }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3">
-				<label for="id_data_lei">Data da Lei</label>
-				{{ proposta_form.data_lei }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<label for="id_valor_contrapartida">Valor da contrapartida</label>
-				{{ proposta_form.valor_contrapartida }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-8">
-				<label for="id_objeto">Objeto</label>
-				{{ proposta_form.objeto }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6">
-				<label for="id_numero_proposta">Número da proposta</label>
-				{{ proposta_form.numero_proposta }}
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="col-md-12 text-right"> 
-				<button class="btn btn-primary">Salvar</button>
-			</div>
-		</div>
-		<br>
-	</form>
 {% endblock %}
