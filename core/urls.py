@@ -18,11 +18,19 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from core.base.views import home
+from core.base.views import home, signin, signout, propostas, proposta, proposta_documento, declaracoes, convenios
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+    path('', home, name='home'),
+    path('signin', signin, name='signin'),
+    path('signout', signout, name='signout'),
+    path('propostas', propostas, name='propostas'),
+    path('proposta', proposta, name='proposta'),
+    path('proposta/<int:id>', proposta, name='proposta'),
+    path('proposta/documento/<int:id>', proposta_documento, name='proposta_documento'),
+    path('declaracoes', declaracoes, name='declaracoes'),
+    path('convenios', convenios, name='convenios'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = 'Administrador Agiliza - Convênios'

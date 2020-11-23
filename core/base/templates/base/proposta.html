@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+
+{% block body %}
+	<h1>Página de propostas</h1>
+
+	<form method="post" class="form">
+		{% csrf_token %}
+		<br />
+		<div class="row">
+			<div class="col-md-5">
+				<label for="id_prefeitura">Prefeitura</label>
+				{{ proposta_form.prefeitura }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-9">
+				<label for="id_lei_complementar">Lei Complementar</label>
+				{{ proposta_form.lei_complementar }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<label for="id_data_lei">Data da Lei</label>
+				{{ proposta_form.data_lei }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label for="id_valor_contrapartida">Valor da contrapartida</label>
+				{{ proposta_form.valor_contrapartida }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<label for="id_objeto">Objeto</label>
+				{{ proposta_form.objeto }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label for="id_numero_proposta">Número da proposta</label>
+				{{ proposta_form.numero_proposta }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right"> 
+				<button class="btn btn-primary">Salvar</button>
+			</div>
+		</div>
+		<br>
+	</form>
+{% endblock %}

@@ -15,7 +15,7 @@ import os
 import dj_database_url
 
 from functools import partial
-from pathlib import Path
+# from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from decouple import config
@@ -137,3 +137,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+
+
+LOGIN_URL = '/signin'
+LOGIN_REDIRECT_URL = '/signin'
