@@ -51,6 +51,7 @@ def propostas(request):
 
 @login_required
 def proposta(request, id=False):
+    msg = {}
 
     proposta_form = PropostaForm()
 
