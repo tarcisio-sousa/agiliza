@@ -31,8 +31,10 @@
 									<div class="dropdown-menu">
 										<a href="/proposta/{{ proposta.id }}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
 										<div class="dropdown-divider"></div>
-										<a href="#" class="dropdown-item"> <i class="fas fa-check-circle"></i> Autorizar</a>
-										<a href="/proposta/documento/{{ proposta.id }}" class="dropdown-item"> <i class="fas fa-certificate"></i> Visualizar</a>
+										<a href="/proposta/{{ proposta.id }}/aprovar" class="dropdown-item"> <i class="fas fa-check-circle"></i> Aprovar</a>
+										<a href="/proposta/{{ proposta.id }}/reprovar" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
+										<a href="/proposta/{{ proposta.id }}/empenhar" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a>
+										<a href="/proposta/documento/{{ proposta.id }}" class="dropdown-item"> <i class="fas fa-certificate"></i> Gerar declaração</a>
 									</div>
 								</li>
 							</ul>
@@ -41,7 +43,7 @@
 						<td>{{ proposta.numero_proposta }}</td>
 						<td>{{ proposta.objeto }}</td>
 						<td>{{ proposta.valor_contrapartida }}</td>
-						<td> - </td>
+						<td>{{ proposta.get_situacao_display }}</td>
 					</tr>
 					{% endfor %}
 				</tbody>

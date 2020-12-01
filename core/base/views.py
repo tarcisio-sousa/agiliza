@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -67,10 +68,12 @@ def proposta(request, id=False):
 
         if proposta_form.is_valid():
             proposta = proposta_form.save()
-            msg = {'sucesso': 'Proposta salva com sucesso!'}
-            redirect(reverse('home'))
+            # msg = {'sucesso': 'Proposta salva com sucesso!'}
+            messages.add_message(request, messages.SUCCESS, 'Proposta salva com sucesso!')
+            return redirect(reverse('propostas'))
         else:
-            msg = {'erro': 'Ocorreu alugm erro!'}
+            messages.add_message(request, messages.SUCCESS, 'Proposta salva com sucesso!')
+            # msg = {'erro': 'Ocorreu algum erro!'}
 
     return render(request, 'base/proposta.html', {'proposta_form': proposta_form, 'msg': msg})
 
@@ -79,6 +82,34 @@ def proposta(request, id=False):
 def proposta_documento(request, id):
     proposta = Proposta.objects.get(id=id)
     return render(request, 'base/proposta_documento.html', {'proposta': proposta})
+
+
+@login_required
+def proposta_aprovar(request, id):
+    proposta = Proposta.objects.get(id=id)
+    proposta.situacao = 'AP'
+    proposta.save()
+    messages.add_message(request, messages.SUCCESS, 'Proposta aprovada!')
+    return redirect(reverse('propostas'))
+
+
+@login_required
+def proposta_reprovar(request, id):
+    proposta = Proposta.objects.get(id=id)
+    proposta.situacao = 'RP'
+    proposta.save()
+    messages.add_message(request, messages.SUCCESS, 'Proposta reprovada!')
+    return redirect(reverse('propostas'))
+
+
+@login_required
+def proposta_empenhar(request, id):
+    proposta = Proposta.objects.get(id=id)
+    proposta.situacao = 'EP'
+    proposta.save()
+    messages.add_message(request, messages.SUCCESS, 'Proposta empenhada!')
+    # gerar convênio
+    return redirect(reverse('propostas'))
 
 
 @login_required
