@@ -75,12 +75,25 @@ class SecretarioFinanceiro(Profissional):
 
 
 class Proposta(models.Model):
+
+    class SituacaoChoice(models.TextChoices):
+        EM_ANALISE = 'EN', _('Em análise')
+        EMPENHADO = 'EP', _('Empenhado')
+        APROVADO = 'AP', _('Aprovado')
+        REPROVADO = 'RP', _('Reprovado')
+        # SITUACAO_CHOICES = [
+        #     (EM_ANALISE, 'Em análise'),
+        #     (EMPENHADO, 'Empenhado'),
+        #     (APROVADO, 'Aprovado'),
+        #     (REPROVADO, 'Reprovado'),
+        # ]
     prefeitura = models.ForeignKey('Prefeitura', models.DO_NOTHING, blank=False, null=False)
     lei_complementar = models.CharField(max_length=200, blank=False, null=False)
     data_lei = models.DateField(_('Data da lei'), blank=False, null=False)
     valor_contrapartida = models.FloatField(_('Valor da contrapartida'), blank=False, null=False)
     objeto = models.CharField(max_length=150, blank=True, null=True)
     numero_proposta = models.CharField(_('Número da proposta'), max_length=150, blank=False, null=False)
+    situacao = models.CharField(max_length=2, choices=SituacaoChoice.choices, default=SituacaoChoice.EM_ANALISE, blank=True, null=True)
 
     class Meta:
         verbose_name = _('proposta')
