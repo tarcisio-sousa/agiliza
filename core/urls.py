@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from core.base.views import home, signin, signout, propostas, proposta, proposta_documento, proposta_aprovar, proposta_reprovar, proposta_empenhar, declaracoes, convenios
+from core.base.views import home, signin, signout, propostas, proposta, proposta_documento, declaracoes, convenios, projetos, projeto
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,12 +28,12 @@ urlpatterns = [
     path('propostas', propostas, name='propostas'),
     path('proposta', proposta, name='proposta'),
     path('proposta/<int:id>', proposta, name='proposta'),
-    path('proposta/<int:id>/aprovar', proposta_aprovar, name='proposta_aprovar'),
-    path('proposta/<int:id>/reprovar', proposta_reprovar, name='proposta_reprovar'),
-    path('proposta/<int:id>/empenhar', proposta_empenhar, name='proposta_empenhar'),
+    path('proposta/<int:id>/<slug:situacao>', proposta, name='proposta'),
     path('proposta/documento/<int:id>', proposta_documento, name='proposta_documento'),
-    path('declaracoes', declaracoes, name='declaracoes'),
     path('convenios', convenios, name='convenios'),
+    path('projetos', projetos, name='projetos'),
+    path('projeto/<int:id>', projeto, name='projeto'),
+    path('declaracoes', declaracoes, name='declaracoes'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = 'Administrador Agiliza - Convênios'

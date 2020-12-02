@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import PropostaForm
-from .models import Proposta
+from .models import Proposta, Convenio, Projeto
 
 
 def signin(request):
@@ -51,8 +51,17 @@ def propostas(request):
 
 
 @login_required
-def proposta(request, id=False):
-    msg = {}
+def proposta(request, id=False, situacao=False):
+
+    if (situacao):
+        proposta = Proposta.objects.get(id=id)
+        proposta.situacao = situacao
+        proposta.save()
+        situacao = proposta.get_situacao_display()
+        messages.add_message(request, messages.INFO, f'Proposta {proposta.numero} {situacao}')
+        if proposta.situacao == 'empenhado':
+            __gerar_convenio(request, proposta)
+        return redirect(reverse('propostas'))
 
     proposta_form = PropostaForm()
 
@@ -68,14 +77,12 @@ def proposta(request, id=False):
 
         if proposta_form.is_valid():
             proposta = proposta_form.save()
-            # msg = {'sucesso': 'Proposta salva com sucesso!'}
             messages.add_message(request, messages.SUCCESS, 'Proposta salva com sucesso!')
             return redirect(reverse('propostas'))
         else:
             messages.add_message(request, messages.SUCCESS, 'Proposta salva com sucesso!')
-            # msg = {'erro': 'Ocorreu algum erro!'}
 
-    return render(request, 'base/proposta.html', {'proposta_form': proposta_form, 'msg': msg})
+    return render(request, 'base/proposta.html', {'proposta_form': proposta_form})
 
 
 @login_required
@@ -84,33 +91,12 @@ def proposta_documento(request, id):
     return render(request, 'base/proposta_documento.html', {'proposta': proposta})
 
 
-@login_required
-def proposta_aprovar(request, id):
-    proposta = Proposta.objects.get(id=id)
-    proposta.situacao = 'AP'
-    proposta.save()
-    messages.add_message(request, messages.SUCCESS, 'Proposta aprovada!')
-    return redirect(reverse('propostas'))
-
-
-@login_required
-def proposta_reprovar(request, id):
-    proposta = Proposta.objects.get(id=id)
-    proposta.situacao = 'RP'
-    proposta.save()
-    messages.add_message(request, messages.SUCCESS, 'Proposta reprovada!')
-    return redirect(reverse('propostas'))
-
-
-@login_required
-def proposta_empenhar(request, id):
-    proposta = Proposta.objects.get(id=id)
-    proposta.situacao = 'EP'
-    proposta.save()
-    messages.add_message(request, messages.SUCCESS, 'Proposta empenhada!')
-    # gerar convênio
-    return redirect(reverse('propostas'))
-
+def __gerar_convenio(request, proposta):
+    (convenio, gerado) = Convenio.objects.get_or_create(proposta=proposta)
+    if gerado:
+        messages.add_message(request, messages.SUCCESS, 'Convênio gerado com sucesso!')
+    else:
+        messages.add_message(request, messages.INFO, 'Esta proposta possui convênio!')
 
 @login_required
 def declaracoes(request):
@@ -119,4 +105,22 @@ def declaracoes(request):
 
 @login_required
 def convenios(request):
-    return render(request, 'base/convenios.html')
+    convenios = Convenio.objects.all()
+    return render(request, 'base/convenios.html', {'convenios': convenios})
+
+
+@login_required
+def projetos(request):
+    projetos = Projeto.objects.all()
+    return render(request, 'base/projetos.html', {'projetos': projetos})
+
+
+@login_required
+def projeto(request, id):
+    projeto = Projeto.objects.get(id=id)
+    # for item in projeto.item_set.all():
+    #     for subitem in item.item_set.all():
+    #         # for subitem in subitem.resposta_item_set.all():
+    #         print(subitem.respostaitem_set.all())
+
+    return render(request, 'base/projeto.html', {'projeto': projeto})

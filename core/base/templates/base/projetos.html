@@ -1,39 +1,46 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Convênios{% endblock %}
+{% block title %}Projetos{% endblock %}
 {% block body %}
 	<div class="row">
+		<div class="col-md-12 text-right mb-2">
+			<a href="{% url 'proposta' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-12">
-			{% if convenios %}
+			{% if projetos %}
 			<table class="table">
 				<thead>
 					<tr>
 						<th>Ações</th>
-						<th>Convênio</th>
-						<th>Proposta</th>
+						<th>Projetos</th>
+						<th>Situação</th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for convenio in convenios %}
+					{% for projeto in projetos %}
 					<tr>
 						<td>
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown text-center">
 									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										<a href="#" class="dropdown-item"> <i class="fas fa-check-circle"></i> Check List</a>
+										<a href="#" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
+										<div class="dropdown-divider"></div>
+										<a href="{% url 'projeto' projeto.id %}" class="dropdown-item"> <i class="fas fa-eye"></i> Visualizar</a>
 									</div>
 								</li>
 							</ul>
 						</td>
-						<td>{{ convenio.id }}</td>
-						<td>{{ convenio.proposta }}</td>
+						<td>{{ projeto.descricao }}</td>
+						<td> - </td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 			{% else %}
-			<div class="alert alert-info">Nenhum convenio cadastrado!</div>
+			<div class="alert alert-info">Nenhum projeto cadastrada!</div>
 			{% endif %}
 		</div>
 	</div>
