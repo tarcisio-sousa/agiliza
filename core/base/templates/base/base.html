@@ -19,20 +19,26 @@
 	<body>
 		<nav class="site-header sticky-top py-1">
 			<div class="container d-flex flex-column flex-md-row justify-content-between">
-				<a href="/" class="py-2"><b>@</b></a>
-				<a href="/propostas" class="py-2 d-none d-md-inline-block">Propostas</a>
-				<a href="/declaracoes" class="py-2 d-none d-md-inline-block">Declarações</a>
-				<a href="/convenios" class="py-2 d-none d-md-inline-block">Convênios</a>
+				<a href="{% url 'home' %}" class="py-2"><b>@</b></a>
+				<a href="{% url 'propostas' %}" class="py-2 d-none d-md-inline-block">Propostas</a>
+				<a href="{% url 'convenios' %}" class="py-2 d-none d-md-inline-block">Convênios</a>
+				<a href="{% url 'projetos' %}" class="py-2 d-none d-md-inline-block">Projetos</a>
+				<a href="{% url 'declaracoes' %}" class="py-2 d-none d-md-inline-block">Declarações</a>
 			</div>
 		</nav>
 
 		<div class="container"> 
+			<h1>{%block title %}{% endblock %}</h1>
 			{% if messages %}
-			<ul class="messages alert alert-info">
+			<div class="messages">
 			    {% for message in messages %}
-			    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			    <div{% if message.tags %} class="alert alert-{{ message.tags }}" role="alert" {% endif %}>{{ message }}
+			    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 			    {% endfor %}
-			</ul>
+			</div>
 			{% endif %}
 			{% block body %}{% endblock %}
 

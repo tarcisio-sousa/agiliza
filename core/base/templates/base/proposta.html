@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 
+{% block title %}Propostas{% endblock %}
 {% block body %}
-	<h1>Página de propostas</h1>
 
 	<form method="post" class="form">
 		{% csrf_token %}
@@ -39,8 +39,8 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<label for="id_numero_proposta">Número da proposta</label>
-				{{ proposta_form.numero_proposta }}
+				<label for="id_numero">Número da proposta</label>
+				{{ proposta_form.numero }}
 			</div>
 		</div>
 		<hr>

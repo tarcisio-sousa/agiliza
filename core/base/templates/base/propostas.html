@@ -1,10 +1,10 @@
 {% extends 'base/base.html' %}
 
+{% block title %}Propostas{% endblock %}
 {% block body %}
-	<h1>Página de propostas</h1>
 	<div class="row">
 		<div class="col-md-12 text-right mb-2">
-			<a href="/proposta" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
+			<a href="{% url 'proposta' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
 		</div>
 	</div>
 	<div class="row">
@@ -26,21 +26,22 @@
 					<tr>
 						<td>
 							<ul class="navbar-nav mr-auto">
-								<li class="nav-item dropdown">
-									<a href="#" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
+								<li class="nav-item dropdown text-center">
+									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										<a href="/proposta/{{ proposta.id }}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
+										<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
 										<div class="dropdown-divider"></div>
-										<a href="/proposta/{{ proposta.id }}/aprovar" class="dropdown-item"> <i class="fas fa-check-circle"></i> Aprovar</a>
-										<a href="/proposta/{{ proposta.id }}/reprovar" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
-										<a href="/proposta/{{ proposta.id }}/empenhar" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a>
-										<a href="/proposta/documento/{{ proposta.id }}" class="dropdown-item"> <i class="fas fa-certificate"></i> Gerar declaração</a>
+										<a href="{% url 'proposta' proposta.id 'em-analise' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Em análise</a>
+										<a href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Aprovar</a>
+										<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
+										<a href="{% url 'proposta' proposta.id 'empenhada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a>
+										<a href="{% url 'proposta_documento' proposta.id %}" class="dropdown-item"> <i class="fas fa-certificate"></i> Gerar declaração</a>
 									</div>
 								</li>
 							</ul>
 						</td>
 						<td>{{ proposta.prefeitura }}</td>
-						<td>{{ proposta.numero_proposta }}</td>
+						<td>{{ proposta.numero }}</td>
 						<td>{{ proposta.objeto }}</td>
 						<td>{{ proposta.valor_contrapartida }}</td>
 						<td>{{ proposta.get_situacao_display }}</td>

@@ -14,4 +14,4 @@ class PropostaForm(ModelForm):
         self.fields['data_lei'].widget.attrs.update({'class': 'form-control'})
         self.fields['valor_contrapartida'].widget.attrs.update({'class': 'form-control'})
         self.fields['objeto'].widget.attrs.update({'class': 'form-control'})
-        self.fields['numero_proposta'].widget.attrs.update({'class': 'form-control'})
+        self.fields['numero'].widget.attrs.update({'class': 'form-control'})
