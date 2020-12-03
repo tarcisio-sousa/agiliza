@@ -18,22 +18,22 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from core.base.views import home, signin, signout, propostas, proposta, proposta_documento, declaracoes, convenios, projetos, projeto
+from core.base import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
-    path('signin', signin, name='signin'),
-    path('signout', signout, name='signout'),
-    path('propostas', propostas, name='propostas'),
-    path('proposta', proposta, name='proposta'),
-    path('proposta/<int:id>', proposta, name='proposta'),
-    path('proposta/<int:id>/<slug:situacao>', proposta, name='proposta'),
-    path('proposta/documento/<int:id>', proposta_documento, name='proposta_documento'),
-    path('convenios', convenios, name='convenios'),
-    path('projetos', projetos, name='projetos'),
-    path('projeto/<int:id>', projeto, name='projeto'),
-    path('declaracoes', declaracoes, name='declaracoes'),
+    path('', views.home, name='home'),
+    path('signin', views.signin, name='signin'),
+    path('signout', views.signout, name='signout'),
+    path('propostas', views.propostas, name='propostas'),
+    path('proposta', views.proposta, name='proposta'),
+    path('proposta/<int:id>', views.proposta, name='proposta'),
+    path('proposta/<int:id>/<slug:situacao>', views.proposta, name='proposta'),
+    path('proposta/documento/<int:id>', views.proposta_documento, name='proposta_documento'),
+    path('convenios', views.convenios, name='convenios'),
+    path('projetos', views.projetos, name='projetos'),
+    path('projeto/<int:id>', views.projeto, name='projeto'),
+    path('declaracoes', views.declaracoes, name='declaracoes'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = 'Administrador Agiliza - Convênios'

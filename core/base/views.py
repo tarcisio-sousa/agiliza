@@ -98,6 +98,7 @@ def __gerar_convenio(request, proposta):
     else:
         messages.add_message(request, messages.INFO, 'Esta proposta possui convênio!')
 
+
 @login_required
 def declaracoes(request):
     return render(request, 'base/declaracoes.html')
