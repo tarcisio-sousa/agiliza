@@ -88,7 +88,9 @@ class Proposta(models.Model):
     valor_contrapartida = models.FloatField(_('Valor da contrapartida'), blank=False, null=False)
     objeto = models.CharField(max_length=150, blank=True, null=True)
     numero = models.CharField(_('Número da proposta'), max_length=150, blank=False, null=False)
-    situacao = models.CharField(max_length=15, choices=SituacaoChoice.choices, default=SituacaoChoice.EM_ANALISE, blank=True, null=True)
+    situacao = models.CharField(
+        max_length=15, choices=SituacaoChoice.choices, default=SituacaoChoice.EM_ANALISE, blank=True, null=True
+    )
     extrato = models.FileField(upload_to='uploads/files/%Y/%m/%d', max_length=150, blank=True, null=True)
 
     class Meta:
@@ -155,7 +157,9 @@ class Projeto(models.Model):
 #         RADIO = 'radio', _('Radio')
 
 #     descricao = models.CharField(max_length=150, blank=False, null=False)
-#     tipo = models.CharField(max_length=150, choices=RespostaChoice.choices, default=RespostaChoice.TEXT, blank=False, null=False)
+#     tipo = models.CharField(
+#         max_length=150, choices=RespostaChoice.choices, default=RespostaChoice.TEXT, blank=False, null=False
+#     )
 
 #     def __str__(self):
 #         return f'{self.descricao}'
