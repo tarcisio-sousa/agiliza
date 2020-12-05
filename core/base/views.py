@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import PropostaForm
-from .models import Proposta, Convenio, Projeto
+from .forms import PropostaForm, ProjetoPavimentacaoForm
+from .models import Proposta, Convenio, Projeto, ProjetoPavimentacao
 
 
 def signin(request):
@@ -80,7 +80,7 @@ def proposta(request, id=False, situacao=False):
             messages.add_message(request, messages.SUCCESS, 'Proposta salva com sucesso!')
             return redirect(reverse('propostas'))
         else:
-            messages.add_message(request, messages.SUCCESS, 'Proposta salva com sucesso!')
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar a proposta!')
 
     return render(request, 'base/proposta.html', {'proposta_form': proposta_form})
 
@@ -112,7 +112,7 @@ def convenios(request):
 
 @login_required
 def projetos(request):
-    projetos = Projeto.objects.all()
+    projetos = ProjetoPavimentacao.objects.all()
     return render(request, 'base/projetos.html', {'projetos': projetos})
 
 
@@ -125,3 +125,30 @@ def projeto(request, id):
     #         print(subitem.respostaitem_set.all())
 
     return render(request, 'base/projeto.html', {'projeto': projeto})
+
+
+@login_required
+def projeto_pavimentacao(request, id=False):
+
+    projeto_form = ProjetoPavimentacaoForm()
+
+    if id:
+        projeto = ProjetoPavimentacao.objects.get(id=id)
+        projeto_form = ProjetoPavimentacaoForm(instance=projeto)
+
+    if request.method == 'POST':
+        projeto_form = ProjetoPavimentacaoForm(request.POST)
+
+        if id:
+            projeto_form = ProjetoPavimentacaoForm(request.POST, instance=projeto)
+
+        if projeto_form.is_valid():
+            projeto_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Checklist de projeto salvo com sucesso!')
+            return redirect(reverse('projetos'))
+        else:
+            messages.add_message(
+                request, messages.ERROR, 'Não foi possível salvar o checklist, verifique todos os itens!'
+            )
+
+    return render(request, 'base/projeto_pavimentacao.html', {'projeto_form': projeto_form})

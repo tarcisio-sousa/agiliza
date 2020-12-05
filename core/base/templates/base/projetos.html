@@ -4,7 +4,7 @@
 {% block body %}
 	<div class="row">
 		<div class="col-md-12 text-right mb-2">
-			<a href="{% url 'proposta' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
+			<a href="{% url 'projeto_pavimentacao' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
 		</div>
 	</div>
 	<div class="row">
@@ -28,12 +28,12 @@
 									<div class="dropdown-menu">
 										<a href="#" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
 										<div class="dropdown-divider"></div>
-										<a href="{% url 'projeto' projeto.id %}" class="dropdown-item"> <i class="fas fa-eye"></i> Visualizar</a>
+										<a href="{% url 'projeto_pavimentacao' projeto.id %}" class="dropdown-item"> <i class="fas fa-eye"></i> Visualizar</a>
 									</div>
 								</li>
 							</ul>
 						</td>
-						<td>{{ projeto.descricao }}</td>
+						<td>{{ projeto }}</td>
 						<td> - </td>
 					</tr>
 					{% endfor %}
