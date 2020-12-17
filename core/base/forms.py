@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from core.base.models import Proposta, ProjetoPavimentacao
+from core.base.models import Proposta, Pavimentacao
 
 
 class PropostaForm(ModelForm):
@@ -12,78 +12,91 @@ class PropostaForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['prefeitura'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['lei_complementar'].widget.attrs.update({'class': 'form-control'})
-        self.fields['data_lei'].widget.attrs.update({'class': 'form-control'})
+        self.fields['data'].widget.attrs.update({'class': 'form-control'})
         self.fields['valor_contrapartida'].widget.attrs.update({'class': 'form-control'})
         self.fields['objeto'].widget.attrs.update({'class': 'form-control'})
         self.fields['numero'].widget.attrs.update({'class': 'form-control'})
 
 
-class ProjetoPavimentacaoForm(ModelForm):
+class PavimentacaoForm(ModelForm):
     class Meta:
-        model = ProjetoPavimentacao
+        model = Pavimentacao
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        CHOICES = [('1', 'Sim'), ('2', 'Não'), ('3', 'Dispensado')]
+        SIM = '1'
+        NAO = '2'
+        DISPENSADO = '0'
+        CHOICES = [(SIM, 'Sim'), (NAO, 'Não'), (DISPENSADO, 'Dispensado')]
         CHOICES_SERVICO_APTO_PARA_ANALISE_TECNICA = [
             ('1', 'Sim (no caso de faltar algum documento comentar)'), ('2', 'Não, pelos seguintes motivos')]
         CHOICES_SERVICO_TERCEIRIZADO = [('1', 'Sim, com prazo de execução de'), ('2', 'Não')]
-        self.fields['copia_plano_trabalho'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['qci'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['planta_georreferenciada'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['projeto_geometrico_planta_baixa'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+        self.fields['copia_plano_trabalho'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['qci'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['planta_georreferenciada'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['projeto_geometrico_planta_baixa'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['projeto_geometrico_perfil_longitudinal'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES
-        )
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['projeto_terraplenagem_notas_servico'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES
-        )
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['projeto_terraplenagem_relatorio_volumes'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES
-        )
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['projeto_terraplenagem_secoes_transversais'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES
-        )
-        self.fields['projeto_pavimentacao_secao_tipo'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['projeto_drenagem'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['projeto_sinalizacao_viaria'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['projeto_calcadas_acessibilidade'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['memorial_descritivo_projeto'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['especificacoes_tecnicas'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['orcamentos_detalhados'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['composicoes_custos_unitarios'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['detalhamento_bdi'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['projeto_pavimentacao_secao_tipo'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['projeto_drenagem'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['projeto_sinalizacao_viaria'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['projeto_calcadas_acessibilidade'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['memorial_descritivo_projeto'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['especificacoes_tecnicas'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['orcamentos_detalhados'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['composicoes_custos_unitarios'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['detalhamento_bdi'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['cronograma_fisico_financeiro_empreendimento'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO
         )
-        self.fields['memoria_calculo_dimensionamento'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['declaracao_bem_uso_comum_povo'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['art_projeto'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['art_orcamento'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['art_acessibilidade'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['declaracao_munutencao_conservacao'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+        self.fields['memoria_calculo_dimensionamento'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['declaracao_bem_uso_comum_povo'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['art_projeto'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['art_orcamento'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['art_acessibilidade'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['declaracao_munutencao_conservacao'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['declaracao_existencia_rede_abastecimento_agua'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES
-        )
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['declaracao_existencia_solucao_esgotamento_sanitario'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES
-        )
-        self.fields['declaracao_regime_execucao_obra'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-        self.fields['equipe_coordenacao_projeto'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['declaracao_regime_execucao_obra'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['equipe_coordenacao_projeto'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['contrato_elaboracao_projeto_engenharia'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES
-        )
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['declaracao_autor_projeto_sinalizacao'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES
-        )
-        self.fields['relatorio_fotografico'] = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
+        self.fields['relatorio_fotografico'] = forms.ChoiceField(
+            widget=forms.RadioSelect, choices=CHOICES, initial=NAO)
         self.fields['servico_apto_para_analise_tecnica'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES_SERVICO_APTO_PARA_ANALISE_TECNICA
-        )
+            widget=forms.RadioSelect, choices=CHOICES_SERVICO_APTO_PARA_ANALISE_TECNICA, initial=NAO)
         self.fields['servico_terceirizado'] = forms.ChoiceField(
-            widget=forms.RadioSelect, choices=CHOICES_SERVICO_TERCEIRIZADO
-        )
+            widget=forms.RadioSelect, choices=CHOICES_SERVICO_TERCEIRIZADO, initial=NAO)
         self.fields['sr'].widget.attrs.update({'class': 'form-control'})
         self.fields['numero_contrato'].widget.attrs.update({'class': 'form-control'})
         self.fields['data_assinatura'].widget.attrs.update({'class': 'form-control'})

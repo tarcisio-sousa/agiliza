@@ -33,6 +33,7 @@ urlpatterns = [
     path('convenios', views.convenios, name='convenios'),
     path('projetos', views.projetos, name='projetos'),
     path('projeto/<int:id>', views.projeto, name='projeto'),
+    path('projeto', views.projeto, name='projeto'),
     path('projeto/pavimentacao', views.projeto_pavimentacao, name='projeto_pavimentacao'),
     path('projeto/pavimentacao/<int:id>', views.projeto_pavimentacao, name='projeto_pavimentacao'),
     path('declaracoes', views.declaracoes, name='declaracoes'),

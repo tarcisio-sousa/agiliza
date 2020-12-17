@@ -17,22 +17,21 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<div class="texto" style="margin-top: 50px;">Declaro, sob as penas da Lei, e em conformidade com a Lei de Diretrizes Orçamentárias vigente e com a Lei Complementar nº 101, de 4 de maio de 2000, que dispomos dos recursos orçamentários, no valor de R$: 24.000,00 (Vinte e quatro mil reais), para participação, a título de contrapartida, no repasse de recursos destinados a Pavimentação em paralelepípedo para o Município de João Costa-PI, proposta de número 013920/2018.</div>
+					<div class="texto" style="margin-top: 50px;">Declaro, sob as penas da Lei, e em conformidade com a Lei de Diretrizes Orçamentárias vigente e com a Lei Complementar {{ proposta.lei_complementar}}, que dispomos dos recursos orçamentários, no valor de R$: {{ proposta.valor_contrapartida }} (Vinte e quatro mil reais), para participação, a título de contrapartida, no repasse de recursos destinados a {{ proposta.objeto }} para o Município de {{ proposta.prefeitura.nome }} – {{ proposta.prefeitura.uf }}, proposta de número {{ proposta.numero }}.</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<div class="data_proposta text-right" style="margin-top: 100px;">João Costa – PI, 16 de Fevereiro de 2018.</div>
+					<div class="data_proposta text-right" style="margin-top: 100px;">{{ proposta.prefeitura.nome }} - {{ proposta.prefeitura.uf }}, {{ proposta.data }}.</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<div class="rodape text-right" style="margin-top: 470px;">
-						Prefeitura de João Costa<br>
-						Praça Central, s/nº. - Centro – 64.765-000 - João Costa – PI. CNPJ: 01612580/0001-30 <br>
-						Telefone (89) 3486-0034/3486-0025<br>
-						Email: prefeituramunicipaljoaocosta@gmail.com<br>
-						gabinetepmjpi@hotmail.com<br>
+						Prefeitura de {{ proposta.prefeitura.nome }}<br>
+						{{ proposta.prefeitura.endereco }} - {{ proposta.prefeitura.bairro }} – {{ proposta.prefeitura.cep }} - {{ proposta.prefeitura.nome }} – {{ proposta.prefeitura.uf }}. CNPJ: {{ proposta.prefeitura.cnpj }} <br>
+						Telefone: {{ proposta.prefeitura.telefone }}<br>
+						Email: {{ proposta.prefeitura.email }}<br>
 					</div>
 				</div>
 			</div>

@@ -31,10 +31,18 @@
 									<div class="dropdown-menu">
 										<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
 										<div class="dropdown-divider"></div>
-										<a href="{% url 'proposta' proposta.id 'em-analise' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Em análise</a>
-										<a href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Aprovar</a>
-										<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
-										<a href="{% url 'proposta' proposta.id 'empenhada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a>
+										{% if proposta.verifica_situacao == 'em-analise' %}
+											<a href="{% url 'proposta' proposta.id 'em-analise' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Em análise </a>
+										{% endif %}
+										{% if proposta.verifica_situacao == 'aprovada' %}
+											<a href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Aprovar</a>
+										{% endif %}
+										{% if proposta.situacao not in 'empenhada,reprovada' %}
+											<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
+										{% endif %}
+										{% if proposta.verifica_situacao == 'empenhada' %}
+											<a href="{% url 'proposta' proposta.id 'empenhada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a>
+										{% endif %}
 										<a href="{% url 'proposta_documento' proposta.id %}" class="dropdown-item"> <i class="fas fa-certificate"></i> Gerar declaração</a>
 									</div>
 								</li>
