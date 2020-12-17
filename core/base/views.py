@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import PropostaForm, ProjetoPavimentacaoForm
-from .models import Proposta, Convenio, Projeto, ProjetoPavimentacao
+from .forms import PropostaForm, EstradaForm, PavimentacaoForm
+from .models import Proposta, Convenio, Estrada, Pavimentacao, Orgao
 
 
 def signin(request):
@@ -59,7 +59,7 @@ def proposta(request, id=False, situacao=False):
         proposta.save()
         situacao = proposta.get_situacao_display()
         messages.add_message(request, messages.INFO, f'Proposta {proposta.numero} {situacao}')
-        if proposta.situacao == 'empenhado':
+        if proposta.situacao == 'empenhada':
             __gerar_convenio(request, proposta)
         return redirect(reverse('propostas'))
 
@@ -107,40 +107,76 @@ def declaracoes(request):
 @login_required
 def convenios(request):
     convenios = Convenio.objects.all()
-    return render(request, 'base/convenios.html', {'convenios': convenios})
+    orgaos = Orgao.objects.all()
+    return render(request, 'base/convenios.html', {'convenios': convenios, 'orgaos': orgaos})
 
 
 @login_required
 def projetos(request):
-    projetos = ProjetoPavimentacao.objects.all()
+    projetos = Pavimentacao.objects.all()
     return render(request, 'base/projetos.html', {'projetos': projetos})
 
 
 @login_required
-def projeto(request, id):
-    projeto = Projeto.objects.get(id=id)
-    # for item in projeto.item_set.all():
-    #     for subitem in item.item_set.all():
-    #         # for subitem in subitem.resposta_item_set.all():
-    #         print(subitem.respostaitem_set.all())
+def projeto(request, id=False):
+    if id:
+        if (request.POST['tipo_projeto'] == 'pavimentacao'):
+            projeto = Pavimentacao()
+        elif (request.POST['tipo_projeto'] == 'estradas'):
+            projeto = Estrada()
 
-    return render(request, 'base/projeto.html', {'projeto': projeto})
+        convenio = Convenio.objects.get(id=id)
+        orgao = Orgao.objects.get(id=request.POST['orgao'])
+        projeto.orgao = orgao
+        projeto.convenio = convenio
+        projeto.tipo = request.POST['tipo_projeto']
+        projeto.save()
+        return redirect(reverse('convenios'))
+
+    return render(request, 'base/projeto.html')
+
+
+@login_required
+def projeto_estrada(request, id=False):
+
+    projeto_form = EstradaForm()
+
+    if id:
+        projeto = Estrada.objects.get(id=id)
+        projeto_form = EstradaForm(instance=projeto)
+
+    if request.method == 'POST':
+        projeto_form = EstradaForm(request.POST)
+
+        if id:
+            projeto_form = EstradaForm(request.POST, instance=projeto)
+
+        if projeto_form.is_valid():
+            projeto_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Checklist de projeto salvo com sucesso!')
+            return redirect(reverse('projetos'))
+        else:
+            messages.add_message(
+                request, messages.ERROR, 'Não foi possível salvar o checklist, verifique todos os itens!'
+            )
+
+    return render(request, 'base/projeto_estrada.html', {'projeto_form': projeto_form})
 
 
 @login_required
 def projeto_pavimentacao(request, id=False):
 
-    projeto_form = ProjetoPavimentacaoForm()
+    projeto_form = PavimentacaoForm()
 
     if id:
-        projeto = ProjetoPavimentacao.objects.get(id=id)
-        projeto_form = ProjetoPavimentacaoForm(instance=projeto)
+        projeto = Pavimentacao.objects.get(id=id)
+        projeto_form = PavimentacaoForm(instance=projeto)
 
     if request.method == 'POST':
-        projeto_form = ProjetoPavimentacaoForm(request.POST)
+        projeto_form = PavimentacaoForm(request.POST)
 
         if id:
-            projeto_form = ProjetoPavimentacaoForm(request.POST, instance=projeto)
+            projeto_form = PavimentacaoForm(request.POST, instance=projeto)
 
         if projeto_form.is_valid():
             projeto_form.save()

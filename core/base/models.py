@@ -84,7 +84,7 @@ class Proposta(models.Model):
 
     prefeitura = models.ForeignKey('Prefeitura', models.DO_NOTHING, blank=False, null=False)
     lei_complementar = models.CharField(max_length=200, blank=False, null=False)
-    data_lei = models.DateField(_('Data da lei'), blank=False, null=False)
+    data = models.DateField(_('Data'), blank=False, null=False)
     valor_contrapartida = models.FloatField(_('Valor da contrapartida'), blank=False, null=False)
     objeto = models.CharField(max_length=150, blank=True, null=True)
     numero = models.CharField(_('Número da proposta'), max_length=150, blank=False, null=False)
@@ -98,7 +98,19 @@ class Proposta(models.Model):
         verbose_name_plural = _('propostas')
 
     def __str__(self):
-        return f'{self.lei_complementar} {self.data_lei} - {self.numero}'
+        return f'{self.lei_complementar} {self.data} - {self.numero}'
+
+    def verifica_situacao(self):
+        if self.SituacaoChoice.EM_ANALISE == self.situacao:
+            return self.SituacaoChoice.APROVADO
+        if self.SituacaoChoice.APROVADO == self.situacao:
+            return self.SituacaoChoice.EMPENHADO
+
+        # return self.situacao
+        # if (self.situacao == 'em-analise'):
+        #     return SituacaoChoice.EMPENHADO
+        # elif (self.situacao == 'empenhada'):
+        #     return SituacaoChoice.APROVADO
 
 
 class Convenio(models.Model):
@@ -125,10 +137,17 @@ class Orgao(models.Model):
 
 
 class Projeto(models.Model):
-    descricao = models.CharField(max_length=200, blank=False, null=False)
+    class TipoChoice(models.TextChoices):
+        ESTRADAS = 'estradas', _('Estradas')
+        PAVIMENTACAO = 'pavimentacao', _('Pavimentacao')
+
+    orgao = models.ForeignKey('Orgao', models.DO_NOTHING, blank=True, null=True)
+    convenio = models.ForeignKey('Convenio', models.DO_NOTHING, blank=True, null=True)
+    tipo = models.CharField(
+        max_length=150, choices=TipoChoice.choices, default=None, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.descricao}'
+        return f'Projeto {self.id}'
 
 
 # class Item(models.Model):
@@ -165,7 +184,75 @@ class Projeto(models.Model):
 #         return f'{self.descricao}'
 
 
-class ProjetoPavimentacao(models.Model):
+class Estrada(Projeto):
+    # 1 - Identificação
+    sr = models.CharField(max_length=250, blank=True, null=True)
+    numero_contrato = models.CharField(max_length=250, blank=True, null=True)
+    data_assinatura = models.CharField(max_length=250, blank=True, null=True)
+    programa = models.CharField(max_length=250, blank=True, null=True)
+    modalidade = models.CharField(max_length=250, blank=True, null=True)
+    proponente = models.CharField(max_length=250, blank=True, null=True)
+    tipo_proponente = models.CharField(max_length=250, blank=True, null=True)
+    empreendimento = models.CharField(max_length=250, blank=True, null=True)
+    localizacao = models.CharField(max_length=250, blank=True, null=True)
+
+    # 2 - Objetivo
+    objetivo_pleito = models.CharField(max_length=250, blank=True, null=True)
+
+    # 3 - Documentação fornecida para a análise técnica do empreendimento
+    copia_plano_trabalho = models.CharField(max_length=250, blank=True, null=True)
+    qci = models.CharField(max_length=250, blank=True, null=True)
+    planta_georreferenciada = models.CharField(max_length=250, blank=True, null=True)
+    projeto_geometrico_planta_baixa = models.CharField(max_length=250, blank=True, null=True)
+    projeto_geometrico_perfil_longitudinal = models.CharField(max_length=250, blank=True, null=True)
+    projeto_terraplenagem_notas_servico = models.CharField(max_length=250, blank=True, null=True)
+    projeto_terraplenagem_relatorio_volumes = models.CharField(max_length=250, blank=True, null=True)
+    projeto_terraplenagem_secoes_transversais = models.CharField(max_length=250, blank=True, null=True)
+    projeto_pavimentacao_secao_tipo = models.CharField(max_length=250, blank=True, null=True)
+    projeto_drenagem = models.CharField(max_length=250, blank=True, null=True)
+    projeto_sinalizacao_viaria = models.CharField(max_length=250, blank=True, null=True)
+    planta_localizacao_jazida_fonte_agua = models.CharField(max_length=250, blank=True, null=True)
+    memorial_descritivo_projeto = models.CharField(max_length=250, blank=True, null=True)
+    especificacoes_tecnicas = models.CharField(max_length=250, blank=True, null=True)
+    orcamentos_detalhados = models.CharField(max_length=250, blank=True, null=True)
+    composicoes_custos_unitarios = models.CharField(max_length=250, blank=True, null=True)
+    detalhamento_bdi = models.CharField(max_length=250, blank=True, null=True)
+    cronograma_fisico_financeiro_empreendimento = models.CharField(max_length=250, blank=True, null=True)
+    memoria_calculo_dimensionamento = models.CharField(max_length=250, blank=True, null=True)
+    declaracao_bem_uso_comum_povo = models.CharField(max_length=250, blank=True, null=True)
+    art_projeto = models.CharField(max_length=250, blank=True, null=True)
+    art_orcamento = models.CharField(max_length=250, blank=True, null=True)
+    declaracao_munutencao_conservacao = models.CharField(max_length=250, blank=True, null=True)
+    declaracao_regime_execucao_obra = models.CharField(max_length=250, blank=True, null=True)
+    equipe_coordenacao_projeto = models.CharField(max_length=250, blank=True, null=True)
+    contrato_elaboracao_projeto_engenharia = models.CharField(max_length=250, blank=True, null=True)
+
+    # 4 - Providencias a serem adotadas
+    servico_apto_para_analise_tecnica = models.CharField(max_length=250, blank=True, null=True)
+    comentario_analise_tecnica = models.CharField(max_length=250, blank=True, null=True)
+    servico_terceirizado = models.CharField(max_length=250, blank=True, null=True)
+    justificativa_comentarios = models.CharField(max_length=250, blank=True, null=True)
+    atividade = models.CharField(max_length=250, blank=True, null=True)
+    produto = models.CharField(max_length=250, blank=True, null=True)
+    linha = models.CharField(max_length=250, blank=True, null=True)
+    fonte = models.CharField(max_length=250, blank=True, null=True)
+    responsavel_verificacao = models.CharField(max_length=250, blank=True, null=True)
+    data = models.CharField(max_length=250, blank=True, null=True)
+    local_data = models.CharField(max_length=250, blank=True, null=True)
+    responsavel_tecnico = models.CharField(max_length=250, blank=True, null=True)
+    matricula = models.CharField(max_length=250, blank=True, null=True)
+    cpf = models.CharField(max_length=250, blank=True, null=True)
+    crea = models.CharField(max_length=250, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'projeto de estrada'
+        verbose_name_plural = 'projetos de estrada'
+
+    def __str__(self):
+        return f'Projeto de estrada Nº {self.id}'
+
+
+class Pavimentacao(Projeto):
     # 1 - Identificação
     sr = models.CharField(max_length=250, blank=True, null=True)
     numero_contrato = models.CharField(max_length=250, blank=True, null=True)

@@ -33,8 +33,12 @@ urlpatterns = [
     path('convenios', views.convenios, name='convenios'),
     path('projetos', views.projetos, name='projetos'),
     path('projeto/<int:id>', views.projeto, name='projeto'),
+    path('projeto', views.projeto, name='projeto'),
+    # path('projeto/objeto/<int:id>', views.projeto_objeto, name='projeto_objeto'),
     path('projeto/pavimentacao', views.projeto_pavimentacao, name='projeto_pavimentacao'),
     path('projeto/pavimentacao/<int:id>', views.projeto_pavimentacao, name='projeto_pavimentacao'),
+    path('projeto/estrada', views.projeto_estrada, name='projeto_estrada'),
+    path('projeto/estrada/<int:id>', views.projeto_estrada, name='projeto_estrada'),
     path('declaracoes', views.declaracoes, name='declaracoes'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
