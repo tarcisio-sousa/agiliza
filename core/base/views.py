@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import PropostaForm, PavimentacaoForm
-from .models import Proposta, Convenio, Pavimentacao, Orgao
+from .forms import PropostaForm, EstradaForm, PavimentacaoForm
+from .models import Proposta, Convenio, Estrada, Pavimentacao, Orgao
 
 
 def signin(request):
@@ -120,17 +120,47 @@ def projetos(request):
 @login_required
 def projeto(request, id=False):
     if id:
-        print(request.POST['tipo_projeto'])
         if (request.POST['tipo_projeto'] == 'pavimentacao'):
             projeto = Pavimentacao()
-            convenio = Convenio.objects.get(id=id)
-            orgao = Orgao.objects.get(id=request.POST['orgao'])
-            projeto.orgao = orgao
-            projeto.convenio = convenio
-            projeto.save()
-            return redirect(reverse('convenios'))
+        elif (request.POST['tipo_projeto'] == 'estradas'):
+            projeto = Estrada()
+
+        convenio = Convenio.objects.get(id=id)
+        orgao = Orgao.objects.get(id=request.POST['orgao'])
+        projeto.orgao = orgao
+        projeto.convenio = convenio
+        projeto.tipo = request.POST['tipo_projeto']
+        projeto.save()
+        return redirect(reverse('convenios'))
 
     return render(request, 'base/projeto.html')
+
+
+@login_required
+def projeto_estrada(request, id=False):
+
+    projeto_form = EstradaForm()
+
+    if id:
+        projeto = Estrada.objects.get(id=id)
+        projeto_form = EstradaForm(instance=projeto)
+
+    if request.method == 'POST':
+        projeto_form = EstradaForm(request.POST)
+
+        if id:
+            projeto_form = EstradaForm(request.POST, instance=projeto)
+
+        if projeto_form.is_valid():
+            projeto_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Checklist de projeto salvo com sucesso!')
+            return redirect(reverse('projetos'))
+        else:
+            messages.add_message(
+                request, messages.ERROR, 'Não foi possível salvar o checklist, verifique todos os itens!'
+            )
+
+    return render(request, 'base/projeto_estrada.html', {'projeto_form': projeto_form})
 
 
 @login_required

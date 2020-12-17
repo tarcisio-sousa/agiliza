@@ -33,7 +33,11 @@
 						<td>{{ convenio.proposta }}</td>
 						<td> 
 							{% for projeto in convenio.projeto_set.all %}
+								{% if projeto.tipo == 'estradas' %}
+								<a href="{% url 'projeto_estrada' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
+								{% elif projeto.tipo == 'pavimentacao' %}
 								<a href="{% url 'projeto_pavimentacao' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
+								{% endif %}
 							{% endfor %}
 						</td>
 					</tr>
