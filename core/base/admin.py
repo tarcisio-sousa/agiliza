@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio, Orgao, Pavimentacao
+from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio, Orgao, Projeto, Pavimentacao
 
 
 @admin.register(Prefeitura)
@@ -40,10 +40,10 @@ class OrgaoAdmin(admin.ModelAdmin):
     list_display = ['descricao', ]
 
 
-# @admin.register(Projeto)
-# class ProjetoAdmin(admin.ModelAdmin):
-#     fields = ('descricao',)
-#     list_display = ['descricao', ]
+@admin.register(Projeto)
+class ProjetoAdmin(admin.ModelAdmin):
+    # fields = ('descricao',)
+    list_display = ['convenio', 'orgao']
 
 
 @admin.register(Pavimentacao)

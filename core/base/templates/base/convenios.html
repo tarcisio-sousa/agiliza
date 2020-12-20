@@ -33,8 +33,12 @@
 						<td>{{ convenio.proposta }}</td>
 						<td> 
 							{% for projeto in convenio.projeto_set.all %}
-								{% if projeto.tipo == 'estradas' %}
+								{% if projeto.tipo == 'edificacao' %}
+								<a href="{% url 'projeto_edificacao' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
+								{% elif projeto.tipo == 'estradas' %}
 								<a href="{% url 'projeto_estrada' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
+								{% elif projeto.tipo == 'equipamento' %}
+								<a href="{% url 'projeto_equipamento' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
 								{% elif projeto.tipo == 'pavimentacao' %}
 								<a href="{% url 'projeto_pavimentacao' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
 								{% endif %}
@@ -85,7 +89,7 @@
 									<label for="idEstradas" class="form-check-label"> Estradas </label>
 								</div>
 								<div class="form-check"> 
-									<input type="radio" name="tipo_projeto" value="equipamentos" class="form-check-input" id="idEquipamentos" />
+									<input type="radio" name="tipo_projeto" value="equipamento" class="form-check-input" id="idEquipamentos" />
 									<label for="idEquipamentos" class="form-check-label"> Equipamentos </label>
 								</div>
 								<div class="form-check"> 

@@ -1,0 +1,382 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Projeto{% endblock %}
+{% block body %}
+	{{ projeto_form.errors }}
+	<form method="post">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Check List Projetos de Engenharia - Estrada - Setor Público</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>1 - Identificação</strong>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-5">
+				<label>SR</label>
+				{{ projeto_form.sr }}
+			</div>
+			<div class="col-md-4">
+				<label>Nº do Contrato</label>
+				{{ projeto_form.numero_contrato }}
+			</div>
+			<div class="col-md-3">
+				<label>Data de assinatura</label>
+				{{ projeto_form.data_assinatura }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<label>Programa</label>
+				{{ projeto_form.programa }}
+			</div>
+			<div class="col-md-6">
+				<label>Ação/Modalidade</label>
+				{{ projeto_form.modalidade }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-7">
+				<label>Proponente</label>
+				{{ projeto_form.proponente }}
+			</div>
+			<div class="col-md-5">
+				<label>Tipo de Proponente</label>
+				{{ projeto_form.tipo_proponente }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-7">
+				<label>Empreendimento</label>
+				{{ projeto_form.empreendimento }}
+			</div>
+			<div class="col-md-5">
+				<label>Localização</label>
+				{{ projeto_form.localizacao }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>2 - Objetivo</strong>
+				<div>Descrever sucintamente o objetivo do pleito</div>
+				{{ projeto_form.objetivo_pleito }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>3 - Documentação fornecida para a análise técnica do empreendimento</strong>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.1 - Cópia do Plano de Trabalho.</div>
+					{% for radio in projeto_form.copia_plano_trabalho %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.2 - Quadro de composição do investimento (QCI).</div>
+					{% for radio in projeto_form.qci %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.3 - Especificações técnicas detalhadas, de forma a permitir a identificação do produto no mercado sem direcionamento da escolha ou cerceamento da concorrência entre fornecedores.</div>
+					{% for radio in projeto_form.especificacoes_detalhadas %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.4 - Orçamentos detalhados.</div>
+					{% for radio in projeto_form.orcamentos_detalhados %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.5 - Cotações de mercado (3 fornecedores).</div>
+					{% for radio in projeto_form.cotacao_mercado %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.6 - Cronograma Físico-Financeiro do empreendimento.</div>
+					{% for radio in projeto_form.cronograma_fisico_financeiro_empreendimento %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.7 - Plano de Uso dos equipamentos adquiridos e identificação dos usuários beneficiados (p/ projetos de mecanização agrícola).</div>
+					{% for radio in projeto_form.plano_uso_equipamentos_adquiridos %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.8 - Documento de Titularidade de área*.</div>
+					{% for radio in projeto_form.documento_titularidade_area %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.9 - Anotação de Responsabilidade Técnica - ART:</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">a) ART de Projeto *</div>
+					{% for radio in projeto_form.art_projeto %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">b) ART de Orçamento *</div>
+					{% for radio in projeto_form.art_orcamento %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">3.22 - Declarações dos órgãos competentes:</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">a) Declaração de manutenção e/ou conservação, guarda e operação dos serviços/equipamentos</div>
+					{% for radio in projeto_form.declaracao_munutencao_conservacao %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">b) Declaração de viabilidade de fornecimento de energia* </div>
+					{% for radio in projeto_form.declaracao_viabilidade_forneceimento_energia %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">c) Declaração de viabilidade de fornecimento de água* </div>
+					{% for radio in projeto_form.declaracao_viabilidade_forneceimento_agua %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">d) Declaração do regime de aquisição dos equipamentos </div>
+					{% for radio in projeto_form.declaracao_aquisicao_equipamentos %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">Outros documentos: </div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">a) Equipe de Coordenação de Projeto </div>
+					{% for radio in projeto_form.equipe_coordenacao_projeto %}
+						<div class="col-md-2 form-check">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>Observações</strong>
+				<ul>
+					<li>1. Para aquisição de materiais e equipamentos, quando esta é realizada independente da contratação das obras, uma vez que se trata apenas de compra / fornecimento de item caracterizado, não é aplicável BDI.</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>4 - Providências a serem adotadas</strong>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>4.1 - Serviço apto para a Análise Técnica de Engenharia do Empreendimento? </strong>
+			</div>
+			{% for radio in projeto_form.servico_apto_para_analise_tecnica %}
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-1 col-form-label"></div>
+					<div class="col-md-11 form-check justify-content-start">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label">{{ radio.choice_label }}</label> 
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+			<div class="col-md-12">
+				<label for="copia_plano_trabalho_sim">Comentários, falta de documentos, falta de condições para análise técnica
+				{{ projeto_form.comentario_analise_tecnica }} </label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<strong>4.2 - Serviço a ser terceirizado? </strong>
+			</div>
+			{% for radio in projeto_form.servico_terceirizado %}
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-1 col-form-label"></div>
+					<div class="col-md-11 form-check justify-content-start">
+						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label">{{ radio.choice_label }}</label> 
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+			<div class="col-md-12">
+				<label for="copia_plano_trabalho_sim">Justificativa e comentários </label>
+				{{ projeto_form.justificativa_comentarios }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				4.3 - Enquadramento ATTE
+			</div>
+			<div class="col-md-5">
+				<label>Atividade</label>
+				{{ projeto_form.atividade }}
+			</div>
+			<div class="col-md-3">
+				<label>Produto</label>
+				{{ projeto_form.produto }}
+			</div>
+			<div class="col-md-2">
+				<label>Linha</label>
+				{{ projeto_form.linha }}
+			</div>
+			<div class="col-md-2">
+				<label>Fonte</label>
+				{{ projeto_form.fonte }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-9">
+				<label>Responsável pela verificação</label>
+				{{ projeto_form.responsavel_verificacao }}
+			</div>
+			<div class="col-md-3">
+				<label>Data</label>
+				{{ projeto_form.data }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-7">
+				<label>Local/Data</label>
+				{{ projeto_form.local_data }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-7">
+				<label>Responsável técnico</label>
+				{{ projeto_form.responsavel_tecnico }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label>Matrícula</label>
+				{{ projeto_form.matricula }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label>CPF</label>
+				{{ projeto_form.cpf }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label>CREA</label>
+				{{ projeto_form.crea }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right"> 
+				<button type="submit" class="btn btn-primary"> Salvar </button>
+			</div>
+		</div>
+		<br>
+	</form>
+{% endblock %}

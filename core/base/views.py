@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import PropostaForm, EstradaForm, PavimentacaoForm
-from .models import Proposta, Convenio, Estrada, Pavimentacao, Orgao
+from .forms import PropostaForm, EdificacaoForm, EstradaForm, EquipamentoForm, PavimentacaoForm
+from .models import Proposta, Convenio, Edificacao, Estrada, Equipamento, Pavimentacao, Orgao
 
 
 def signin(request):
@@ -120,10 +120,15 @@ def projetos(request):
 @login_required
 def projeto(request, id=False):
     if id:
-        if (request.POST['tipo_projeto'] == 'pavimentacao'):
-            projeto = Pavimentacao()
+        if (request.POST['tipo_projeto'] == 'edificacao'):
+            projeto = Edificacao()
         elif (request.POST['tipo_projeto'] == 'estradas'):
             projeto = Estrada()
+        elif (request.POST['tipo_projeto'] == 'equipamento'):
+            projeto = Equipamento()
+        elif (request.POST['tipo_projeto'] == 'pavimentacao'):
+            projeto = Pavimentacao()
+        print(projeto)
 
         convenio = Convenio.objects.get(id=id)
         orgao = Orgao.objects.get(id=request.POST['orgao'])
@@ -161,6 +166,58 @@ def projeto_estrada(request, id=False):
             )
 
     return render(request, 'base/projeto_estrada.html', {'projeto_form': projeto_form})
+
+
+@login_required
+def projeto_edificacao(request, id=False):
+
+    projeto_form = EdificacaoForm()
+
+    if id:
+        projeto = Edificacao.objects.get(id=id)
+        projeto_form = EdificacaoForm(instance=projeto)
+
+    if request.method == 'POST':
+        projeto_form = EdificacaoForm(request.POST)
+
+        if id:
+            projeto_form = EdificacaoForm(request.POST, instance=projeto)
+
+        if projeto_form.is_valid():
+            projeto_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Checklist de projeto salvo com sucesso!')
+            return redirect(reverse('projetos'))
+        else:
+            messages.add_message(
+                request, messages.ERROR, 'Não foi possível salvar o checklist, verifique todos os itens!')
+
+    return render(request, 'base/projeto_edificacao.html', {'projeto_form': projeto_form})
+
+
+@login_required
+def projeto_equipamento(request, id=False):
+
+    projeto_form = EquipamentoForm()
+
+    if id:
+        projeto = Equipamento.objects.get(id=id)
+        projeto_form = EquipamentoForm(instance=projeto)
+
+    if request.method == 'POST':
+        projeto_form = EquipamentoForm(request.POST)
+
+        if id:
+            projeto_form = EquipamentoForm(request.POST, instance=projeto)
+
+        if projeto_form.is_valid():
+            projeto_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Checklist de projeto salvo com sucesso!')
+            return redirect(reverse('projetos'))
+        else:
+            messages.add_message(
+                request, messages.ERROR, 'Não foi possível salvar o checklist, verifique todos os itens!')
+
+    return render(request, 'base/projeto_equipamento.html', {'projeto_form': projeto_form})
 
 
 @login_required
