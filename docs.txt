@@ -1,0 +1,16 @@
+Upload extrato
+
+Gerar relatorio
+proposta por situação
+filtros
+
+
+convenio
+descricao
+numero da proposta objeto numero convenio
+numero convenio gerado pelo sinconv
+
+upload de protocolos
+
+checklist adicionar usuário responsavel por tarefa
+data que foi protocolado no orgão

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -19,20 +20,21 @@ class Prefeitura(Cliente):
     # campo do tipo imagem, com o modelo de papel timbrado da prefeitura
     timbre = models.ImageField(upload_to='uploads/%Y/%m/%d', max_length=150)
 
-    prefeito = models.ForeignKey('Prefeito', models.DO_NOTHING, blank=False, null=False)
-    secretario_obras = models.ForeignKey('SecretarioDeObras', models.DO_NOTHING, blank=True, null=True)
-    secretario_financeiro = models.ForeignKey('SecretarioFinanceiro', models.DO_NOTHING, blank=True, null=True)
+    prefeito = models.ForeignKey('Prefeito', on_delete=models.CASCADE, blank=False, null=False)
+    secretario_obras = models.ForeignKey('SecretarioDeObras', on_delete=models.CASCADE, blank=True, null=True)
+    secretario_financeiro = models.ForeignKey('SecretarioFinanceiro', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.nome
 
 
 class Profissional(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     nome = models.CharField(max_length=200, blank=False, null=False)
     cpf = models.CharField(_('CPF'), max_length=20, blank=False, null=False)
     telefone = models.CharField(max_length=20, blank=False, null=False)
     email = models.CharField(max_length=200, blank=False, null=False)
-    cargo = models.ForeignKey('Cargo', models.DO_NOTHING, blank=True, null=True)
+    cargo = models.ForeignKey('Cargo', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         verbose_name = 'profissional'
@@ -82,7 +84,7 @@ class Proposta(models.Model):
         APROVADO = 'aprovada', _('Aprovada')
         REPROVADO = 'reprovada', _('Reprovada')
 
-    prefeitura = models.ForeignKey('Prefeitura', models.DO_NOTHING, blank=False, null=False)
+    prefeitura = models.ForeignKey('Prefeitura', on_delete=models.CASCADE, blank=False, null=False)
     lei_complementar = models.CharField(max_length=200, blank=False, null=False)
     data = models.DateField(_('Data'), blank=False, null=False)
     valor_contrapartida = models.FloatField(_('Valor da contrapartida'), blank=False, null=False)
@@ -98,7 +100,7 @@ class Proposta(models.Model):
         verbose_name_plural = _('propostas')
 
     def __str__(self):
-        return f'{self.lei_complementar} {self.data} - {self.numero}'
+        return f'{self.numero} {self.objeto}'
 
     def verifica_situacao(self):
         if self.SituacaoChoice.EM_ANALISE == self.situacao:
@@ -114,8 +116,10 @@ class Proposta(models.Model):
 
 
 class Convenio(models.Model):
-    proposta = models.ForeignKey('Proposta', models.DO_NOTHING, blank=False, null=False)
-    orgao = models.ForeignKey('Orgao', models.DO_NOTHING, blank=True, null=True)
+    proposta = models.ForeignKey('Proposta', on_delete=models.CASCADE, blank=True, null=True)
+    orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
+    arquivo_extrato = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
+    numero_convenio = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = _('convênio')
@@ -142,13 +146,23 @@ class Projeto(models.Model):
         EQUIPAMENTO = 'equipamento', _('Equipamento')
         PAVIMENTACAO = 'pavimentacao', _('Pavimentacao')
 
-    orgao = models.ForeignKey('Orgao', models.DO_NOTHING, blank=True, null=True)
-    convenio = models.ForeignKey('Convenio', models.DO_NOTHING, blank=True, null=True)
+    orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
+    convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=True, null=True)
     tipo = models.CharField(
         max_length=150, choices=TipoChoice.choices, default=None, blank=True, null=True)
 
     def __str__(self):
         return f'Projeto {self.id}'
+
+
+class Protocolo(models.Model):
+    descricao = models.CharField(max_length=250, blank=False, null=False)
+    data = models.DateField(_('Data'), auto_now=True, blank=False, null=False)
+    arquivo = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
+    convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=False, null=False)
+
+    def __str__(self):
+        return f'{self.data} - {self.descricao}'
 
 
 class Edificacao(Projeto):
@@ -234,6 +248,24 @@ class Edificacao(Projeto):
 
     def __str__(self):
         return f'Projeto de edificacao Nº {self.id}'
+
+
+class Praca(Edificacao):
+    class Meta:
+        verbose_name='praça'
+        verbose_name_plural='praças'
+
+    def __str__(self):
+        return f'Projeto de praça Nº {self.id}'
+
+
+class CentroEsportivo(Edificacao):
+    class Meta:
+        verbose_name='projeto de centro esportivo'
+        verbose_name_plural='projetos de centros esportivo'
+
+    def __str__(self):
+        return f'Projeto de centro esportivo Nº {self.id}'
 
 
 class Estrada(Projeto):

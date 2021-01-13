@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from core.base.models import Proposta, Edificacao, Estrada, Equipamento, Pavimentacao
+from core.base.models import Proposta, Edificacao, Estrada, Equipamento, Pavimentacao, Convenio
 
 
 class PropostaForm(ModelForm):
@@ -16,6 +16,15 @@ class PropostaForm(ModelForm):
         self.fields['valor_contrapartida'].widget.attrs.update({'class': 'form-control'})
         self.fields['objeto'].widget.attrs.update({'class': 'form-control'})
         self.fields['numero'].widget.attrs.update({'class': 'form-control'})
+
+
+class ConvenioArquivoExtratoForm(ModelForm):
+    class Meta:
+        model = Convenio
+        fields = ['arquivo_extrato',]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 class EdificacaoForm(ModelForm):
