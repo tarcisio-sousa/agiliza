@@ -21,7 +21,7 @@ class PropostaForm(ModelForm):
 class ConvenioArquivoExtratoForm(ModelForm):
     class Meta:
         model = Convenio
-        fields = ['arquivo_extrato',]
+        fields = ['arquivo_extrato', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

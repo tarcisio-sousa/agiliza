@@ -252,8 +252,8 @@ class Edificacao(Projeto):
 
 class Praca(Edificacao):
     class Meta:
-        verbose_name='praça'
-        verbose_name_plural='praças'
+        verbose_name = 'praça'
+        verbose_name_plural = 'praças'
 
     def __str__(self):
         return f'Projeto de praça Nº {self.id}'
@@ -261,8 +261,8 @@ class Praca(Edificacao):
 
 class CentroEsportivo(Edificacao):
     class Meta:
-        verbose_name='projeto de centro esportivo'
-        verbose_name_plural='projetos de centros esportivo'
+        verbose_name = 'projeto de centro esportivo'
+        verbose_name_plural = 'projetos de centros esportivo'
 
     def __str__(self):
         return f'Projeto de centro esportivo Nº {self.id}'

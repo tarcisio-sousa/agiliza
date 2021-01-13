@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import PropostaForm, ConvenioArquivoExtratoForm, EdificacaoForm, EstradaForm, EquipamentoForm, PavimentacaoForm
+from .forms import PropostaForm, ConvenioArquivoExtratoForm, EdificacaoForm
+from .forms import EstradaForm, EquipamentoForm, PavimentacaoForm
 from .models import Proposta, Convenio, Edificacao, Estrada, Equipamento, Pavimentacao, Orgao
 
 
@@ -20,7 +21,7 @@ def signin(request):
         user = authenticate(username=username, password=password)
 
         if (user is not None) and (user.is_active):
-            if user.is_superuser or user.profissional.cargo.descricao=='PREFEITO':
+            if user.is_superuser or user.profissional.cargo.descricao == 'PREFEITO':
                 login(request, user)
                 is_auth = True
 
@@ -119,6 +120,7 @@ def arquivo_extrato(request, id):
         if form.is_valid():
             form.save()
     return redirect(reverse('convenios'))
+
 
 @login_required
 def projetos(request):
