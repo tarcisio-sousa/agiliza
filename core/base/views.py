@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import PropostaForm, EdificacaoForm, EstradaForm, EquipamentoForm, PavimentacaoForm
+from .forms import PropostaForm, ConvenioArquivoExtratoForm, EdificacaoForm
+from .forms import EstradaForm, EquipamentoForm, PavimentacaoForm
 from .models import Proposta, Convenio, Edificacao, Estrada, Equipamento, Pavimentacao, Orgao
 
 
@@ -20,7 +21,7 @@ def signin(request):
         user = authenticate(username=username, password=password)
 
         if (user is not None) and (user.is_active):
-            if user.is_superuser:
+            if user.is_superuser or user.profissional.cargo.descricao == 'PREFEITO':
                 login(request, user)
                 is_auth = True
 
@@ -112,6 +113,16 @@ def convenios(request):
 
 
 @login_required
+def arquivo_extrato(request, id):
+    if request.method == 'POST':
+        convenio = Convenio.objects.get(id=id)
+        form = ConvenioArquivoExtratoForm(request.POST, request.FILES, instance=convenio)
+        if form.is_valid():
+            form.save()
+    return redirect(reverse('convenios'))
+
+
+@login_required
 def projetos(request):
     projetos = Pavimentacao.objects.all()
     return render(request, 'base/projetos.html', {'projetos': projetos})
@@ -128,7 +139,6 @@ def projeto(request, id=False):
             projeto = Equipamento()
         elif (request.POST['tipo_projeto'] == 'pavimentacao'):
             projeto = Pavimentacao()
-        print(projeto)
 
         convenio = Convenio.objects.get(id=id)
         orgao = Orgao.objects.get(id=request.POST['orgao'])

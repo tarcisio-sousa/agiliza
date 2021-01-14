@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
 from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio, Orgao, Projeto, Pavimentacao
 
 
@@ -7,9 +9,23 @@ class PrefeituraAdmin(admin.ModelAdmin):
     list_display = ['nome', 'email', 'prefeito', 'secretario_obras', 'secretario_financeiro']
 
 
+class ProfissionalInline(admin.StackedInline):
+    model = Profissional
+    can_delete = False
+    verbose_name_plural = 'profissional'
+
+
+# @admin.register(User)
+class UserAdmin(BaseUserAdmin):
+    inlines = (ProfissionalInline,)
+
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+
+
 @admin.register(Profissional)
 class ProfissionalAdmin(admin.ModelAdmin):
-    fields = ('nome', 'cargo')
     list_display = ['nome', 'cargo']
 
 

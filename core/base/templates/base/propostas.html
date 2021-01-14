@@ -3,9 +3,12 @@
 {% block title %}Propostas{% endblock %}
 {% block body %}
 	<div class="row">
+
+		{% if perms.base.add_proposta %}
 		<div class="col-md-12 text-right mb-2">
 			<a href="{% url 'proposta' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
 		</div>
+		{% endif %}
 	</div>
 	<div class="row">
 		<div class="col-md-12">
@@ -18,6 +21,7 @@
 						<th>Número da proposta</th>
 						<th>Objeto</th>
 						<th>Valor R$</th>
+						<th>Data</th>
 						<th>Situação</th>
 					</tr>
 				</thead>
@@ -29,19 +33,21 @@
 								<li class="nav-item dropdown text-center">
 									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
-										<div class="dropdown-divider"></div>
-										{% if proposta.verifica_situacao == 'em-analise' %}
-											<a href="{% url 'proposta' proposta.id 'em-analise' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Em análise </a>
-										{% endif %}
-										{% if proposta.verifica_situacao == 'aprovada' %}
-											<a href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Aprovar</a>
-										{% endif %}
-										{% if proposta.situacao not in 'empenhada,reprovada' %}
-											<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
-										{% endif %}
-										{% if proposta.verifica_situacao == 'empenhada' %}
-											<a href="{% url 'proposta' proposta.id 'empenhada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a>
+										{% if perms.base.edit_proposta %}
+											<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
+											<div class="dropdown-divider"></div>
+											{% if proposta.verifica_situacao == 'em-analise' %}
+												<a href="{% url 'proposta' proposta.id 'em-analise' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Em análise </a>
+											{% endif %}
+											{% if proposta.verifica_situacao == 'aprovada' %}
+												<a href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Aprovar</a>
+											{% endif %}
+											{% if proposta.situacao not in 'empenhada,reprovada' %}
+												<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
+											{% endif %}
+											{% if proposta.verifica_situacao == 'empenhada' %}
+												<a href="{% url 'proposta' proposta.id 'empenhada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a>
+											{% endif %}
 										{% endif %}
 										<a href="{% url 'proposta_documento' proposta.id %}" class="dropdown-item"> <i class="fas fa-certificate"></i> Gerar declaração</a>
 									</div>
@@ -52,6 +58,7 @@
 						<td>{{ proposta.numero }}</td>
 						<td>{{ proposta.objeto }}</td>
 						<td>{{ proposta.valor_contrapartida }}</td>
+						<td>{{ proposta.data }}</td>
 						<td>{{ proposta.get_situacao_display }}</td>
 					</tr>
 					{% endfor %}
