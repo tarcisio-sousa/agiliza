@@ -27,6 +27,7 @@ urlpatterns = [
     path('signout', views.signout, name='signout'),
 
     path('propostas', views.propostas, name='propostas'),
+    path('propostas/<slug:filter_situacao>', views.propostas, name='propostas'),
     path('proposta', views.proposta, name='proposta'),
     path('proposta/<int:id>', views.proposta, name='proposta'),
     path('proposta/<int:id>/<slug:situacao>', views.proposta, name='proposta'),

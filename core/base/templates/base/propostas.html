@@ -3,16 +3,27 @@
 {% block title %}Propostas{% endblock %}
 {% block body %}
 	<div class="row">
-
-		{% if perms.base.add_proposta %}
 		<div class="col-md-12 text-right mb-2">
+		{% if perms.base.add_proposta %}
 			<a href="{% url 'proposta' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
-		</div>
 		{% endif %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-5 offset-md-7 mb-2">
+			<form action="{% url 'propostas' %}" method="post"> 
+				{% csrf_token %}
+				<div class="input-group input-group-sm">
+					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
+					<div class="input-group-append">
+						<button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			{% if propostas %}
 			<table class="table">
 				<thead>
 					<tr>
@@ -20,9 +31,36 @@
 						<th>Prefeitura</th>
 						<th>Número da proposta</th>
 						<th>Objeto</th>
-						<th>Valor R$</th>
+						<th>Valor</th>
 						<th>Data</th>
-						<th>Situação</th>
+						<th>
+							Situação 
+							<ul class="navbar-nav mr-auto d-inline-block">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="dropdown-item {% if not filter_situacao %}disabled{% endif %}" href="{% url 'propostas' %}">
+												Todas
+												{% if not filter_situacao %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</li>
+									{% for situacao in choices_situacao %}
+										<li>
+											<a class="dropdown-item {% if situacao.0 == filter_situacao %}disabled{% endif %}" href="{% url 'propostas' situacao.0 %}">
+												{{situacao.1}}
+												{% if situacao.0 == filter_situacao %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</li>
+									{% endfor %}
+									</ul>
+								</li>
+					     	</ul>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -30,7 +68,7 @@
 					<tr>
 						<td>
 							<ul class="navbar-nav mr-auto">
-								<li class="nav-item dropdown text-center">
+								<li class="nav-item dropdown">
 									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
 										{% if perms.base.edit_proposta %}
@@ -57,15 +95,15 @@
 						<td>{{ proposta.prefeitura }}</td>
 						<td>{{ proposta.numero }}</td>
 						<td>{{ proposta.objeto }}</td>
-						<td>{{ proposta.valor_contrapartida }}</td>
-						<td>{{ proposta.data }}</td>
+						<td class="text-right">{% load l10n %}{{ proposta.valor_contrapartida|floatformat:2|localize }}</td>
+						<td>{{ proposta.data|date:"d/m/Y" }}</td>
 						<td>{{ proposta.get_situacao_display }}</td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			{% else %}
-			<div class="alert alert-info">Nenhum proposta cadastrada!</div>
+			{% if not propostas %}
+				<div class="alert alert-info">Nenhuma proposta cadastrada!</div>
 			{% endif %}
 		</div>
 	</div>
