@@ -1,11 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.contrib.auth.decorators import login_required
 from .forms import PropostaForm, ConvenioArquivoExtratoForm, EdificacaoForm
 from .forms import EstradaForm, EquipamentoForm, PavimentacaoForm
-from .models import Proposta, Convenio, Edificacao, Estrada, Equipamento, Pavimentacao, Orgao
+from .models import Proposta, Convenio, Edificacao, Estrada, Equipamento, Pavimentacao, Orgao, Prefeitura
 
 
 def signin(request):
@@ -46,9 +47,25 @@ def home(request):
 
 
 @login_required
-def propostas(request):
-    propostas = Proposta.objects.all()
-    return render(request, 'base/propostas.html', {'propostas': propostas})
+def propostas(request, filter_situacao=False):
+    choices_situacao = Proposta.SituacaoChoice.choices
+
+    if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
+        prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
+        propostas = Proposta.objects.filter(prefeitura=prefeitura)
+    else:
+        propostas = Proposta.objects.all()
+
+    if filter_situacao:
+        propostas = propostas.filter(situacao=filter_situacao)
+
+    if request.method == 'POST':
+        if request.POST['search']:
+            propostas = propostas.filter(Q(numero=request.POST['search']) | Q(objeto__contains=request.POST['search']))
+
+    return render(request, 'base/propostas.html', {
+        'choices_situacao': choices_situacao, 'filter_situacao': filter_situacao, 'propostas': propostas
+    })
 
 
 @login_required
@@ -107,7 +124,12 @@ def declaracoes(request):
 
 @login_required
 def convenios(request):
-    convenios = Convenio.objects.all()
+    if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
+        prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
+        convenios = Convenio.objects.filter(proposta__prefeitura=prefeitura)
+    else:
+        convenios = Convenio.objects.all()
+
     orgaos = Orgao.objects.all()
     return render(request, 'base/convenios.html', {'convenios': convenios, 'orgaos': orgaos})
 
