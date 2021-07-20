@@ -160,26 +160,26 @@ def projetos(request):
 
 @login_required
 def projeto(request, id=False):
-    # if id:
-        # if (request.POST['tipo_projeto'] == 'edificacao'):
-        #     projeto = Edificacao()
-        # elif (request.POST['tipo_projeto'] == 'estradas'):
-        #     projeto = Estrada()
-        # elif (request.POST['tipo_projeto'] == 'equipamento'):
-        #     projeto = Equipamento()
-        # elif (request.POST['tipo_projeto'] == 'pavimentacao'):
-        #     projeto = Pavimentacao()
-
-        # convenio = Convenio.objects.get(id=id)
-        # orgao = Orgao.objects.get(id=request.POST['orgao'])
-        # projeto.orgao = orgao
-        # projeto.convenio = convenio
-        # projeto.tipo = request.POST['tipo_projeto']
-        # projeto.save()
-        # return redirect(reverse('convenios'))
-
-    # orgaos = Orgao.objects.all()
     projeto_form = ProjetoForm()
+
+    if (id):
+        projeto = Projeto.objects.get(id=id)
+        projeto_form = ProjetoForm(instance=projeto)
+
+    if request.method == 'POST':
+
+        projeto_form = ProjetoForm(request.POST)
+
+        if id:
+            projeto = Projeto.objects.get(id=id)
+            projeto_form = ProjetoForm(request.POST, instance=projeto)
+
+        if projeto_form.is_valid():
+            projeto = projeto_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Projeto salvo com sucesso!')
+            return redirect(reverse('projetos'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o projeto!')
 
     return render(request, 'base/projeto.html', {'projeto_form': projeto_form})
 
@@ -187,13 +187,17 @@ def projeto(request, id=False):
 @login_required
 def itens(request, id=False):
     itens = Item.objects.all()
-
     return render(request, 'base/itens.html', {'itens': itens})
 
 
 @login_required
 def item(request, id=False):
     item_form = ItemForm()
+
+    if (id):
+        item = Item.objects.get(id=id)
+        item_form = ItemForm(instance=item)
+        print(item_form)
 
     if request.method == 'POST':
 
@@ -222,6 +226,26 @@ def opcoes(request):
 @login_required
 def opcao(request, id=False):
     opcao_form = OpcaoForm()
+
+    if (id):
+        opcao = Opcao.objects.get(id=id)
+        opcao_form = PropostaForm(instance=opcao)
+        print(opcao)
+
+    if request.method == 'POST':
+
+        opcao_form = OpcaoForm(request.POST)
+
+        if id:
+            opcao = Opcao.objects.get(id=id)
+            opcao_form = OpcaoForm(request.POST, instance=opcao)
+
+        if opcao_form.is_valid():
+            opcao = opcao_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Opção salva com sucesso!')
+            return redirect(reverse('opcoes'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar a opção!')
 
     return render(request, 'base/opcao.html', {'opcao_form': opcao_form})
 

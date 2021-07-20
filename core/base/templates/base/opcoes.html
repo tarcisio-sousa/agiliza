@@ -26,9 +26,9 @@
 								<li class="nav-opcao dropdown text-center">
 									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										<a href="#" class="dropdown-opcao"> <i class="fas fa-edit"></i> Editar</a>
+										<a href="{% url 'opcao' opcao.id %}" class="dropdown-opcao"> <i class="fas fa-edit"></i> Editar</a>
 										<div class="dropdown-divider"></div>
-										<a href="{# url 'opcao' opcao.id #}" class="dropdown-opcao"> <i class="fas fa-eye"></i> Visualizar</a>
+										<a href="{% url 'opcao' opcao.id %}" class="dropdown-opcao"> <i class="fas fa-eye"></i> Visualizar</a>
 									</div>
 								</li>
 							</ul>

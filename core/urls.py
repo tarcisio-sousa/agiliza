@@ -41,7 +41,7 @@ urlpatterns = [
     path('arquivo/extrato/<int:id>', views.arquivo_extrato, name='arquivo_extrato'),
 
     path('projetos', views.projetos, name='projetos'),
-    # path('projeto/<int:id>', views.projeto, name='projeto'),
+    path('projeto/<int:id>', views.projeto, name='projeto'),
     path('projeto', views.projeto, name='projeto'),
     # # path('projeto/objeto/<int:id>', views.projeto_objeto, name='projeto_objeto'),
     # path('projeto/estrada', views.projeto_estrada, name='projeto_estrada'),
@@ -53,8 +53,10 @@ urlpatterns = [
     # path('projeto/edificacao', views.projeto_edificacao, name='projeto_edificacao'),
     # path('projeto/edificacao/<int:id>', views.projeto_edificacao, name='projeto_edificacao'),
     path('itens', views.itens, name='itens'),
+    path('item/<int:id>', views.item, name='item'),
     path('item', views.item, name='item'),
     path('opcoes', views.opcoes, name='opcoes'),
+    path('opcao/<int:id>', views.opcao, name='opcao'),
     path('opcao', views.opcao, name='opcao'),
 
     path('declaracoes', views.declaracoes, name='declaracoes'),
