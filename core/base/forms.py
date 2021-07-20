@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from core.base.models import Proposta, Edificacao, Estrada, Equipamento, Pavimentacao, Convenio
+from core.base.models import Proposta, Edificacao, Estrada, Equipamento, Pavimentacao, Convenio, Projeto, Item, Opcao
 
 
 class PropostaForm(ModelForm):
@@ -25,6 +25,41 @@ class ConvenioArquivoExtratoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class ProjetoForm(ModelForm):
+    class Meta:
+        model = Projeto
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['orgao'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['tipo'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+
+
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['descricao'].widget.attrs.update({'class': 'form-control'})
+        self.fields['subitem'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['projeto'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+
+
+class OpcaoForm(ModelForm):
+    class Meta:
+        model = Opcao
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['item'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['usuario'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
 
 
 class EdificacaoForm(ModelForm):

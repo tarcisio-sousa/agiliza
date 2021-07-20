@@ -3,13 +3,26 @@
 {% block title %}Convênios{% endblock %}
 {% block body %}
 	<div class="row">
+		<div class="col-md-5 offset-md-7 mb-2">
+			<form action="{% url 'convenios' %}" method="post"> 
+				{% csrf_token %}
+				<div class="input-group input-group-sm">
+					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
+					<div class="input-group-append">
+						<button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-12">
 			{% if convenios %}
 			<table class="table">
 				<thead>
 					<tr>
 						{% if perms.base.add_convenio %}
-						<th>Ações</th>
+						<th width="1%">Ações</th>
 						{% endif %}
 						<th>Convênio</th>
 						<th>Proposta</th>
@@ -45,17 +58,19 @@
 						<td>{{ convenio.proposta }}</td>
 						{% if perms.base.add_convenio %}
 						<td> 
-							{% for projeto in convenio.projeto_set.all %}
-								{% if projeto.tipo == 'edificacao' %}
-								<a href="{% url 'projeto_edificacao' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
-								{% elif projeto.tipo == 'estradas' %}
-								<a href="{% url 'projeto_estrada' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
-								{% elif projeto.tipo == 'equipamento' %}
-								<a href="{% url 'projeto_equipamento' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
-								{% elif projeto.tipo == 'pavimentacao' %}
-								<a href="{% url 'projeto_pavimentacao' projeto.id %}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
-								{% endif %}
-							{% endfor %}
+							<!--
+							{# for projeto in convenio.projeto_set.all #}
+								{# if projeto.tipo == 'edificacao' #}
+								<a href="{# url 'projeto_edificacao' projeto.id #}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
+								{# elif projeto.tipo == 'estradas' #}
+								<a href="{# url 'projeto_estrada' projeto.id #}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
+								{# elif projeto.tipo == 'equipamento' #}
+								<a href="{# url 'projeto_equipamento' projeto.id #}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
+								{# elif projeto.tipo == 'pavimentacao' #}
+								<a href="{# url 'projeto_pavimentacao' projeto.id #}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
+								{# endif #}
+							{# endfor #}
+							-->
 						</td>
 						{% endif %}
 						<td>{{ convenio.proposta.data }}</td>

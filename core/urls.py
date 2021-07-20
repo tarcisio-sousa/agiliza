@@ -16,11 +16,15 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
+from django.views.generic.base import RedirectView
 
 from core.base import views
 
+favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
+
 urlpatterns = [
+    re_path('favicon.ico', favicon_view),
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('signin', views.signin, name='signin'),
@@ -37,17 +41,21 @@ urlpatterns = [
     path('arquivo/extrato/<int:id>', views.arquivo_extrato, name='arquivo_extrato'),
 
     path('projetos', views.projetos, name='projetos'),
-    path('projeto/<int:id>', views.projeto, name='projeto'),
+    # path('projeto/<int:id>', views.projeto, name='projeto'),
     path('projeto', views.projeto, name='projeto'),
-    # path('projeto/objeto/<int:id>', views.projeto_objeto, name='projeto_objeto'),
-    path('projeto/estrada', views.projeto_estrada, name='projeto_estrada'),
-    path('projeto/estrada/<int:id>', views.projeto_estrada, name='projeto_estrada'),
-    path('projeto/equipamento', views.projeto_equipamento, name='projeto_equipamento'),
-    path('projeto/equipamento/<int:id>', views.projeto_equipamento, name='projeto_equipamento'),
-    path('projeto/pavimentacao', views.projeto_pavimentacao, name='projeto_pavimentacao'),
-    path('projeto/pavimentacao/<int:id>', views.projeto_pavimentacao, name='projeto_pavimentacao'),
-    path('projeto/edificacao', views.projeto_edificacao, name='projeto_edificacao'),
-    path('projeto/edificacao/<int:id>', views.projeto_edificacao, name='projeto_edificacao'),
+    # # path('projeto/objeto/<int:id>', views.projeto_objeto, name='projeto_objeto'),
+    # path('projeto/estrada', views.projeto_estrada, name='projeto_estrada'),
+    # path('projeto/estrada/<int:id>', views.projeto_estrada, name='projeto_estrada'),
+    # path('projeto/equipamento', views.projeto_equipamento, name='projeto_equipamento'),
+    # path('projeto/equipamento/<int:id>', views.projeto_equipamento, name='projeto_equipamento'),
+    # path('projeto/pavimentacao', views.projeto_pavimentacao, name='projeto_pavimentacao'),
+    # path('projeto/pavimentacao/<int:id>', views.projeto_pavimentacao, name='projeto_pavimentacao'),
+    # path('projeto/edificacao', views.projeto_edificacao, name='projeto_edificacao'),
+    # path('projeto/edificacao/<int:id>', views.projeto_edificacao, name='projeto_edificacao'),
+    path('itens', views.itens, name='itens'),
+    path('item', views.item, name='item'),
+    path('opcoes', views.opcoes, name='opcoes'),
+    path('opcao', views.opcao, name='opcao'),
 
     path('declaracoes', views.declaracoes, name='declaracoes'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

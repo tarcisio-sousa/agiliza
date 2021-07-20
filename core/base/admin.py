@@ -59,7 +59,7 @@ class OrgaoAdmin(admin.ModelAdmin):
 @admin.register(Projeto)
 class ProjetoAdmin(admin.ModelAdmin):
     # fields = ('descricao',)
-    list_display = ['convenio', 'orgao']
+    list_display = ['convenio', 'orgao', 'tipo']
 
 
 @admin.register(Pavimentacao)

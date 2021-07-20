@@ -1,26 +1,38 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Projeto{% endblock %}
+{% block title %}Opção{% endblock %}
 {% block body %}
 
 	<form method="post" class="form"> 
 		{% csrf_token %}
 		<div class="row">
 			<div class="col-md-12">
-				<label>Orgão</label>
-				{{ projeto_form.orgao }}
+				<label>Descrição</label>
+				{{ opcao_form.descricao }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<label>Convênio</label>
-				{{ projeto_form.convenio }}
+				<label>Alternativa</label>
+				{{ opcao_form.alternativa }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<label>Tipo</label>
-				{{ projeto_form.tipo }}
+				<label>Texto</label>
+				{{ opcao_form.texto }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Item</label>
+				{{ opcao_form.item }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Usuário</label>
+				{{ opcao_form.usuario }}
 			</div>
 		</div>
 		<hr>

@@ -74,23 +74,30 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.1 - Cópia do Plano de Trabalho.</div>
+					<div class="col-md-7 col-form-label">3.1 - Cópia do Plano de Trabalho.</div>
 					{% for radio in projeto_form.copia_plano_trabalho %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
+						<div class="col-md-2">
+							<select class="form-control">
+								<option>Selecione responsável</option>
+								<option>Todos</option>
+								<option>Lucas Dantas</option>
+							</select>
+						</div>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.2 - Quadro de composição do investimento (QCI).</div>
+					<div class="col-md-7 col-form-label">3.2 - Quadro de composição do investimento (QCI).</div>
 					{% for radio in projeto_form.qci %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -98,11 +105,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.3 - Planta georreferenciada, contendo a localização dos trechos em relação ao centro urbano e aos equipamentos existentes no seu entorno.</div>
+					<div class="col-md-7 col-form-label">3.3 - Planta georreferenciada, contendo a localização dos trechos em relação ao centro urbano e aos equipamentos existentes no seu entorno.</div>
 					{% for radio in projeto_form.planta_georreferenciada %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 
 				</div>
@@ -111,11 +118,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.4 - Projeto geométrico - planta baixa com estaqueamento.</div>
+					<div class="col-md-7 col-form-label">3.4 - Projeto geométrico - planta baixa com estaqueamento.</div>
 					{% for radio in projeto_form.projeto_geometrico_planta_baixa %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -123,11 +130,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.5 - Projeto geométrico - perfil longitudinal.</div>
+					<div class="col-md-7 col-form-label">3.5 - Projeto geométrico - perfil longitudinal.</div>
 					{% for radio in projeto_form.projeto_geometrico_perfil_longitudinal %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -135,11 +142,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.6 - Projeto de terraplenagem - notas de serviço.</div>
+					<div class="col-md-7 col-form-label">3.6 - Projeto de terraplenagem - notas de serviço.</div>
 					{% for radio in projeto_form.projeto_terraplenagem_notas_servico %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -147,11 +154,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.7 - Projeto de terraplenagem - relatório de volumes.</div>
+					<div class="col-md-7 col-form-label">3.7 - Projeto de terraplenagem - relatório de volumes.</div>
 					{% for radio in projeto_form.projeto_terraplenagem_relatorio_volumes %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -159,11 +166,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.8 - Projeto de terraplenagem - seções transversais.</div>
+					<div class="col-md-7 col-form-label">3.8 - Projeto de terraplenagem - seções transversais.</div>
 					{% for radio in projeto_form.projeto_terraplenagem_secoes_transversais %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -171,11 +178,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.9 - Projeto de pavimentação - seção tipo.</div>
+					<div class="col-md-7 col-form-label">3.9 - Projeto de pavimentação - seção tipo.</div>
 					{% for radio in projeto_form.projeto_pavimentacao_secao_tipo %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -183,11 +190,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.10 - Projeto de drenagem e obras de arte correntes/especiais.</div>
+					<div class="col-md-7 col-form-label">3.10 - Projeto de drenagem e obras de arte correntes/especiais.</div>
 					{% for radio in projeto_form.projeto_drenagem %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -195,11 +202,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.11 - Projeto de sinalização viária.</div>
+					<div class="col-md-7 col-form-label">3.11 - Projeto de sinalização viária.</div>
 					{% for radio in projeto_form.projeto_sinalizacao_viaria %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -207,11 +214,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.12 - Planta com localização de jazidas e fontes de água.</div>
+					<div class="col-md-7 col-form-label">3.12 - Planta com localização de jazidas e fontes de água.</div>
 					{% for radio in projeto_form.planta_localizacao_jazida_fonte_agua %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -219,11 +226,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.13 - Memorial descritivo do projeto.</div>
+					<div class="col-md-7 col-form-label">3.13 - Memorial descritivo do projeto.</div>
 					{% for radio in projeto_form.memorial_descritivo_projeto %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -231,11 +238,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.14 - Especificações técnicas.</div>
+					<div class="col-md-7 col-form-label">3.14 - Especificações técnicas.</div>
 					{% for radio in projeto_form.especificacoes_tecnicas %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -243,11 +250,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.15 - Orçamentos detalhados.</div>
+					<div class="col-md-7 col-form-label">3.15 - Orçamentos detalhados.</div>
 					{% for radio in projeto_form.orcamentos_detalhados %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -255,11 +262,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.16 - Composições de custos unitários.</div>
+					<div class="col-md-7 col-form-label">3.16 - Composições de custos unitários.</div>
 					{% for radio in projeto_form.composicoes_custos_unitarios %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -267,11 +274,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.17 - Detalhamento do BDI (acórdão TCU 2622/2013).</div>
+					<div class="col-md-7 col-form-label">3.17 - Detalhamento do BDI (acórdão TCU 2622/2013).</div>
 					{% for radio in projeto_form.detalhamento_bdi %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -279,11 +286,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.18 - Cronograma Físico-Financeiro do empreendimento.</div>
+					<div class="col-md-7 col-form-label">3.18 - Cronograma Físico-Financeiro do empreendimento.</div>
 					{% for radio in projeto_form.cronograma_fisico_financeiro_empreendimento %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -291,11 +298,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.19 - Memória de cálculo e/ou dimensionamento.</div>
+					<div class="col-md-7 col-form-label">3.19 - Memória de cálculo e/ou dimensionamento.</div>
 					{% for radio in projeto_form.memoria_calculo_dimensionamento %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -303,11 +310,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.20 - Declaração de bem de uso comum do povo.</div>
+					<div class="col-md-7 col-form-label">3.20 - Declaração de bem de uso comum do povo.</div>
 					{% for radio in projeto_form.declaracao_bem_uso_comum_povo %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -315,26 +322,26 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.21 - Anotação de Responsabilidade Técnica - ART:</div>
+					<div class="col-md-7 col-form-label">3.21 - Anotação de Responsabilidade Técnica - ART:</div>
 				</div>
 			</div>
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">a) ART de Projeto</div>
+					<div class="col-md-7 col-form-label">a) ART de Projeto</div>
 					{% for radio in projeto_form.art_projeto %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">b) ART de Orçamento</div>
+					<div class="col-md-7 col-form-label">b) ART de Orçamento</div>
 					{% for radio in projeto_form.art_orcamento %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -342,26 +349,26 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.22 - Declarações dos órgãos competentes:</div>
+					<div class="col-md-7 col-form-label">3.22 - Declarações dos órgãos competentes:</div>
 				</div>
 			</div>
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">a) Declaração de manutenção e/ou conservação, guarda e operação dos serviços/equipamentos</div>
+					<div class="col-md-7 col-form-label">a) Declaração de manutenção e/ou conservação, guarda e operação dos serviços/equipamentos</div>
 					{% for radio in projeto_form.declaracao_munutencao_conservacao %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">b) Declaração de Regime de Execução de Obra </div>
+					<div class="col-md-7 col-form-label">b) Declaração de Regime de Execução de Obra </div>
 					{% for radio in projeto_form.declaracao_regime_execucao_obra %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -369,26 +376,26 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">3.23 - Manifestação do órgão competente do meio ambiente.</div>
+					<div class="col-md-7 col-form-label">3.23 - Manifestação do órgão competente do meio ambiente.</div>
 				</div>
 			</div>
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">a) Equipe de Coordenação de Projeto </div>
+					<div class="col-md-7 col-form-label">a) Equipe de Coordenação de Projeto </div>
 					{% for radio in projeto_form.equipe_coordenacao_projeto %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>
 			<div class="col-md-12">
 				<div class="form-inline">
-					<div class="col-md-6 col-form-label">b) Contrato de elaboração do projeto de engenharia </div>
+					<div class="col-md-7 col-form-label">b) Contrato de elaboração do projeto de engenharia </div>
 					{% for radio in projeto_form.contrato_elaboracao_projeto_engenharia %}
-						<div class="col-md-2 form-check">
-						{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
-					</div>
+						<div class="col-md-1 form-check">
+							{{ radio.tag }} &nbsp; <label for="{{ radio.id_for_label }}" class="form-check-label"> {{ radio.choice_label }}</label>
+						</div>
 					{% endfor %}
 				</div>
 			</div>

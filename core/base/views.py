@@ -5,8 +5,10 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import PropostaForm, ConvenioArquivoExtratoForm, EdificacaoForm
-from .forms import EstradaForm, EquipamentoForm, PavimentacaoForm
-from .models import Proposta, Convenio, Edificacao, Estrada, Equipamento, Pavimentacao, Orgao, Prefeitura
+from .forms import EstradaForm, EquipamentoForm, PavimentacaoForm, ProjetoForm
+from .forms import ItemForm, OpcaoForm
+from .models import Proposta, Convenio, Projeto, Item, Opcao, Edificacao, Estrada, Equipamento
+from .models import Pavimentacao, Orgao, Prefeitura
 
 
 def signin(request):
@@ -62,6 +64,8 @@ def propostas(request, filter_situacao=False):
     if request.method == 'POST':
         if request.POST['search']:
             propostas = propostas.filter(Q(numero=request.POST['search']) | Q(objeto__contains=request.POST['search']))
+
+    propostas = propostas.order_by('-id')
 
     return render(request, 'base/propostas.html', {
         'choices_situacao': choices_situacao, 'filter_situacao': filter_situacao, 'propostas': propostas
@@ -130,6 +134,10 @@ def convenios(request):
     else:
         convenios = Convenio.objects.all()
 
+    if request.method == 'POST':
+        if request.POST['search']:
+            convenios = convenios.filter(Q(numero_convenio=request.POST['search']) | Q(orgao=request.POST['search']))
+
     orgaos = Orgao.objects.all()
     return render(request, 'base/convenios.html', {'convenios': convenios, 'orgaos': orgaos})
 
@@ -144,6 +152,81 @@ def arquivo_extrato(request, id):
     return redirect(reverse('convenios'))
 
 
+@login_required
+def projetos(request):
+    projetos = Projeto.objects.all()
+    return render(request, 'base/projetos.html', {'projetos': projetos})
+
+
+@login_required
+def projeto(request, id=False):
+    # if id:
+        # if (request.POST['tipo_projeto'] == 'edificacao'):
+        #     projeto = Edificacao()
+        # elif (request.POST['tipo_projeto'] == 'estradas'):
+        #     projeto = Estrada()
+        # elif (request.POST['tipo_projeto'] == 'equipamento'):
+        #     projeto = Equipamento()
+        # elif (request.POST['tipo_projeto'] == 'pavimentacao'):
+        #     projeto = Pavimentacao()
+
+        # convenio = Convenio.objects.get(id=id)
+        # orgao = Orgao.objects.get(id=request.POST['orgao'])
+        # projeto.orgao = orgao
+        # projeto.convenio = convenio
+        # projeto.tipo = request.POST['tipo_projeto']
+        # projeto.save()
+        # return redirect(reverse('convenios'))
+
+    # orgaos = Orgao.objects.all()
+    projeto_form = ProjetoForm()
+
+    return render(request, 'base/projeto.html', {'projeto_form': projeto_form})
+
+
+@login_required
+def itens(request, id=False):
+    itens = Item.objects.all()
+
+    return render(request, 'base/itens.html', {'itens': itens})
+
+
+@login_required
+def item(request, id=False):
+    item_form = ItemForm()
+
+    if request.method == 'POST':
+
+        item_form = ItemForm(request.POST)
+
+        if id:
+            item = Item.objects.get(id=id)
+            item_form = ItemForm(request.POST, instance=item)
+
+        if item_form.is_valid():
+            item = item_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Item salvo com sucesso!')
+            return redirect(reverse('itens'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item!')
+
+    return render(request, 'base/item.html', {'item_form': item_form})
+
+
+@login_required
+def opcoes(request):
+    opcoes = Opcao.objects.all()
+    return render(request, 'base/opcoes.html', {'opcoes': opcoes})
+
+
+@login_required
+def opcao(request, id=False):
+    opcao_form = OpcaoForm()
+
+    return render(request, 'base/opcao.html', {'opcao_form': opcao_form})
+
+
+'''
 @login_required
 def projetos(request):
     projetos = Pavimentacao.objects.all()
@@ -277,3 +360,4 @@ def projeto_pavimentacao(request, id=False):
             )
 
     return render(request, 'base/projeto_pavimentacao.html', {'projeto_form': projeto_form})
+'''

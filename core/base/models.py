@@ -142,9 +142,12 @@ class Orgao(models.Model):
 
 class Projeto(models.Model):
     class TipoChoice(models.TextChoices):
-        ESTRADAS = 'estradas', _('Estradas')
+        ESTRADA = 'estrada', _('Estrada')
         EQUIPAMENTO = 'equipamento', _('Equipamento')
+        PRACA = 'praca', _('Praca')
         PAVIMENTACAO = 'pavimentacao', _('Pavimentacao')
+        CENTRO_ESPORTIVO = 'centro_esportivo', _('Centro Esportivo')
+        EDIFICACAO = 'edificacao', _('Edificação')
 
     orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
     convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=True, null=True)
@@ -153,6 +156,22 @@ class Projeto(models.Model):
 
     def __str__(self):
         return f'Projeto {self.id}'
+
+
+class Item(models.Model):
+    descricao = models.CharField(max_length=250, blank=False, null=False)
+    subitem = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
+    projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return f'Item {self.descricao}'
+
+class Opcao(models.Model):
+    descricao = models.BooleanField(default=False)
+    alternativa = models.BooleanField(default=False)
+    texto = models.BooleanField(default=False)
+    item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
 
 class Protocolo(models.Model):

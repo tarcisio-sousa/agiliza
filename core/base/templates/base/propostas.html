@@ -1,14 +1,16 @@
 {% extends 'base/base.html' %}
 
 {% block title %}Propostas{% endblock %}
-{% block body %}
-	<div class="row">
-		<div class="col-md-12 text-right mb-2">
-		{% if perms.base.add_proposta %}
-			<a href="{% url 'proposta' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
-		{% endif %}
-		</div>
+{% block action %}
+<div class="row">
+	<div class="col-md-12 text-right mb-2">
+	{% if perms.base.add_proposta %}
+		<a href="{% url 'proposta' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Criar proposta </a>
+	{% endif %}
 	</div>
+</div>
+{% endblock %}
+{% block body %}
 	<div class="row">
 		<div class="col-md-5 offset-md-7 mb-2">
 			<form action="{% url 'propostas' %}" method="post"> 
@@ -27,7 +29,7 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Ações</th>
+						<th width="1%">Ações</th>
 						<th>Prefeitura</th>
 						<th>Número da proposta</th>
 						<th>Objeto</th>

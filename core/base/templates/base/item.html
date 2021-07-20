@@ -1,26 +1,26 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Projeto{% endblock %}
+{% block title %}Item{% endblock %}
 {% block body %}
 
 	<form method="post" class="form"> 
 		{% csrf_token %}
 		<div class="row">
 			<div class="col-md-12">
-				<label>Orgão</label>
-				{{ projeto_form.orgao }}
+				<label>Descricao</label>
+				{{ item_form.descricao }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<label>Convênio</label>
-				{{ projeto_form.convenio }}
+				<label>Subitem de</label>
+				{{ item_form.subitem }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<label>Tipo</label>
-				{{ projeto_form.tipo }}
+				<label>Projeto</label>
+				{{ item_form.projeto }}
 			</div>
 		</div>
 		<hr>
