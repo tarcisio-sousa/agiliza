@@ -49,6 +49,7 @@ class ItemForm(ModelForm):
         self.fields['descricao'].widget.attrs.update({'class': 'form-control'})
         self.fields['subitem'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
         self.fields['projeto'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['observacoes'].widget.attrs.update({'class': 'form-control'})
 
 
 class OpcaoForm(ModelForm):
