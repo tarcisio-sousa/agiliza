@@ -22,7 +22,7 @@ keyring==10.6.0
 keyrings.alt==3.0
 language-selector==0.1
 launchpadlib==1.10.6
-lazr.restfulclient==0.13.5
+lazr.restfulclient==0.14.3
 lazr.uri==1.0.3
 louis==3.5.0
 macaroonbakery==1.1.3
