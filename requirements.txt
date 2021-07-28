@@ -31,7 +31,7 @@ MarkupSafe==1.0
 netifaces==0.10.4
 oauth==1.0.1
 olefile==0.45.1
-pexpect==4.2.1
+pexpect==4.8.0
 Pillow==5.1.0
 pipenv==2021.5.29
 platformdirs==2.0.2
