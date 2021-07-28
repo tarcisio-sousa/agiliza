@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio, Orgao, Projeto, Pavimentacao
+from ordered_model.admin import OrderedModelAdmin
+from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio
+from core.base.models import Orgao, Projeto, Item, Opcao, ItemAlternativa, Pavimentacao
 
 
 @admin.register(Prefeitura)
@@ -59,7 +61,26 @@ class OrgaoAdmin(admin.ModelAdmin):
 @admin.register(Projeto)
 class ProjetoAdmin(admin.ModelAdmin):
     # fields = ('descricao',)
-    list_display = ['convenio', 'orgao']
+    list_display = ['convenio', 'orgao', 'tipo']
+
+
+@admin.register(Item)
+class ItemAdmin(OrderedModelAdmin):
+    list_display = ['descricao', 'move_up_down_links']
+    # fields = ('descricao',)
+
+
+@admin.register(Opcao)
+class OpcaoAdmin(OrderedModelAdmin):
+    pass
+    # list_display = ['descricao', 'move_up_down_links']
+    # fields = ('descricao',)
+
+
+@admin.register(ItemAlternativa)
+class ItemAlternativaAdmin(OrderedModelAdmin):
+    list_display = ['item']
+    # fields = ('descricao',)
 
 
 @admin.register(Pavimentacao)

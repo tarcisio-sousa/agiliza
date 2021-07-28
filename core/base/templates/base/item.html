@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Item{% endblock %}
+{% block body %}
+
+	<form method="post" class="form"> 
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-12">
+				<label>Descricao</label>
+				{{ item_form.descricao }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Subitem de</label>
+				{{ item_form.subitem }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Projeto</label>
+				{{ item_form.projeto }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Observações</label>
+				{{ item_form.observacoes }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Opção</label>
+				{{ item_form.opcao }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right"> 
+				<button class="btn btn-primary">Salvar</button>
+			</div>
+		</div>
+	</form>
+{% endblock %}

@@ -2,52 +2,32 @@
 
 {% block title %}Projeto{% endblock %}
 {% block body %}
-	<div class="row">
-		<div class="col-md-12">
-			<select name="orgao" class="form-control custom-select custom-select-sm">
-				<option value=""> Selecione Orgão </option>
-				<option value=""> CAIXA </option>
-				<option value=""> FUNASA </option>
-				<option value=""> CODEVASF </option>
-			</select>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<label>Tipo de projeto</label>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="form-check"> 
-				<input type="radio" name="tipo_projeto" class="form-check-input" id="idEstradas" />
-				<label for="idEstradas" class="form-check-label"> Estradas </label>
-			</div>
-			<div class="form-check"> 
-				<input type="radio" name="tipo_projeto" class="form-check-input" id="idEquipamentos" />
-				<label for="idEquipamentos" class="form-check-label"> Equipamentos </label>
-			</div>
-			<div class="form-check"> 
-				<input type="radio" name="tipo_projeto" class="form-check-input" id="idPraca" />
-				<label for="idPraca" class="form-check-label"> Praça </label>
-			</div>
-			<div class="form-check"> 
-				<input type="radio" name="tipo_projeto" class="form-check-input" id="idCentroEsportivo" />
-				<label for="idCentroEsportivo" class="form-check-label"> Centro Esportivo </label>
-			</div>
-			<div class="form-check"> 
-				<input type="radio" name="tipo_projeto" class="form-check-input" id="idPavimentacao" />
-				<label for="idPavimentacao" class="form-check-label"> Pavimentação </label>
-			</div>
-			<div class="form-check"> 
-				<input type="radio" name="tipo_projeto" class="form-check-input" id="idEdificacao" />
-				<label for="idEdificacao" class="form-check-label"> Edificação </label>
+
+	<form method="post" class="form"> 
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-12">
+				<label>Orgão</label>
+				{{ projeto_form.orgao }}
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12 text-right"> 
-			<button class="btn btn-primary btn-sm"> <i class="fas fa-check-circle"></i> </button>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Convênio</label>
+				{{ projeto_form.convenio }}
+			</div>
 		</div>
-	</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Tipo</label>
+				{{ projeto_form.tipo }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right"> 
+				<button class="btn btn-primary">Salvar</button>
+			</div>
+		</div>
+	</form>
 {% endblock %}

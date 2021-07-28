@@ -1,21 +1,25 @@
 {% extends 'base/base.html' %}
 
 {% block title %}Projetos{% endblock %}
-{% block body %}
+{% block action %}
 	<div class="row">
 		<div class="col-md-12 text-right mb-2">
-			<a href="{% url 'projeto_pavimentacao' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
+			<a href="{% url 'projeto' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
 		</div>
 	</div>
+{% endblock %}
+{% block body %}
 	<div class="row">
 		<div class="col-md-12">
 			{% if projetos %}
-			<table class="table">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th>Ações</th>
-						<th>Projetos</th>
-						<th>Situação</th>
+						<th width="1%">Ações</th>
+						<th>Orgão</th>
+						<th>Convênio</th>
+						<th>Projeto</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -26,21 +30,25 @@
 								<li class="nav-item dropdown text-center">
 									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										<a href="#" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
+										<a href="{% url 'check_list' projeto.id %}" class="dropdown-item"> <i class="fas fa-check"></i> Check List</a>
+										<a href="{% url 'projeto_itens' projeto.id %}" class="dropdown-item"> <i class="fas fa-list"></i> Itens</a>
+										<a href="{% url 'projeto' projeto.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
 										<div class="dropdown-divider"></div>
-										<a href="{% url 'projeto_pavimentacao' projeto.id %}" class="dropdown-item"> <i class="fas fa-eye"></i> Visualizar</a>
+										<a href="{% url 'projeto' projeto.id %}" class="dropdown-item"> <i class="fas fa-eye"></i> Visualizar</a>
 									</div>
 								</li>
 							</ul>
 						</td>
-						<td>{{ projeto }}</td>
+						<td>{{ projeto.orgao }}</td>
+						<td>{{ projeto.convenio }}</td>
+						<td>{{ projeto.get_tipo_display }}</td>
 						<td> - </td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 			{% else %}
-			<div class="alert alert-info">Nenhum projeto cadastrada!</div>
+			<div class="alert alert-info mb-0">Nenhum projeto cadastrado!</div>
 			{% endif %}
 		</div>
 	</div>

@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Item{% endblock %}
+{% block body %}
+
+	<form method="post" class="form"> 
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-12">
+				<label>Item</label>
+				{{ item_alternativa_form.item }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Alternativas</label>
+				{{ item_alternativa_form.alternativa }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right"> 
+				<button class="btn btn-primary">Salvar</button>
+			</div>
+		</div>
+	</form>
+{% endblock %}

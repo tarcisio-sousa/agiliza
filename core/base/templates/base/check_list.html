@@ -1,0 +1,56 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Check List{% endblock %}
+{% block body %}
+
+	<form method="post" class="form"> 
+		{% csrf_token %}
+		{% for item in itens %}
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-inline">
+					<div class="col-md-6 col-form-label">{{ item.descricao }}</div>
+					{% if item.opcao.descricao %}
+					<div class="col-md-8 col-form-label">
+						<input type="text" name="item_opcao_descricao_{{ item.id }}" class="form-control form-control-sm w-100" />
+					</div>
+					{% endif %}
+					{% if item.opcao.alternativa %}
+					{% for item_alternativas in item.itemalternativa_set.all %}
+					<div class="col-md-3">
+						<select class="form-control custom-select custom-select-sm w-100"> 
+							<option> --- </option>
+							{% for alternativa in item_alternativas.alternativa.all %}
+							<option value="{{ alternativa.id }}">{{ alternativa.descricao }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					{% endfor %}
+					{% if item.opcao.responsavel %}
+					<div class="col-md-3">
+						<select class="form-control custom-select custom-select-sm w-100"> 
+							<option> --- </option>
+							{% for usuario in usuarios %}
+							<option value="{{ usuario.id }}">{{ usuario.username }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					{% endif %}
+					{% endif %}
+					{% if item.opcao.texto %}
+					<div class="col-md-9">
+						<textarea name="item_opcao_texto_{{ item.id }}" class="form-control form-control-sm w-100"></textarea>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right"> 
+				<button class="btn btn-primary">Salvar</button>
+			</div>
+		</div>
+	</form>
+{% endblock %}

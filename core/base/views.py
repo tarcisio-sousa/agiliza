@@ -1,12 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import PropostaForm, ConvenioArquivoExtratoForm, EdificacaoForm
-from .forms import EstradaForm, EquipamentoForm, PavimentacaoForm
-from .models import Proposta, Convenio, Edificacao, Estrada, Equipamento, Pavimentacao, Orgao, Prefeitura
+from .forms import PropostaForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
+from .forms import OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
+from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
+from .models import Atividade, LicenciamentoAmbiental
 
 
 def signin(request):
@@ -62,6 +64,8 @@ def propostas(request, filter_situacao=False):
     if request.method == 'POST':
         if request.POST['search']:
             propostas = propostas.filter(Q(numero=request.POST['search']) | Q(objeto__contains=request.POST['search']))
+
+    propostas = propostas.order_by('-id')
 
     return render(request, 'base/propostas.html', {
         'choices_situacao': choices_situacao, 'filter_situacao': filter_situacao, 'propostas': propostas
@@ -130,6 +134,10 @@ def convenios(request):
     else:
         convenios = Convenio.objects.all()
 
+    if request.method == 'POST':
+        if request.POST['search']:
+            convenios = convenios.filter(Q(numero_convenio=request.POST['search']) | Q(orgao=request.POST['search']))
+
     orgaos = Orgao.objects.all()
     return render(request, 'base/convenios.html', {'convenios': convenios, 'orgaos': orgaos})
 
@@ -144,6 +152,208 @@ def arquivo_extrato(request, id):
     return redirect(reverse('convenios'))
 
 
+@login_required
+def projetos(request):
+    projetos = Projeto.objects.all()
+    return render(request, 'base/projetos.html', {'projetos': projetos})
+
+
+@login_required
+def projeto(request, id=False):
+    projeto_form = ProjetoForm()
+
+    if (id):
+        projeto = Projeto.objects.get(id=id)
+        projeto_form = ProjetoForm(instance=projeto)
+
+    if request.method == 'POST':
+
+        projeto_form = ProjetoForm(request.POST)
+
+        if id:
+            projeto = Projeto.objects.get(id=id)
+            projeto_form = ProjetoForm(request.POST, instance=projeto)
+
+        if projeto_form.is_valid():
+            projeto = projeto_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Projeto salvo com sucesso!')
+            return redirect(reverse('projetos'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o projeto!')
+
+    return render(request, 'base/projeto.html', {'projeto_form': projeto_form})
+
+
+@login_required
+def projeto_itens(request, id=False):
+    itens = Item.objects.filter(projeto=id)
+    return render(request, 'base/itens.html', {'itens': itens})
+
+
+@login_required
+def itens(request, id=False):
+    itens = Item.objects.all()
+    return render(request, 'base/itens.html', {'itens': itens})
+
+
+@login_required
+def item(request, id=False):
+    item_form = ItemForm()
+
+    if (id):
+        item = Item.objects.get(id=id)
+        item_form = ItemForm(instance=item)
+
+    if request.method == 'POST':
+
+        item_form = ItemForm(request.POST)
+
+        if id:
+            item = Item.objects.get(id=id)
+            item_form = ItemForm(request.POST, instance=item)
+
+        if item_form.is_valid():
+            item = item_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Item salvo com sucesso!')
+            return redirect(reverse('itens'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item!')
+
+    return render(request, 'base/item.html', {'item_form': item_form})
+
+
+@login_required
+def opcoes(request):
+    opcoes = Opcao.objects.all()
+    return render(request, 'base/opcoes.html', {'opcoes': opcoes})
+
+
+@login_required
+def opcao(request, id=False):
+    opcao_form = OpcaoForm()
+
+    if (id):
+        opcao = Opcao.objects.get(id=id)
+        opcao_form = OpcaoForm(instance=opcao)
+
+    if request.method == 'POST':
+
+        opcao_form = OpcaoForm(request.POST)
+
+        if id:
+            opcao = Opcao.objects.get(id=id)
+            opcao_form = OpcaoForm(request.POST, instance=opcao)
+
+        if opcao_form.is_valid():
+            opcao = opcao_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Opção salva com sucesso!')
+            return redirect(reverse('opcoes'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar a opção!')
+
+    return render(request, 'base/opcao.html', {'opcao_form': opcao_form})
+
+
+@login_required
+def alternativas(request):
+    alternativas = Alternativa.objects.all()
+    return render(request, 'base/alternativas.html', {'alternativas': alternativas})
+
+
+@login_required
+def alternativa(request, id=False):
+    alternativa_form = AlternativaForm()
+
+    if (id):
+        alternativa = Alternativa.objects.get(id=id)
+        alternativa_form = AlternativaForm(instance=alternativa)
+
+    if request.method == 'POST':
+
+        alternativa_form = AlternativaForm(request.POST)
+
+        if id:
+            alternativa = Alternativa.objects.get(id=id)
+            alternativa_form = AlternativaForm(request.POST, instance=alternativa)
+
+        if alternativa_form.is_valid():
+            alternativa = alternativa_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Alternativa salva com sucesso!')
+            return redirect(reverse('alternativas'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar a alternativa!')
+
+    return render(request, 'base/alternativa.html', {'alternativa_form': alternativa_form})
+
+
+@login_required
+def itens_alternativas(request):
+    itens = ItemAlternativa.objects.all()
+    return render(request, 'base/itens_alternativas.html', {'itens': itens})
+
+
+@login_required
+def item_alternativas(request, id=False):
+    item_alternativa_form = ItemAlternativaForm()
+
+    if (id):
+        item_alternativa = ItemAlternativa.objects.get(id=id)
+        item_alternativa_form = ItemAlternativaForm(instance=item_alternativa)
+
+    if request.method == 'POST':
+
+        item_alternativa_form = ItemAlternativaForm(request.POST)
+
+        if id:
+            item_alternativa = ItemAlternativa.objects.get(id=id)
+            item_alternativa_form = ItemAlternativaForm(request.POST, instance=item_alternativa)
+
+        if item_alternativa_form.is_valid():
+            item_alternativa = item_alternativa_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Item alternativa salva com sucesso!')
+            return redirect(reverse('itensalternativas'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item alternativa!')
+
+    return render(request, 'base/item_alternativas.html', {'item_alternativa_form': item_alternativa_form})
+
+
+@login_required
+def check_list(request, id=False):
+    projeto = Projeto.objects.get(pk=id)
+    itens = Item.objects.filter(projeto__id=id)
+    usuarios = User.objects.all()
+    return render(request, 'base/check_list.html', {'projeto': projeto, 'itens': itens, 'usuarios': usuarios})
+
+
+@login_required
+def protocolo(request):
+    atividades = Atividade.objects.all()
+    licenciamentos = LicenciamentoAmbiental.objects.all()
+    return render(request, 'base/protocolo.html', {'atividades': atividades, 'licenciamentos': licenciamentos})
+
+
+def atividade(request):
+    atividade_form = AtividadeForm()
+    if request.method == 'POST':
+        atividade_form = AtividadeForm(request.POST, request.FILES)
+        if atividade_form.is_valid():
+            atividade_form.save()
+            return redirect(reverse('protocolo'))
+    return render(request, 'base/atividade.html', {'atividade_form': atividade_form})
+
+
+def licenciamento_ambiental(request):
+    licenciamento_form = LicenciamentoForm()
+    if request.method == 'POST':
+        licenciamento_form = LicenciamentoForm(request.POST, request.FILES)
+        if licenciamento_form.is_valid():
+            licenciamento_form.save()
+            return redirect(reverse('protocolo'))
+    return render(request, 'base/licenciamento_ambiental.html', {'licenciamento_form': licenciamento_form})
+
+
+'''
 @login_required
 def projetos(request):
     projetos = Pavimentacao.objects.all()
@@ -277,3 +487,4 @@ def projeto_pavimentacao(request, id=False):
             )
 
     return render(request, 'base/projeto_pavimentacao.html', {'projeto_form': projeto_form})
+'''

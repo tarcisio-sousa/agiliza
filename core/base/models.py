@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from ordered_model.models import OrderedModel
 from django.utils.translation import gettext_lazy as _
 
 
@@ -142,9 +143,12 @@ class Orgao(models.Model):
 
 class Projeto(models.Model):
     class TipoChoice(models.TextChoices):
-        ESTRADAS = 'estradas', _('Estradas')
+        ESTRADA = 'estrada', _('Estrada')
         EQUIPAMENTO = 'equipamento', _('Equipamento')
+        PRACA = 'praca', _('Praca')
         PAVIMENTACAO = 'pavimentacao', _('Pavimentacao')
+        CENTRO_ESPORTIVO = 'centro_esportivo', _('Centro Esportivo')
+        EDIFICACAO = 'edificacao', _('Edificação')
 
     orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
     convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=True, null=True)
@@ -152,17 +156,95 @@ class Projeto(models.Model):
         max_length=150, choices=TipoChoice.choices, default=None, blank=True, null=True)
 
     def __str__(self):
-        return f'Projeto {self.id}'
+        return f'Projeto {self.id} - {self.get_tipo_display()}'
+
+
+class Item(OrderedModel):
+    descricao = models.CharField(max_length=250, blank=False, null=False)
+    subitem = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
+    projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, null=True)
+    observacoes = models.TextField(blank=True, null=True)
+    sort_order = models.PositiveIntegerField(editable=False, db_index=True, blank=True, null=True)
+    opcao = models.ForeignKey('Opcao', on_delete=models.CASCADE, blank=True, null=True)
+    order_field_name = "sort_order"
+
+    class Meta(OrderedModel.Meta):
+        ordering = ("sort_order",)
+        verbose_name_plural = "itens"
+
+    def __str__(self):
+        return f'Item {self.descricao}'
+
+
+class Opcao(models.Model):
+    descricao = models.BooleanField(default=False)
+    alternativa = models.BooleanField(default=False)
+    texto = models.BooleanField(default=False)
+    responsavel = models.BooleanField(default=False)
+    # item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
+    # usuario = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        string = ''
+        if (self.descricao):
+            string += f' Descrição: {self.descricao} '
+        if (self.alternativa):
+            string += f' Alternativa: {self.alternativa} '
+        if (self.texto):
+            string += f' Texto: {self.texto} '
+        if (self.responsavel):
+            string += f' responsavel: {self.responsavel} '
+
+        return string
+
+
+class ItemAlternativa(models.Model):
+    item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
+    alternativa = models.ManyToManyField('Alternativa')
+
+    def __str__(self):
+        return f'{self.item}'
+
+
+class Alternativa(models.Model):
+    descricao = models.CharField(max_length=250, blank=False, null=False)
+    # opcao = models.ForeignKey('Opcao', on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.descricao}'
 
 
 class Protocolo(models.Model):
-    descricao = models.CharField(max_length=250, blank=False, null=False)
-    data = models.DateField(_('Data'), auto_now=True, blank=False, null=False)
-    arquivo = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
+    class ResponsavelChoice(models.TextChoices):
+        AGILIZA = 'agiliza', _('AGILIZA')
+        FUNASA = 'funasa', _('FUNASA')
+        PREFEITURA = 'prefeitura', _('PREFEITURA')
+
+    class SituacaoChoice(models.TextChoices):
+        ENVIADO_ANALISE = 'enviado_analise', _('Enviado p/ análise')
+        SOLICITADA_COMPLEMENTACAO = 'solicitada_complementacao', _('Solicitada complementação')
+        APROVADO = 'aprovado', _('Aprovado')
+
     convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=False, null=False)
+    data = models.DateField(_('Data'), auto_now=True, blank=False, null=False)
+    data_prevista = models.DateField(_('Data Prevista'), blank=False, null=False)
+    responsavel = models.CharField(
+        max_length=250, choices=ResponsavelChoice.choices, default=None, blank=True, null=True)
+    consideracoes = models.TextField(blank=False, null=False)
+    situacao = models.CharField(
+        max_length=150, choices=SituacaoChoice.choices, default=None, blank=True, null=True)
+    anexo = models.FileField(upload_to='uploads/protocolos/%Y/%m/%d', max_length=150, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.data} - {self.descricao}'
+        return f'{self.data} - {self.convenio}'
+
+
+class Atividade(Protocolo):
+    pass
+
+
+class LicenciamentoAmbiental(Protocolo):
+    pass
 
 
 class Edificacao(Projeto):

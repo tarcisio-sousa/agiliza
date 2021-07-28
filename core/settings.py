@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.base',
+    'ordered_model',
 ]
 
 MIDDLEWARE = [
