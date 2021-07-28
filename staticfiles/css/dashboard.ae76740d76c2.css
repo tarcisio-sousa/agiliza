@@ -6,16 +6,6 @@ body {
     background-color: #00532e;
 }
 
-.color-agiliza {
-  color: #00532e;
-}
-
-.btn-agiliza:hover {
-    color: #fff;
-    background-color: #0069d9;
-    border-color: #0062cc;
-}
-
 .feather {
   width: 16px;
   height: 16px;

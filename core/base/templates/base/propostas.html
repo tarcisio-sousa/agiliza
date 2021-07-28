@@ -5,7 +5,7 @@
 <div class="row">
 	<div class="col-md-12 text-right mb-2">
 	{% if perms.base.add_proposta %}
-		<a href="{% url 'proposta' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Criar proposta </a>
+		<a href="{% url 'proposta' %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Criar proposta </a>
 	{% endif %}
 	</div>
 </div>
@@ -18,7 +18,7 @@
 				<div class="input-group input-group-sm">
 					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
 					<div class="input-group-append">
-						<button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+						<button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i></button>
 					</div>
 				</div>
 			</form>
@@ -39,7 +39,7 @@
 							Situação 
 							<ul class="navbar-nav mr-auto d-inline-block">
 								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
+									<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
 									<ul class="dropdown-menu">
 										<li>
 											<a class="dropdown-item {% if not filter_situacao %}disabled{% endif %}" href="{% url 'propostas' %}">
@@ -71,7 +71,7 @@
 						<td>
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown">
-									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
+									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
 										{% if perms.base.edit_proposta %}
 											<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>

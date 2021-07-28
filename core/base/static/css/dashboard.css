@@ -2,6 +2,69 @@ body {
   font-size: .875rem;
 }
 
+.bg-agiliza {
+    background-color: #00532e;
+}
+
+.home-agiliza {
+  color: #FFFFFF !important;
+  font-weight: bold;
+  text-decoration: underline;
+  -webkit-text-decoration-color: #ebff00; /* safari still uses vendor prefix */
+  text-decoration-color: #ebff00;
+  /*text-decoration-thickness: 2px;*/
+  text-underline-offset: 2px;
+}
+
+.color-agiliza {
+  color: #00532e;
+}
+
+.link-agiliza {
+  color: #00532e !important;
+  /*background-color: #00532e;*/
+  border-color: #026637;
+}
+
+.link-agiliza:hover {
+  color: #0f8a53 !important;
+  /*background-color: #0f8a53;*/
+  border-color: #0aa45c;
+}
+
+.btn-agiliza {
+  color: #fff;
+  background-color: #00532e;
+  border-color: #026637;
+}
+
+.btn-agiliza:hover {
+  color: #fff;
+  background-color: #0f8a53;
+  border-color: #0aa45c;
+}
+
+.btn-agiliza:focus, .btn-agiliza.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(153, 255, 204, 0.25);
+}
+
+.btn-outline-agiliza {
+  color: #00532e;
+  border-color: #00532e;
+}
+
+.btn-outline-agiliza:hover {
+  color: #fff;
+  background-color: #0f8a53;
+  border-color: #0aa45c;
+}
+
+.btn-outline-agiliza:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(153, 255, 204, 0.25);
+}
+
 .feather {
   width: 16px;
   height: 16px;
