@@ -19,7 +19,7 @@ importlib-metadata==4.6.1
 importlib-resources==5.2.0
 kazam==1.4.5
 keyring==10.6.0
-keyrings.alt==3.0
+keyrings.alt==4.1.0
 language-selector==0.1
 launchpadlib==1.10.6
 lazr.restfulclient==0.13.5
