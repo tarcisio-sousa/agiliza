@@ -17,7 +17,7 @@ httplib2==0.9.2
 idna==2.6
 importlib-metadata==4.6.1
 importlib-resources==5.2.0
-kazam==1.4.5
+kazam==1.5.5
 keyring==10.6.0
 keyrings.alt==3.0
 language-selector==0.1
