@@ -17,6 +17,7 @@ whitenoise = "*"
 dj-database-url = "*"
 psycopg2-binary = "*"
 pillow = "*"
+ordered_model = "*"
 
 [requires]
 python_version = "3.6"
