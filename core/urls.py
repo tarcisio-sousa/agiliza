@@ -66,6 +66,9 @@ urlpatterns = [
     path('item-alternativas/<int:id>', views.item_alternativas, name='item_alternativas'),
     path('item-alternativas', views.item_alternativas, name='item_alternativas'),
     path('check-list/<int:id>', views.check_list, name='check_list'),
+    path('protocolo', views.protocolo, name='protocolo'),
+    path('atividade', views.atividade, name='atividade'),
+    path('licenciamento-ambiental', views.licenciamento_ambiental, name='licenciamento_ambiental'),
 
     path('declaracoes', views.declaracoes, name='declaracoes'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

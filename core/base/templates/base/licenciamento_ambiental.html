@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Licenciamento Ambiental{% endblock %}
+{% block body %}
+
+	<form method="post" enctype="multipart/form-data" class="form"> 
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-12">
+				<label>Convênio</label>
+				{{ licenciamento_form.convenio }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Data prevista</label>
+				{{ licenciamento_form.data_prevista }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Responsável</label>
+				{{ licenciamento_form.responsavel }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Considerações</label>
+				{{ licenciamento_form.consideracoes }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Situação</label>
+				{{ licenciamento_form.situacao }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label>Anexo</label>
+				{{ licenciamento_form.anexo }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right"> 
+				<button class="btn btn-primary">Salvar</button>
+			</div>
+		</div>
+	</form>
+{% endblock %}

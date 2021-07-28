@@ -1,16 +1,18 @@
 {% extends 'base/base.html' %}
 
 {% block title %}Projetos{% endblock %}
-{% block body %}
+{% block action %}
 	<div class="row">
 		<div class="col-md-12 text-right mb-2">
 			<a href="{% url 'projeto' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
 		</div>
 	</div>
+{% endblock %}
+{% block body %}
 	<div class="row">
 		<div class="col-md-12">
 			{% if projetos %}
-			<table class="table">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th width="1%">Ações</th>
@@ -46,7 +48,7 @@
 				</tbody>
 			</table>
 			{% else %}
-			<div class="alert alert-info">Nenhum projeto cadastrado!</div>
+			<div class="alert alert-info mb-0">Nenhum projeto cadastrado!</div>
 			{% endif %}
 		</div>
 	</div>

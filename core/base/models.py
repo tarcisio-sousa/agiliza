@@ -215,13 +215,36 @@ class Alternativa(models.Model):
 
 
 class Protocolo(models.Model):
-    descricao = models.CharField(max_length=250, blank=False, null=False)
-    data = models.DateField(_('Data'), auto_now=True, blank=False, null=False)
-    arquivo = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
+    class ResponsavelChoice(models.TextChoices):
+        AGILIZA = 'agiliza', _('AGILIZA')
+        FUNASA = 'funasa', _('FUNASA')
+        PREFEITURA = 'prefeitura', _('PREFEITURA')
+
+    class SituacaoChoice(models.TextChoices):
+        ENVIADO_ANALISE = 'enviado_analise', _('Enviado p/ análise')
+        SOLICITADA_COMPLEMENTACAO = 'solicitada_complementacao', _('Solicitada complementação')
+        APROVADO = 'aprovado', _('Aprovado')
+
     convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=False, null=False)
+    data = models.DateField(_('Data'), auto_now=True, blank=False, null=False)
+    data_prevista = models.DateField(_('Data Prevista'), blank=False, null=False)
+    responsavel = models.CharField(
+        max_length=250, choices=ResponsavelChoice.choices, default=None, blank=True, null=True)
+    consideracoes = models.TextField(blank=False, null=False)
+    situacao = models.CharField(
+        max_length=150, choices=SituacaoChoice.choices, default=None, blank=True, null=True)
+    anexo = models.FileField(upload_to='uploads/protocolos/%Y/%m/%d', max_length=150, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.data} - {self.descricao}'
+        return f'{self.data} - {self.convenio}'
+
+
+class Atividade(Protocolo):
+    pass
+
+
+class LicenciamentoAmbiental(Protocolo):
+    pass
 
 
 class Edificacao(Projeto):

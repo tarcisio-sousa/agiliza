@@ -18,7 +18,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			{% if convenios %}
-			<table class="table">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 						{% if perms.base.add_convenio %}
@@ -43,8 +43,11 @@
 									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<ul class="dropdown-menu">
 										<li>
-											<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop" onclick="seleciona_convenio(this)" data-id="{{ convenio.id }}"> <i class="fas fa-plus-circle"></i> Projeto </a>
+											<a href="{% url 'protocolo' %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Protocolo </a>
 										</li>
+										<!--<li>
+											<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop" onclick="seleciona_convenio(this)" data-id="{# convenio.id #}"> <i class="fas fa-plus-circle"></i> Projeto </a>
+										</li>-->
 										<li>
 											<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#staticExtractUpload" onclick="seleciona_arquivo_extrato(this)" data-id="{{ convenio.id }}"> <i class="fas fa-cloud-upload-alt"></i> Extrato </a>
 										</li>
@@ -79,7 +82,7 @@
 				</tbody>
 			</table>
 			{% else %}
-			<div class="alert alert-info">Nenhum convenio cadastrado!</div>
+			<div class="alert alert-info mb-0">Nenhum convenio cadastrado!</div>
 			{% endif %}
 		</div>
 	</div>

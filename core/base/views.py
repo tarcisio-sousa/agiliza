@@ -5,9 +5,10 @@ from django.contrib.auth import authenticate, logout, login
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import PropostaForm, ConvenioArquivoExtratoForm
-from .forms import ProjetoForm, ItemForm, OpcaoForm, AlternativaForm, ItemAlternativaForm
+from .forms import PropostaForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
+from .forms import OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
+from .models import Atividade, LicenciamentoAmbiental
 
 
 def signin(request):
@@ -323,6 +324,33 @@ def check_list(request, id=False):
     itens = Item.objects.filter(projeto__id=id)
     usuarios = User.objects.all()
     return render(request, 'base/check_list.html', {'projeto': projeto, 'itens': itens, 'usuarios': usuarios})
+
+
+@login_required
+def protocolo(request):
+    atividades = Atividade.objects.all()
+    licenciamentos = LicenciamentoAmbiental.objects.all()
+    return render(request, 'base/protocolo.html', {'atividades': atividades, 'licenciamentos': licenciamentos})
+
+
+def atividade(request):
+    atividade_form = AtividadeForm()
+    if request.method == 'POST':
+        atividade_form = AtividadeForm(request.POST, request.FILES)
+        if atividade_form.is_valid():
+            atividade_form.save()
+            return redirect(reverse('protocolo'))
+    return render(request, 'base/atividade.html', {'atividade_form': atividade_form})
+
+
+def licenciamento_ambiental(request):
+    licenciamento_form = LicenciamentoForm()
+    if request.method == 'POST':
+        licenciamento_form = LicenciamentoForm(request.POST, request.FILES)
+        if licenciamento_form.is_valid():
+            licenciamento_form.save()
+            return redirect(reverse('protocolo'))
+    return render(request, 'base/licenciamento_ambiental.html', {'licenciamento_form': licenciamento_form})
 
 
 '''

@@ -1,16 +1,18 @@
 {% extends 'base/base.html' %}
 
 {% block title %}Itens{% endblock %}
-{% block body %}
+{% block action %}
 	<div class="row">
 		<div class="col-md-12 text-right mb-2">
 			<a href="{% url 'item' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
 		</div>
 	</div>
+{% endblock %}
+{% block body %}
 	<div class="row">
 		<div class="col-md-12">
 			{% if itens %}
-			<table class="table">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th width="1%">Ações</th>
@@ -40,7 +42,7 @@
 				</tbody>
 			</table>
 			{% else %}
-			<div class="alert alert-info">Nenhum item cadastrado!</div>
+			<div class="alert alert-info mb-0">Nenhum item cadastrado!</div>
 			{% endif %}
 		</div>
 	</div>
