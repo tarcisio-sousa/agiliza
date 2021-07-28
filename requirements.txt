@@ -43,7 +43,7 @@ pycups==1.9.73
 PyGObject==3.26.1
 pymacaroons==0.13.0
 PyNaCl==1.1.2
-pyRFC3339==1.0
+pyRFC3339==1.1
 python-apt==1.6.5+ubuntu0.6
 python-dateutil==2.6.1
 python-debian==0.1.32
