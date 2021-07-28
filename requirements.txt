@@ -65,7 +65,7 @@ ubuntu-drivers-common==0.0.0
 ufw==0.36
 unattended-upgrades==0.1
 urllib3==1.22
-urwid==2.0.1
+urwid==2.1.2
 usb-creator==0.3.3
 virtualenv==20.6.0
 virtualenv-clone==0.5.5
