@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Opção{% endblock %}
+{% block title %}Alternativa{% endblock %}
 {% block body %}
 
 	<form method="post" class="form"> 
@@ -8,19 +8,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<label>Descrição</label>
-				{{ opcao_form.descricao }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<label>Alternativa</label>
-				{{ opcao_form.alternativa }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<label>Texto</label>
-				{{ opcao_form.texto }}
+				{{ alternativa_form.descricao }}
 			</div>
 		</div>
 		<hr>

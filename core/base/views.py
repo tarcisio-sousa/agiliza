@@ -1,14 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import PropostaForm, ConvenioArquivoExtratoForm, EdificacaoForm
-from .forms import EstradaForm, EquipamentoForm, PavimentacaoForm, ProjetoForm
-from .forms import ItemForm, OpcaoForm
-from .models import Proposta, Convenio, Projeto, Item, Opcao, Edificacao, Estrada, Equipamento
-from .models import Pavimentacao, Orgao, Prefeitura
+from .forms import PropostaForm, ConvenioArquivoExtratoForm
+from .forms import ProjetoForm, ItemForm, OpcaoForm, AlternativaForm, ItemAlternativaForm
+from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 
 
 def signin(request):
@@ -185,6 +184,12 @@ def projeto(request, id=False):
 
 
 @login_required
+def projeto_itens(request, id=False):
+    itens = Item.objects.filter(projeto=id)
+    return render(request, 'base/itens.html', {'itens': itens})
+
+
+@login_required
 def itens(request, id=False):
     itens = Item.objects.all()
     return render(request, 'base/itens.html', {'itens': itens})
@@ -197,7 +202,6 @@ def item(request, id=False):
     if (id):
         item = Item.objects.get(id=id)
         item_form = ItemForm(instance=item)
-        print(item_form)
 
     if request.method == 'POST':
 
@@ -229,8 +233,7 @@ def opcao(request, id=False):
 
     if (id):
         opcao = Opcao.objects.get(id=id)
-        opcao_form = PropostaForm(instance=opcao)
-        print(opcao)
+        opcao_form = OpcaoForm(instance=opcao)
 
     if request.method == 'POST':
 
@@ -248,6 +251,78 @@ def opcao(request, id=False):
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar a opção!')
 
     return render(request, 'base/opcao.html', {'opcao_form': opcao_form})
+
+
+@login_required
+def alternativas(request):
+    alternativas = Alternativa.objects.all()
+    return render(request, 'base/alternativas.html', {'alternativas': alternativas})
+
+
+@login_required
+def alternativa(request, id=False):
+    alternativa_form = AlternativaForm()
+
+    if (id):
+        alternativa = Alternativa.objects.get(id=id)
+        alternativa_form = AlternativaForm(instance=alternativa)
+
+    if request.method == 'POST':
+
+        alternativa_form = AlternativaForm(request.POST)
+
+        if id:
+            alternativa = Alternativa.objects.get(id=id)
+            alternativa_form = AlternativaForm(request.POST, instance=alternativa)
+
+        if alternativa_form.is_valid():
+            alternativa = alternativa_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Alternativa salva com sucesso!')
+            return redirect(reverse('alternativas'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar a alternativa!')
+
+    return render(request, 'base/alternativa.html', {'alternativa_form': alternativa_form})
+
+
+@login_required
+def itens_alternativas(request):
+    itens = ItemAlternativa.objects.all()
+    return render(request, 'base/itens_alternativas.html', {'itens': itens})
+
+
+@login_required
+def item_alternativas(request, id=False):
+    item_alternativa_form = ItemAlternativaForm()
+
+    if (id):
+        item_alternativa = ItemAlternativa.objects.get(id=id)
+        item_alternativa_form = ItemAlternativaForm(instance=item_alternativa)
+
+    if request.method == 'POST':
+
+        item_alternativa_form = ItemAlternativaForm(request.POST)
+
+        if id:
+            item_alternativa = ItemAlternativa.objects.get(id=id)
+            item_alternativa_form = ItemAlternativaForm(request.POST, instance=item_alternativa)
+
+        if item_alternativa_form.is_valid():
+            item_alternativa = item_alternativa_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Item alternativa salva com sucesso!')
+            return redirect(reverse('itensalternativas'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item alternativa!')
+
+    return render(request, 'base/item_alternativas.html', {'item_alternativa_form': item_alternativa_form})
+
+
+@login_required
+def check_list(request, id=False):
+    projeto = Projeto.objects.get(pk=id)
+    itens = Item.objects.filter(projeto__id=id)
+    usuarios = User.objects.all()
+    return render(request, 'base/check_list.html', {'projeto': projeto, 'itens': itens, 'usuarios': usuarios})
 
 
 '''

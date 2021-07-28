@@ -1,26 +1,20 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Opção{% endblock %}
+{% block title %}Item{% endblock %}
 {% block body %}
 
 	<form method="post" class="form"> 
 		{% csrf_token %}
 		<div class="row">
 			<div class="col-md-12">
-				<label>Descrição</label>
-				{{ opcao_form.descricao }}
+				<label>Item</label>
+				{{ item_alternativa_form.item }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<label>Alternativa</label>
-				{{ opcao_form.alternativa }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<label>Texto</label>
-				{{ opcao_form.texto }}
+				<label>Alternativas</label>
+				{{ item_alternativa_form.alternativa }}
 			</div>
 		</div>
 		<hr>

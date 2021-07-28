@@ -1,43 +1,39 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Opções{% endblock %}
+{% block title %}Alternativas{% endblock %}
 {% block body %}
 	<div class="row">
 		<div class="col-md-12 text-right mb-2">
-			<a href="{% url 'opcao' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
+			<a href="{% url 'alternativa' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Nova </a>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			{% if opcoes %}
+			{% if alternativas %}
 			<table class="table">
 				<thead>
 					<tr>
 						<th width="1%">Ações</th>
 						<th>Descrição</th>
-						<th>Alternativa</th>
-						<th>Texto</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for opcao in opcoes %}
+					{% for alternativa in alternativas %}
 					<tr>
 						<td>
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown text-center">
 									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										<a href="{% url 'opcao' opcao.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
+										<a href="{% url 'alternativa' alternativa.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
 										<div class="dropdown-divider"></div>
-										<a href="{% url 'opcao' opcao.id %}" class="dropdown-item"> <i class="fas fa-eye"></i> Visualizar</a>
+										<a href="{% url 'alternativa' alternativa.id %}" class="dropdown-item"> <i class="fas fa-eye"></i> Visualizar</a>
 									</div>
 								</li>
 							</ul>
 						</td>
-						<td>{{ opcao.descricao }}</td>
-						<td>{{ opcao.alternativa }}</td>
-						<td>{{ opcao.texto }}</td>
+						<td>{{ alternativa.descricao }}</td>
 						<td> - </td>
 					</tr>
 					{% endfor %}

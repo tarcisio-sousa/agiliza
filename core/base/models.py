@@ -165,20 +165,53 @@ class Item(OrderedModel):
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, null=True)
     observacoes = models.TextField(blank=True, null=True)
     sort_order = models.PositiveIntegerField(editable=False, db_index=True, blank=True, null=True)
+    opcao = models.ForeignKey('Opcao', on_delete=models.CASCADE, blank=True, null=True)
     order_field_name = "sort_order"
 
     class Meta(OrderedModel.Meta):
         ordering = ("sort_order",)
+        verbose_name_plural = "itens"
 
     def __str__(self):
         return f'Item {self.descricao}'
+
 
 class Opcao(models.Model):
     descricao = models.BooleanField(default=False)
     alternativa = models.BooleanField(default=False)
     texto = models.BooleanField(default=False)
+    responsavel = models.BooleanField(default=False)
+    # item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
+    # usuario = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        string = ''
+        if (self.descricao):
+            string += f' Descrição: {self.descricao} '
+        if (self.alternativa):
+            string += f' Alternativa: {self.alternativa} '
+        if (self.texto):
+            string += f' Texto: {self.texto} '
+        if (self.responsavel):
+            string += f' responsavel: {self.responsavel} '
+
+        return string
+
+
+class ItemAlternativa(models.Model):
     item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    alternativa = models.ManyToManyField('Alternativa')
+
+    def __str__(self):
+        return f'{self.item}'
+
+
+class Alternativa(models.Model):
+    descricao = models.CharField(max_length=250, blank=False, null=False)
+    # opcao = models.ForeignKey('Opcao', on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.descricao}'
 
 
 class Protocolo(models.Model):
