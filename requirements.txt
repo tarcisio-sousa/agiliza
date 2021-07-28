@@ -35,7 +35,7 @@ pexpect==4.2.1
 Pillow==5.1.0
 pipenv==2021.5.29
 platformdirs==2.0.2
-protobuf==3.0.0
+protobuf==3.17.3
 psutil==5.4.2
 pycairo==1.16.2
 pycrypto==2.6.1
