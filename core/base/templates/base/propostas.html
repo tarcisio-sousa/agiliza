@@ -63,12 +63,13 @@
 								</li>
 					     	</ul>
 						</th>
+						<th width="1%">Extrato</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for proposta in propostas %}
 					<tr>
-						<td>
+						<td class="text-center">
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown">
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
@@ -77,7 +78,7 @@
 											<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
 											<div class="dropdown-divider"></div>
 											{% if proposta.verifica_situacao == 'em-analise' %}
-												<a href="{% url 'proposta' proposta.id 'em-analise' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Em análise </a>
+												<a href="javascript:void(0);" class="dropdown-item"> <i class="fas fa-check-circle"></i> Em análise </a>
 											{% endif %}
 											{% if proposta.verifica_situacao == 'aprovada' %}
 												<a href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Aprovar</a>
@@ -89,6 +90,7 @@
 												<a href="{% url 'proposta' proposta.id 'empenhada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a>
 											{% endif %}
 										{% endif %}
+										<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#extratoModal" onclick="seleciona_proposta_arquivo_extrato(this)" data-id="{{ proposta.id }}"> <i class="fas fa-cloud-upload-alt"></i> Extrato </a>
 										<a href="{% url 'proposta_documento' proposta.id %}" class="dropdown-item"> <i class="fas fa-certificate"></i> Gerar declaração</a>
 									</div>
 								</li>
@@ -100,6 +102,7 @@
 						<td class="text-right">{% load l10n %}{{ proposta.valor_contrapartida|floatformat:2|localize }}</td>
 						<td>{{ proposta.data|date:"d/m/Y" }}</td>
 						<td>{{ proposta.get_situacao_display }}</td>
+						<td class="text-center">{% if proposta.extrato %}<a href="/media/{{ proposta.extrato }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
 					</tr>
 					{% endfor %}
 				</tbody>
@@ -109,4 +112,38 @@
 			{% endif %}
 		</div>
 	</div>
+
+
+
+	<!-- Modal Extrato Proposta -->
+	<div class="modal fade" id="extratoModal" tabindex="-1" aria-labelledby="extratoModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" id="formExtrato" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="extratoModalLabel">Extrato</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<label for="">Enviar arquivo</label>
+								<input type="file" name="extrato" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm"> <i class="fas fa-check-circle"></i> Salvar </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script>
+		let seleciona_proposta_arquivo_extrato = (proposta) => document.getElementById('formExtrato').action=`/proposta/arquivo/extrato/${proposta.dataset.id}`
+	</script>
 {% endblock %}

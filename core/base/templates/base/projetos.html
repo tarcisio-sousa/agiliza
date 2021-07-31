@@ -4,7 +4,7 @@
 {% block action %}
 	<div class="row">
 		<div class="col-md-12 text-right mb-2">
-			<a href="{% url 'projeto' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Novo </a>
+			<a href="{% url 'projeto' %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Novo </a>
 		</div>
 	</div>
 {% endblock %}
@@ -25,10 +25,10 @@
 				<tbody>
 					{% for projeto in projetos %}
 					<tr>
-						<td>
+						<td class="text-center">
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown text-center">
-									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
+									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
 										<a href="{% url 'check_list' projeto.id %}" class="dropdown-item"> <i class="fas fa-check"></i> Check List</a>
 										<a href="{% url 'projeto_itens' projeto.id %}" class="dropdown-item"> <i class="fas fa-list"></i> Itens</a>

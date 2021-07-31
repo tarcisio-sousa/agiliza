@@ -20,6 +20,15 @@ class PropostaForm(ModelForm):
         self.fields['numero'].widget.attrs.update({'class': 'form-control'})
 
 
+class PropostaArquivoExtratoForm(ModelForm):
+    class Meta:
+        model = Proposta
+        fields = ['extrato', ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class ConvenioArquivoExtratoForm(ModelForm):
     class Meta:
         model = Convenio

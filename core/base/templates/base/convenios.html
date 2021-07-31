@@ -9,7 +9,7 @@
 				<div class="input-group input-group-sm">
 					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
 					<div class="input-group-append">
-						<button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i></button>
+						<button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i></button>
 					</div>
 				</div>
 			</form>
@@ -36,11 +36,11 @@
 					{% for convenio in convenios %}
 					<tr>
 						{% if perms.base.add_convenio %}
-						<td>
+						<td class="text-center">
 							{# if not convenio.projeto_set.all #}
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown text-center">
-									<a href="javascript: void(0)" class="nav-link dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
+									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<ul class="dropdown-menu">
 										<li>
 											<a href="{% url 'protocolo' %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Protocolo </a>
@@ -48,9 +48,6 @@
 										<!--<li>
 											<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop" onclick="seleciona_convenio(this)" data-id="{# convenio.id #}"> <i class="fas fa-plus-circle"></i> Projeto </a>
 										</li>-->
-										<li>
-											<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#staticExtractUpload" onclick="seleciona_arquivo_extrato(this)" data-id="{{ convenio.id }}"> <i class="fas fa-cloud-upload-alt"></i> Extrato </a>
-										</li>
 									</ul>
 								</li>
 							</ul>
@@ -153,39 +150,7 @@
 	</div>
 
 
-
-	<!-- Modal Upload Extrato -->
-	<div class="modal fade" id="staticExtractUpload" tabindex="-1" aria-labelledby="staticExtractUploadLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<form method="post" id="formUploadExtrato" enctype="multipart/form-data">
-				{% csrf_token %}
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="staticExtractUploadLabel">Extrato</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-md-12">
-								<label for="">Enviar arquivo</label>
-								<input type="file" name="arquivo_extrato" class="form-control" />
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary btn-sm"> <i class="fas fa-check-circle"></i> Salvar </button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-
 	<script>
-		let seleciona_convenio = convenio => 
-			document.getElementById('formConvenioProjeto').action=`/projeto/${convenio.dataset.id}`;
-		let seleciona_arquivo_extrato = convenio => 
-			document.getElementById('formUploadExtrato').action=`/arquivo/extrato/${convenio.dataset.id}`;
+		let seleciona_convenio = convenio => document.getElementById('formConvenioProjeto').action=`/projeto/${convenio.dataset.id}`;
 	</script>
 {% endblock %}

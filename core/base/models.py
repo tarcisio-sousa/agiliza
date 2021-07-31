@@ -94,7 +94,7 @@ class Proposta(models.Model):
     situacao = models.CharField(
         max_length=15, choices=SituacaoChoice.choices, default=SituacaoChoice.EM_ANALISE, blank=True, null=True
     )
-    extrato = models.FileField(upload_to='uploads/files/%Y/%m/%d', max_length=150, blank=True, null=True)
+    extrato = models.FileField(upload_to='uploads/extrato/%Y/%m/%d', max_length=150, blank=True, null=True)
 
     class Meta:
         verbose_name = _('proposta')

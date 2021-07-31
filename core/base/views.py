@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import PropostaForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
+from .forms import PropostaForm, PropostaArquivoExtratoForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
 from .forms import OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental
@@ -105,6 +105,16 @@ def proposta(request, id=False, situacao=False):
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar a proposta!')
 
     return render(request, 'base/proposta.html', {'proposta_form': proposta_form})
+
+
+@login_required
+def proposta_arquivo_extrato(request, id):
+    if request.method == 'POST':
+        proposta = Proposta.objects.get(id=id)
+        proposta_arquivo_extrato_form = PropostaArquivoExtratoForm(request.POST, request.FILES, instance=proposta)
+        if proposta_arquivo_extrato_form.is_valid():
+            proposta_arquivo_extrato_form.save()
+    return redirect(reverse('propostas'))
 
 
 @login_required

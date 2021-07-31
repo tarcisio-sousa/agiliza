@@ -3,18 +3,18 @@
 {% block action %}
 <div class="row">
 	<div class="col-md-12 text-right mb-2">
-		<a href="{% url 'atividade' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Atividade</a>
-		<a href="{% url 'licenciamento_ambiental' %}" class="btn btn-sm btn-primary"> <i class="fas fa-plus-circle"></i> Licenciamento ambiental</a>
+		<a href="{% url 'atividade' %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Atividade</a>
+		<a href="{% url 'licenciamento_ambiental' %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Licenciamento ambiental</a>
 	</div>
 </div>
 {% endblock %}
 {% block body %}
 <ul class="nav nav-tabs" id="myTab" role="tablist">
 	<li class="nav-item" role="presentation">
-		<a class="nav-link active" id="atividade-tab" data-toggle="tab" href="#atividade" role="tab" aria-controls="atividade" aria-selected="true">Atividades</a>
+		<a class="nav-link link-agiliza active" id="atividade-tab" data-toggle="tab" href="#atividade" role="tab" aria-controls="atividade" aria-selected="true">Atividades</a>
 	</li>
 	<li class="nav-item" role="presentation">
-		<a class="nav-link" id="licenciamento-tab" data-toggle="tab" href="#licenciamento" role="tab" aria-controls="licenciamento" aria-selected="false">Licenciamento ambiental</a>
+		<a class="nav-link link-agiliza" id="licenciamento-tab" data-toggle="tab" href="#licenciamento" role="tab" aria-controls="licenciamento" aria-selected="false">Licenciamento ambiental</a>
 	</li>
 </ul>
 <div class="tab-content" id="myTabContent">
@@ -41,7 +41,7 @@
 							<td>{{ atividade.get_responsavel_display }}</td>
 							<td>{{ atividade.consideracoes }}</td>
 							<td>{{ atividade.get_situacao_display }}</td>
-							<td>{% if atividade.anexo %}<a href="/media/{{ atividade.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
+							<td class="text-center">{% if atividade.anexo %}<a href="/media/{{ atividade.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
 						</tr>
 						{% endfor %}
 					</tbody>
@@ -79,7 +79,7 @@
 							<td>{{ licenciamento.get_responsavel_display }}</td>
 							<td>{{ licenciamento.consideracoes }}</td>
 							<td>{{ licenciamento.get_situacao_display }}</td>
-							<td>{% if licenciamento.anexo %}<a href="/media/{{ licenciamento.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
+							<td class="text-center">{% if licenciamento.anexo %}<a href="/media/{{ licenciamento.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
 						</tr>
 						{% endfor %}
 					</tbody>
