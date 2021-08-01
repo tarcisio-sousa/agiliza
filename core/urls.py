@@ -37,6 +37,7 @@ urlpatterns = [
     path('proposta/<int:id>/<slug:situacao>', views.proposta, name='proposta'),
     path('proposta/documento/<int:id>', views.proposta_documento, name='proposta_documento'),
     path('proposta/arquivo/extrato/<int:id>', views.proposta_arquivo_extrato, name='proposta_arquivo_extrato'),
+    path('proposta/empenhar/<int:id>', views.proposta_empenhar, name='proposta_empenhar'),
 
     path('convenios', views.convenios, name='convenios'),
     path('arquivo/extrato/<int:id>', views.arquivo_extrato, name='arquivo_extrato'),

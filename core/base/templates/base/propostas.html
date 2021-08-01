@@ -87,7 +87,8 @@
 												<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
 											{% endif %}
 											{% if proposta.verifica_situacao == 'empenhada' %}
-												<a href="{% url 'proposta' proposta.id 'empenhada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a>
+												<!-- <a href="{# url 'proposta' proposta.id 'empenhada' #}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a> -->
+												<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#empenharPropostaModal" onclick="seleciona_empenhar_proposta(this)" data-id="{{ proposta.id }}"> <i class="fas fa-check-circle"></i> Empenhar </a>
 											{% endif %}
 										{% endif %}
 										<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#extratoModal" onclick="seleciona_proposta_arquivo_extrato(this)" data-id="{{ proposta.id }}"> <i class="fas fa-cloud-upload-alt"></i> Extrato </a>
@@ -113,6 +114,34 @@
 		</div>
 	</div>
 
+
+	<!-- Modal Empenhar Proposta -->
+	<div class="modal fade" id="empenharPropostaModal" tabindex="-1" aria-labelledby="empenharPropostaModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" id="formEmpenharProposta">
+				{% csrf_token %}
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="empenharPropostaModalLabel">Convênio</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<label for="">Número convênio</label>
+								<input type="text" name="numero_convenio" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm"> <i class="fas fa-check-circle"></i> Empenhar </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
 
 	<!-- Modal Extrato Proposta -->
@@ -144,6 +173,14 @@
 	</div>
 
 	<script>
-		let seleciona_proposta_arquivo_extrato = (proposta) => document.getElementById('formExtrato').action=`/proposta/arquivo/extrato/${proposta.dataset.id}`
+		let seleciona_empenhar_proposta = () => {}
+		let seleciona_proposta_arquivo_extrato = () => {}
+		let form_empenhar_proposta = document.getElementById('formEmpenharProposta')
+		let form_extrato = document.getElementById('formExtrato')
+
+		seleciona_empenhar_proposta = (elemento) => 
+			form_empenhar_proposta.action = `/proposta/empenhar/${elemento.dataset.id}`
+		seleciona_proposta_arquivo_extrato = (elemento) => 
+			form_extrato.action = `/proposta/arquivo/extrato/${elemento.dataset.id}`
 	</script>
 {% endblock %}

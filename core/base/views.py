@@ -118,14 +118,31 @@ def proposta_arquivo_extrato(request, id):
 
 
 @login_required
+def proposta_empenhar(request, id):
+    if request.method == 'POST':
+        proposta = Proposta.objects.get(id=id)
+        proposta.situacao = 'empenhada'
+        proposta.save()
+        situacao = proposta.get_situacao_display()
+        messages.add_message(request, messages.INFO, f'Proposta {proposta.numero} {situacao}')
+        if proposta.situacao == 'empenhada':
+            numero_convenio = request.POST['numero_convenio']
+            __gerar_convenio(request, proposta, numero_convenio)
+        return redirect(reverse('propostas'))
+
+
+@login_required
 def proposta_documento(request, id):
     proposta = Proposta.objects.get(id=id)
     return render(request, 'base/proposta_documento.html', {'proposta': proposta})
 
 
-def __gerar_convenio(request, proposta):
+def __gerar_convenio(request, proposta, numero_convenio=False):
     (convenio, gerado) = Convenio.objects.get_or_create(proposta=proposta)
     if gerado:
+        if (numero_convenio):
+            convenio.numero_convenio = numero_convenio
+            convenio.save()
         messages.add_message(request, messages.SUCCESS, 'Convênio gerado com sucesso!')
     else:
         messages.add_message(request, messages.INFO, 'Esta proposta possui convênio!')

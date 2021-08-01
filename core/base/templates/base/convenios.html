@@ -24,7 +24,7 @@
 						{% if perms.base.add_convenio %}
 						<th width="1%">Ações</th>
 						{% endif %}
-						<th>Convênio</th>
+						<th>Número Convênio</th>
 						<th>Proposta</th>
 						{% if perms.base.add_convenio %}
 						<th>Projeto</th>
@@ -54,7 +54,7 @@
 							{# endif #}
 						</td>
 						{% endif %}
-						<td>{{ convenio.id }}</td>
+						<td>{{ convenio.numero_convenio }}</td>
 						<td>{{ convenio.proposta }}</td>
 						{% if perms.base.add_convenio %}
 						<td> 

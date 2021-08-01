@@ -88,6 +88,7 @@ class Proposta(models.Model):
     prefeitura = models.ForeignKey('Prefeitura', on_delete=models.CASCADE, blank=False, null=False)
     lei_complementar = models.CharField(max_length=200, blank=False, null=False)
     data = models.DateField(_('Data'), blank=False, null=False)
+    data_prevista = models.DateField(_('Data Prevista'), blank=False, null=False)
     valor_contrapartida = models.FloatField(_('Valor da contrapartida'), blank=False, null=False)
     objeto = models.CharField(max_length=150, blank=True, null=True)
     numero = models.CharField(_('Número da proposta'), max_length=150, blank=False, null=False)
