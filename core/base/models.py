@@ -63,6 +63,13 @@ class Prefeito(Profissional):
         verbose_name_plural = _('prefeitos')
 
 
+class Responsavel(Profissional):
+
+    class Meta:
+        verbose_name = _('responsável')
+        verbose_name_plural = _('responsáveis')
+
+
 class SecretarioDeObras(Profissional):
 
     class Meta:
@@ -213,6 +220,15 @@ class Alternativa(models.Model):
 
     def __str__(self):
         return f'{self.descricao}'
+
+
+class ProjetoControle(models.Model):
+    item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=False, null=False)
+    alternativa = models.ForeignKey('Alternativa', on_delete=models.CASCADE, blank=False, null=False)
+    responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, blank=True, null=True)
+    observacoes = models.TextField(blank=True, null=True)
+    comentario = models.CharField(max_length=250, blank=True, null=True)
+    data_prevista = models.DateField(_('Data Prevista'), blank=True, null=True)
 
 
 class Protocolo(models.Model):

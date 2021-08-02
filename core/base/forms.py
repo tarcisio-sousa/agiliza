@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from core.base.models import Proposta, Edificacao, Estrada, Equipamento, Pavimentacao
 from core.base.models import Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa
-from core.base.models import Atividade, LicenciamentoAmbiental
+from core.base.models import Atividade, LicenciamentoAmbiental, ProjetoControle
 
 
 class PropostaForm(ModelForm):
@@ -78,6 +78,21 @@ class ProjetoForm(ModelForm):
         self.fields['orgao'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
         self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
         self.fields['tipo'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+
+
+class ProjetoControleForm(ModelForm):
+    class Meta:
+        model = ProjetoControle
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['item'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['alternativa'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['responsavel'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['observacoes'].widget.attrs.update({'class': 'form-control'})
+        self.fields['comentario'].widget.attrs.update({'class': 'form-control'})
+        self.fields['data_prevista'].widget.attrs.update({'class': 'form-control'})
 
 
 class ItemForm(ModelForm):

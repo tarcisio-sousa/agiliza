@@ -1,14 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import PropostaForm, PropostaArquivoExtratoForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
 from .forms import OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
+from .forms import ProjetoControleForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
-from .models import Atividade, LicenciamentoAmbiental
+from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle
 
 
 def signin(request):
@@ -349,8 +349,46 @@ def item_alternativas(request, id=False):
 def check_list(request, id=False):
     projeto = Projeto.objects.get(pk=id)
     itens = Item.objects.filter(projeto__id=id)
-    usuarios = User.objects.all()
-    return render(request, 'base/check_list.html', {'projeto': projeto, 'itens': itens, 'usuarios': usuarios})
+    responsaveis = Responsavel.objects.all()
+    return render(request, 'base/check_list.html', {'projeto': projeto, 'itens': itens, 'responsaveis': responsaveis})
+
+
+@login_required
+def projeto_controle(request, id=False):
+    itens = ProjetoControle.objects.all()
+    # itens = ProjetoControle.objects.filter(item__projeto__id=id)
+    return render(request, 'base/projeto_controle.html', {'itens': itens})
+
+
+@login_required
+def projeto_controle_item(request, id=False):
+    projeto_controle_item_form = ProjetoControleForm()
+
+    # if (id):
+    #     projeto_controle = ProjetoControle.objects.get(item__projeto__id=id)
+    #     projeto_controle_form = ItemAlternativaForm(instance=projeto_controle)
+
+    if request.method == 'POST':
+
+        projeto_controle_form = ProjetoControleForm(request.POST)
+
+        # if id:
+        #     projeto_controle = ProjetoControle.objects.get(item__projeto__id=id)
+        #     projeto_controle_form = ItemAlternativaForm(request.POST, instance=projeto_controle)
+
+        if projeto_controle_form.is_valid():
+            projeto_controle_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Item adicionado com sucesso!')
+            return redirect(reverse('projeto_controle', args=[id]))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item alternativa!')
+    return render(
+        request,
+        'base/projeto_controle_item.html',
+        {
+            'projeto_controle_item_form': projeto_controle_item_form
+        }
+    )
 
 
 @login_required
@@ -378,140 +416,3 @@ def licenciamento_ambiental(request):
             licenciamento_form.save()
             return redirect(reverse('protocolo'))
     return render(request, 'base/licenciamento_ambiental.html', {'licenciamento_form': licenciamento_form})
-
-
-'''
-@login_required
-def projetos(request):
-    projetos = Pavimentacao.objects.all()
-    return render(request, 'base/projetos.html', {'projetos': projetos})
-
-
-@login_required
-def projeto(request, id=False):
-    if id:
-        if (request.POST['tipo_projeto'] == 'edificacao'):
-            projeto = Edificacao()
-        elif (request.POST['tipo_projeto'] == 'estradas'):
-            projeto = Estrada()
-        elif (request.POST['tipo_projeto'] == 'equipamento'):
-            projeto = Equipamento()
-        elif (request.POST['tipo_projeto'] == 'pavimentacao'):
-            projeto = Pavimentacao()
-
-        convenio = Convenio.objects.get(id=id)
-        orgao = Orgao.objects.get(id=request.POST['orgao'])
-        projeto.orgao = orgao
-        projeto.convenio = convenio
-        projeto.tipo = request.POST['tipo_projeto']
-        projeto.save()
-        return redirect(reverse('convenios'))
-
-    return render(request, 'base/projeto.html')
-
-
-@login_required
-def projeto_estrada(request, id=False):
-
-    projeto_form = EstradaForm()
-
-    if id:
-        projeto = Estrada.objects.get(id=id)
-        projeto_form = EstradaForm(instance=projeto)
-
-    if request.method == 'POST':
-        projeto_form = EstradaForm(request.POST)
-
-        if id:
-            projeto_form = EstradaForm(request.POST, instance=projeto)
-
-        if projeto_form.is_valid():
-            projeto_form.save()
-            messages.add_message(request, messages.SUCCESS, 'Checklist de projeto salvo com sucesso!')
-            return redirect(reverse('projetos'))
-        else:
-            messages.add_message(
-                request, messages.ERROR, 'Não foi possível salvar o checklist, verifique todos os itens!'
-            )
-
-    return render(request, 'base/projeto_estrada.html', {'projeto_form': projeto_form})
-
-
-@login_required
-def projeto_edificacao(request, id=False):
-
-    projeto_form = EdificacaoForm()
-
-    if id:
-        projeto = Edificacao.objects.get(id=id)
-        projeto_form = EdificacaoForm(instance=projeto)
-
-    if request.method == 'POST':
-        projeto_form = EdificacaoForm(request.POST)
-
-        if id:
-            projeto_form = EdificacaoForm(request.POST, instance=projeto)
-
-        if projeto_form.is_valid():
-            projeto_form.save()
-            messages.add_message(request, messages.SUCCESS, 'Checklist de projeto salvo com sucesso!')
-            return redirect(reverse('projetos'))
-        else:
-            messages.add_message(
-                request, messages.ERROR, 'Não foi possível salvar o checklist, verifique todos os itens!')
-
-    return render(request, 'base/projeto_edificacao.html', {'projeto_form': projeto_form})
-
-
-@login_required
-def projeto_equipamento(request, id=False):
-
-    projeto_form = EquipamentoForm()
-
-    if id:
-        projeto = Equipamento.objects.get(id=id)
-        projeto_form = EquipamentoForm(instance=projeto)
-
-    if request.method == 'POST':
-        projeto_form = EquipamentoForm(request.POST)
-
-        if id:
-            projeto_form = EquipamentoForm(request.POST, instance=projeto)
-
-        if projeto_form.is_valid():
-            projeto_form.save()
-            messages.add_message(request, messages.SUCCESS, 'Checklist de projeto salvo com sucesso!')
-            return redirect(reverse('projetos'))
-        else:
-            messages.add_message(
-                request, messages.ERROR, 'Não foi possível salvar o checklist, verifique todos os itens!')
-
-    return render(request, 'base/projeto_equipamento.html', {'projeto_form': projeto_form})
-
-
-@login_required
-def projeto_pavimentacao(request, id=False):
-
-    projeto_form = PavimentacaoForm()
-
-    if id:
-        projeto = Pavimentacao.objects.get(id=id)
-        projeto_form = PavimentacaoForm(instance=projeto)
-
-    if request.method == 'POST':
-        projeto_form = PavimentacaoForm(request.POST)
-
-        if id:
-            projeto_form = PavimentacaoForm(request.POST, instance=projeto)
-
-        if projeto_form.is_valid():
-            projeto_form.save()
-            messages.add_message(request, messages.SUCCESS, 'Checklist de projeto salvo com sucesso!')
-            return redirect(reverse('projetos'))
-        else:
-            messages.add_message(
-                request, messages.ERROR, 'Não foi possível salvar o checklist, verifique todos os itens!'
-            )
-
-    return render(request, 'base/projeto_pavimentacao.html', {'projeto_form': projeto_form})
-'''

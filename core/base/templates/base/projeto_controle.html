@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Controle {% endblock %}
+{% block action %}
+<div class="row">
+	<div class="col-md-12 text-right mb-2">
+		<a href="{% url 'projeto_controle_item' 1 %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Adicionar Item </a>
+	</div>
+</div>
+{% endblock %}
+{% block body %}
+	<div class="row">
+		<div class="col-md-12">
+			{% if itens %}
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Opção</th>
+						<th>Data</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in itens %}
+					<tr>
+						<td>{{ item.item.descricao }}</td>
+						<td>{{ item.alternativa }}</td>
+						<td>{{ item.data_prevista }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+			<div class="alert alert-info mb-0">Nenhum item adicionado!</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

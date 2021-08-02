@@ -5,6 +5,58 @@
 
 	<form method="post" class="form"> 
 		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-12">
+				<label for="">Item</label>
+				<select name="" id="" class="form-control custom-select custom-select-sm">
+					<option value="">Selecione opção</option>
+					{% for item in itens %}
+					<option value="{{ item.id }}">{{ item.descricao }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="">Opção</label>
+				<select name="" id="" class="form-control custom-select custom-select-sm">
+					<option value="">Selecione opção</option>
+					<option value="s">Sim</option>
+					<option value="n">Não</option>
+					<option value="d">Dispensado</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="">Responsável</label>
+				<select class="form-control custom-select custom-select-sm w-100"> 
+					<option> --- </option>
+					{% for responsavel in responsaveis %}
+					<option value="{{ responsavel.id }}">{{ responsavel.nome }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="">Observação</label>
+				<textarea name="item_opcao_texto" class="form-control form-control-sm w-100"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="">Comentário</label>
+				<input type="text" name="item_opcao_descricao" class="form-control form-control-sm w-100" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="">Data Prevista</label>
+				<input type="text" name="item_opcao_data_prevista" class="form-control form-control-sm w-100" />
+			</div>
+		</div>
+		<!--
 		{% for item in itens %}
 		<div class="row">
 			<div class="col-md-12">
@@ -46,6 +98,7 @@
 			</div>
 		</div>
 		{% endfor %}
+		-->
 		<hr>
 		<div class="row">
 			<div class="col-md-12 text-right"> 

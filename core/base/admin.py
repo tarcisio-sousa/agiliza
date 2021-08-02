@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from ordered_model.admin import OrderedModelAdmin
 from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio
-from core.base.models import Orgao, Projeto, Item, Opcao, ItemAlternativa, Pavimentacao
+from core.base.models import Orgao, Projeto, Item, Opcao, ItemAlternativa, Pavimentacao, Responsavel
 
 
 @admin.register(Prefeitura)
@@ -28,6 +28,11 @@ admin.site.register(User, UserAdmin)
 
 @admin.register(Profissional)
 class ProfissionalAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'cargo']
+
+
+@admin.register(Responsavel)
+class ResponsavelAdmin(admin.ModelAdmin):
     list_display = ['nome', 'cargo']
 
 

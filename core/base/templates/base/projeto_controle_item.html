@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %}
+
+{% block title %} Controle - Item {% endblock %}
+{% block body %}
+
+	<form method="post" class="form">
+		{% csrf_token %}
+		<br />
+		<div class="row">
+			<div class="col-md-12">
+				<label for="id_prefeitura">Item</label>
+				{{ projeto_controle_item_form.item }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="id_prefeitura">Opção</label>
+				{{ projeto_controle_item_form.alternativa }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="id_prefeitura">Responsável</label>
+				{{ projeto_controle_item_form.responsavel }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="id_prefeitura">Observações</label>
+				{{ projeto_controle_item_form.observacoes }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="id_prefeitura">Comentário</label>
+				{{ projeto_controle_item_form.comentario }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label for="id_prefeitura">Data Prevista</label>
+				{{ projeto_controle_item_form.data_prevista }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right"> 
+				<button class="btn btn-primary">Salvar</button>
+			</div>
+		</div>
+		<br>
+	</form>
+{% endblock %}
