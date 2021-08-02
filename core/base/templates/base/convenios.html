@@ -37,7 +37,6 @@
 					<tr>
 						{% if perms.base.add_convenio %}
 						<td class="text-center">
-							{# if not convenio.projeto_set.all #}
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown text-center">
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
@@ -45,33 +44,15 @@
 										<li>
 											<a href="{% url 'protocolo' %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Protocolo </a>
 										</li>
-										<!--<li>
-											<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#staticBackdrop" onclick="seleciona_convenio(this)" data-id="{# convenio.id #}"> <i class="fas fa-plus-circle"></i> Projeto </a>
-										</li>-->
 									</ul>
 								</li>
 							</ul>
-							{# endif #}
 						</td>
 						{% endif %}
 						<td>{{ convenio.numero_convenio }}</td>
 						<td>{{ convenio.proposta }}</td>
 						{% if perms.base.add_convenio %}
-						<td> 
-							<!--
-							{# for projeto in convenio.projeto_set.all #}
-								{# if projeto.tipo == 'edificacao' #}
-								<a href="{# url 'projeto_edificacao' projeto.id #}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
-								{# elif projeto.tipo == 'estradas' #}
-								<a href="{# url 'projeto_estrada' projeto.id #}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
-								{# elif projeto.tipo == 'equipamento' #}
-								<a href="{# url 'projeto_equipamento' projeto.id #}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
-								{# elif projeto.tipo == 'pavimentacao' #}
-								<a href="{# url 'projeto_pavimentacao' projeto.id #}" class="dropdown-item"> <i class="fas fa-tasks"></i> Projeto [{{projeto.id}}] </a>
-								{# endif #}
-							{# endfor #}
-							-->
-						</td>
+						<td></td>
 						{% endif %}
 						<td>{{ convenio.proposta.data }}</td>
 					</tr>
@@ -151,6 +132,11 @@
 
 
 	<script>
-		let seleciona_convenio = convenio => document.getElementById('formConvenioProjeto').action=`/projeto/${convenio.dataset.id}`;
+		let seleciona_convenio = () => {}
+
+		let form_convenio_projeto = document.getElementById('formConvenioProjeto')
+		
+		seleciona_convenio = (elemento) => 
+			form_convenio_projeto.action=`/projeto/${elemento.dataset.id}`;
 	</script>
 {% endblock %}

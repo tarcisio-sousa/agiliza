@@ -87,7 +87,6 @@
 												<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
 											{% endif %}
 											{% if proposta.verifica_situacao == 'empenhada' %}
-												<!-- <a href="{# url 'proposta' proposta.id 'empenhada' #}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Empenhar</a> -->
 												<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#empenharPropostaModal" onclick="seleciona_empenhar_proposta(this)" data-id="{{ proposta.id }}"> <i class="fas fa-check-circle"></i> Empenhar </a>
 											{% endif %}
 										{% endif %}
@@ -175,6 +174,7 @@
 	<script>
 		let seleciona_empenhar_proposta = () => {}
 		let seleciona_proposta_arquivo_extrato = () => {}
+		
 		let form_empenhar_proposta = document.getElementById('formEmpenharProposta')
 		let form_extrato = document.getElementById('formExtrato')
 
