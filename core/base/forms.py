@@ -74,8 +74,6 @@ class ProjetoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.fields['orgao'].widget.attrs.update({'class': 'form-control custom-select'})
-        # self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['tipo'].widget.attrs.update({'class': 'form-control custom-select'})
 
 
@@ -99,7 +97,6 @@ class ProjetoControleItemForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.fields['controle'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['item'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['alternativa'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['responsavel'].widget.attrs.update({'class': 'form-control custom-select'})
@@ -129,8 +126,6 @@ class OpcaoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.fields['item'].widget.attrs.update({'class': 'form-control custom-select'})
-        # self.fields['usuario'].widget.attrs.update({'class': 'form-control custom-select'})
 
 
 class AlternativaForm(ModelForm):
@@ -141,7 +136,6 @@ class AlternativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['descricao'].widget.attrs.update({'class': 'form-control'})
-        # self.fields['opcao'].widget.attrs.update({'class': 'form-control custom-select'})
 
 
 class ItemAlternativaForm(ModelForm):

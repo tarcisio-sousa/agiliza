@@ -152,8 +152,6 @@ class Projeto(models.Model):
         CENTRO_ESPORTIVO = 'centro_esportivo', _('Centro Esportivo')
         EDIFICACAO = 'edificacao', _('Edificação')
 
-    # orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
-    # convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=True, null=True)
     tipo = models.CharField(
         max_length=150, choices=TipoChoice.choices, default=None, blank=True, null=True)
 
