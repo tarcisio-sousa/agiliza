@@ -357,7 +357,6 @@ def check_list(request, id=False):
 @login_required
 def convenio_projeto_controle(request, convenio_id=False):
     convenio = Convenio.objects.get(id=convenio_id)
-    print(convenio)
     try:
         controle = ProjetoControle.objects.get(convenio__id=convenio.id)
     except Exception:
@@ -409,7 +408,6 @@ def projeto_controle_item(request, controle_id=False):
             messages.add_message(request, messages.SUCCESS, 'Item adicionado com sucesso!')
             return redirect(reverse('convenio_projeto_controle', args=[controle.convenio.id]))
         else:
-            print(projeto_controle_item_form)
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item de controle!')
     return render(
         request,
