@@ -1,98 +1,120 @@
 {% extends 'base/base.html' %}
+
+{% load django_bootstrap_breadcrumbs %}
+
 {% block title %}Protocolo{% endblock %}
+
 {% block action %}
 <div class="row">
 	<div class="col-md-12 text-right mb-2">
-		<a href="{% url 'atividade' %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Atividade</a>
-		<a href="{% url 'licenciamento_ambiental' %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Licenciamento ambiental</a>
+
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item dropdown text-center">
+				<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
+				<ul class="dropdown-menu dropdown-menu-right">
+					<li>
+						<a href="{% url 'atividades' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Atividade</a>
+					</li>
+					<li> 
+						<a href="{% url 'licenciamentos_ambientais' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Licenciamento ambiental</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
 	</div>
 </div>
 {% endblock %}
 {% block body %}
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-	<li class="nav-item" role="presentation">
-		<a class="nav-link link-agiliza active" id="atividade-tab" data-toggle="tab" href="#atividade" role="tab" aria-controls="atividade" aria-selected="true">Atividades</a>
-	</li>
-	<li class="nav-item" role="presentation">
-		<a class="nav-link link-agiliza" id="licenciamento-tab" data-toggle="tab" href="#licenciamento" role="tab" aria-controls="licenciamento" aria-selected="false">Licenciamento ambiental</a>
-	</li>
-</ul>
-<div class="tab-content" id="myTabContent">
-	<div class="tab-pane fade show active" id="atividade" role="tabpanel" aria-labelledby="atividade-tab">
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Data prevista</th>
-							<th>Responsável</th>
-							<th>Considerações</th>
-							<th>Situação</th>
-							<th width="1%">Anexo</th>
-						</tr>
-					</thead>
-					{% if atividades %}
-					<tbody>
-						{% for atividade in atividades %}
-						<tr>
-							<td>{{ atividade.data }}</td>
-							<td>{{ atividade.data_prevista }}</td>
-							<td>{{ atividade.get_responsavel_display }}</td>
-							<td>{{ atividade.consideracoes }}</td>
-							<td>{{ atividade.get_situacao_display }}</td>
-							<td class="text-center">{% if atividade.anexo %}<a href="/media/{{ atividade.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-					{% else %}
-					<tfoot> 
-						<tr>
-							<td colspan="7"><div class="alert alert-info mb-0">Nenhuma atividade cadastrada!</div></td>
-						</tr>
-					</tfoot>
-					{% endif %}
-				</table>
+	{% block breadcrumbs %}
+		{% breadcrumb " Dashboard " "/" %}
+		{% breadcrumb " Convênios " "convenios" %}
+		{% breadcrumb " Protocolo " "procolo" convenio.id %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item" role="presentation">
+			<a class="nav-link link-agiliza active" id="atividade-tab" data-toggle="tab" href="#atividade" role="tab" aria-controls="atividade" aria-selected="true">Atividades</a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link link-agiliza" id="licenciamento-tab" data-toggle="tab" href="#licenciamento" role="tab" aria-controls="licenciamento" aria-selected="false">Licenciamento ambiental</a>
+		</li>
+	</ul>
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active" id="atividade" role="tabpanel" aria-labelledby="atividade-tab">
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Data</th>
+								<th>Data prevista</th>
+								<th>Responsável</th>
+								<th>Considerações</th>
+								<th>Situação</th>
+								<th width="1%">Anexo</th>
+							</tr>
+						</thead>
+						{% if atividades %}
+						<tbody>
+							{% for atividade in atividades %}
+							<tr>
+								<td>{{ atividade.data }}</td>
+								<td>{{ atividade.data_prevista }}</td>
+								<td>{{ atividade.get_responsavel_display }}</td>
+								<td>{{ atividade.consideracoes }}</td>
+								<td>{{ atividade.get_situacao_display }}</td>
+								<td class="text-center">{% if atividade.anexo %}<a href="/media/{{ atividade.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+						{% else %}
+						<tfoot> 
+							<tr>
+								<td colspan="7"><div class="alert alert-info mb-0">Nenhuma atividade cadastrada!</div></td>
+							</tr>
+						</tfoot>
+						{% endif %}
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="licenciamento" role="tabpanel" aria-labelledby="licenciamento-tab">
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Data</th>
+								<th>Data prevista</th>
+								<th>Responsável</th>
+								<th>Considerações</th>
+								<th>Situação</th>
+								<th width="1%">Anexo</th>
+							</tr>
+						</thead>
+						{% if licenciamentos %}
+						<tbody>
+							{% for licenciamento in licenciamentos %}
+							<tr>
+								<td>{{ licenciamento.data }}</td>
+								<td>{{ licenciamento.data_prevista }}</td>
+								<td>{{ licenciamento.get_responsavel_display }}</td>
+								<td>{{ licenciamento.consideracoes }}</td>
+								<td>{{ licenciamento.get_situacao_display }}</td>
+								<td class="text-center">{% if licenciamento.anexo %}<a href="/media/{{ licenciamento.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+						{% else %}
+						<tfoot> 
+							<tr>
+								<td colspan="7"><div class="alert alert-info mb-0">Nenhum licenciamento ambiental cadastrado!</div></td>
+							</tr>
+						</tfoot>
+						{% endif %}
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="tab-pane fade" id="licenciamento" role="tabpanel" aria-labelledby="licenciamento-tab">
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>Data</th>
-							<th>Data prevista</th>
-							<th>Responsável</th>
-							<th>Considerações</th>
-							<th>Situação</th>
-							<th width="1%">Anexo</th>
-						</tr>
-					</thead>
-					{% if licenciamentos %}
-					<tbody>
-						{% for licenciamento in licenciamentos %}
-						<tr>
-							<td>{{ licenciamento.data }}</td>
-							<td>{{ licenciamento.data_prevista }}</td>
-							<td>{{ licenciamento.get_responsavel_display }}</td>
-							<td>{{ licenciamento.consideracoes }}</td>
-							<td>{{ licenciamento.get_situacao_display }}</td>
-							<td class="text-center">{% if licenciamento.anexo %}<a href="/media/{{ licenciamento.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-					{% else %}
-					<tfoot> 
-						<tr>
-							<td colspan="7"><div class="alert alert-info mb-0">Nenhum licenciamento ambiental cadastrado!</div></td>
-						</tr>
-					</tfoot>
-					{% endif %}
-				</table>
-			</div>
-		</div>
-	</div>
-</div>
 {% endblock %}

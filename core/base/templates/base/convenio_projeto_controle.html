@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block title %} Controle {% endblock %}
+{% block action %}
+<div class="row">
+	<div class="col-md-12 text-right mb-2">
+		{% if not controle %}
+		<a href="{% url 'projeto_controle' convenio.id %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Criar Controle </a>
+		{% endif %}
+		{% if controle %}
+		<a href="{% url 'projeto_controle_item' controle.id %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Adicionar Item </a>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
+{% block body %}
+	{% block breadcrumbs %}
+		{% breadcrumb " Dashboard " "/" %}
+		{% breadcrumb " Convênios " "convenios" %}
+		{% breadcrumb " Controle " "convenio_projeto_controle" convenio.id %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
+	<div class="row">
+		<div class="col-md-12">
+
+			{% if controle %}
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Orgão</th>
+						<th>Projeto</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ controle.orgao }}</td>
+						<td>{{ controle.projeto.get_tipo_display }}</td>
+					</tr>
+				</tbody>
+			</table>
+			{% else %}
+			<div class="alert alert-info mb-0">Nenhum controle criado!</div>
+			<br>
+			{% endif %}
+			{% if itens %}
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Item</th>
+						<th>Opção</th>
+						<th>Responsável</th>
+						<th>Data</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in itens %}
+					<tr>
+						<td>{{ item.item.descricao }}</td>
+						<td>{{ item.alternativa }}</td>
+						<td>{{ item.responsavel }}</td>
+						<td>{{ item.data_prevista }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% elif controle %}
+			<div class="alert alert-info mb-0">Nenhum item adicionado!</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

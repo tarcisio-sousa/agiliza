@@ -1,7 +1,15 @@
 {% extends 'base/base.html' %}
 
+{% load django_bootstrap_breadcrumbs %}
+
 {% block title %}Propostas{% endblock %}
 {% block body %}
+	{% block breadcrumbs %}
+		{% breadcrumb " Dashboard " "/" %}
+		{% breadcrumb " Propostas " "propostas" %}
+		{% breadcrumb " Proposta " "proposta" %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
 
 	<form method="post" class="form">
 		{% csrf_token %}

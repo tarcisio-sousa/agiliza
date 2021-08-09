@@ -6,9 +6,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import PropostaForm, PropostaArquivoExtratoForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
 from .forms import OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
-from .forms import ProjetoControleForm
+from .forms import ProjetoControleForm, ProjetoControleItemForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
-from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle
+from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
 
 
 def signin(request):
@@ -165,6 +165,7 @@ def convenios(request):
         if request.POST['search']:
             convenios = convenios.filter(Q(numero_convenio=request.POST['search']) | Q(orgao=request.POST['search']))
 
+    convenios = convenios.order_by('-proposta__data')
     orgaos = Orgao.objects.all()
     return render(request, 'base/convenios.html', {'convenios': convenios, 'orgaos': orgaos})
 
@@ -354,65 +355,107 @@ def check_list(request, id=False):
 
 
 @login_required
-def projeto_controle(request, id=False):
-    itens = ProjetoControle.objects.all()
-    # itens = ProjetoControle.objects.filter(item__projeto__id=id)
-    return render(request, 'base/projeto_controle.html', {'itens': itens})
+def convenio_projeto_controle(request, convenio_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
+    print(convenio)
+    try:
+        controle = ProjetoControle.objects.get(convenio__id=convenio.id)
+    except Exception:
+        controle = False
+    else:
+        pass
+    finally:
+        pass
+
+    itens = False
+    if (controle):
+        itens = ProjetoControleItem.objects.filter(controle__id=controle.id)
+    return render(
+        request, 'base/convenio_projeto_controle.html', {'convenio': convenio, 'controle': controle, 'itens': itens})
 
 
 @login_required
-def projeto_controle_item(request, id=False):
-    projeto_controle_item_form = ProjetoControleForm()
+def projeto_controle(request, convenio_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
+    projeto_controle_form = ProjetoControleForm(initial={'convenio': convenio})
 
-    # if (id):
-    #     projeto_controle = ProjetoControle.objects.get(item__projeto__id=id)
-    #     projeto_controle_form = ItemAlternativaForm(instance=projeto_controle)
+    if request.method == 'POST':
+        projeto_controle_form = ProjetoControleForm(request.POST)
+
+        if projeto_controle_form.is_valid():
+            controle = projeto_controle_form.save(commit=False)
+            controle.convenio = convenio
+            controle.save()
+            messages.add_message(request, messages.SUCCESS, 'Controle criado com sucesso!')
+            return redirect(reverse('convenio_projeto_controle', args=[convenio_id]))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o controle!')
+    return render(request, 'base/projeto_controle.html', {'projeto_controle_form': projeto_controle_form})
+
+
+@login_required
+def projeto_controle_item(request, controle_id=False):
+    controle = ProjetoControle.objects.get(id=controle_id)
+    projeto_controle_item_form = ProjetoControleItemForm()
 
     if request.method == 'POST':
 
-        projeto_controle_form = ProjetoControleForm(request.POST)
+        projeto_controle_item_form = ProjetoControleItemForm(request.POST)
 
-        # if id:
-        #     projeto_controle = ProjetoControle.objects.get(item__projeto__id=id)
-        #     projeto_controle_form = ItemAlternativaForm(request.POST, instance=projeto_controle)
-
-        if projeto_controle_form.is_valid():
-            projeto_controle_form.save()
+        if projeto_controle_item_form.is_valid():
+            projeto_controle_item = projeto_controle_item_form.save(commit=False)
+            projeto_controle_item.controle = controle
+            projeto_controle_item.save()
             messages.add_message(request, messages.SUCCESS, 'Item adicionado com sucesso!')
-            return redirect(reverse('projeto_controle', args=[id]))
+            return redirect(reverse('convenio_projeto_controle', args=[controle.convenio.id]))
         else:
-            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item alternativa!')
+            print(projeto_controle_item_form)
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item de controle!')
     return render(
         request,
         'base/projeto_controle_item.html',
         {
+            'controle': controle,
             'projeto_controle_item_form': projeto_controle_item_form
         }
     )
 
 
 @login_required
-def protocolo(request):
-    atividades = Atividade.objects.all()
-    licenciamentos = LicenciamentoAmbiental.objects.all()
-    return render(request, 'base/protocolo.html', {'atividades': atividades, 'licenciamentos': licenciamentos})
+def protocolo(request, convenio_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
+    atividades = Atividade.objects.filter(convenio=convenio)
+    licenciamentos = LicenciamentoAmbiental.objects.filter(convenio=convenio)
+    return render(
+        request,
+        'base/protocolo.html',
+        {'convenio': convenio, 'atividades': atividades, 'licenciamentos': licenciamentos})
 
 
-def atividade(request):
+def atividades(request, convenio_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
     atividade_form = AtividadeForm()
     if request.method == 'POST':
         atividade_form = AtividadeForm(request.POST, request.FILES)
         if atividade_form.is_valid():
-            atividade_form.save()
+            atividade = atividade_form.save(commit=False)
+            atividade.convenio = convenio
+            atividade.save()
             return redirect(reverse('protocolo'))
-    return render(request, 'base/atividade.html', {'atividade_form': atividade_form})
+    return render(request, 'base/atividade.html', {'convenio': convenio, 'atividade_form': atividade_form})
 
 
-def licenciamento_ambiental(request):
+def licenciamentos_ambientais(request, convenio_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
     licenciamento_form = LicenciamentoForm()
     if request.method == 'POST':
         licenciamento_form = LicenciamentoForm(request.POST, request.FILES)
         if licenciamento_form.is_valid():
-            licenciamento_form.save()
+            licenciamento = licenciamento_form.save(commit=False)
+            licenciamento.convenio = convenio
+            licenciamento.save()
             return redirect(reverse('protocolo'))
-    return render(request, 'base/licenciamento_ambiental.html', {'licenciamento_form': licenciamento_form})
+    return render(
+        request,
+        'base/licenciamento_ambiental.html',
+        {'convenio': convenio, 'licenciamento_form': licenciamento_form})

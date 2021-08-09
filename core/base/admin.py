@@ -65,7 +65,7 @@ class OrgaoAdmin(admin.ModelAdmin):
 
 @admin.register(Projeto)
 class ProjetoAdmin(admin.ModelAdmin):
-    list_display = ['convenio', 'orgao', 'tipo']
+    list_display = ['tipo']
 
 
 @admin.register(Item)
