@@ -4,6 +4,13 @@
 
 {% block title %} Controle {% endblock %}
 {% block body %}
+	{% block breadcrumbs %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
+		{% breadcrumb " Convênios " "convenios" %}
+		{% breadcrumb " Controle " "convenio_projeto_controle" controle.convenio.id %}
+		{% breadcrumb " Projeto " "projeto_controle" convenio.id %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
 	<form method="post" class="form">
 		{% csrf_token %}
 		<br />

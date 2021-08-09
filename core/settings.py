@@ -79,6 +79,8 @@ TEMPLATES = [
     },
 ]
 
+BREADCRUMBS_TEMPLATE = 'base/breadcrumb_default.html' # os.path.join(BASE_DIR, '')
+
 WSGI_APPLICATION = 'core.wsgi.application'
 
 

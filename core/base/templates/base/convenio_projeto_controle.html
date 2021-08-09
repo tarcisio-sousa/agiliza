@@ -17,10 +17,10 @@
 {% endblock %}
 {% block body %}
 	{% block breadcrumbs %}
-		{% breadcrumb " Dashboard " "/" %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
 		{% breadcrumb " Convênios " "convenios" %}
 		{% breadcrumb " Controle " "convenio_projeto_controle" convenio.id %}
-		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+		{% render_breadcrumbs %}
 	{% endblock %}
 	<div class="row">
 		<div class="col-md-12">
@@ -51,7 +51,7 @@
 						<th>Item</th>
 						<th>Opção</th>
 						<th>Responsável</th>
-						<th>Data</th>
+						<th>Data Prevista</th>
 					</tr>
 				</thead>
 				<tbody>
