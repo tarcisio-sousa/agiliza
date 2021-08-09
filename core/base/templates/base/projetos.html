@@ -16,8 +16,6 @@
 				<thead>
 					<tr>
 						<th width="1%">Ações</th>
-						<th>Orgão</th>
-						<th>Convênio</th>
 						<th>Projeto</th>
 						<th></th>
 					</tr>
@@ -30,8 +28,7 @@
 								<li class="nav-item dropdown text-center">
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										<a href="{% url 'check_list' projeto.id %}" class="dropdown-item"> <i class="fas fa-check"></i> Check List</a>
-										<a href="{% url 'projeto_controle' projeto.id %}" class="dropdown-item"> <i class="fas fa-check"></i> Controle</a>
+										<!-- <a href="{% url 'projeto_controle' projeto.id %}" class="dropdown-item"> <i class="fas fa-check"></i> Controle</a> -->
 										<a href="{% url 'projeto_itens' projeto.id %}" class="dropdown-item"> <i class="fas fa-list"></i> Itens</a>
 										<a href="{% url 'projeto' projeto.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
 										<div class="dropdown-divider"></div>
@@ -40,8 +37,6 @@
 								</li>
 							</ul>
 						</td>
-						<td>{{ projeto.orgao }}</td>
-						<td>{{ projeto.convenio }}</td>
 						<td>{{ projeto.get_tipo_display }}</td>
 						<td> - </td>
 					</tr>

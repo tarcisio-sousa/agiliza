@@ -152,8 +152,8 @@ class Projeto(models.Model):
         CENTRO_ESPORTIVO = 'centro_esportivo', _('Centro Esportivo')
         EDIFICACAO = 'edificacao', _('Edificação')
 
-    orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
-    convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=True, null=True)
+    # orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
+    # convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=True, null=True)
     tipo = models.CharField(
         max_length=150, choices=TipoChoice.choices, default=None, blank=True, null=True)
 
@@ -214,6 +214,13 @@ class Alternativa(models.Model):
 
 
 class ProjetoControle(models.Model):
+    orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
+    convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=True, null=True)
+    projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, null=True)
+
+
+class ProjetoControleItem(models.Model):
+    controle = models.ForeignKey('ProjetoControle', on_delete=models.CASCADE, blank=False, null=False)
     item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=False, null=False)
     alternativa = models.ForeignKey('Alternativa', on_delete=models.CASCADE, blank=False, null=False)
     responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, blank=True, null=True)

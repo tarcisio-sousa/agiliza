@@ -1,7 +1,14 @@
 {% extends 'base/base.html' %}
 
+{% load django_bootstrap_breadcrumbs %}
+
 {% block title %}Convênios{% endblock %}
 {% block body %}
+	{% block breadcrumbs %}
+		{% breadcrumb " Dashboard " "/" %}
+		{% breadcrumb " Convênios " "convenios" %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
 	<div class="row">
 		<div class="col-md-5 offset-md-7 mb-2">
 			<form action="{% url 'convenios' %}" method="post"> 
@@ -42,7 +49,10 @@
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<ul class="dropdown-menu">
 										<li>
-											<a href="{% url 'protocolo' %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Protocolo </a>
+											<a href="{% url 'protocolo' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Protocolo </a>
+										</li>
+										<li>
+											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Controle </a>
 										</li>
 									</ul>
 								</li>

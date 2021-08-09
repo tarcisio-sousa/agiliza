@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from core.base.models import Proposta
 from core.base.models import Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa
-from core.base.models import Atividade, LicenciamentoAmbiental, ProjetoControle
+from core.base.models import Atividade, LicenciamentoAmbiental, ProjetoControle, ProjetoControleItem
 
 
 class PropostaForm(ModelForm):
@@ -45,11 +45,10 @@ class AtividadeForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
         self.fields['data_prevista'].widget.attrs.update({'class': 'form-control'})
-        self.fields['responsavel'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['responsavel'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['consideracoes'].widget.attrs.update({'class': 'form-control'})
-        self.fields['situacao'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['situacao'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['anexo'].widget.attrs.update({'class': 'form-control'})
 
 
@@ -60,11 +59,11 @@ class LicenciamentoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['data_prevista'].widget.attrs.update({'class': 'form-control'})
-        self.fields['responsavel'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['responsavel'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['consideracoes'].widget.attrs.update({'class': 'form-control'})
-        self.fields['situacao'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['situacao'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['anexo'].widget.attrs.update({'class': 'form-control'})
 
 
@@ -75,9 +74,9 @@ class ProjetoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['orgao'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
-        self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
-        self.fields['tipo'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        # self.fields['orgao'].widget.attrs.update({'class': 'form-control custom-select'})
+        # self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select'})
+        self.fields['tipo'].widget.attrs.update({'class': 'form-control custom-select'})
 
 
 class ProjetoControleForm(ModelForm):
@@ -87,9 +86,23 @@ class ProjetoControleForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['item'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
-        self.fields['alternativa'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
-        self.fields['responsavel'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['orgao'].widget.attrs.update({'class': 'form-control custom-select'})
+        self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select'})
+        self.fields['projeto'].widget.attrs.update({'class': 'form-control custom-select'})
+
+
+class ProjetoControleItemForm(ModelForm):
+    class Meta:
+        model = ProjetoControleItem
+        # fields = '__all__'
+        exclude = ('controle',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.fields['controle'].widget.attrs.update({'class': 'form-control custom-select'})
+        self.fields['item'].widget.attrs.update({'class': 'form-control custom-select'})
+        self.fields['alternativa'].widget.attrs.update({'class': 'form-control custom-select'})
+        self.fields['responsavel'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['observacoes'].widget.attrs.update({'class': 'form-control'})
         self.fields['comentario'].widget.attrs.update({'class': 'form-control'})
         self.fields['data_prevista'].widget.attrs.update({'class': 'form-control'})
@@ -103,10 +116,10 @@ class ItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['descricao'].widget.attrs.update({'class': 'form-control'})
-        self.fields['subitem'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
-        self.fields['projeto'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['subitem'].widget.attrs.update({'class': 'form-control custom-select'})
+        self.fields['projeto'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['observacoes'].widget.attrs.update({'class': 'form-control'})
-        self.fields['opcao'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['opcao'].widget.attrs.update({'class': 'form-control custom-select'})
 
 
 class OpcaoForm(ModelForm):
@@ -116,8 +129,8 @@ class OpcaoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.fields['item'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
-        # self.fields['usuario'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        # self.fields['item'].widget.attrs.update({'class': 'form-control custom-select'})
+        # self.fields['usuario'].widget.attrs.update({'class': 'form-control custom-select'})
 
 
 class AlternativaForm(ModelForm):
@@ -128,7 +141,7 @@ class AlternativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['descricao'].widget.attrs.update({'class': 'form-control'})
-        # self.fields['opcao'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        # self.fields['opcao'].widget.attrs.update({'class': 'form-control custom-select'})
 
 
 class ItemAlternativaForm(ModelForm):
@@ -139,4 +152,4 @@ class ItemAlternativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['item'].widget.attrs.update({'class': 'form-control'})
-        self.fields['alternativa'].widget.attrs.update({'class': 'form-control custom-select custom-select-sm'})
+        self.fields['alternativa'].widget.attrs.update({'class': 'form-control custom-select'})

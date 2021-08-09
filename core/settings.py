@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core.base',
     'ordered_model',
+    'django_bootstrap_breadcrumbs',
 ]
 
 MIDDLEWARE = [
