@@ -6,7 +6,7 @@
 {% block body %}
 
 	{% block breadcrumbs %}
-		{% breadcrumb " Dashboard " "/" %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
 		{% breadcrumb " Convênios " "convenios" %}
 		{% breadcrumb " Protocolo " "protocolo" convenio.id %}
 		{% breadcrumb " Licenciamentos Ambientais " "licenciamentos_ambientais" convenio.id %}

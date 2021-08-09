@@ -5,7 +5,7 @@
 {% block title %}Convênios{% endblock %}
 {% block body %}
 	{% block breadcrumbs %}
-		{% breadcrumb " Dashboard " "/" %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
 		{% breadcrumb " Convênios " "convenios" %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}

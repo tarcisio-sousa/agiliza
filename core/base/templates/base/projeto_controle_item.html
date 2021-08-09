@@ -5,8 +5,8 @@
 {% block title %} Controle - Item {% endblock %}
 {% block body %}
 	{% block breadcrumbs %}
-		{% breadcrumb " Dashboard " "/" %}
-		{% breadcrumb " Convênio " "convenios" %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
+		{% breadcrumb " Convênios " "convenios" %}
 		{% breadcrumb " Controle " "convenio_projeto_controle" controle.convenio.id %}
 		{% breadcrumb " Item " "projeto_controle_item" controle.id %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
