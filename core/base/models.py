@@ -182,6 +182,10 @@ class Opcao(models.Model):
     texto = models.BooleanField(default=False)
     responsavel = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = 'opção'
+        verbose_name_plural = 'opções'
+
     def __str__(self):
         string = ''
         if (self.descricao):
@@ -216,6 +220,13 @@ class ProjetoControle(models.Model):
     convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=True, null=True)
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, null=True)
 
+    class Meta:
+        verbose_name = 'controle'
+        verbose_name_plural = 'controles'
+
+    def __str__(self):
+        return f'{self.orgao} - {self.projeto.get_tipo_display()} - {self.convenio.numero_convenio}'
+
 
 class ProjetoControleItem(models.Model):
     controle = models.ForeignKey('ProjetoControle', on_delete=models.CASCADE, blank=False, null=False)
@@ -225,6 +236,13 @@ class ProjetoControleItem(models.Model):
     observacoes = models.TextField(blank=True, null=True)
     comentario = models.CharField(max_length=250, blank=True, null=True)
     data_prevista = models.DateField(_('Data Prevista'), blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'item'
+        verbose_name = 'itens'
+
+    def __str__(self):
+        return f'{self.item.descricao}'
 
 
 class Protocolo(models.Model):
