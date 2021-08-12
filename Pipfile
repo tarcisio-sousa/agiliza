@@ -18,6 +18,7 @@ dj-database-url = "*"
 psycopg2-binary = "*"
 pillow = "*"
 django-ordered-model = "*"
+django-bootstrap-breadcrumbs = "*"
 
 [requires]
 python_version = "3.6"

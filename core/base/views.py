@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
+from django.core.mail import send_mail
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -100,6 +101,14 @@ def proposta(request, id=False, situacao=False):
         if proposta_form.is_valid():
             proposta = proposta_form.save()
             messages.add_message(request, messages.SUCCESS, 'Proposta salva com sucesso!')
+
+            send_mail(
+                'Proposta Cadastrada',
+                'Agiliza Convênios > Proposta cadastrada com sucesso',
+                'sousa.tarcisio.s@gmail.com',
+                ['tarcisio.sales@bol.com.br', ],
+                fail_silently=False)
+
             return redirect(reverse('propostas'))
         else:
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar a proposta!')

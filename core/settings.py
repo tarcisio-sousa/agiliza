@@ -79,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-BREADCRUMBS_TEMPLATE = 'base/breadcrumb_default.html' # os.path.join(BASE_DIR, '')
+BREADCRUMBS_TEMPLATE = 'base/breadcrumb_default.html'
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
@@ -149,3 +149,13 @@ LOGIN_URL = '/signin'
 LOGIN_REDIRECT_URL = '/signin'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+
+# Configuração de email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'sousa.tarcisio.s@gmail.com'
+EMAIL_HOST_PASSWORD = 'lryomurvonnmwyqg'
