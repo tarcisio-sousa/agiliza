@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from ordered_model.admin import OrderedModelAdmin
 from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio
 from core.base.models import Orgao, Projeto, Item, Opcao, ItemAlternativa, Responsavel
+from core.base.models import ProjetoControle, ProjetoControleItem
 
 
 @admin.register(Prefeitura)
@@ -81,3 +82,15 @@ class OpcaoAdmin(OrderedModelAdmin):
 @admin.register(ItemAlternativa)
 class ItemAlternativaAdmin(OrderedModelAdmin):
     list_display = ['item']
+
+
+class ProjetoControleItemStacked(admin.StackedInline):
+    model = ProjetoControleItem
+    extra = 1
+
+
+@admin.register(ProjetoControle)
+class ProjetoControleAdmin(admin.ModelAdmin):
+    inlines = [
+        ProjetoControleItemStacked,
+    ]
