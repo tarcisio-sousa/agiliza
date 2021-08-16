@@ -3,13 +3,27 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
 from django.core.mail import send_mail
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import ItemControleSerializer
 from .forms import PropostaForm, PropostaArquivoExtratoForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
 from .forms import OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
 from .forms import ProjetoControleForm, ProjetoControleItemForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
+
+
+def notification_scheduled_job():
+    send_mail(
+        'Proposta Cadastrada',
+        'Agiliza Convênios - Proposta cadastrada com sucesso',
+        'sousa.tarcisio.s@gmail.com',
+        ['tarcisio.sales@bol.com.br', ],
+        fail_silently=False)
 
 
 def signin(request):
@@ -366,6 +380,7 @@ def check_list(request, id=False):
 @login_required
 def convenio_projeto_controle(request, convenio_id=False):
     convenio = Convenio.objects.get(id=convenio_id)
+    projeto_controle_item_form = ProjetoControleItemForm()
     try:
         controle = ProjetoControle.objects.get(convenio__id=convenio.id)
     except Exception:
@@ -379,7 +394,12 @@ def convenio_projeto_controle(request, convenio_id=False):
     if (controle):
         itens = ProjetoControleItem.objects.filter(controle__id=controle.id)
     return render(
-        request, 'base/convenio_projeto_controle.html', {'convenio': convenio, 'controle': controle, 'itens': itens})
+        request, 'base/convenio_projeto_controle.html', {
+            'convenio': convenio,
+            'controle': controle,
+            'itens': itens,
+            'projeto_controle_item_form': projeto_controle_item_form
+        })
 
 
 @login_required
@@ -398,7 +418,10 @@ def projeto_controle(request, convenio_id=False):
             return redirect(reverse('convenio_projeto_controle', args=[convenio_id]))
         else:
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar o controle!')
-    return render(request, 'base/projeto_controle.html', {'projeto_controle_form': projeto_controle_form})
+    return render(request, 'base/projeto_controle.html', {
+        'convenio': convenio,
+        'projeto_controle_form': projeto_controle_form
+    })
 
 
 @login_required
@@ -426,6 +449,45 @@ def projeto_controle_item(request, controle_id=False):
             'projeto_controle_item_form': projeto_controle_item_form
         }
     )
+
+
+@api_view(['GET', 'POST'])
+def item_controle_projeto_lista(request):
+    if request.method == 'GET':
+        itens = ProjetoControleItem.objects.all()
+        serializer = ItemControleSerializer(itens, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        # data = JSONParser().parse(request)
+        serializer = ItemControleSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def item_controle_projeto_detalhe(request, pk):
+    try:
+        item = ProjetoControleItem.objects.get(pk=pk)
+    except ProjetoControleItem.DoesNotExist:
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ItemControleSerializer(item)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = ItemControleSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        item.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @login_required
