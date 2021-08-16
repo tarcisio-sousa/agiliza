@@ -46,8 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.base',
+    'rest_framework',
     'ordered_model',
     'django_bootstrap_breadcrumbs',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -80,6 +82,10 @@ TEMPLATES = [
 ]
 
 BREADCRUMBS_TEMPLATE = 'base/breadcrumb_default.html'
+
+CRONJOBS = [
+    ('*/5 * * * *', 'core.base.views.notification_scheduled_job')
+]
 
 WSGI_APPLICATION = 'core.wsgi.application'
 

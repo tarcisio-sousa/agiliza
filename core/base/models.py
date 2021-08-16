@@ -156,7 +156,7 @@ class Projeto(models.Model):
         max_length=150, choices=TipoChoice.choices, default=None, blank=True, null=True)
 
     def __str__(self):
-        return f'Projeto {self.id} - {self.get_tipo_display()}'
+        return f'{self.id} - {self.get_tipo_display()}'
 
 
 class Item(OrderedModel):
@@ -173,7 +173,7 @@ class Item(OrderedModel):
         verbose_name_plural = "itens"
 
     def __str__(self):
-        return f'Item {self.descricao}'
+        return f'{self.descricao}'
 
 
 class Opcao(models.Model):
@@ -225,7 +225,12 @@ class ProjetoControle(models.Model):
         verbose_name_plural = 'controles'
 
     def __str__(self):
-        return f'{self.orgao} - {self.projeto.get_tipo_display()} - {self.convenio.numero_convenio}'
+        string = f'{self.orgao} '
+        if self.projeto:
+            string += f'{self.projeto} '
+        if self.convenio:
+            string += f'{self.convenio} '
+        return string
 
 
 class ProjetoControleItem(models.Model):

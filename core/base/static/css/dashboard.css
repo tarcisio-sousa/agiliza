@@ -2,6 +2,18 @@ body {
   font-size: .875rem;
 }
 
+a {
+  color: #00532e;
+  /*background-color: #00532e;*/
+  /*border-color: #026637;*/
+}
+
+a:hover {
+  color: #0f8a53;
+  /*background-color: #0f8a53;*/
+  /*border-color: #0aa45c;*/
+}
+
 .logo-agiliza {
   background: url('/static/img/logo-agiliza.png') no-repeat;
   background-size: contain;
@@ -71,6 +83,18 @@ body {
 .btn-outline-agiliza:focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(153, 255, 204, 0.25);
+}
+
+.breadcrumb-item a {
+  color: #00532e !important;
+  /*background-color: #00532e;*/
+  border-color: #026637;
+}
+
+.breadcrumb-item a:hover {
+  color: #0f8a53 !important;
+  /*background-color: #0f8a53;*/
+  border-color: #0aa45c;
 }
 
 .feather {

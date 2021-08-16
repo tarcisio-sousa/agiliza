@@ -75,6 +75,10 @@ urlpatterns = [
         name='licenciamentos_ambientais'),
 
     path('declaracoes', views.declaracoes, name='declaracoes'),
+
+    path('api/item/controle', views.item_controle_projeto_lista, name='item_controle_projeto_lista'),
+    path('api/item/controle/<int:pk>', views.item_controle_projeto_detalhe, name='item_controle_projeto_detalhe'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = 'Administrador Agiliza - Convênios'

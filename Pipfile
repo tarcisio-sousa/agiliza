@@ -19,6 +19,8 @@ psycopg2-binary = "*"
 pillow = "*"
 django-ordered-model = "*"
 django-bootstrap-breadcrumbs = "*"
+django-crontab = "*"
+djangorestframework = "*"
 
 [requires]
 python_version = "3.6"
