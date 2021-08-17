@@ -391,9 +391,8 @@ def convenio_projeto_controle(request, convenio_id=False):
         for item in itens:
             try:
                 item.item_controle = ProjetoControleItem.objects.get(controle=controle, item=item)
-            except:
+            except Exception:
                 item.item_controle = False
-        # itens = False
 
     return render(
         request, 'base/convenio_projeto_controle.html', {
