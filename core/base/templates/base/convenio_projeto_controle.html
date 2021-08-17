@@ -9,9 +9,6 @@
 		{% if not controle %}
 		<a href="{% url 'projeto_controle' convenio.id %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Criar Controle </a>
 		{% endif %}
-		{% if controle %}
-		<!-- <a href="{# url 'projeto_controle_item' controle.id #}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Adicionar Item </a> -->
-		{% endif %}
 	</div>
 </div>
 {% endblock %}
@@ -47,12 +44,6 @@
 			<div class="alert alert-info mb-0">Nenhum controle criado!</div>
 			<br>
 			{% endif %}
-			<!-- <div class="row">
-				<div class="col-md-12 mb-2 text-right">
-					<a href="javascript: void(0);" class="btn btn-sm btn-agiliza" data-toggle="modal" data-target="#itemModal"><i class="fas fa-plus-circle"></i> Item</a>
-				</div>
-			</div> -->
-			{% if itens %}
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -60,24 +51,28 @@
 						<th>Opção</th>
 						<th>Responsável</th>
 						<th>Data Prevista</th>
-						<th class="p-1" width="1%" style="vertical-align: middle;"><a href="javascript: void(0);" class="btn btn-sm btn-link" data-toggle="modal" data-target="#itemModal"> <i class="fas fa-plus"></i> </a></th>
+						<th width="1%"></th>
+						<!-- <th width="1%"></th> -->
 					</tr>
 				</thead>
 				<tbody>
 					{% for item in itens %}
 					<tr>
-						<td>{{ item.item.descricao }}</td>
-						<td>{{ item.alternativa }}</td>
-						<td>{{ item.responsavel }}</td>
-						<td>{{ item.data_prevista }}</td>
-						<td class="text-center"><a href="javascript: void(0);" onclick="removerItemControle(this)" data-item-id="{{ item.id }}" class="text-danger"><i class="fas fa-times"></i></a></td>
+						<td>{{ item.descricao }}</td>
+						<td>{{ item.item_controle.alternativa|default:"" }}</td>
+						<td>{{ item.item_controle.responsavel|default:"" }}</td>
+						<td>{{ item.item_controle.data_prevista|date:"d/m/Y"|default:"" }}</td>
+						<td class="p-1 text-center" style="vertical-align: middle;"><a href="javascript: void(0);" class="btn btn-sm btn-link" data-toggle="modal" data-target="#itemModal" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}"> <i class="fas fa-plus"></i> </a></td>
+						<td class="p-1 text-center" style="vertical-align: middle;">
+							{% if item.item_controle %}	
+							<a href="javascript: void(0);" onclick="removerItemControle(this)" data-id="{{ item.id }}" class="btn btn-sm btn-link text-danger"><i class="fas fa-times"></i></a>
+							{% endif %}
+						</td>
 					</tr>
 					{% endfor %}
+					
 				</tbody>
 			</table>
-			{% elif controle %}
-			<div class="alert alert-info mb-0">Nenhum item adicionado!</div>
-			{% endif %}
 		</div>
 	</div>
 
@@ -93,14 +88,8 @@
 					</button>
 				</div>
 				<div class="modal-body">
-						<input type="hidden" name="controle" value="{{ controle.id }}" />
-						<br />
-						<div class="row">
-							<div class="col-md-12">
-								<label for="id_prefeitura">Item</label>
-								{{ projeto_controle_item_form.item }}
-							</div>
-						</div>
+						<input type="hidden" name="controle" value="{{ controle.id }}" id="id_controle" />
+						<input type="hidden" name="item" id="id_item" />
 						<div class="row">
 							<div class="col-md-12">
 								<label for="id_prefeitura">Opção</label>
@@ -134,8 +123,8 @@
 						<br>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-					<button type="submit" class="btn btn-primary"> <i class="fas fa-plus-circle"></i> </button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal"> <i class="fas fa-times"></i> Cancelar </button>
+					<button type="submit" class="btn btn-primary"> <i class="fas fa-plus-circle"></i> Salvar </button>
 				</div>
 				</form>
 			</div>
@@ -144,6 +133,16 @@
 	<script type="text/javascript">
 		let token = document.getElementsByName('csrfmiddlewaretoken')[0].value
 
+		$('#itemModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget)
+			var itemControleID = button.data('id')
+			var itemID = button.data('item-id')
+			console.log(itemControleID)
+			console.log(itemID)
+			var modal = $(this)
+			modal.find('.modal-body input#id_item').val(itemID)
+		})
+
 		let submeterItemControle = (formulario) => {
 			event.preventDefault()
 			dados = new FormData(formulario)
@@ -151,8 +150,8 @@
 		}
 
 		let removerItemControle = (el) => {
-			let itemID = el.dataset.itemId
-			apiDeletarItemControle(itemID)
+			let id = el.dataset.id
+			apiDeletarItemControle(id)
 		}
 
 		let apiSubmeterDadosItemControle = (dados) => {
@@ -172,8 +171,8 @@
 			})
 		}
 
-		let apiDeletarItemControle = (itemID) => {
-			fetch(`/api/item/controle/${itemID}`, {
+		let apiDeletarItemControle = (id) => {
+			fetch(`/api/item/controle/${id}`, {
 				method: 'DELETE',
 				headers: {
 					'X-CSRFToken': token
