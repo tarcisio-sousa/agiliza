@@ -385,14 +385,16 @@ def convenio_projeto_controle(request, convenio_id=False):
         controle = ProjetoControle.objects.get(convenio__id=convenio.id)
     except Exception:
         controle = False
-    else:
-        pass
-    finally:
-        pass
 
-    itens = False
     if (controle):
-        itens = ProjetoControleItem.objects.filter(controle__id=controle.id)
+        itens = Item.objects.filter(projeto=controle.projeto)
+        for item in itens:
+            try:
+                item.item_controle = ProjetoControleItem.objects.get(controle=controle, item=item)
+            except:
+                item.item_controle = False
+        # itens = False
+
     return render(
         request, 'base/convenio_projeto_controle.html', {
             'convenio': convenio,
