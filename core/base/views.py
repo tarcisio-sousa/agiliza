@@ -9,7 +9,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import ItemControleSerializer
+from .serializers import ItemControleSerializer, ItemControleViewSerializer
 from .forms import PropostaForm, PropostaArquivoExtratoForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
 from .forms import OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
 from .forms import ProjetoControleForm, ProjetoControleItemForm
@@ -460,7 +460,6 @@ def item_controle_projeto_lista(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        # data = JSONParser().parse(request)
         serializer = ItemControleSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -476,7 +475,7 @@ def item_controle_projeto_detalhe(request, pk):
         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = ItemControleSerializer(item)
+        serializer = ItemControleViewSerializer(item)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
