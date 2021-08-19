@@ -22,7 +22,7 @@ def notification_scheduled_job():
         'Proposta Cadastrada',
         'Agiliza Convênios - Proposta cadastrada com sucesso',
         'sousa.tarcisio.s@gmail.com',
-        ['tarcisio.sales@bol.com.br', ],
+        ['tarcisio.sales@bol.com.br', 'lucasdantas.eng@gmail.com'],
         fail_silently=False)
 
 
@@ -386,6 +386,8 @@ def convenio_projeto_controle(request, convenio_id=False):
     except Exception:
         controle = False
 
+    itens = False
+
     if (controle):
         itens = Item.objects.filter(projeto=controle.projeto)
         for item in itens:
@@ -510,7 +512,7 @@ def atividades(request, convenio_id=False):
             atividade = atividade_form.save(commit=False)
             atividade.convenio = convenio
             atividade.save()
-            return redirect(reverse('protocolo'))
+            return redirect(reverse('protocolo', args=[convenio.id]))
     return render(request, 'base/atividade.html', {'convenio': convenio, 'atividade_form': atividade_form})
 
 
@@ -523,7 +525,7 @@ def licenciamentos_ambientais(request, convenio_id=False):
             licenciamento = licenciamento_form.save(commit=False)
             licenciamento.convenio = convenio
             licenciamento.save()
-            return redirect(reverse('protocolo'))
+            return redirect(reverse('protocolo', args=[convenio.id]))
     return render(
         request,
         'base/licenciamento_ambiental.html',

@@ -41,7 +41,7 @@ class ConvenioArquivoExtratoForm(ModelForm):
 class AtividadeForm(ModelForm):
     class Meta:
         model = Atividade
-        fields = '__all__'
+        fields = ['data_prevista', 'responsavel', 'consideracoes', 'situacao', 'anexo', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -55,11 +55,10 @@ class AtividadeForm(ModelForm):
 class LicenciamentoForm(ModelForm):
     class Meta:
         model = LicenciamentoAmbiental
-        fields = '__all__'
+        fields = ['data_prevista', 'responsavel', 'consideracoes', 'situacao', 'anexo', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['convenio'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['data_prevista'].widget.attrs.update({'class': 'form-control'})
         self.fields['responsavel'].widget.attrs.update({'class': 'form-control custom-select'})
         self.fields['consideracoes'].widget.attrs.update({'class': 'form-control'})

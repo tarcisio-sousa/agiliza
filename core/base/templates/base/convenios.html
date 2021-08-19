@@ -49,10 +49,10 @@
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<ul class="dropdown-menu">
 										<li>
-											<a href="{% url 'protocolo' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Protocolo </a>
+											<a href="{% url 'protocolo' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Histórico </a>
 										</li>
 										<li>
-											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Controle </a>
+											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Elaboração de Projeto </a>
 										</li>
 									</ul>
 								</li>
@@ -64,7 +64,7 @@
 						{% if perms.base.add_convenio %}
 						<td></td>
 						{% endif %}
-						<td>{{ convenio.proposta.data }}</td>
+						<td>{{ convenio.proposta.data|date:'d/m/Y' }}</td>
 					</tr>
 					{% endfor %}
 				</tbody>

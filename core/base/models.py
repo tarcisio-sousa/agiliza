@@ -15,6 +15,7 @@ class Cliente(models.Model):
     cidade = models.CharField(max_length=150, blank=True, null=True)
     uf = models.CharField(_('UF'), max_length=5, blank=True, null=True)
     telefone = models.CharField(max_length=15, blank=True, null=True)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
 
 class Prefeitura(Cliente):
@@ -36,6 +37,7 @@ class Profissional(models.Model):
     telefone = models.CharField(max_length=20, blank=False, null=False)
     email = models.CharField(max_length=200, blank=False, null=False)
     cargo = models.ForeignKey('Cargo', on_delete=models.CASCADE, blank=True, null=True)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name = 'profissional'
@@ -47,6 +49,7 @@ class Profissional(models.Model):
 
 class Cargo(models.Model):
     descricao = models.CharField(max_length=200, blank=False, null=False)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name = _('cargo')
@@ -103,6 +106,7 @@ class Proposta(models.Model):
         max_length=15, choices=SituacaoChoice.choices, default=SituacaoChoice.EM_ANALISE, blank=True, null=True
     )
     extrato = models.FileField(upload_to='uploads/extrato/%Y/%m/%d', max_length=150, blank=True, null=True)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name = _('proposta')
@@ -123,6 +127,7 @@ class Convenio(models.Model):
     orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
     arquivo_extrato = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
     numero_convenio = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name = _('convênio')
@@ -134,6 +139,7 @@ class Convenio(models.Model):
 
 class Orgao(models.Model):
     descricao = models.CharField(max_length=250, blank=False, null=False)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name = _('orgão')
@@ -154,6 +160,7 @@ class Projeto(models.Model):
 
     tipo = models.CharField(
         max_length=150, choices=TipoChoice.choices, default=None, blank=True, null=True)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     def __str__(self):
         return f'{self.id} - {self.get_tipo_display()}'
@@ -167,6 +174,7 @@ class Item(OrderedModel):
     sort_order = models.PositiveIntegerField(editable=False, db_index=True, blank=True, null=True)
     opcao = models.ForeignKey('Opcao', on_delete=models.CASCADE, blank=True, null=True)
     order_field_name = "sort_order"
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     class Meta(OrderedModel.Meta):
         ordering = ("sort_order",)
@@ -181,6 +189,7 @@ class Opcao(models.Model):
     alternativa = models.BooleanField(default=False)
     texto = models.BooleanField(default=False)
     responsavel = models.BooleanField(default=False)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name = 'opção'
@@ -203,6 +212,7 @@ class Opcao(models.Model):
 class ItemAlternativa(models.Model):
     item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
     alternativa = models.ManyToManyField('Alternativa')
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     def __str__(self):
         return f'{self.item}'
@@ -210,6 +220,7 @@ class ItemAlternativa(models.Model):
 
 class Alternativa(models.Model):
     descricao = models.CharField(max_length=250, blank=False, null=False)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     def __str__(self):
         return f'{self.descricao}'
@@ -219,6 +230,7 @@ class ProjetoControle(models.Model):
     orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
     convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=True, null=True)
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, null=True)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name = 'controle'
@@ -241,6 +253,7 @@ class ProjetoControleItem(models.Model):
     observacoes = models.TextField(blank=True, null=True)
     comentario = models.CharField(max_length=250, blank=True, null=True)
     data_prevista = models.DateField(_('Data Prevista'), blank=True, null=True)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name = 'item'
@@ -263,6 +276,7 @@ class Protocolo(models.Model):
 
     convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=False, null=False)
     data = models.DateField(_('Data'), auto_now=True, blank=False, null=False)
+    data_protocolado = models.DateField(_('Data Protocolado'), blank=False, null=False)
     data_prevista = models.DateField(_('Data Prevista'), blank=False, null=False)
     responsavel = models.CharField(
         max_length=250, choices=ResponsavelChoice.choices, default=None, blank=True, null=True)
@@ -270,6 +284,7 @@ class Protocolo(models.Model):
     situacao = models.CharField(
         max_length=150, choices=SituacaoChoice.choices, default=None, blank=True, null=True)
     anexo = models.FileField(upload_to='uploads/protocolos/%Y/%m/%d', max_length=150, blank=True, null=True)
+    data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     def __str__(self):
         return f'{self.data} - {self.convenio}'

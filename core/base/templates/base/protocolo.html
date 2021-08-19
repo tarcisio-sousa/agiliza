@@ -2,7 +2,7 @@
 
 {% load django_bootstrap_breadcrumbs %}
 
-{% block title %}Protocolo{% endblock %}
+{% block title %}Histórico{% endblock %}
 
 {% block action %}
 <div class="row">
@@ -13,10 +13,10 @@
 				<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 				<ul class="dropdown-menu dropdown-menu-right">
 					<li>
-						<a href="{% url 'atividades' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Atividade</a>
+						<a href="{% url 'atividades' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Orgão Concedente</a>
 					</li>
 					<li> 
-						<a href="{% url 'licenciamentos_ambientais' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Licenciamento ambiental</a>
+						<a href="{% url 'licenciamentos_ambientais' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> SEMAR </a>
 					</li>
 				</ul>
 			</li>
@@ -28,15 +28,15 @@
 	{% block breadcrumbs %}
 		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
 		{% breadcrumb " Convênios " "convenios" %}
-		{% breadcrumb " Protocolo " "procolo" convenio.id %}
+		{% breadcrumb " Histórico " "procolo" convenio.id %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		<li class="nav-item" role="presentation">
-			<a class="nav-link link-agiliza active" id="atividade-tab" data-toggle="tab" href="#atividade" role="tab" aria-controls="atividade" aria-selected="true">Atividades</a>
+			<a class="nav-link link-agiliza active" id="atividade-tab" data-toggle="tab" href="#atividade" role="tab" aria-controls="atividade" aria-selected="true">Orgão Concedente</a>
 		</li>
 		<li class="nav-item" role="presentation">
-			<a class="nav-link link-agiliza" id="licenciamento-tab" data-toggle="tab" href="#licenciamento" role="tab" aria-controls="licenciamento" aria-selected="false">Licenciamento ambiental</a>
+			<a class="nav-link link-agiliza" id="licenciamento-tab" data-toggle="tab" href="#licenciamento" role="tab" aria-controls="licenciamento" aria-selected="false">SEMAR</a>
 		</li>
 	</ul>
 	<div class="tab-content" id="myTabContent">

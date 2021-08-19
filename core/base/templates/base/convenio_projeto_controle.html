@@ -2,12 +2,12 @@
 
 {% load django_bootstrap_breadcrumbs %}
 
-{% block title %} Controle {% endblock %}
+{% block title %} Elaboração de Projeto {% endblock %}
 {% block action %}
 <div class="row">
 	<div class="col-md-12 text-right mb-2">
 		{% if not controle %}
-		<a href="{% url 'projeto_controle' convenio.id %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Criar Controle </a>
+		<a href="{% url 'projeto_controle' convenio.id %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Novo projeto </a>
 		{% endif %}
 	</div>
 </div>
@@ -16,7 +16,7 @@
 	{% block breadcrumbs %}
 		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
 		{% breadcrumb " Convênios " "convenios" %}
-		{% breadcrumb " Controle " "convenio_projeto_controle" convenio.id %}
+		{% breadcrumb " Elaboração de Projeto " "convenio_projeto_controle" convenio.id %}
 		{% render_breadcrumbs %}
 	{% endblock %}
 
@@ -41,7 +41,7 @@
 				</tbody>
 			</table>
 			{% else %}
-			<div class="alert alert-info mb-0">Nenhum controle criado!</div>
+			<div class="alert alert-info mb-0">Nenhum projeto criado!</div>
 			<br>
 			{% endif %}
 			<table class="table table-bordered">
@@ -56,23 +56,27 @@
 					</tr>
 				</thead>
 				<tbody>
+					{% if itens %}
 					{% for item in itens %}
 					<tr class="item-controle">
-						<td class="descricao">{{ item.descricao }}</td>
+						<td>
+							<div class="descricao">{{ item.descricao }}</div>
+							<div class="observacoes text-danger">{{ item.item_controle.observacoes }}</div>
+						</td>
 						<td class="alternativa">{{ item.item_controle.alternativa|default:"" }}</td>
 						<td class="responsavel">{{ item.item_controle.responsavel|default:"" }}</td>
 						<td class="data_prevista">{{ item.item_controle.data_prevista|date:"d/m/Y"|default:"" }}</td>
 						<td class="p-1 text-center" style="vertical-align: middle;">
-							<a href="javascript: void(0);" class="btn btn-sm btn-link adicionar-item-controle" data-position="{{ forloop.counter }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)"> <i class="fas fa-check"></i> </a>
+							<a href="javascript: void(0);" class="btn btn-sm btn-link adicionar-item-controle" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)"> <i class="fas fa-check"></i> </a>
 						</td>
 						<td class="p-1 text-center remover" style="vertical-align: middle;">
 							{% if item.item_controle %}	
-							<a href="javascript: void(0);" onclick="removerItemControle(this)" data-id="{{ item.id }}" class="btn btn-sm btn-link text-danger"><i class="fas fa-times"></i></a>
+							<a href="javascript: void(0);" class="btn btn-sm btn-link text-danger" data-posicao="{{ forloop.counter0 }}" data-id="{{ item.item_controle.id }}" onclick="removerItemControle(this)"><i class="fas fa-times"></i></a>
 							{% endif %}
 						</td>
 					</tr>
 					{% endfor %}
-					
+					{% endif %}
 				</tbody>
 			</table>
 		</div>
@@ -153,7 +157,9 @@
 
 		let removerItemControle = (el) => {
 			let id = el.dataset.id
-			apiDeletarItemControle(id)
+			let posicao = el.dataset.posicao
+			console.log(el.dataset)
+			apiDeletarItemControle(id, posicao)
 		}
 
 		let apiSubmeterDadosItemControle = (dados, posicao = false) => {
@@ -188,16 +194,33 @@
 
 		let carregarItemControle = (item, posicao = false) => {
 			let alternativa = document.getElementsByClassName('alternativa')[posicao]
+			let observacoes = document.getElementsByClassName('observacoes')[posicao]
 			let responsavel = document.getElementsByClassName('responsavel')[posicao]
 			let data_prevista = document.getElementsByClassName('data_prevista')[posicao]
 			let remover = document.getElementsByClassName('remover')[posicao]
 			alternativa.innerHTML = item.alternativa.descricao
+			observacoes.innerHTML = item.observacoes
 			responsavel.innerHTML = item.responsavel.nome
 			data_prevista.innerHTML = formatarData(item.data_prevista)
 			remover.innerHTML = `<a href='javascript: void(0);' onclick='removerItemControle(this)' data-id='${item.id}' class='btn btn-sm btn-link text-danger'><i class='fas fa-times'></i></a>`
 		}
 
-		let apiDeletarItemControle = (id) => {
+		let deletarItemControle = (posicao = false) => {
+			console.log(posicao)
+			console.log(document.getElementsByClassName('alternativa')[posicao])
+			let alternativa = document.getElementsByClassName('alternativa')[posicao]
+			let observacoes = document.getElementsByClassName('observacoes')[posicao]
+			let responsavel = document.getElementsByClassName('responsavel')[posicao]
+			let data_prevista = document.getElementsByClassName('data_prevista')[posicao]
+			let remover = document.getElementsByClassName('remover')[posicao]
+			alternativa.innerHTML = ''
+			observacoes.innerHTML = ''
+			responsavel.innerHTML = ''
+			data_prevista.innerHTML = ''
+			remover.innerHTML = ''
+		}
+
+		let apiDeletarItemControle = (id, posicao = false) => {
 			fetch(`/api/item/controle/${id}`, {
 				method: 'DELETE',
 				headers: {
@@ -207,6 +230,7 @@
 			.then(response => console.log(response))
 			.then(data => {
 				console.log('Success: ', data)
+				deletarItemControle(posicao)
 			})
 			.catch(error => console.log('Error: ', error)) }
 
