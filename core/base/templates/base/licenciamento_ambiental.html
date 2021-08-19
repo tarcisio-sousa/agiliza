@@ -2,14 +2,14 @@
 
 {% load django_bootstrap_breadcrumbs %}
 
-{% block title %}Licenciamento Ambiental{% endblock %}
+{% block title %}SEMAR{% endblock %}
 {% block body %}
 
 	{% block breadcrumbs %}
 		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
 		{% breadcrumb " Convênios " "convenios" %}
-		{% breadcrumb " Protocolo " "protocolo" convenio.id %}
-		{% breadcrumb " Licenciamentos Ambientais " "licenciamentos_ambientais" convenio.id %}
+		{% breadcrumb " Histórico " "protocolo" convenio.id %}
+		{% breadcrumb " SEMAR " "licenciamentos_ambientais" convenio.id %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 

@@ -2,15 +2,15 @@
 
 {% load django_bootstrap_breadcrumbs %}
 
-{% block title %}Atividade{% endblock %}
+{% block title %}Orgão Concedente{% endblock %}
 
 {% block body %}
 
 	{% block breadcrumbs %}
 		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
 		{% breadcrumb " Convênios " "convenios" %}
-		{% breadcrumb " Protocolo " "protocolo" convenio.id %}
-		{% breadcrumb " Atividade " "atividades" convenio.id %}
+		{% breadcrumb " Histórico " "protocolo" convenio.id %}
+		{% breadcrumb " Orgão Concedente " "atividades" convenio.id %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 
