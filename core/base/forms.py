@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 from core.base.models import Proposta
 from core.base.models import Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa
@@ -8,6 +9,7 @@ class PropostaForm(ModelForm):
     class Meta:
         model = Proposta
         fields = '__all__'
+        widgets = {'valor_contrapartida': forms.TextInput() }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -15,7 +17,10 @@ class PropostaForm(ModelForm):
             'class': 'form-control form-control-sm custom-select custom-select-sm'})
         self.fields['lei_complementar'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['data'].widget.attrs.update({'class': 'form-control form-control-sm date'})
-        self.fields['valor_contrapartida'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['valor_contrapartida'].widget.attrs.update({
+            'class': 'form-control form-control-sm money'})
+        self.fields['valor_contrapartida'].localize = True
+        self.fields['valor_contrapartida'].widget.is_localized = True
         self.fields['objeto'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['numero'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['data_prevista'].widget.attrs.update({'class': 'form-control form-control-sm date'})

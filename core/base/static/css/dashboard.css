@@ -18,6 +18,10 @@ a:hover {
   text-align: center;
 }
 
+.money {
+  text-align: right;
+}
+
 .logo-agiliza {
   background: url('/static/img/logo-agiliza.png') no-repeat;
   background-size: contain;
