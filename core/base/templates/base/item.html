@@ -6,31 +6,31 @@
 	<form method="post" class="form"> 
 		{% csrf_token %}
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 form-group">
 				<label>Descricao</label>
 				{{ item_form.descricao }}
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 form-group">
 				<label>Subitem de</label>
 				{{ item_form.subitem }}
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 form-group">
 				<label>Projeto</label>
 				{{ item_form.projeto }}
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 form-group">
 				<label>Observações</label>
 				{{ item_form.observacoes }}
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 form-group">
 				<label>Opção</label>
 				{{ item_form.opcao }}
 			</div>
@@ -38,7 +38,7 @@
 		<hr>
 		<div class="row">
 			<div class="col-md-12 text-right"> 
-				<button class="btn btn-primary">Salvar</button>
+				<button class="btn btn-sm btn-primary px-3 py-1">Salvar</button>
 			</div>
 		</div>
 	</form>

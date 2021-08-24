@@ -87,6 +87,11 @@ CRONJOBS = [
     ('*/5 * * * *', 'core.base.views.notification_scheduled_job')
 ]
 
+REST_FRAMEWORK = {
+    'DATE_INPUT_FORMATS': ['%d/%m/%Y', ],
+    'DATE_FORMAT': '%Y-%m-%d',
+}
+
 WSGI_APPLICATION = 'core.wsgi.application'
 
 

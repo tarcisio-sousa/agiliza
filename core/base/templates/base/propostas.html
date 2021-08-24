@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-md-12 text-right mb-2">
 	{% if perms.base.add_proposta %}
-		<a href="{% url 'proposta' %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Criar proposta </a>
+		<a href="{% url 'proposta' %}" class="btn btn-sm btn-link-agiliza px-3">CRIAR <i class="fas fa-plus"></i> </a>
 	{% endif %}
 	</div>
 </div>
@@ -135,9 +135,9 @@
 					</div>
 					<div class="modal-body">
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-12 form-group">
 								<label for="">Número convênio</label>
-								<input type="text" name="numero_convenio" class="form-control" />
+								<input type="text" name="numero_convenio" class="form-control form-control-sm" />
 							</div>
 						</div>
 					</div>
