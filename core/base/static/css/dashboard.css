@@ -14,6 +14,10 @@ a:hover {
   /*border-color: #0aa45c;*/
 }
 
+.date {
+  text-align: center;
+}
+
 .logo-agiliza {
   background: url('/static/img/logo-agiliza.png') no-repeat;
   background-size: contain;

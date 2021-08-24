@@ -116,12 +116,12 @@ def proposta(request, id=False, situacao=False):
             proposta = proposta_form.save()
             messages.add_message(request, messages.SUCCESS, 'Proposta salva com sucesso!')
 
-            send_mail(
-                'Proposta Cadastrada',
-                'Agiliza Convênios > Proposta cadastrada com sucesso',
-                'sousa.tarcisio.s@gmail.com',
-                ['tarcisio.sales@bol.com.br', ],
-                fail_silently=False)
+            # send_mail(
+            #     'Proposta Cadastrada',
+            #     'Agiliza Convênios > Proposta cadastrada com sucesso',
+            #     'sousa.tarcisio.s@gmail.com',
+            #     ['tarcisio.sales@bol.com.br', ],
+            #     fail_silently=False)
 
             return redirect(reverse('propostas'))
         else:

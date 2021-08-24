@@ -1,1 +1,12 @@
-<footer></footer>
+<footer>
+	<script>
+		$(function () {
+			$.datetimepicker.setLocale('pt-BR')
+			$('.date').datetimepicker({
+				format: 'd/m/Y',
+				timepicker: false,
+				mask: true,
+			})
+		})
+	</script>
+</footer>

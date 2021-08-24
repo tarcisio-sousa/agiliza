@@ -15,54 +15,57 @@
 		{% csrf_token %}
 		<br />
 		<div class="row">
-			<div class="col-md-5">
-				<label for="id_prefeitura">Prefeitura</label>
-				{{ proposta_form.prefeitura }}
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="col-md-9">
-				<label for="id_lei_complementar">Lei Complementar</label>
-				{{ proposta_form.lei_complementar }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3">
-				<label for="id_data">Data</label>
-				{{ proposta_form.data }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<label for="id_valor_contrapartida">Valor da contrapartida</label>
-				{{ proposta_form.valor_contrapartida }}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-8">
-				<label for="id_objeto">Objeto</label>
-				{{ proposta_form.objeto }}
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-md-6">
-				<label for="id_numero">Número da proposta</label>
-				{{ proposta_form.numero }}
+				<div class="row">
+					<div class="col-md-12 form-group">
+						<label for="id_prefeitura">Prefeitura</label>
+						{{ proposta_form.prefeitura }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-9 form-group">
+						<label for="id_numero">Número da proposta</label>
+						{{ proposta_form.numero }}
+					</div>
+				</div> 
+				<div class="row">
+					<div class="col-md-4 form-group">
+						<label for="id_data">Data</label>
+						{{ proposta_form.data }}
+					</div>
+					<div class="col-md-4 form-group">
+						<label for="id_data">Data Prevista</label>
+						<div class='date'>
+							{{ proposta_form.data_prevista }}
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3">
-				<label for="id_data">Data Prevista</label>
-				<div class='date'>
-					{{ proposta_form.data_prevista }}
+			<div class="col-md-6"> 
+				<div class="row">
+					<div class="col-md-10 form-group">
+						<label for="id_lei_complementar">Lei Complementar</label>
+						{{ proposta_form.lei_complementar }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 form-group">
+						<label for="id_objeto">Objeto</label>
+						{{ proposta_form.objeto }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 form-group">
+						<label for="id_valor_contrapartida">Valor da contrapartida</label>
+						{{ proposta_form.valor_contrapartida }}
+					</div>
 				</div>
 			</div>
 		</div>
 		<hr>
 		<div class="row">
 			<div class="col-md-12 text-right"> 
-				<button class="btn btn-primary">Salvar</button>
+				<button class="btn btn-sm btn-primary px-3 py-1">Salvar</button>
 			</div>
 		</div>
 		<br>

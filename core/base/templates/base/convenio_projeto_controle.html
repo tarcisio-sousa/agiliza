@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-md-12 text-right mb-2">
 		{% if not controle %}
-		<a href="{% url 'projeto_controle' convenio.id %}" class="btn btn-sm btn-agiliza"> <i class="fas fa-plus-circle"></i> Novo projeto </a>
+		<a href="{% url 'projeto_controle' convenio.id %}" class="btn btn-sm btn-link-agiliza px-3">CRIAR <i class="fas fa-plus"></i> </a>
 		{% endif %}
 	</div>
 </div>
@@ -94,39 +94,34 @@
 					</button>
 				</div>
 				<div class="modal-body">
-						<input type="hidden" name="controle" value="{{ controle.id }}" id="id_controle" />
-						<input type="hidden" name="item" id="id_item" />
-						<div class="row">
-							<div class="col-md-12">
-								<label for="id_prefeitura">Opção</label>
-								{{ projeto_controle_item_form.alternativa }}
-							</div>
+					<input type="hidden" name="controle" value="{{ controle.id }}" id="id_controle" />
+					<input type="hidden" name="item" id="id_item" />
+					<div class="row">
+						<div class="col-md-5 form-group">
+							<label for="id_prefeitura">Opção</label>
+							{{ projeto_controle_item_form.alternativa }}
 						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<label for="id_prefeitura">Responsável</label>
-								{{ projeto_controle_item_form.responsavel }}
-							</div>
+						<div class="col-md-3 form-group">
+							<label for="id_prefeitura">Data Prevista</label>
+							{{ projeto_controle_item_form.data_prevista }}
 						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<label for="id_prefeitura">Observações</label>
-								{{ projeto_controle_item_form.observacoes }}
-							</div>
+						<div class="col-md-4 form-group">
+							<label for="id_prefeitura">Responsável</label>
+							{{ projeto_controle_item_form.responsavel }}
 						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<label for="id_prefeitura">Comentário</label>
-								{{ projeto_controle_item_form.comentario }}
-							</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 form-group">
+							<label for="id_prefeitura">Observações</label>
+							{{ projeto_controle_item_form.observacoes }}
 						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<label for="id_prefeitura">Data Prevista</label>
-								{{ projeto_controle_item_form.data_prevista }}
-							</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 form-group">
+							<label for="id_prefeitura">Comentário</label>
+							{{ projeto_controle_item_form.comentario }}
 						</div>
-						<br>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal"> <i class="fas fa-times"></i> Cancelar </button>

@@ -8,7 +8,7 @@
 <div class="row">
 	<div class="col-md-12 text-right mb-2">
 
-		<ul class="navbar-nav mr-auto">
+		<!-- <ul class="navbar-nav mr-auto">
 			<li class="nav-item dropdown text-center">
 				<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 				<ul class="dropdown-menu dropdown-menu-right">
@@ -20,7 +20,7 @@
 					</li>
 				</ul>
 			</li>
-		</ul>
+		</ul> -->
 	</div>
 </div>
 {% endblock %}
@@ -52,6 +52,9 @@
 								<th>Considerações</th>
 								<th>Situação</th>
 								<th width="1%">Anexo</th>
+								<th width="1%" class="p-0">
+									<a class="nav-link link-agiliza active mb-1" href="{% url 'atividades' convenio.id %}"> <i class="fas fa-plus"></i> </a>
+								</th>
 							</tr>
 						</thead>
 						{% if atividades %}
@@ -90,6 +93,9 @@
 								<th>Considerações</th>
 								<th>Situação</th>
 								<th width="1%">Anexo</th>
+								<th width="1%" class="p-0">
+									<a class="nav-link link-agiliza mb-1" href="{% url 'licenciamentos_ambientais' convenio.id %}"> <i class="fas fa-plus"></i> </a>
+								</th>
 							</tr>
 						</thead>
 						{% if licenciamentos %}
