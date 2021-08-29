@@ -79,7 +79,9 @@ alertify.defaults = {
     },
 };
 
-// alertify.alert('Ready!');
+alertify.defaults.theme.ok = "btn btn-sm btn-primary";
+alertify.defaults.theme.cancel = "btn btn-sm btn-secondary";
+alertify.defaults.theme.input = "form-control";
 
 $(function () {
     $.datetimepicker.setLocale('pt-BR')
