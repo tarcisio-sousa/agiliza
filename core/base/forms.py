@@ -9,7 +9,7 @@ class PropostaForm(ModelForm):
     class Meta:
         model = Proposta
         fields = '__all__'
-        widgets = {'valor_contrapartida': forms.TextInput() }
+        widgets = {'valor_contrapartida': forms.TextInput()}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
