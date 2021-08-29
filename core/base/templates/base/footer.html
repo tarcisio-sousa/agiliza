@@ -1,13 +1,4 @@
+{% load static %}
 <footer>
-	<script>
-		$(function () {
-			$.datetimepicker.setLocale('pt-BR')
-			$('.date').datetimepicker({
-				format: 'd/m/Y',
-				timepicker: false,
-				mask: true,
-			})
-			$('.money').mask('000.000.000.000.000,00', {reverse: true})
-		})
-	</script>
+	<script src="{% static 'js/main.js' %}"></script>
 </footer>
