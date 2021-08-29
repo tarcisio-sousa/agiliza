@@ -44,7 +44,7 @@
 			<div class="alert alert-info mb-0">Nenhum projeto criado!</div>
 			<br>
 			{% endif %}
-			<table class="table table-bordered">
+			<table class="table table-bordered table-hover">
 				<thead>
 					<tr>
 						<th>Item</th>
@@ -66,12 +66,16 @@
 						<td class="alternativa">{{ item.item_controle.alternativa|default:"" }}</td>
 						<td class="responsavel">{{ item.item_controle.responsavel|default:"" }}</td>
 						<td class="data_prevista">{{ item.item_controle.data_prevista|date:"d/m/Y"|default:"" }}</td>
-						<td class="p-1 text-center" style="vertical-align: middle;">
-							<a href="javascript: void(0);" class="btn btn-sm btn-link adicionar-item-controle" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)"> <i class="fas fa-check"></i> </a>
+						<td class="submeter_item_controle p-1 text-center" style="vertical-align: middle;">
+							{% if not item.item_controle.id %}
+							<a href="javascript: void(0);" class="btn btn-sm btn-link botao_submeter_item_controle" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)"><i class="fas fa-circle"></i></a>
+							{% else %}
+							<a href="javascript: void(0);" class="btn btn-sm btn-link text-success botao_submeter_item_controle" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)"><i class="fas fa-check-circle"></i></a>
+							{% endif %}
 						</td>
 						<td class="p-1 text-center remover" style="vertical-align: middle;">
 							{% if item.item_controle %}	
-							<a href="javascript: void(0);" class="btn btn-sm btn-link text-danger" data-posicao="{{ forloop.counter0 }}" data-id="{{ item.item_controle.id }}" onclick="removerItemControle(this)"><i class="fas fa-times"></i></a>
+							<a href="javascript: void(0);" class="btn btn-sm btn-link text-danger" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id }}" onclick="removerItemControle(this)"><i class="fas fa-times-circle"></i></a>
 							{% endif %}
 						</td>
 					</tr>
@@ -124,8 +128,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal"> <i class="fas fa-times"></i> Cancelar </button>
-					<button type="submit" class="btn btn-primary"> <i class="fas fa-plus-circle"></i> Salvar </button>
+					<button type="submit" class="btn btn-sm btn-primary px-3 py-1"> Salvar </button>
+					<button type="button" class="btn btn-sm btn-secondary px-3 py-1" data-dismiss="modal"> Cancelar </button>
 				</div>
 				</form>
 			</div>
@@ -137,29 +141,48 @@
 		let abrirItemModal = (el) => {
 			let posicao = pegarPosicaoItem(el)
 			$('#itemModal').modal('show')
+			document.getElementById('itemControleForm').reset();
 			document.getElementById('itemControleForm').dataset.posicao = posicao
+			if (el.dataset.id != 'False') {
+				document.getElementById('itemControleForm').dataset.id = el.dataset.id
+				apiCarregarFormularioItemControle(el.dataset.id)
+			}
 			document.getElementById('id_item').value = el.dataset.itemId
-			// document.getElementById('id_item_controle').value = el.dataset.id
 		}
 
 
 		let submeterItemControle = (formulario) => {
 			event.preventDefault()
 			let posicao = formulario.dataset.posicao
+			let id = formulario.dataset.id || false
 			dados = new FormData(formulario)
-			apiSubmeterDadosItemControle(dados, posicao)
+			apiSubmeterDadosItemControle(dados, id, posicao)
 		}
 
 		let removerItemControle = (el) => {
 			let id = el.dataset.id
+			let item = el.dataset.itemId
 			let posicao = el.dataset.posicao
-			console.log(el.dataset)
-			apiDeletarItemControle(id, posicao)
+			alertify.confirm(
+				'Remover item', 
+				'Tem certeza que deseja remover este item?', 
+				function() { 
+					apiDeletarItemControle(id, item, posicao)
+				},
+				function() { console.log('Não foi possível remover o item') })
+				.set('labels', {ok: 'Sim', cancel: 'Não'})
 		}
 
-		let apiSubmeterDadosItemControle = (dados, posicao = false) => {
-			fetch(`/api/item/controle`, {
-				method: 'POST',
+		function pegarMetodoSubmeter(id) {
+			if (id) return { url: `/api/item/controle/${id}`, method: 'PUT' }
+			return { url: `/api/item/controle`, method: 'POST' }
+		}
+
+		let apiSubmeterDadosItemControle = (dados, id, posicao = false) => {
+			let requisicao = pegarMetodoSubmeter(id)
+
+			fetch(requisicao.url, {
+				method: requisicao.method,
 				headers: {
 					'X-CSRFToken': token
 				},
@@ -167,7 +190,7 @@
 			})
 			.then(response => response.json())
 			.then(data => {
-				console.log('Success: ', data)
+				// console.log('Success: ', data)
 				apiCarregarDadosItemControle(data.id, posicao)
 				fecharItemModal()
 			})
@@ -182,10 +205,33 @@
 			})
 			.then(response => response.json())
 			.then(data => {
-				console.log('Success: ', data)
+				// console.log('Success: ', data)
 				carregarItemControle(data, posicao)
 			})
 			.catch(error => console.log('Error: ', error)) }
+
+		let apiCarregarFormularioItemControle = (id) => {
+			fetch(`/api/item/controle/${id}`, {
+				method: 'GET',
+				headers: {
+					'X-CSRFToken': token
+				}
+			})
+			.then(response => response.json())
+			.then(data => {
+				// console.log('Success: ', data)
+				carregarFormularioItemControle(data)
+			})
+			.catch(error => console.log('Error: ', error)) }
+
+		let carregarFormularioItemControle = (item) => {
+			console.log(item)
+			document.getElementById('id_alternativa').value = item.alternativa.id
+			document.getElementById('id_data_prevista').value = formatarData(item.data_prevista)
+			document.getElementById('id_responsavel').value = item.responsavel.id
+			document.getElementById('id_observacoes').value = item.observacoes
+			document.getElementById('id_comentario').value = item.comentario
+		}
 
 		let carregarItemControle = (item, posicao = false) => {
 			let alternativa = document.getElementsByClassName('alternativa')[posicao]
@@ -193,29 +239,31 @@
 			let responsavel = document.getElementsByClassName('responsavel')[posicao]
 			let data_prevista = document.getElementsByClassName('data_prevista')[posicao]
 			let remover = document.getElementsByClassName('remover')[posicao]
+			let submeter = document.getElementsByClassName('submeter_item_controle')[posicao]
 			alternativa.innerHTML = item.alternativa.descricao
 			observacoes.innerHTML = item.observacoes
 			responsavel.innerHTML = item.responsavel.nome
 			data_prevista.innerHTML = formatarData(item.data_prevista)
-			remover.innerHTML = `<a href='javascript: void(0);' onclick='removerItemControle(this)' data-id='${item.id}' class='btn btn-sm btn-link text-danger'><i class='fas fa-times'></i></a>`
+			remover.innerHTML = `<a href='javascript: void(0);' onclick='removerItemControle(this)' data-posicao='${posicao}' data-item-id='${item.item}' data-id='${item.id}' class='btn btn-sm btn-link text-danger'><i class='fas fa-times-circle'></i></a>`
+			submeter.innerHTML = `<a href='javascript: void(0);' class='btn btn-sm btn-link text-success submeter_item_controle' data-posicao='${posicao}' data-item-id='${item.item}' data-id='${item.id}' onclick='abrirItemModal(this)'><i class='fas fa-check-circle'></i></a>`
 		}
 
-		let deletarItemControle = (posicao = false) => {
-			console.log(posicao)
-			console.log(document.getElementsByClassName('alternativa')[posicao])
+		let deletarItemControle = (id, item, posicao = false) => {
 			let alternativa = document.getElementsByClassName('alternativa')[posicao]
 			let observacoes = document.getElementsByClassName('observacoes')[posicao]
 			let responsavel = document.getElementsByClassName('responsavel')[posicao]
 			let data_prevista = document.getElementsByClassName('data_prevista')[posicao]
 			let remover = document.getElementsByClassName('remover')[posicao]
+			let submeter = document.getElementsByClassName('submeter_item_controle')[posicao]
 			alternativa.innerHTML = ''
 			observacoes.innerHTML = ''
 			responsavel.innerHTML = ''
 			data_prevista.innerHTML = ''
 			remover.innerHTML = ''
+			submeter.innerHTML = `<a href='javascript: void(0);' class='btn btn-sm btn-link submeter_item_controle' data-posicao='${posicao}' data-item-id='${item}' data-id='False' onclick='abrirItemModal(this)'><i class='fas fa-circle'></i></a>`
 		}
 
-		let apiDeletarItemControle = (id, posicao = false) => {
+		let apiDeletarItemControle = (id, item, posicao = false) => {
 			fetch(`/api/item/controle/${id}`, {
 				method: 'DELETE',
 				headers: {
@@ -224,8 +272,9 @@
 			})
 			.then(response => console.log(response))
 			.then(data => {
-				console.log('Success: ', data)
-				deletarItemControle(posicao)
+				// console.log('Success: ', data)
+				console.log(id, item, posicao)
+				deletarItemControle(id, item, posicao)
 			})
 			.catch(error => console.log('Error: ', error)) }
 
@@ -234,7 +283,7 @@
 		}
 
 		function pegarPosicaoItem(item) {
-			var lista = document.getElementsByClassName('adicionar-item-controle')
+			var lista = document.getElementsByClassName('botao_submeter_item_controle')
 			lista = [].slice.call(lista)
 			posicao = lista.indexOf(item)
 			return posicao
