@@ -1,23 +1,35 @@
 {% extends 'base/base.html' %}
 
+{% load django_bootstrap_breadcrumbs %}
+
 {% block title %}Itens{% endblock %}
+
 {% block action %}
 	<div class="row">
 		<div class="col-md-12 text-right mb-2">
+			{% comment %}
 			<a href="{% url 'item' %}" class="btn btn-sm btn-link-agiliza px-3">CRIAR <i class="fas fa-plus"></i> </a>
+			{% endcomment %}
 		</div>
 	</div>
 {% endblock %}
 {% block body %}
+
+	{% block breadcrumbs %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
+		{% breadcrumb " Projetos " "projetos" %}
+		{% breadcrumb " Itens " "projeto_itens" projeto.id %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
+
 	<div class="row">
 		<div class="col-md-12">
 			{% if itens %}
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th width="1%">Ações</th>
+						<th class="p-0" width="1%"><a href="{% url 'projeto_item' projeto.id %}" class="nav-link link-agiliza active mb-1"> <i class="fas fa-plus"></i> </a></th>
 						<th>Descrição</th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -28,15 +40,14 @@
 								<li class="nav-item dropdown text-center">
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										<a href="{% url 'item' item.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
+										<a href="{% url 'projeto_item' projeto.id item.id %}" class="dropdown-item"> Editar</a>
 										<div class="dropdown-divider"></div>
-										<a href="{% url 'item' item.id %}" class="dropdown-item"> <i class="fas fa-eye"></i> Visualizar</a>
+										<a href="{% url 'projeto_item' projeto.id item.id %}" class="dropdown-item"> Visualizar</a>
 									</div>
 								</li>
 							</ul>
 						</td>
 						<td>{{ item.descricao }}</td>
-						<td> - </td>
 					</tr>
 					{% endfor %}
 				</tbody>

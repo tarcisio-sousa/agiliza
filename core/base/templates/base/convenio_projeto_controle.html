@@ -50,7 +50,7 @@
 						<th>Item</th>
 						<th>Opção</th>
 						<th>Responsável</th>
-						<th>Data Prevista</th>
+						<th style="white-space: nowrap;">Data Prevista</th>
 						<th width="1%"></th>
 						<!-- <th width="1%"></th> -->
 					</tr>
@@ -60,12 +60,13 @@
 					{% for item in itens %}
 					<tr class="item-controle">
 						<td>
-							<div class="descricao">{{ item.descricao }}</div>
+							<div class="descricao"><a href="javascript: void(0);" class="botao_submeter_item_controle" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)">{{ item.descricao }}</a></div>
 							<div class="observacoes text-danger">{{ item.item_controle.observacoes }}</div>
 						</td>
 						<td class="alternativa">{{ item.item_controle.alternativa|default:"" }}</td>
 						<td class="responsavel">{{ item.item_controle.responsavel|default:"" }}</td>
 						<td class="data_prevista">{{ item.item_controle.data_prevista|date:"d/m/Y"|default:"" }}</td>
+						{% comment %}
 						<td class="submeter_item_controle p-1 text-center" style="vertical-align: middle;">
 							{% if not item.item_controle.id %}
 							<a href="javascript: void(0);" class="btn btn-sm btn-link botao_submeter_item_controle" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)"><i class="fas fa-circle"></i></a>
@@ -73,6 +74,7 @@
 							<a href="javascript: void(0);" class="btn btn-sm btn-link text-success botao_submeter_item_controle" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)"><i class="fas fa-check-circle"></i></a>
 							{% endif %}
 						</td>
+						{% endcomment %}
 						<td class="p-1 text-center remover" style="vertical-align: middle;">
 							{% if item.item_controle %}	
 							<a href="javascript: void(0);" class="btn btn-sm btn-link text-danger" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id }}" onclick="removerItemControle(this)"><i class="fas fa-times-circle"></i></a>
@@ -239,13 +241,14 @@
 			let responsavel = document.getElementsByClassName('responsavel')[posicao]
 			let data_prevista = document.getElementsByClassName('data_prevista')[posicao]
 			let remover = document.getElementsByClassName('remover')[posicao]
-			let submeter = document.getElementsByClassName('submeter_item_controle')[posicao]
+			let submeter = document.getElementsByClassName('botao_submeter_item_controle')[posicao]
 			alternativa.innerHTML = item.alternativa.descricao
 			observacoes.innerHTML = item.observacoes
 			responsavel.innerHTML = item.responsavel.nome
 			data_prevista.innerHTML = formatarData(item.data_prevista)
 			remover.innerHTML = `<a href='javascript: void(0);' onclick='removerItemControle(this)' data-posicao='${posicao}' data-item-id='${item.item}' data-id='${item.id}' class='btn btn-sm btn-link text-danger'><i class='fas fa-times-circle'></i></a>`
-			submeter.innerHTML = `<a href='javascript: void(0);' class='btn btn-sm btn-link text-success submeter_item_controle' data-posicao='${posicao}' data-item-id='${item.item}' data-id='${item.id}' onclick='abrirItemModal(this)'><i class='fas fa-check-circle'></i></a>`
+			submeter.dataset.id = item.id
+			// submeter.innerHTML = `<a href='javascript: void(0);' class='btn btn-sm btn-link text-success submeter_item_controle' data-posicao='${posicao}' data-item-id='${item.item}' data-id='${item.id}' onclick='abrirItemModal(this)'><i class='fas fa-check-circle'></i></a>`
 		}
 
 		let deletarItemControle = (id, item, posicao = false) => {
@@ -254,13 +257,13 @@
 			let responsavel = document.getElementsByClassName('responsavel')[posicao]
 			let data_prevista = document.getElementsByClassName('data_prevista')[posicao]
 			let remover = document.getElementsByClassName('remover')[posicao]
-			let submeter = document.getElementsByClassName('submeter_item_controle')[posicao]
+			// let submeter = document.getElementsByClassName('submeter_item_controle')[posicao]
 			alternativa.innerHTML = ''
 			observacoes.innerHTML = ''
 			responsavel.innerHTML = ''
 			data_prevista.innerHTML = ''
 			remover.innerHTML = ''
-			submeter.innerHTML = `<a href='javascript: void(0);' class='btn btn-sm btn-link submeter_item_controle' data-posicao='${posicao}' data-item-id='${item}' data-id='False' onclick='abrirItemModal(this)'><i class='fas fa-circle'></i></a>`
+			// submeter.innerHTML = `<a href='javascript: void(0);' class='btn btn-sm btn-link submeter_item_controle' data-posicao='${posicao}' data-item-id='${item}' data-id='False' onclick='abrirItemModal(this)'><i class='fas fa-circle'></i></a>`
 		}
 
 		let apiDeletarItemControle = (id, item, posicao = false) => {

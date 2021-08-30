@@ -47,11 +47,12 @@ class ConvenioArquivoExtratoForm(ModelForm):
 class AtividadeForm(ModelForm):
     class Meta:
         model = Atividade
-        fields = ['data_prevista', 'responsavel', 'consideracoes', 'situacao', 'anexo', ]
+        fields = ['data_prevista', 'data_protocolado', 'responsavel', 'consideracoes', 'situacao', 'anexo', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['data_prevista'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+        self.fields['data_protocolado'].widget.attrs.update({'class': 'form-control form-control-sm date'})
         self.fields['responsavel'].widget.attrs.update({
             'class': 'form-control form-control-sm custom-select custom-select-sm'})
         self.fields['consideracoes'].widget.attrs.update({'class': 'form-control form-control-sm'})
@@ -64,11 +65,12 @@ class AtividadeForm(ModelForm):
 class LicenciamentoForm(ModelForm):
     class Meta:
         model = LicenciamentoAmbiental
-        fields = ['data_prevista', 'responsavel', 'consideracoes', 'situacao', 'anexo', ]
+        fields = ['data_prevista', 'data_protocolado', 'responsavel', 'consideracoes', 'situacao', 'anexo', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['data_prevista'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+        self.fields['data_protocolado'].widget.attrs.update({'class': 'form-control form-control-sm date'})
         self.fields['responsavel'].widget.attrs.update({
             'class': 'form-control form-control-sm custom-select custom-select-sm'})
         self.fields['consideracoes'].widget.attrs.update({'class': 'form-control form-control-sm'})

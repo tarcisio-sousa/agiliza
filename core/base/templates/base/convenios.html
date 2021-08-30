@@ -29,14 +29,12 @@
 				<thead>
 					<tr>
 						{% if perms.base.add_convenio %}
-						<th width="1%">Ações</th>
+						<th width="1%"> <!-- Ações --> </th>
 						{% endif %}
 						<th>Número Convênio</th>
 						<th>Proposta</th>
-						{% if perms.base.add_convenio %}
-						<th>Projeto</th>
-						{% endif %}
-						<th>Data</th>
+						<th>Prefeitura</th>
+						<th width="1%">Data</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,10 +47,10 @@
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<ul class="dropdown-menu">
 										<li>
-											<a href="{% url 'protocolo' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Histórico </a>
+											<a href="{% url 'protocolo' convenio.id %}" class="dropdown-item"> Histórico </a>
 										</li>
 										<li>
-											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Elaboração de Projeto </a>
+											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> Elaboração de Projeto </a>
 										</li>
 									</ul>
 								</li>
@@ -61,9 +59,7 @@
 						{% endif %}
 						<td>{{ convenio.numero_convenio }}</td>
 						<td>{{ convenio.proposta }}</td>
-						{% if perms.base.add_convenio %}
-						<td></td>
-						{% endif %}
+						<td>{{ convenio.proposta.prefeitura }}</td>
 						<td>{{ convenio.proposta.data|date:'d/m/Y' }}</td>
 					</tr>
 					{% endfor %}

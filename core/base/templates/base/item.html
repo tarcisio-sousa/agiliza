@@ -1,7 +1,18 @@
 {% extends 'base/base.html' %}
 
+{% load django_bootstrap_breadcrumbs %}
+
 {% block title %}Item{% endblock %}
+
 {% block body %}
+
+	{% block breadcrumbs %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
+		{% breadcrumb " Projetos " "projetos" %}
+		{% breadcrumb " Itens " "projeto_itens" projeto.id %}
+		{% breadcrumb " Item " "item" %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
 
 	<form method="post" class="form"> 
 		{% csrf_token %}

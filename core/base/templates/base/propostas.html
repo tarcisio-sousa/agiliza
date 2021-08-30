@@ -6,9 +6,11 @@
 {% block action %}
 <div class="row">
 	<div class="col-md-12 text-right mb-2">
+	{% comment %}
 	{% if perms.base.add_proposta %}
-		<a href="{% url 'proposta' %}" class="btn btn-sm btn-link-agiliza px-3">CRIAR <i class="fas fa-plus"></i> </a>
+		<a href="{% url 'proposta' %}" class="btn btn-sm btn-link-agiliza px-3">CRIAR </a>
 	{% endif %}
+	{% endcomment %}
 	</div>
 </div>
 {% endblock %}
@@ -36,18 +38,23 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th width="1%">Ações</th>
+						<th class="p-0" width="1%"> 
+							{% if perms.base.add_proposta %}
+							<a href="{% url 'proposta' %}" class="nav-link link-agiliza active mb-1"> <i class="fas fa-plus"></i> </a>
+							{% endif %}
+						</th>
+						<!-- <th width="1%">Ações</th> -->
 						<th>Prefeitura</th>
-						<th>Número da proposta</th>
+						<th>Número</th>
 						<th>Objeto</th>
 						<th>Valor</th>
 						<th>Data</th>
 						<th>
 							Situação 
-							<ul class="navbar-nav mr-auto d-inline-block">
+							<ul class="navbar-nav mr-auto d-inline-block float-right">
 								<li class="nav-item dropdown">
 									<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
-									<ul class="dropdown-menu">
+									<ul class="dropdown-menu dropdown-menu-right">
 										<li>
 											<a class="dropdown-item {% if not filter_situacao %}disabled{% endif %}" href="{% url 'propostas' %}">
 												Todas
@@ -76,29 +83,30 @@
 				<tbody>
 					{% for proposta in propostas %}
 					<tr>
+						<!-- <td class="text-center"><i class="fas fa-caret-right"></i></td> -->
 						<td class="text-center">
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown">
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
 										{% if perms.base.edit_proposta %}
-											<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> <i class="fas fa-edit"></i> Editar</a>
+											<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> Editar</a>
 											<div class="dropdown-divider"></div>
 											{% if proposta.verifica_situacao == 'em-analise' %}
-												<a href="javascript:void(0);" class="dropdown-item"> <i class="fas fa-check-circle"></i> Em análise </a>
+												<a href="javascript:void(0);" class="dropdown-item"> Em análise </a>
 											{% endif %}
 											{% if proposta.verifica_situacao == 'aprovada' %}
-												<a href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Aprovar</a>
+												<a href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item"> Aprovar</a>
 											{% endif %}
 											{% if proposta.situacao not in 'empenhada,reprovada' %}
-												<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> <i class="fas fa-check-circle"></i> Reprovar</a>
+												<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> Reprovar</a>
 											{% endif %}
 											{% if proposta.verifica_situacao == 'empenhada' %}
-												<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#empenharPropostaModal" onclick="seleciona_empenhar_proposta(this)" data-id="{{ proposta.id }}"> <i class="fas fa-check-circle"></i> Empenhar </a>
+												<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#empenharPropostaModal" onclick="seleciona_empenhar_proposta(this)" data-id="{{ proposta.id }}"> Empenhar </a>
 											{% endif %}
 										{% endif %}
-										<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#extratoModal" onclick="seleciona_proposta_arquivo_extrato(this)" data-id="{{ proposta.id }}"> <i class="fas fa-cloud-upload-alt"></i> Extrato </a>
-										<a href="{% url 'proposta_documento' proposta.id %}" class="dropdown-item"> <i class="fas fa-certificate"></i> Gerar declaração</a>
+										<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#extratoModal" onclick="seleciona_proposta_arquivo_extrato(this)" data-id="{{ proposta.id }}"> Extrato </a>
+										<a href="{% url 'proposta_documento' proposta.id %}" class="dropdown-item"> Gerar declaração</a>
 									</div>
 								</li>
 							</ul>

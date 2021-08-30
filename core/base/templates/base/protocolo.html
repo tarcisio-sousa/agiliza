@@ -46,23 +46,24 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th>Data</th>
-								<th>Data prevista</th>
+								<th width="1%" class="p-0">
+									<a class="nav-link link-agiliza active mb-1" href="{% url 'atividades' convenio.id %}"> <i class="fas fa-plus-circle"></i> </a>
+								</th>
+								<th width="1%">Data</th>
+								<th width="1%" style="white-space: nowrap;">Data prevista</th>
 								<th>Responsável</th>
 								<th>Considerações</th>
 								<th>Situação</th>
 								<th width="1%">Anexo</th>
-								<th width="1%" class="p-0">
-									<a class="nav-link link-agiliza active mb-1" href="{% url 'atividades' convenio.id %}"> <i class="fas fa-plus"></i> </a>
-								</th>
 							</tr>
 						</thead>
 						{% if atividades %}
 						<tbody>
 							{% for atividade in atividades %}
-							<tr>
-								<td>{{ atividade.data }}</td>
-								<td>{{ atividade.data_prevista }}</td>
+							<tr> 
+								<td class="text-center"><i class="fas fa-caret-right"></i></td>
+								<td>{{ atividade.data|date:'d/m/Y' }}</td>
+								<td>{{ atividade.data_prevista|date:'d/m/Y' }}</td>
 								<td>{{ atividade.get_responsavel_display }}</td>
 								<td>{{ atividade.consideracoes }}</td>
 								<td>{{ atividade.get_situacao_display }}</td>
@@ -87,23 +88,24 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th>Data</th>
-								<th>Data prevista</th>
+								<th width="1%" class="p-0">
+									<a class="nav-link link-agiliza mb-1" href="{% url 'licenciamentos_ambientais' convenio.id %}"> <i class="fas fa-plus-circle"></i> </a>
+								</th>
+								<th width="1%">Data</th>
+								<th width="1%" style="white-space: nowrap;">Data prevista</th>
 								<th>Responsável</th>
 								<th>Considerações</th>
 								<th>Situação</th>
 								<th width="1%">Anexo</th>
-								<th width="1%" class="p-0">
-									<a class="nav-link link-agiliza mb-1" href="{% url 'licenciamentos_ambientais' convenio.id %}"> <i class="fas fa-plus"></i> </a>
-								</th>
 							</tr>
 						</thead>
 						{% if licenciamentos %}
 						<tbody>
 							{% for licenciamento in licenciamentos %}
 							<tr>
-								<td>{{ licenciamento.data }}</td>
-								<td>{{ licenciamento.data_prevista }}</td>
+								<td class="text-center"><i class="fas fa-caret-right"></i></td>
+								<td>{{ licenciamento.data|date:'d/m/Y' }}</td>
+								<td>{{ licenciamento.data_prevista|date:'d/m/Y' }}</td>
 								<td>{{ licenciamento.get_responsavel_display }}</td>
 								<td>{{ licenciamento.consideracoes }}</td>
 								<td>{{ licenciamento.get_situacao_display }}</td>
