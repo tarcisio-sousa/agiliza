@@ -237,8 +237,36 @@ def projeto(request, id=False):
 
 @login_required
 def projeto_itens(request, id=False):
-    itens = Item.objects.filter(projeto=id)
-    return render(request, 'base/itens.html', {'itens': itens})
+    projeto = Projeto.objects.get(id=id)
+    itens = Item.objects.filter(projeto=projeto.id)
+    return render(request, 'base/itens.html', {'projeto':projeto, 'itens': itens})
+
+
+@login_required
+def projeto_item(request, projeto_id, id=False):
+    projeto = Projeto.objects.get(id=projeto_id)
+    item_form = ItemForm()
+
+    if (id):
+        item = Item.objects.get(id=id)
+        item_form = ItemForm(instance=item)
+
+    if request.method == 'POST':
+
+        item_form = ItemForm(request.POST)
+
+        if id:
+            item = Item.objects.get(id=id)
+            item_form = ItemForm(request.POST, instance=item)
+
+        if item_form.is_valid():
+            item = item_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Item salvo com sucesso!')
+            return redirect(reverse('itens'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item!')
+
+    return render(request, 'base/item.html', {'projeto': projeto, 'item_form': item_form})
 
 
 @login_required

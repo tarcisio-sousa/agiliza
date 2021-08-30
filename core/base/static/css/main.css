@@ -3,9 +3,21 @@ h1, .nav, .btn {
 }
 
 table {
-	font-size: 12px;
+	font-size: .80rem;
 }
 
+a:hover {
+	text-decoration: none !important;
+}
+
+.table-hover tbody tr:hover {
+	background-color: #ebf4ec !important;
+} 
+
 .dropdown-item {
-	font-size: 12px;
+	font-size: .75rem;
+}
+
+.dropdown-toggle::after {
+	content: none !important;
 }
