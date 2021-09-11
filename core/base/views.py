@@ -239,7 +239,7 @@ def projeto(request, id=False):
 def projeto_itens(request, id=False):
     projeto = Projeto.objects.get(id=id)
     itens = Item.objects.filter(projeto=projeto.id)
-    return render(request, 'base/itens.html', {'projeto':projeto, 'itens': itens})
+    return render(request, 'base/projeto_itens.html', {'projeto': projeto, 'itens': itens})
 
 
 @login_required
@@ -262,7 +262,7 @@ def projeto_item(request, projeto_id, id=False):
         if item_form.is_valid():
             item = item_form.save()
             messages.add_message(request, messages.SUCCESS, 'Item salvo com sucesso!')
-            return redirect(reverse('projeto_itens', args=[projeto_id]))
+            return redirect(reverse('projeto_itens', args=[projeto.id]))
         else:
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item!')
 
