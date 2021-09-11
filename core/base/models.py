@@ -175,6 +175,7 @@ class Item(models.Model):
     observacoes = models.TextField(blank=True, null=True)
     opcao = models.ForeignKey('Opcao', on_delete=models.CASCADE, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
+    order = models.CharField(max_length=250, blank=True, null=True)
     # sort_order = models.PositiveIntegerField(editable=False, db_index=True)
     # order_field_name = "sort_order"
 
