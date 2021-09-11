@@ -248,7 +248,7 @@ class ProjetoControle(models.Model):
 
 class ProjetoControleItem(models.Model):
     controle = models.ForeignKey('ProjetoControle', on_delete=models.CASCADE, blank=False, null=False)
-    item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=False, null=False)
+    item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
     alternativa = models.ForeignKey('Alternativa', on_delete=models.CASCADE, blank=True, null=True)
     responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, blank=True, null=True)
     observacoes = models.TextField(blank=True, null=True)
