@@ -167,18 +167,19 @@ class Projeto(models.Model):
         return f'{self.id} - {self.get_tipo_display()}'
 
 
-class Item(OrderedModelBase):
+# class Item(OrderedModelBase):
+class Item(models.Model):
     descricao = models.CharField(max_length=250, blank=False, null=False)
     subitem = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, null=True)
     observacoes = models.TextField(blank=True, null=True)
     opcao = models.ForeignKey('Opcao', on_delete=models.CASCADE, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
-    sort_order = models.PositiveIntegerField(editable=False, db_index=True)
-    order_field_name = "sort_order"
+    # sort_order = models.PositiveIntegerField(editable=False, db_index=True)
+    # order_field_name = "sort_order"
 
     class Meta:
-        ordering = ("sort_order",)
+        # ordering = ("sort_order",)
         verbose_name_plural = "itens"
 
     def __str__(self):
@@ -248,7 +249,7 @@ class ProjetoControle(models.Model):
 
 class ProjetoControleItem(models.Model):
     controle = models.ForeignKey('ProjetoControle', on_delete=models.CASCADE, blank=False, null=False)
-    item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=False, null=False)
+    item = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
     alternativa = models.ForeignKey('Alternativa', on_delete=models.CASCADE, blank=True, null=True)
     responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, blank=True, null=True)
     observacoes = models.TextField(blank=True, null=True)

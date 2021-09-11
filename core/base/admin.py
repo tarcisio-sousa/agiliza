@@ -69,18 +69,22 @@ class ProjetoAdmin(admin.ModelAdmin):
     list_display = ['tipo']
 
 
+# class ItemAdmin(OrderedModelAdmin):
 @admin.register(Item)
-class ItemAdmin(OrderedModelAdmin):
-    list_display = ['descricao', 'move_up_down_links']
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['descricao']
+    # list_display = ['descricao', 'move_up_down_links']
 
 
+# class OpcaoAdmin(OrderedModelAdmin):
 @admin.register(Opcao)
-class OpcaoAdmin(OrderedModelAdmin):
+class OpcaoAdmin(admin.ModelAdmin):
     pass
 
 
+# class ItemAlternativaAdmin(OrderedModelAdmin):
 @admin.register(ItemAlternativa)
-class ItemAlternativaAdmin(OrderedModelAdmin):
+class ItemAlternativaAdmin(admin.ModelAdmin):
     list_display = ['item']
 
 
