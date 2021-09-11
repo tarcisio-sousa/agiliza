@@ -262,7 +262,7 @@ def projeto_item(request, projeto_id, id=False):
         if item_form.is_valid():
             item = item_form.save()
             messages.add_message(request, messages.SUCCESS, 'Item salvo com sucesso!')
-            return redirect(reverse('itens'))
+            return redirect(reverse('projeto_itens', args=[projeto_id]))
         else:
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item!')
 

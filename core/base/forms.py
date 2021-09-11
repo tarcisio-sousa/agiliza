@@ -122,7 +122,8 @@ class ProjetoControleItemForm(ModelForm):
 class ItemForm(ModelForm):
     class Meta:
         model = Item
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('sort_order',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
