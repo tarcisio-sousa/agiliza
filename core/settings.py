@@ -160,8 +160,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 
-LOGIN_URL = '/signin'
-LOGIN_REDIRECT_URL = '/signin'
+LOGIN_URL = 'signin'
+LOGIN_REDIRECT_URL = 'signin'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
