@@ -1,4 +1,23 @@
+// vanillajs 
+window.onload = function(){
+    const btn_sair = document.getElementById('btn-sair-agiliza');
+    const sair = btn_sair.getElementsByTagName('i')[0];
+    let handler = event => {
+        if (event.type == 'mouseover') { 
+            sair.classList.remove('fa-door-closed')
+            sair.classList.add('fa-door-open')
+        }
+        if (event.type == 'mouseleave') { 
+            sair.classList.add('fa-door-closed')
+            sair.classList.remove('fa-door-open')
+        }
+    }
+    
+    btn_sair.onmouseover = btn_sair.onmouseleave = handler
+}
 
+
+// libs 
 alertify.defaults = {
     // dialogs defaults
     autoReset:true,
@@ -83,6 +102,8 @@ alertify.defaults.theme.ok = "btn btn-sm btn-primary";
 alertify.defaults.theme.cancel = "btn btn-sm btn-secondary";
 alertify.defaults.theme.input = "form-control";
 
+
+// JQuery
 $(function () {
     $.datetimepicker.setLocale('pt-BR')
     $('.date').datetimepicker({
@@ -92,3 +113,4 @@ $(function () {
     })
     $('.money').mask('000.000.000.000.000,00', {reverse: true})
 })
+
