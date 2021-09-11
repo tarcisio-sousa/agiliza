@@ -24,7 +24,7 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-core/settings.py
+*settings.py
 
 
 
