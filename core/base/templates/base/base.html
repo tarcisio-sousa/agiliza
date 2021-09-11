@@ -22,7 +22,7 @@
 		<!-- jQuery and JS bundle w/ Popper.js -->
 		<script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
 		<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-		<script src="{% static 'js/all.js' %}"></script>
+		<!-- <script src="{# static 'js/all.js' #}"></script> -->
 		<!-- XDSoft DateTimePicker -->
 		<script src="{% static 'js/jquery.datetimepicker.full.min.js' %}" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
 		<script src="{% static 'js/jquery.mask.js' %}"></script>
@@ -44,7 +44,7 @@
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-md-0">
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'signout' %}"> <i class="fas fa-door-open"></i> </a>
+							<a class="nav-link" href="{% url 'signout' %}" id="btn-sair-agiliza"> <i id="icone-sair-agiliza" class="fas fa-door-closed"></i> </a>
 						</li>
 					</ul>
 				</div>
@@ -111,6 +111,23 @@
 			</div>
 
 		</div>
+		<script type="text/javascript">
+			const btn_sair = document.getElementById('btn-sair-agiliza');
+			const sair = btn_sair.getElementsByTagName('i')[0];
+			let handler = event => {
+				if (event.type == 'mouseover') { 
+					sair.classList.remove('fa-door-closed')
+					sair.classList.add('fa-door-open')
+				}
+				if (event.type == 'mouseleave') { 
+					sair.classList.add('fa-door-closed')
+					sair.classList.remove('fa-door-open')
+				}
+			}
+
+			btn_sair.onmouseover = btn_sair.onmouseleave = handler
+
+		</script>
 
 		{% include 'base/footer.html' %}
 
