@@ -18,7 +18,7 @@
 	{% block breadcrumbs %}
 		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
 		{% breadcrumb " Projetos " "projetos" %}
-		{% breadcrumb " Itens " "projeto_itens" projeto.id %}
+		{% breadcrumb " Itens " "itens" %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 
@@ -27,7 +27,7 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th class="p-0" width="1%"><a href="{% url 'projeto_item' projeto.id %}" class="nav-link link-agiliza active mb-1"> <i class="fas fa-plus-circle"></i> </a></th>
+						<th class="p-0" width="1%"><a href="#" class="nav-link link-agiliza active mb-1"> <i class="fas fa-plus-circle"></i> </a></th>
 						<th>Descrição</th>
 					</tr>
 				</thead>
@@ -39,9 +39,9 @@
 								<li class="nav-item dropdown text-center">
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										<a href="{% url 'projeto_item' projeto.id item.id %}" class="dropdown-item"> Editar</a>
+										<a href="#" class="dropdown-item"> Editar</a>
 										<div class="dropdown-divider"></div>
-										<a href="{% url 'projeto_item' projeto.id item.id %}" class="dropdown-item"> Visualizar</a>
+										<a href="#" class="dropdown-item"> Visualizar</a>
 									</div>
 								</li>
 							</ul>
