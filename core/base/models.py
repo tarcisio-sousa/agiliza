@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from ordered_model.models import OrderedModelBase
+# from ordered_model.models import OrderedModelBase
 from django.utils.translation import gettext_lazy as _
 
 
