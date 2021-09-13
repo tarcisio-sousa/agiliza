@@ -239,7 +239,6 @@ def projeto(request, id=False):
 def projeto_itens(request, id=False):
     projeto = Projeto.objects.get(id=id)
     itens = Item.objects.filter(projeto=projeto.id)
-    
     return render(request, 'base/projeto_itens.html', {'projeto': projeto, 'itens': itens})
 
 
