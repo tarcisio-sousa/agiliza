@@ -176,8 +176,8 @@
 		}
 
 		function pegarMetodoSubmeter(id) {
-			if (id) return { url: `/api/item/controle/${id}`, method: 'PUT' }
-			return { url: `/api/item/controle`, method: 'POST' }
+			if (id) return { url: `/agiliza/api/item/controle/${id}`, method: 'PUT' }
+			return { url: `/agiliza/api/item/controle`, method: 'POST' }
 		}
 
 		let apiSubmeterDadosItemControle = (dados, id, posicao = false) => {
@@ -199,7 +199,7 @@
 			.catch(error => console.log('Error: ', error)) }
 
 		let apiCarregarDadosItemControle = (id, posicao = false) => {
-			fetch(`/api/item/controle/${id}`, {
+			fetch(`/agiliza/api/item/controle/${id}`, {
 				method: 'GET',
 				headers: {
 					'X-CSRFToken': token
@@ -213,7 +213,7 @@
 			.catch(error => console.log('Error: ', error)) }
 
 		let apiCarregarFormularioItemControle = (id) => {
-			fetch(`/api/item/controle/${id}`, {
+			fetch(`/agiliza/api/item/controle/${id}`, {
 				method: 'GET',
 				headers: {
 					'X-CSRFToken': token
@@ -267,7 +267,7 @@
 		}
 
 		let apiDeletarItemControle = (id, item, posicao = false) => {
-			fetch(`/api/item/controle/${id}`, {
+			fetch(`/agiliza/api/item/controle/${id}`, {
 				method: 'DELETE',
 				headers: {
 					'X-CSRFToken': token

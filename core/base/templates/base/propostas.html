@@ -194,8 +194,8 @@
 		let form_extrato = document.getElementById('formExtrato')
 
 		seleciona_empenhar_proposta = (elemento) => 
-			form_empenhar_proposta.action = `/proposta/empenhar/${elemento.dataset.id}`
+			form_empenhar_proposta.action = `/agiliza/proposta/empenhar/${elemento.dataset.id}`
 		seleciona_proposta_arquivo_extrato = (elemento) => 
-			form_extrato.action = `/proposta/arquivo/extrato/${elemento.dataset.id}`
+			form_extrato.action = `/agiliza/proposta/arquivo/extrato/${elemento.dataset.id}`
 	</script>
 {% endblock %}
