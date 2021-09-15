@@ -151,13 +151,13 @@ DECIMAL_SEPARATOR = ','
 
 # Configuração de ambiente de desenvolvimento
 
-STATIC_URL = '/agiliza/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/agilizaconvenio/www/static/' # os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/agiliza/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/home/agilizaconvenio/www/media/' # os.path.join(BASE_DIR, 'mediafiles')
 
 
 LOGIN_URL = '/agiliza/signin'
