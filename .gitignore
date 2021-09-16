@@ -24,8 +24,9 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-settings.py
 
+# Settings
+agiliza/core/settings.py
 
 
 #pyenv
