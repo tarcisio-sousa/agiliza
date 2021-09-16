@@ -152,16 +152,16 @@ DECIMAL_SEPARATOR = ','
 # Configuração de ambiente de desenvolvimento
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/agilizaconvenio/www/static/' # os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = config('MAIN_STATIC_ROOT', default=os.path.join(BASE_DIR, 'staticfiles'))
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/agilizaconvenio/www/media/' # os.path.join(BASE_DIR, 'mediafiles')
+MEDIA_ROOT = config('MAIN_MEDIA_ROOT', default=os.path.join(BASE_DIR, 'mediafiles'))
 
 
-LOGIN_URL = '/agiliza/signin'
-LOGIN_REDIRECT_URL = '/agiliza/signin'
+LOGIN_URL = config('MAIN_LOGIN_URL', default='/signin')
+LOGIN_REDIRECT_URL = config('MAIN_LOGIN_REDIRECT_URL', default='/signin')
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
