@@ -24,8 +24,9 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-core/settings.py
 
+# Settings
+core/settings.py
 
 
 #pyenv
