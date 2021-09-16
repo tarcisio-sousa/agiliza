@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-# from ordered_model.models import OrderedModelBase
+from ordered_model.models import OrderedModelBase
 from django.utils.translation import gettext_lazy as _
 
 
@@ -167,8 +167,8 @@ class Projeto(models.Model):
         return f'{self.id} - {self.get_tipo_display()}'
 
 
-# class Item(OrderedModelBase):
-class Item(models.Model):
+# class Item(models.Model):
+class Item(OrderedModelBase):
     descricao = models.CharField(max_length=250, blank=False, null=False)
     subitem = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, null=True)
@@ -177,10 +177,10 @@ class Item(models.Model):
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
     order = models.CharField(max_length=250, blank=True, null=True)
     sort_order = models.PositiveIntegerField(editable=False, db_index=True, blank=True, null=True)
-    # order_field_name = "sort_order"
+    order_field_name = "sort_order"
 
     class Meta:
-        # ordering = ("sort_order",)
+        ordering = ("sort_order",)
         verbose_name_plural = "itens"
 
     def __str__(self):

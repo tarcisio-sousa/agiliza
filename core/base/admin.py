@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-# from ordered_model.admin import OrderedModelAdmin
+from ordered_model.admin import OrderedModelAdmin
 from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio
 from core.base.models import Orgao, Projeto, Item, Opcao, ItemAlternativa, Responsavel
 from core.base.models import ProjetoControle, ProjetoControleItem
@@ -69,11 +69,11 @@ class ProjetoAdmin(admin.ModelAdmin):
     list_display = ['tipo']
 
 
-# class ItemAdmin(OrderedModelAdmin):
+# class ItemAdmin(admin.ModelAdmin):
 @admin.register(Item)
-class ItemAdmin(admin.ModelAdmin):
-    list_display = ['descricao']
-    # list_display = ['descricao', 'move_up_down_links']
+class ItemAdmin(OrderedModelAdmin):
+    list_display = ['descricao', 'move_up_down_links']
+    # list_display = ['descricao']
 
 
 # class OpcaoAdmin(OrderedModelAdmin):
