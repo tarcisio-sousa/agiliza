@@ -16,7 +16,7 @@
 {% block body %}
 
 	{% block breadcrumbs %}
-		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
 		{% breadcrumb " Projetos " "projetos" %}
 		{% breadcrumb " Itens " "projeto_itens" projeto.id %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}

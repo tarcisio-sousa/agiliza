@@ -14,7 +14,7 @@
 {% endblock %}
 {% block body %}
 	{% block breadcrumbs %}
-		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
 		{% breadcrumb " Convênios " "convenios" %}
 		{% breadcrumb " Elaboração de Projeto " "convenio_projeto_controle" convenio.id %}
 		{% render_breadcrumbs %}

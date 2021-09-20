@@ -26,7 +26,7 @@
 {% endblock %}
 {% block body %}
 	{% block breadcrumbs %}
-		{% breadcrumb_safe "<i class='fas fa-home'></i>" "/" %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
 		{% breadcrumb " Convênios " "convenios" %}
 		{% breadcrumb " Histórico " "procolo" convenio.id %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
