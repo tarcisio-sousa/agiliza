@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core.base',
     'rest_framework',
+    'rest_framework.authtoken',
     'ordered_model',
     'django_bootstrap_breadcrumbs',
     'django_crontab',
@@ -90,6 +91,13 @@ CRONJOBS = [
 REST_FRAMEWORK = {
     'DATE_INPUT_FORMATS': ['%d/%m/%Y', ],
     'DATE_FORMAT': '%Y-%m-%d',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
+    ],
 }
 
 WSGI_APPLICATION = 'core.wsgi.application'
