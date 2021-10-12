@@ -7,7 +7,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from .serializers import ItemControleSerializer, ItemControleViewSerializer
 from .forms import PropostaForm, PropostaArquivoExtratoForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
@@ -483,6 +484,7 @@ def projeto_controle_item(request, controle_id=False):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def item_controle_projeto_lista(request):
     if request.method == 'GET':
         itens = ProjetoControleItem.objects.all()
@@ -498,6 +500,7 @@ def item_controle_projeto_lista(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def item_controle_projeto_detalhe(request, pk):
     try:
         item = ProjetoControleItem.objects.get(pk=pk)
