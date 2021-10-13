@@ -138,7 +138,8 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		let token = document.getElementsByName('csrfmiddlewaretoken')[0].value
+		// const base_url = document.querySelector('[name=csrfmiddlewaretoken]').value
+		const token = document.querySelector('[name=csrfmiddlewaretoken]').value
 
 		let abrirItemModal = (el) => {
 			let posicao = pegarPosicaoItem(el)
@@ -248,7 +249,6 @@
 			data_prevista.innerHTML = formatarData(item.data_prevista)
 			remover.innerHTML = `<a href='javascript: void(0);' onclick='removerItemControle(this)' data-posicao='${posicao}' data-item-id='${item.item}' data-id='${item.id}' class='btn btn-sm btn-link text-danger'><i class='fas fa-times-circle'></i></a>`
 			submeter.dataset.id = item.id
-			// submeter.innerHTML = `<a href='javascript: void(0);' class='btn btn-sm btn-link text-success submeter_item_controle' data-posicao='${posicao}' data-item-id='${item.item}' data-id='${item.id}' onclick='abrirItemModal(this)'><i class='fas fa-check-circle'></i></a>`
 		}
 
 		let deletarItemControle = (id, item, posicao = false) => {
@@ -263,7 +263,6 @@
 			responsavel.innerHTML = ''
 			data_prevista.innerHTML = ''
 			remover.innerHTML = ''
-			// submeter.innerHTML = `<a href='javascript: void(0);' class='btn btn-sm btn-link submeter_item_controle' data-posicao='${posicao}' data-item-id='${item}' data-id='False' onclick='abrirItemModal(this)'><i class='fas fa-circle'></i></a>`
 		}
 
 		let apiDeletarItemControle = (id, item, posicao = false) => {
