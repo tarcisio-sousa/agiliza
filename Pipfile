@@ -21,6 +21,7 @@ django-ordered-model = "*"
 django-bootstrap-breadcrumbs = "*"
 django-crontab = "*"
 djangorestframework = "*"
+django-xhtml2pdf = "*"
 
 [requires]
 python_version = "3.6"

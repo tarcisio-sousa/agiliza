@@ -6,9 +6,10 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django_xhtml2pdf.utils import generate_pdf
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import ItemControleSerializer, ItemControleViewSerializer
 from .forms import PropostaForm, PropostaArquivoExtratoForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
@@ -159,6 +160,14 @@ def proposta_empenhar(request, id):
 def proposta_documento(request, id):
     proposta = Proposta.objects.get(id=id)
     return render(request, 'base/proposta_documento.html', {'proposta': proposta})
+
+
+@login_required
+def pdf_proposta_documento(request, id):
+    proposta = Proposta.objects.get(id=id)
+    resp = HttpResponse(content_type='application/pdf')
+    result = generate_pdf('base/pdf_proposta_documento.html', file_object=resp, context={'proposta': proposta})
+    return result
 
 
 def __gerar_convenio(request, proposta, numero_convenio=False):
