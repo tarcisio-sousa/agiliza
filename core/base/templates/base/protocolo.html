@@ -31,16 +31,14 @@
 		{% breadcrumb " Histórico " "procolo" convenio.id %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
-	<ul class="nav nav-tabs" id="myTab" role="tablist">
-		<li class="nav-item" role="presentation">
-			<a class="nav-link link-agiliza active" id="atividade-tab" data-toggle="tab" href="#atividade" role="tab" aria-controls="atividade" aria-selected="true">Orgão Concedente</a>
-		</li>
-		<li class="nav-item" role="presentation">
-			<a class="nav-link link-agiliza" id="licenciamento-tab" data-toggle="tab" href="#licenciamento" role="tab" aria-controls="licenciamento" aria-selected="false">SEMAR</a>
-		</li>
-	</ul>
-	<div class="tab-content" id="myTabContent">
-		<div class="tab-pane fade show active" id="atividade" role="tabpanel" aria-labelledby="atividade-tab">
+
+	<div>
+		<div class="tab-pane show" id="orgao-concedente" role="tabpanel" aria-labelledby="orgao-concedente-tab">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<a class="nav-link link-agiliza active" id="orgao-concedente-tab" data-toggle="tab" href="#orgao-concedente" role="tab" aria-controls="orgao-concedente" aria-selected="true">Orgão Concedente</a>
+				</li>
+			</ul>
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table table-bordered">
@@ -49,7 +47,7 @@
 								<th width="1%" class="p-0">
 									<a class="nav-link link-agiliza active mb-1" href="{% url 'atividades' convenio.id %}"> <i class="fas fa-plus-circle"></i> </a>
 								</th>
-								<th width="1%">Data</th>
+								<th width="1%">Protocolado</th>
 								<th width="1%" style="white-space: nowrap;">Data prevista</th>
 								<th>Responsável</th>
 								<th>Considerações</th>
@@ -62,7 +60,7 @@
 							{% for atividade in atividades %}
 							<tr> 
 								<td class="text-center"><i class="fas fa-caret-right"></i></td>
-								<td>{{ atividade.data|date:'d/m/Y' }}</td>
+								<td>{{ atividade.data_protocolado|date:'d/m/Y' }}</td>
 								<td>{{ atividade.data_prevista|date:'d/m/Y' }}</td>
 								<td>{{ atividade.get_responsavel_display }}</td>
 								<td>{{ atividade.consideracoes }}</td>
@@ -82,7 +80,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane fade" id="licenciamento" role="tabpanel" aria-labelledby="licenciamento-tab">
+		<div class="tab-pane" id="licenciamento" role="tabpanel" aria-labelledby="licenciamento-tab">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<a class="nav-link link-agiliza active" id="licenciamento-tab" data-toggle="tab" href="#licenciamento" role="tab" aria-controls="licenciamento" aria-selected="true">SEMAR</a>
+				</li>
+			</ul>
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table table-bordered">
@@ -91,7 +94,7 @@
 								<th width="1%" class="p-0">
 									<a class="nav-link link-agiliza mb-1" href="{% url 'licenciamentos_ambientais' convenio.id %}"> <i class="fas fa-plus-circle"></i> </a>
 								</th>
-								<th width="1%">Data</th>
+								<th width="1%">Protocolado</th>
 								<th width="1%" style="white-space: nowrap;">Data prevista</th>
 								<th>Responsável</th>
 								<th>Considerações</th>
@@ -104,7 +107,7 @@
 							{% for licenciamento in licenciamentos %}
 							<tr>
 								<td class="text-center"><i class="fas fa-caret-right"></i></td>
-								<td>{{ licenciamento.data|date:'d/m/Y' }}</td>
+								<td>{{ licenciamento.data_protocolado|date:'d/m/Y' }}</td>
 								<td>{{ licenciamento.data_prevista|date:'d/m/Y' }}</td>
 								<td>{{ licenciamento.get_responsavel_display }}</td>
 								<td>{{ licenciamento.consideracoes }}</td>
