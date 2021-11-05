@@ -3,35 +3,34 @@
 {% load django_bootstrap_breadcrumbs %}
 
 {% block title %}Propostas{% endblock %}
-{% block action %}
-<div class="row">
-	<div class="col-md-12 text-right mb-2">
-	{% comment %}
-	{% if perms.base.add_proposta %}
-		<a href="{% url 'proposta' %}" class="btn btn-sm btn-link-agiliza px-3">CRIAR </a>
-	{% endif %}
-	{% endcomment %}
-	</div>
-</div>
-{% endblock %}
 {% block body %}
 	{% block breadcrumbs %}
 		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
 		{% breadcrumb " Propostas " "propostas" %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
-	<div class="row">
-		<div class="col-md-5 offset-md-7 mb-2">
-			<form action="{% url 'propostas' %}" method="get"> 
-				<div class="input-group input-group-sm">
-					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
-					<div class="input-group-append">
-						<button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i></button>
+	{% block search %}
+	<div class="d-flex justify-content-end mb-2"> 
+		<div class="row">
+			<div class="col-md-12"> 
+				<div class="btn-toolbar mb-2 mb-md-0 ml-1">
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<form action="{% url 'propostas' %}" method="get"> 
+								<div class="input-group input-group-sm btn-group-toggle" data-toggle="buttons"> 
+							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
+									<div class="input-group-append"> 
+								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i></button>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
+	{% endblock %}
 	<div class="row">
 		<div class="col-md-12">
 			<table class="table table-bordered">
@@ -39,7 +38,7 @@
 					<tr>
 						<th class="p-0" width="1%"> 
 							{% if perms.base.add_proposta %}
-							<a href="{% url 'proposta' %}" class="nav-link link-agiliza active mb-1"> <i class="fas fa-plus-circle"></i> </a>
+								<a href="{% url 'proposta' %}" class="nav-link link-agiliza mb-1"> <i class="fas fa-plus-circle"></i> </a>
 							{% endif %}
 						</th>
 						<!-- <th width="1%">Ações</th> -->
