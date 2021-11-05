@@ -21,11 +21,8 @@ class ItemControleSerializer(serializers.ModelSerializer):
         model = ProjetoControleItem
         fields = ['id', 'controle', 'item', 'alternativa', 'responsavel', 'observacoes', 'comentario', 'data_prevista']
 
-
-class ItemControleViewSerializer(serializers.ModelSerializer):
-    alternativa = AlternativaSerializer()
-    responsavel = ResponsavelSerializer()
-
-    class Meta:
-        model = ProjetoControleItem
-        fields = ['id', 'controle', 'item', 'alternativa', 'responsavel', 'observacoes', 'comentario', 'data_prevista']
+    def to_representation(self, item):
+        ret = super().to_representation(item)
+        ret['alternativa'] = AlternativaSerializer().to_representation(item.alternativa)
+        ret['responsavel'] = ResponsavelSerializer().to_representation(item.responsavel)
+        return ret

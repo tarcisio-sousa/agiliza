@@ -1,11 +1,13 @@
 from django.urls import path
+from . import views
 
 from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.routers import DefaultRouter
 
-from . import views
+router = DefaultRouter()
+router.register('item/controle', views.ItemControleProjetoViewSet)
 
 urlpatterns = [
     path('login', obtain_auth_token, name='login'),
-    path('item/controle', views.item_controle_projeto_lista, name='item_controle_projeto_lista'),
-    path('item/controle/<int:pk>', views.item_controle_projeto_detalhe, name='item_controle_projeto_detalhe'),
 ]
+urlpatterns += router.urls

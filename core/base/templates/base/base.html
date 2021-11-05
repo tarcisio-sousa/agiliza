@@ -21,7 +21,7 @@
 
 		<!-- jQuery and JS bundle w/ Popper.js -->
 		<script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
-		<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+		<!-- <script src="{# static 'js/bootstrap.bundle.min.js' #}"></script> -->
 		<!-- <script src="{# static 'js/all.js' #}"></script> -->
 		<!-- XDSoft DateTimePicker -->
 		<script src="{% static 'js/jquery.datetimepicker.full.min.js' %}" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
@@ -75,11 +75,8 @@
 					</div>
 				</nav>
 				<main class="col-md-9 ml-sm-auto col-lg-10 px-md-4" role="main">
-					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-						<h1>{% block title %}{% endblock %}</h1>
-						<div class="btn-toolbar mb-2 mb-md-0">
-							{% block action %}{% endblock %}
-						</div>
+					<div class="d-flex pt-3 pb-2 mb-3 border-bottom">
+						<h1 class="mr-auto ">{% block title %}{% endblock %}</h1>
 					</div>
 					{% if messages %}
 					<div class="messages fixed-bottom w-25" style="right: 1rem; left: auto;">
@@ -95,6 +92,8 @@
 					{% block breadcrumb %}
 					{% endblock %}
 					{% block body %}
+						{% block search %}
+						{% endblock %}
 					{% endblock %}
 				</main>
 			</div>
