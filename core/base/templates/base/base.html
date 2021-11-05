@@ -66,23 +66,11 @@
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'convenios' %}"> Convênios</a>
 							</li>
+							{% if perms.auth.is_super %}
 							<li class="nav-item">
 								<a class="nav-link" href="{% url 'projetos' %}"> Projetos</a>
 							</li>
-							<!--
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'itens' %}"> Itens</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'opcoes' %}"> Opções</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'alternativas' %}"> Alternativas</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'itens_alternativas' %}"> Itens Alternativas</a>
-							</li>
-							-->
+							{% endif %}
 						</ul>
 					</div>
 				</nav>
@@ -94,7 +82,7 @@
 						</div>
 					</div>
 					{% if messages %}
-					<div class="messages">
+					<div class="messages fixed-bottom w-25" style="right: 1rem; left: auto;">
 					    {% for message in messages %}
 					    <div {% if message.tags %} class="alert alert-{{ message.tags }}" role="alert" {% endif %}>{{ message }}
 					    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">

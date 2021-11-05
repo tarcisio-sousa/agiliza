@@ -22,8 +22,7 @@
 	{% endblock %}
 	<div class="row">
 		<div class="col-md-5 offset-md-7 mb-2">
-			<form action="{% url 'propostas' %}" method="post"> 
-				{% csrf_token %}
+			<form action="{% url 'propostas' %}" method="get"> 
 				<div class="input-group input-group-sm">
 					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
 					<div class="input-group-append">
@@ -63,11 +62,11 @@
 												{% endif %}
 											</a>
 										</li>
-									{% for situacao in choices_situacao %}
+									{% for choice_situacao, situacao in choices_situacao %}
 										<li>
-											<a class="dropdown-item {% if situacao.0 == filter_situacao %}disabled{% endif %}" href="{% url 'propostas' situacao.0 %}">
-												{{situacao.1}}
-												{% if situacao.0 == filter_situacao %}
+											<a class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" href="{% url 'propostas' choice_situacao %}">
+												{{ situacao }}
+												{% if choice_situacao == filter_situacao %}
 													<i class="fas fa-check"></i>
 												{% endif %}
 											</a>
@@ -148,6 +147,28 @@
 								<input type="text" name="numero_convenio" class="form-control form-control-sm" />
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label for="id_prefeitura">Orgão</label>
+								<select name="orgao_id" id="orgao" class="custom-select form-control">
+									<option>-------</option>
+									{% for orgao in orgaos %}
+									<option value="{{orgao.id}}">{{ orgao.descricao }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label for="id_prefeitura">Projeto</label>
+								<select name="projeto_id" id="projeto" class="custom-select form-control">
+									<option>-------</option>
+									{% for projeto in projetos %}
+									<option value="{{projeto.id}}">{{ projeto }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary btn-sm"> <i class="fas fa-check-circle"></i> Empenhar </button>
@@ -187,15 +208,12 @@
 	</div>
 
 	<script>
-		let seleciona_empenhar_proposta = () => {}
-		let seleciona_proposta_arquivo_extrato = () => {}
-		
 		let form_empenhar_proposta = document.getElementById('formEmpenharProposta')
 		let form_extrato = document.getElementById('formExtrato')
 
-		seleciona_empenhar_proposta = (elemento) => 
+		let seleciona_empenhar_proposta = (elemento) => 
 			form_empenhar_proposta.action = `/agiliza/proposta/empenhar/${elemento.dataset.id}`
-		seleciona_proposta_arquivo_extrato = (elemento) => 
+		let seleciona_proposta_arquivo_extrato = (elemento) => 
 			form_extrato.action = `/agiliza/proposta/arquivo/extrato/${elemento.dataset.id}`
 	</script>
 {% endblock %}

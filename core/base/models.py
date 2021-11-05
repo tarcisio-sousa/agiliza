@@ -172,7 +172,6 @@ class Projeto(models.Model):
         return f'{self.id} - {self.get_tipo_display()}'
 
 
-# class Item(models.Model):
 class Item(OrderedModelBase):
     descricao = models.CharField(max_length=250, blank=False, null=False)
     subitem = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
