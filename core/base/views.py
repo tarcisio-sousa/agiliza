@@ -7,10 +7,11 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.authtoken.models import Token
+# from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
+# from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import ItemControleSerializer, ItemControleViewSerializer
 from .forms import PropostaForm, PropostaArquivoExtratoForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
@@ -53,7 +54,9 @@ def signin(request):
         else:
             msg['erro'] = 'Usuário ou senha inválidos!'
 
-    return render(request, 'base/sign_in.html')
+    return render(
+        request,
+        'base/sign_in.html')
 
 
 def signout(request):
@@ -63,31 +66,40 @@ def signout(request):
 
 @login_required
 def home(request):
-    return render(request, 'base/home.html')
+    return render(
+        request,
+        'base/home.html')
 
 
 @login_required
 def propostas(request, filter_situacao=False):
     choices_situacao = Proposta.SituacaoChoice.choices
+    propostas = Proposta.objects.order_by('-id')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
-        propostas = Proposta.objects.filter(prefeitura=prefeitura)
-    else:
-        propostas = Proposta.objects.all()
+        propostas = propostas.objects.filter(prefeitura=prefeitura)
 
-    if filter_situacao:
-        propostas = propostas.filter(situacao=filter_situacao)
+    propostas = propostas.filter(
+        situacao=filter_situacao) if filter_situacao else propostas
 
-    if request.method == 'POST':
-        if request.POST['search']:
-            propostas = propostas.filter(Q(numero=request.POST['search']) | Q(objeto__contains=request.POST['search']))
+    if request.method == 'GET':
+        if 'search' in request.GET:
+            propostas = propostas.filter(Q(numero=request.GET['search']) | Q(objeto__contains=request.GET['search']))
 
-    propostas = propostas.order_by('-id')
+    orgaos = Orgao.objects.all()
+    projetos = Projeto.objects.all()
 
-    return render(request, 'base/propostas.html', {
-        'choices_situacao': choices_situacao, 'filter_situacao': filter_situacao, 'propostas': propostas
-    })
+    return render(
+        request,
+        'base/propostas.html',
+        {
+            'choices_situacao': choices_situacao,
+            'filter_situacao': filter_situacao,
+            'propostas': propostas,
+            'orgaos': orgaos,
+            'projetos': projetos,
+        })
 
 
 @login_required
@@ -100,7 +112,7 @@ def proposta(request, id=False, situacao=False):
         situacao = proposta.get_situacao_display()
         messages.add_message(request, messages.INFO, f'Proposta {proposta.numero} {situacao}')
         if proposta.situacao == 'empenhada':
-            __gerar_convenio(request, proposta)
+            _gerar_convenio(request, proposta)
         return redirect(reverse('propostas'))
 
     proposta_form = PropostaForm()
@@ -152,8 +164,8 @@ def proposta_empenhar(request, id):
         situacao = proposta.get_situacao_display()
         messages.add_message(request, messages.INFO, f'Proposta {proposta.numero} {situacao}')
         if proposta.situacao == 'empenhada':
-            numero_convenio = request.POST['numero_convenio']
-            __gerar_convenio(request, proposta, numero_convenio)
+            dados = request.POST
+            _gerar_convenio(request, proposta, dados)
         return redirect(reverse('propostas'))
 
 
@@ -163,15 +175,27 @@ def proposta_documento(request, id):
     return render(request, 'base/proposta_documento.html', {'proposta': proposta})
 
 
-def __gerar_convenio(request, proposta, numero_convenio=False):
+def _gerar_convenio(request, proposta, dados):
     (convenio, gerado) = Convenio.objects.get_or_create(proposta=proposta)
     if gerado:
-        if (numero_convenio):
-            convenio.numero_convenio = numero_convenio
+        if (dados['numero_convenio']):
+            convenio.numero_convenio = dados['numero_convenio']
             convenio.save()
-        messages.add_message(request, messages.SUCCESS, 'Convênio gerado com sucesso!')
+            messages.add_message(request, messages.SUCCESS, 'Convênio gerado com sucesso!')
+            _gerar_projeto(request, convenio, dados)
     else:
         messages.add_message(request, messages.INFO, 'Esta proposta possui convênio!')
+
+
+def _gerar_projeto(request, convenio, dados):
+    (controle, gerado) = ProjetoControle.objects.get_or_create(convenio=convenio)
+    if gerado:
+        controle.orgao_id = dados['orgao_id']
+        controle.projeto_id = dados['projeto_id']
+        controle.save()
+        messages.add_message(request, messages.SUCCESS, 'Controle de projeto criado com sucesso!')
+    else:
+        messages.add_message(request, messages.INFO, 'Este controle possui projeto')
 
 
 @login_required
@@ -181,19 +205,24 @@ def declaracoes(request):
 
 @login_required
 def convenios(request):
+    convenios = Convenio.objects.order_by('-proposta__data')
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
         convenios = Convenio.objects.filter(proposta__prefeitura=prefeitura)
-    else:
-        convenios = Convenio.objects.all()
 
     if request.method == 'POST':
         if request.POST['search']:
-            convenios = convenios.filter(Q(numero_convenio=request.POST['search']) | Q(orgao=request.POST['search']))
+            convenios = convenios.filter(
+                Q(numero_convenio=request.POST['search']) | Q(orgao=request.POST['search']))
 
-    convenios = convenios.order_by('-proposta__data')
     orgaos = Orgao.objects.all()
-    return render(request, 'base/convenios.html', {'convenios': convenios, 'orgaos': orgaos})
+    return render(
+        request,
+        'base/convenios.html',
+        {
+            'convenios': convenios,
+            'orgaos': orgaos,
+        })
 
 
 @login_required
@@ -209,7 +238,12 @@ def arquivo_extrato(request, id):
 @login_required
 def projetos(request):
     projetos = Projeto.objects.all()
-    return render(request, 'base/projetos.html', {'projetos': projetos})
+    return render(
+        request,
+        'base/projetos.html',
+        {
+            'projetos': projetos,
+        })
 
 
 @login_required
@@ -275,7 +309,12 @@ def projeto_item(request, projeto_id, id=False):
 @login_required
 def itens(request, id=False):
     itens = Item.objects.all()
-    return render(request, 'base/itens.html', {'itens': itens})
+    return render(
+        request,
+        'base/itens.html',
+        {
+            'itens': itens,
+        })
 
 
 @login_required
@@ -307,7 +346,12 @@ def item(request, id=False):
 @login_required
 def opcoes(request):
     opcoes = Opcao.objects.all()
-    return render(request, 'base/opcoes.html', {'opcoes': opcoes})
+    return render(
+        request,
+        'base/opcoes.html',
+        {
+            'opcoes': opcoes,
+        })
 
 
 @login_required
@@ -339,7 +383,12 @@ def opcao(request, id=False):
 @login_required
 def alternativas(request):
     alternativas = Alternativa.objects.all()
-    return render(request, 'base/alternativas.html', {'alternativas': alternativas})
+    return render(
+        request,
+        'base/alternativas.html',
+        {
+            'alternativas': alternativas,
+        })
 
 
 @login_required
@@ -371,7 +420,12 @@ def alternativa(request, id=False):
 @login_required
 def itens_alternativas(request):
     itens = ItemAlternativa.objects.all()
-    return render(request, 'base/itens_alternativas.html', {'itens': itens})
+    return render(
+        request,
+        'base/itens_alternativas.html',
+        {
+            'itens': itens,
+        })
 
 
 @login_required
@@ -475,14 +529,73 @@ def projeto_controle_item(request, controle_id=False):
             return redirect(reverse('convenio_projeto_controle', args=[controle.convenio.id]))
         else:
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar o item de controle!')
+
     return render(
         request,
         'base/projeto_controle_item.html',
         {
             'controle': controle,
-            'projeto_controle_item_form': projeto_controle_item_form
+            'projeto_controle_item_form': projeto_controle_item_form,
         }
     )
+
+
+@login_required
+def protocolo(request, convenio_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
+    atividades = Atividade.objects.filter(convenio=convenio)
+    licenciamentos = LicenciamentoAmbiental.objects.filter(convenio=convenio)
+
+    return render(
+        request,
+        'base/protocolo.html',
+        {
+            'convenio': convenio,
+            'atividades': atividades,
+            'licenciamentos': licenciamentos,
+        })
+
+
+@login_required
+def atividades(request, convenio_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
+    atividade_form = AtividadeForm()
+    if request.method == 'POST':
+        atividade_form = AtividadeForm(request.POST, request.FILES)
+        if atividade_form.is_valid():
+            atividade = atividade_form.save(commit=False)
+            atividade.convenio = convenio
+            atividade.save()
+            return redirect(reverse('protocolo', args=[convenio.id]))
+
+    return render(
+        request,
+        'base/atividade.html',
+        {
+            'convenio': convenio,
+            'atividade_form': atividade_form,
+        })
+
+
+@login_required
+def licenciamentos_ambientais(request, convenio_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
+    licenciamento_form = LicenciamentoForm()
+    if request.method == 'POST':
+        licenciamento_form = LicenciamentoForm(request.POST, request.FILES)
+        if licenciamento_form.is_valid():
+            licenciamento = licenciamento_form.save(commit=False)
+            licenciamento.convenio = convenio
+            licenciamento.save()
+            return redirect(reverse('protocolo', args=[convenio.id]))
+
+    return render(
+        request,
+        'base/licenciamento_ambiental.html',
+        {
+            'convenio': convenio,
+            'licenciamento_form': licenciamento_form,
+        })
 
 
 @api_view(['GET', 'POST'])
@@ -525,43 +638,3 @@ def item_controle_projeto_detalhe(request, pk):
     elif request.method == 'DELETE':
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@login_required
-def protocolo(request, convenio_id=False):
-    convenio = Convenio.objects.get(id=convenio_id)
-    atividades = Atividade.objects.filter(convenio=convenio)
-    licenciamentos = LicenciamentoAmbiental.objects.filter(convenio=convenio)
-    return render(
-        request,
-        'base/protocolo.html',
-        {'convenio': convenio, 'atividades': atividades, 'licenciamentos': licenciamentos})
-
-
-def atividades(request, convenio_id=False):
-    convenio = Convenio.objects.get(id=convenio_id)
-    atividade_form = AtividadeForm()
-    if request.method == 'POST':
-        atividade_form = AtividadeForm(request.POST, request.FILES)
-        if atividade_form.is_valid():
-            atividade = atividade_form.save(commit=False)
-            atividade.convenio = convenio
-            atividade.save()
-            return redirect(reverse('protocolo', args=[convenio.id]))
-    return render(request, 'base/atividade.html', {'convenio': convenio, 'atividade_form': atividade_form})
-
-
-def licenciamentos_ambientais(request, convenio_id=False):
-    convenio = Convenio.objects.get(id=convenio_id)
-    licenciamento_form = LicenciamentoForm()
-    if request.method == 'POST':
-        licenciamento_form = LicenciamentoForm(request.POST, request.FILES)
-        if licenciamento_form.is_valid():
-            licenciamento = licenciamento_form.save(commit=False)
-            licenciamento.convenio = convenio
-            licenciamento.save()
-            return redirect(reverse('protocolo', args=[convenio.id]))
-    return render(
-        request,
-        'base/licenciamento_ambiental.html',
-        {'convenio': convenio, 'licenciamento_form': licenciamento_form})
