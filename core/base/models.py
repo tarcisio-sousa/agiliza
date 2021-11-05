@@ -159,8 +159,8 @@ class Projeto(models.Model):
     class TipoChoice(models.TextChoices):
         ESTRADA = 'estrada', _('Estrada')
         EQUIPAMENTO = 'equipamento', _('Equipamento')
-        PRACA = 'praca', _('Praca')
-        PAVIMENTACAO = 'pavimentacao', _('Pavimentacao')
+        PRACA = 'praca', _('Praça')
+        PAVIMENTACAO = 'pavimentacao', _('Pavimentação')
         CENTRO_ESPORTIVO = 'centro_esportivo', _('Centro Esportivo')
         EDIFICACAO = 'edificacao', _('Edificação')
 

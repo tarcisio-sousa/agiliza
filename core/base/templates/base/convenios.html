@@ -9,28 +9,35 @@
 		{% breadcrumb " Convênios " "convenios" %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
-	<div class="row">
-		<div class="col-md-5 offset-md-7 mb-2">
-			<form action="{% url 'convenios' %}" method="post"> 
-				{% csrf_token %}
-				<div class="input-group input-group-sm">
-					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar">
-					<div class="input-group-append">
-						<button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i></button>
+	{% block search %}
+	<div class="d-flex justify-content-end mb-2"> 
+		<div class="row">
+			<div class="col-md-12"> 
+				<div class="btn-toolbar mb-2 mb-md-0 ml-1">
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<form action="{% url 'convenios' %}" method="get"> 
+								<div class="input-group input-group-sm btn-group-toggle" data-toggle="buttons"> 
+							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
+									<div class="input-group-append"> 
+								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i></button>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
+	{% endblock %}
 	<div class="row">
 		<div class="col-md-12">
 			{% if convenios %}
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						{% if perms.base.add_convenio %}
-						<th width="1%"> <!-- Ações --> </th>
-						{% endif %}
+						<th width="1%"><i class="fas fa-asterisk"></i></th>
 						<th>Número Convênio</th>
 						<th>Proposta</th>
 						<th>Objeto</th>

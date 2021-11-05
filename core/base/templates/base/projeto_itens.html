@@ -8,7 +8,7 @@
 	<div class="row">
 		<div class="col-md-12 text-right mb-2">
 			{% comment %}
-			<a href="{% url 'item' %}" class="btn btn-sm btn-link-agiliza px-3">CRIAR <i class="fas fa-plus"></i> </a>
+			<a href="{% url 'item' %}" class="btn btn-sm btn-link-agiliza px-3">Criar <i class="fas fa-plus"></i> </a>
 			{% endcomment %}
 		</div>
 	</div>
@@ -21,13 +21,26 @@
 		{% breadcrumb " Itens " "projeto_itens" projeto.id %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
+	
+	{% block search %}
+	<div class="d-flex justify-content-between mb-2"> 
+		<div class="row">
+			<div class="col-md-12">
+				{% if perms.base.add_proposta %}
+					<a href="{% url 'projeto_item' projeto.id %}" class="btn btn-sm link-agiliza">Novo <i class="fas fa-plus-circle"></i> </a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% endblock %}
 
 	<div class="row">
 		<div class="col-md-12">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th class="p-0" width="1%"><a href="{% url 'projeto_item' projeto.id %}" class="nav-link link-agiliza active mb-1"> <i class="fas fa-plus-circle"></i> </a></th>
+						<th width="1%"><i class="fas fa-asterisk"></i></th>
+						<!-- <th class="p-0" width="1%"><a href="{% url 'projeto_item' projeto.id %}" class="nav-link link-agiliza active mb-1"> <i class="fas fa-plus-circle"></i> </a></th> -->
 						<th>Descrição</th>
 					</tr>
 				</thead>
