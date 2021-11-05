@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ProjetoControleItem, Alternativa, Responsavel
+from core.base.models import ProjetoControleItem, Alternativa, Responsavel
 
 
 class AlternativaSerializer(serializers.ModelSerializer):
