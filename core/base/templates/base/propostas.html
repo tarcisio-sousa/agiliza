@@ -10,7 +10,14 @@
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 	{% block search %}
-	<div class="d-flex justify-content-end mb-2"> 
+	<div class="d-flex justify-content-between mb-2"> 
+		<div class="row">
+			<div class="col-md-12">
+				{% if perms.base.add_proposta %}
+					<a href="{% url 'proposta' %}" class="btn btn-sm link-agiliza">Nova <i class="fas fa-plus-circle"></i> </a>
+				{% endif %}
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-12"> 
 				<div class="btn-toolbar mb-2 mb-md-0 ml-1">
@@ -36,12 +43,8 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th class="p-0" width="1%"> 
-							{% if perms.base.add_proposta %}
-								<a href="{% url 'proposta' %}" class="nav-link link-agiliza mb-1"> <i class="fas fa-plus-circle"></i> </a>
-							{% endif %}
-						</th>
-						<!-- <th width="1%">Ações</th> -->
+						<!-- <th class="p-0" width="1%"> </th> -->
+						<th width="1%"><i class="fas fa-asterisk"></i></th>
 						<th>Prefeitura</th>
 						<th>Número</th>
 						<th>Objeto</th>
