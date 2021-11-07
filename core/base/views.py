@@ -169,8 +169,8 @@ def proposta_documento(request, id):
 def _gerar_convenio(request, proposta, dados):
     (convenio, gerado) = Convenio.objects.get_or_create(proposta=proposta)
     if gerado:
-        if (dados['numero_convenio']):
-            convenio.numero_convenio = dados['numero_convenio']
+        if (dados['numero']):
+            convenio.numero = dados['numero']
             convenio.save()
             messages.add_message(request, messages.SUCCESS, 'Convênio gerado com sucesso!')
             _gerar_projeto(request, convenio, dados)
@@ -204,7 +204,7 @@ def convenios(request):
     if request.method == 'POST':
         if request.POST['search']:
             convenios = convenios.filter(
-                Q(numero_convenio=request.POST['search']) | Q(orgao=request.POST['search']))
+                Q(numero=request.POST['search']) | Q(orgao=request.POST['search']))
 
     orgaos = Orgao.objects.all()
     return render(

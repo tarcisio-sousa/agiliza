@@ -132,7 +132,7 @@ class Convenio(models.Model):
     proposta = models.ForeignKey('Proposta', on_delete=models.CASCADE, blank=True, null=True)
     orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
     arquivo_extrato = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
-    numero_convenio = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
+    numero = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
     valor = models.DecimalField(
         _('Valor'), max_digits=19, default=0, decimal_places=2, blank=True, null=True)
