@@ -134,7 +134,11 @@ class Convenio(models.Model):
     arquivo_extrato = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
     numero_convenio = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
-
+    valor = models.DecimalField(
+        _('Valor'), max_digits=19, default=0, decimal_places=2, blank=True, null=True)
+    valor_repasse = models.DecimalField(
+        _('Valor do repasse'), max_digits=19, default=0, decimal_places=2, blank=True, null=True)
+    
     class Meta:
         verbose_name = _('convênio')
         verbose_name_plural = _('convênios')
