@@ -1,5 +1,5 @@
-const url_api = '/api'
-// const url_api = '/agiliza/api'
+// const url_api = '/api'
+const url_api = '/agiliza/api'
 const url_item_controle = 'item/controle'
 
 const token = document.querySelector('[name=csrfmiddlewaretoken]').value

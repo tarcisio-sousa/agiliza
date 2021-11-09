@@ -1,5 +1,5 @@
-const url_base = ''
-// const url_base = '/agiliza'
+// const url_base = ''
+const url_base = '/agiliza'
 const url_projeto = 'projeto'
 
 let seleciona_convenio = (elemento) => {
