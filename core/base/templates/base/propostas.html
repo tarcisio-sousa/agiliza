@@ -1,5 +1,12 @@
 {% extends 'base/base.html' %}
 
+{% load static %}
+
+{% block javascript %}
+{{ block.super }}	
+<script src="{% static 'js/propostas.js' %}"></script>
+{% endblock %}
+
 {% load django_bootstrap_breadcrumbs %}
 
 {% block title %}Propostas{% endblock %}
@@ -24,7 +31,7 @@
 					<div class="row">
 						<div class="col-md-12 text-right">
 							<form action="{% url 'propostas' %}" method="get"> 
-								<div class="input-group input-group-sm btn-group-toggle" data-toggle="buttons"> 
+								<div class="input-group input-group-sm"> 
 							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
 									<div class="input-group-append"> 
 								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i></button>
@@ -209,13 +216,4 @@
 		</div>
 	</div>
 
-	<script>
-		let form_empenhar_proposta = document.getElementById('formEmpenharProposta')
-		let form_extrato = document.getElementById('formExtrato')
-
-		let seleciona_empenhar_proposta = (elemento) => 
-			form_empenhar_proposta.action = `/agiliza/proposta/empenhar/${elemento.dataset.id}`
-		let seleciona_proposta_arquivo_extrato = (elemento) => 
-			form_extrato.action = `/agiliza/proposta/arquivo/extrato/${elemento.dataset.id}`
-	</script>
 {% endblock %}
