@@ -1,5 +1,12 @@
 {% extends 'base/base.html' %}
 
+{% load static %}
+
+{% block javascript %}
+{{ block.super }}	
+<script src="{% static 'js/convenios.js' %}"></script>
+{% endblock %}
+
 {% load django_bootstrap_breadcrumbs %}
 
 {% block title %}Convênios{% endblock %}
@@ -17,7 +24,7 @@
 					<div class="row">
 						<div class="col-md-12 text-right">
 							<form action="{% url 'convenios' %}" method="get"> 
-								<div class="input-group input-group-sm btn-group-toggle" data-toggle="buttons"> 
+								<div class="input-group input-group-sm"> 
 							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
 									<div class="input-group-append"> 
 								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i></button>
@@ -145,13 +152,4 @@
 		</div>
 	</div>
 
-
-	<script>
-		let seleciona_convenio = () => {}
-
-		let form_convenio_projeto = document.getElementById('formConvenioProjeto')
-		
-		seleciona_convenio = (elemento) => 
-			form_convenio_projeto.action=`/agiliza/projeto/${elemento.dataset.id}`;
-	</script>
 {% endblock %}
