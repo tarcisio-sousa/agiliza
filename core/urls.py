@@ -28,7 +28,7 @@ urlpatterns = [
     path('api/', include('core.api.urls')),
     path('', include('core.base.urls')),
     path('admin/', admin.site.urls),
-    path('relatorios/', PDFTemplateView.as_view(template_name='reports/my_template.html', filename='my_pdf.pdf'), name='pdf'),
+    # path('relatorios/', PDFTemplateView.as_view(template_name='reports/my_template.html', filename='my_pdf.pdf'), name='pdf'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
