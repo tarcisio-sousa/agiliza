@@ -124,7 +124,7 @@
 						<td>{{ proposta.objeto }}</td>
 						<td class="text-right">{% load l10n %}{{ proposta.valor_contrapartida|floatformat:2|localize }}</td>
 						<td>{{ proposta.data|date:"d/m/Y" }}</td>
-						<td>{{ proposta.get_situacao_display }}</td>
+						<td class="text-center">{{ proposta.get_situacao_display }}</td>
 						<td class="text-center">{% if proposta.extrato %}<a href="/agiliza/media/{{ proposta.extrato }}" target="_blank"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
 					</tr>
 					{% endfor %}
@@ -203,13 +203,17 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-md-12">
-								<label for="">Enviar arquivo</label>
-								<input type="file" name="extrato" class="form-control" />
+								<div class="input-group">
+								  <div class="custom-file">
+								    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+								    <label class="custom-file-label" for="inputGroupFile01">Selecionar arquivo</label>
+								  </div>
+								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary btn-sm"> <i class="fas fa-check-circle"></i> Salvar </button>
+						<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
 					</div>
 				</div>
 			</form>
