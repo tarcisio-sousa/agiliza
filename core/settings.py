@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'ordered_model',
     'django_bootstrap_breadcrumbs',
     'django_crontab',
-    'wkhtmltopdf',
+    # 'wkhtmltopdf',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +86,7 @@ TEMPLATES = [
 
 BREADCRUMBS_TEMPLATE = 'base/breadcrumb_default.html'
 
-WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+# WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
 
 CRONJOBS = [
     ('*/5 * * * *', 'core.base.views.notification_scheduled_job')
