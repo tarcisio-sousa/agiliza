@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 
-from wkhtmltopdf.views import PDFTemplateView
+# from wkhtmltopdf.views import PDFTemplateView
 
 favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 
