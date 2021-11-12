@@ -9,7 +9,10 @@ class PropostaForm(ModelForm):
     class Meta:
         model = Proposta
         fields = '__all__'
-        widgets = {'valor_contrapartida': forms.TextInput()}
+        widgets = {
+            'valor_convenio': forms.TextInput(),
+            'valor_contrapartida': forms.TextInput(),
+            'valor_repasse': forms.TextInput()}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,10 +20,18 @@ class PropostaForm(ModelForm):
             'class': 'form-control form-control-sm custom-select custom-select-sm'})
         self.fields['lei_complementar'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['data'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+        self.fields['valor_convenio'].widget.attrs.update({
+            'class': 'form-control form-control-sm money'})
+        self.fields['valor_convenio'].localize = True
+        self.fields['valor_convenio'].widget.is_localized = True
         self.fields['valor_contrapartida'].widget.attrs.update({
             'class': 'form-control form-control-sm money'})
         self.fields['valor_contrapartida'].localize = True
         self.fields['valor_contrapartida'].widget.is_localized = True
+        self.fields['valor_repasse'].widget.attrs.update({
+            'class': 'form-control form-control-sm money'})
+        self.fields['valor_repasse'].localize = True
+        self.fields['valor_repasse'].widget.is_localized = True
         self.fields['objeto'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['numero'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['data_prevista'].widget.attrs.update({'class': 'form-control form-control-sm date'})
