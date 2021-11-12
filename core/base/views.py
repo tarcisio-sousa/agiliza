@@ -10,6 +10,7 @@ from .forms import OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeFor
 from .forms import ProjetoControleForm, ProjetoControleItemForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
+from .models import TecnicoOrgao
 
 
 def notification_scheduled_job():
@@ -171,6 +172,12 @@ def _gerar_convenio(request, proposta, dados):
     if gerado:
         if (dados['numero']):
             convenio.numero = dados['numero']
+            if (dados['nome']):
+                tecnico_orgao = TecnicoOrgao()
+                tecnico_orgao.nome = dados['nome']
+                tecnico_orgao.telefone = dados['telefone']
+                tecnico_orgao.save()
+                convenio.tecnico_orgao = tecnico_orgao
             convenio.save()
             messages.add_message(request, messages.SUCCESS, 'Convênio gerado com sucesso!')
             _gerar_projeto(request, convenio, dados)

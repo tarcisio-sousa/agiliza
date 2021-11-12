@@ -138,6 +138,7 @@ class Convenio(models.Model):
     arquivo_extrato = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
     numero = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
+    tecnico_orgao = models.ForeignKey('TecnicoOrgao', on_delete=models.CASCADE, blank=True, null=True)
     
     class Meta:
         verbose_name = _('convênio')
@@ -157,6 +158,18 @@ class Orgao(models.Model):
 
     def __str__(self):
         return f'{self.descricao}'
+
+
+class TecnicoOrgao(models.Model):
+    nome = models.CharField(max_length=200, blank=True, null=True)
+    telefone = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('técnico orgão')
+        verbose_name_plural = _('técnicos orgãos')
+
+    def __str__(self):
+        return f'{self.nome}'
 
 
 class Projeto(models.Model):
