@@ -151,13 +151,13 @@
 					</div>
 					<div class="modal-body">
 						<div class="row">
-							<div class="col-md-12 form-group">
+							<div class="col-md-8 form-group">
 								<label for="">Número convênio</label>
 								<input type="text" name="numero" class="form-control form-control-sm" />
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-12 form-group">
+							<div class="col-md-5 form-group">
 								<label for="id_prefeitura">Orgão</label>
 								<select name="orgao_id" id="orgao" class="custom-select form-control">
 									<option>-------</option>
@@ -166,16 +166,27 @@
 									{% endfor %}
 								</select>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12 form-group">
-								<label for="id_prefeitura">Projeto</label>
+							<div class="col-md-7 form-group">
+								<label for="id_prefeitura">Tipo de projeto</label>
 								<select name="projeto_id" id="projeto" class="custom-select form-control">
 									<option>-------</option>
 									{% for projeto in projetos %}
 									<option value="{{projeto.id}}">{{ projeto }}</option>
 									{% endfor %}
 								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<h5>Técnico do orgão</h5>
+							</div>
+							<div class="col-md-8 form-group">
+								<label>Nome</label>
+								<input type="text" name="nome" class="form-control form-control-sm" />
+							</div>
+							<div class="col-md-4 form-group">
+								<label>Telefone</label>
+								<input type="text" name="telefone" class="form-control form-control-sm" />
 							</div>
 						</div>
 					</div>
