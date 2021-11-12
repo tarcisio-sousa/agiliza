@@ -3,7 +3,8 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from ordered_model.admin import OrderedModelAdmin
 from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio
-from core.base.models import Orgao, Projeto, Item, Opcao, ItemAlternativa, Responsavel
+from core.base.models import Orgao, Projeto, Item, Opcao, ItemAlternativa
+from core.base.models import Responsavel, SecretarioDeObras, SecretarioFinanceiro
 from core.base.models import ProjetoControle, ProjetoControleItem
 
 
@@ -34,6 +35,16 @@ class ProfissionalAdmin(admin.ModelAdmin):
 
 @admin.register(Responsavel)
 class ResponsavelAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'cargo']
+
+
+@admin.register(SecretarioDeObras)
+class SecretarioDeObrasAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'cargo']
+
+
+@admin.register(SecretarioFinanceiro)
+class SecretarioFinanceiroAdmin(admin.ModelAdmin):
     list_display = ['nome', 'cargo']
 
 

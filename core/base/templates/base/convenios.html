@@ -49,7 +49,7 @@
 						<th>Proposta</th>
 						<th>Objeto</th>
 						<th>Prefeitura</th>
-						<th width="1%">Data</th>
+						<th width="1%">Valor</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -76,7 +76,7 @@
 						<td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td>
 						<td>{{ convenio.proposta.objeto }}</td>
 						<td>{{ convenio.proposta.prefeitura }}</td>
-						<td>{{ convenio.proposta.data|date:'d/m/Y' }}</td>
+						<td>{% load l10n %}{{ convenio.valor|floatformat:2|localize }}</td>
 					</tr>
 					{% endfor %}
 				</tbody>
