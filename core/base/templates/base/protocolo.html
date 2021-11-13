@@ -7,20 +7,6 @@
 {% block action %}
 <div class="row">
 	<div class="col-md-12 text-right mb-2">
-
-		<!-- <ul class="navbar-nav mr-auto">
-			<li class="nav-item dropdown text-center">
-				<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
-				<ul class="dropdown-menu dropdown-menu-right">
-					<li>
-						<a href="{% url 'atividades' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> Orgão Concedente</a>
-					</li>
-					<li> 
-						<a href="{% url 'licenciamentos_ambientais' convenio.id %}" class="dropdown-item"> <i class="fas fa-plus-circle"></i> SEMAR </a>
-					</li>
-				</ul>
-			</li>
-		</ul> -->
 	</div>
 </div>
 {% endblock %}
@@ -36,11 +22,13 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="row">
-					<div class="col-md-12 mb-2"> 
-						<h8 class="text-uppercase font-weight-bold link-agiliza">Dados</h8>
-					</div>
 					<div class="col-md-12">
-						<div class="card mb-3">
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<h8 class="nav-link link-agiliza active">Dados</h8>
+							</li>
+						</ul>
+						<div class="card card-nav-agiliza mb-3">
 							<div class="card-body">
 								<div class="form-group row mb-0"> 
 									<label for="numero" class="col-sm-4 col-form-label-sm font-weight-bold">Nº Convênio</label>
@@ -65,11 +53,40 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12 mb-2"> 
-						<h8 class="text-uppercase font-weight-bold link-agiliza">Custos</h8>
-					</div>
 					<div class="col-md-12">
-						<div class="card mb-3">
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<h8 class="nav-link link-agiliza active">Técnico do Órgão</h8>
+							</li>
+						</ul>
+						<div class="card card-nav-agiliza mb-3">
+							<div class="card-body"> 
+								<div class="form-group row mb-0"> 
+									<label for="nome" class="col-sm-4 col-form-label-sm font-weight-bold">Nome</label>
+									<div class="col-sm-8"> 
+										<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.nome}}</div>
+									</div>
+								</div>
+								<div class="form-group row mb-0"> 
+									<label for="telefone" class="col-sm-4 col-form-label-sm font-weight-bold">Telefone</label>
+									<div class="col-sm-8"> 
+										<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.telefone}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<h8 class="nav-link link-agiliza active">Custos</h8>
+							</li>
+						</ul>
+						<div class="card card-nav-agiliza mb-3">
 							<div class="card-body">
 								<div class="form-group row mb-0"> 
 									<label for="valor_repasse" class="col-sm-4 col-form-label-sm font-weight-bold">Valor Repasse</label>
@@ -88,55 +105,33 @@
 									<div class="col-sm-8"> 
 										<div class="form-control-sm form-control-plaintext text-right">R$ {{convenio.proposta.valor_convenio}}</div>
 									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="row">
-					<div class="col-md-12 mb-2"> 
-						<h8 class="text-uppercase font-weight-bold link-agiliza">Técnico do Orgão</h8>
-					</div>
-					<div class="col-md-12">
-						<div class="card mb-3">
-							<div class="card-body"> 
-								<div class="form-group row mb-0"> 
-									<label for="nome" class="col-sm-4 col-form-label-sm font-weight-bold">Nome</label>
-									<div class="col-sm-8"> 
-										<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.nome}}</div>
+								</div> 
+								<form method="post" class="form">
+								<div class="form-group row mb-2"> 
+									<label for="valor_liberado" class="col-sm-8 col-form-label-sm font-weight-bold">Valor Liberado</label>
+									<div class="col-sm-4"> 
+										<div class="form-control-sm form-control-plaintext text-right">
+											<!-- R$ 0,00 -->
+											<input type="text" class="form-control form-control-sm money" />
+										</div>
 									</div>
 								</div>
-								<div class="form-group row mb-0"> 
-									<label for="telefone" class="col-sm-4 col-form-label-sm font-weight-bold">Telefone</label>
-									<div class="col-sm-8"> 
-										<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.telefone}}</div>
+								<div class="form-group row mb-3"> 
+									<label for="valor_a_liberar" class="col-sm-8 col-form-label-sm font-weight-bold">Valor à Liberar</label>
+									<div class="col-sm-4"> 
+										<div class="form-control-sm form-control-plaintext text-right">
+											<!-- R$ 0,00 -->
+											<input type="text" class="form-control form-control-sm money" />
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 mt-0 mb-2"> 
-						<h8 class="text-uppercase font-weight-bold link-agiliza">Execução Concedente</h8>
-					</div>
-					<div class="col-md-12">
-						<div class="card mb-3">
-							<div class="card-body"> 
-								<div class="form-group row mb-0"> 
-									<label for="valor_liberado" class="col-sm-4 col-form-label-sm font-weight-bold">Valor Liberado</label>
-									<div class="col-sm-8"> 
-										<div class="form-control-sm form-control-plaintext text-right">R$ 0,00</div>
+								<div class="row">
+									<div class="col-md-12 text-right">
+										<button class="btn btn-sm btn-primary">Salvar  <i class="fas fa-paper-plane"></i></button>
 									</div>
 								</div>
-								<div class="form-group row mb-0"> 
-									<label for="valor_a_liberar" class="col-sm-4 col-form-label-sm font-weight-bold">Valor à Liberar</label>
-									<div class="col-sm-8"> 
-										<div class="form-control-sm form-control-plaintext text-right">R$ 0,00</div>
-									</div>
-								</div>
+								</form>
+
 							</div>
 						</div>
 					</div>

@@ -44,6 +44,12 @@ a:hover {
   text-underline-offset: 2px;
 }
 
+.card-nav-agiliza {
+  border-top: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .color-agiliza {
   color: #00532e;
 }
