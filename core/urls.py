@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 
-# from wkhtmltopdf.views import PDFTemplateView
+from wkhtmltopdf.views import PDFTemplateView
 
 favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 
@@ -28,8 +28,8 @@ urlpatterns = [
     path('api/', include('core.api.urls')),
     path('', include('core.base.urls')),
     path('admin/', admin.site.urls),
-    # path('relatorios/', PDFTemplateView.as_view(
-    # template_name='reports/my_template.html', filename='my_pdf.pdf'), name='pdf'),
+    path('relatorios/', PDFTemplateView.as_view(
+        template_name='reports/my_template.html', filename='my_pdf.pdf'), name='pdf'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

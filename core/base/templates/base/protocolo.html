@@ -83,7 +83,7 @@
 					<div class="col-md-12">
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item" role="presentation">
-								<h8 class="nav-link link-agiliza active">Custos - R$</h8>
+								<h8 class="nav-link link-agiliza active">Custos [R$]</h8>
 							</li>
 						</ul>
 						<div class="card card-nav-agiliza mb-3">
@@ -108,6 +108,12 @@
 								</div>
 								<form method="post" class="form">
 								{% csrf_token %}
+								<div class="form-group row mb-3"> 
+									<label for="valor_a_liberar" class="col-sm-8 col-form-label-sm font-weight-bold">À liberar</label>
+									<div class="col-sm-4"> 
+										<div class="form-control-sm form-control-plaintext text-right">{% load l10n %}{{ convenio.proposta.verifica_valor_liberar|floatformat:2|localize }}</div>
+									</div>
+								</div>
 								<div class="form-group row mb-2"> 
 									<label for="valor_liberado" class="col-sm-8 col-form-label-sm font-weight-bold">Liberado</label>
 									<div class="col-sm-4"> 
@@ -116,12 +122,6 @@
 											<!-- <input type="text" class="form-control form-control-sm money" /> -->
 											{{ proposta_form.valor_liberado }}
 										</div>
-									</div>
-								</div>
-								<div class="form-group row mb-3"> 
-									<label for="valor_a_liberar" class="col-sm-8 col-form-label-sm font-weight-bold">À liberar</label>
-									<div class="col-sm-4"> 
-										<div class="form-control-sm form-control-plaintext text-right">{% load l10n %}{{ convenio.proposta.verifica_valor_liberar|floatformat:2|localize }}</div>
 									</div>
 								</div>
 								<div class="row">
