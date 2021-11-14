@@ -111,6 +111,6 @@ $(function () {
         timepicker: false,
         mask: true,
     })
-    $('.money').mask('000.000.000.000.000,00', {reverse: true})
+    $('.money').maskMoney({thousands:'.', decimal:',', allowZero: true})
 })
 
