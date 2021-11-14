@@ -108,7 +108,7 @@
 								</div>
 								<form method="post" class="form">
 								{% csrf_token %}
-								<div class="form-group row mb-3"> 
+								<div class="form-group row mb-0"> 
 									<label for="valor_a_liberar" class="col-sm-8 col-form-label-sm font-weight-bold">À liberar</label>
 									<div class="col-sm-4"> 
 										<div class="form-control-sm form-control-plaintext text-right">{% load l10n %}{{ convenio.proposta.verifica_valor_liberar|floatformat:2|localize }}</div>
