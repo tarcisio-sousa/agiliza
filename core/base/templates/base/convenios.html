@@ -76,7 +76,7 @@
 						<td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td>
 						<td>{{ convenio.proposta.objeto }}</td>
 						<td>{{ convenio.proposta.prefeitura }}</td>
-						<td>{% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}</td>
+						<td class="text-right">{% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}</td>
 					</tr>
 					{% endfor %}
 				</tbody>

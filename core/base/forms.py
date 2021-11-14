@@ -46,6 +46,21 @@ class PropostaArquivoExtratoForm(ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class PropostaValorLiberado(ModelForm):
+    class Meta:
+        model = Proposta
+        fields = ['valor_liberado', ]
+        widgets = {
+            'valor_liberado': forms.TextInput()}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['valor_liberado'].widget.attrs.update({
+            'class': 'form-control form-control-sm money'})
+        self.fields['valor_liberado'].localize = True
+        self.fields['valor_liberado'].widget.is_localized = True
+
+
 class ConvenioArquivoExtratoForm(ModelForm):
     class Meta:
         model = Convenio

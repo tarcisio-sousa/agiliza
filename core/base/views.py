@@ -5,9 +5,10 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import PropostaForm, PropostaArquivoExtratoForm, ConvenioArquivoExtratoForm, ProjetoForm, ItemForm
-from .forms import OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
-from .forms import ProjetoControleForm, ProjetoControleItemForm
+from django.utils.formats import localize
+from .forms import PropostaForm, PropostaArquivoExtratoForm, PropostaValorLiberado, ConvenioArquivoExtratoForm
+from .forms import ProjetoForm, OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
+from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
 from .models import TecnicoOrgao
@@ -544,6 +545,14 @@ def protocolo(request, convenio_id=False):
     atividades = Atividade.objects.filter(convenio=convenio)
     licenciamentos = LicenciamentoAmbiental.objects.filter(convenio=convenio)
 
+    proposta_form = PropostaValorLiberado(instance=convenio.proposta)
+    if request.method == 'POST':
+        proposta_form = PropostaValorLiberado(request.POST, instance=convenio.proposta)
+        if proposta_form.is_valid():
+            proposta = proposta_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Valor liberado R$ %s' % localize(proposta.valor_liberado))
+            return redirect(reverse('protocolo', args=[convenio.id]))
+
     return render(
         request,
         'base/protocolo.html',
@@ -551,6 +560,7 @@ def protocolo(request, convenio_id=False):
             'convenio': convenio,
             'atividades': atividades,
             'licenciamentos': licenciamentos,
+            'proposta_form': proposta_form,
         })
 
 

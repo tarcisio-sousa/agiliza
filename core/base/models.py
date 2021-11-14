@@ -110,6 +110,8 @@ class Proposta(models.Model):
         _('Valor do convênio'), max_digits=19, default=0, decimal_places=2, blank=True, null=True)
     valor_repasse = models.DecimalField(
         _('Valor do repasse'), max_digits=19, default=0, decimal_places=2, blank=True, null=True)
+    valor_liberado = models.DecimalField(
+        _('Valor liberado'), max_digits=19, default=0, decimal_places=2, blank=True, null=True)
     objeto = models.CharField(max_length=150, blank=True, null=True)
     numero = models.CharField(_('Número da proposta'), max_length=150, blank=False, null=False)
     situacao = models.CharField(
@@ -131,6 +133,9 @@ class Proposta(models.Model):
         if self.SituacaoChoice.APROVADO == self.situacao:
             return self.SituacaoChoice.EMPENHADO
 
+    def verifica_valor_liberar(self):
+        return self.valor_repasse - self.valor_liberado
+
 
 class Convenio(models.Model):
     proposta = models.ForeignKey('Proposta', on_delete=models.CASCADE, blank=True, null=True)
@@ -139,7 +144,7 @@ class Convenio(models.Model):
     numero = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
     tecnico_orgao = models.ForeignKey('TecnicoOrgao', on_delete=models.CASCADE, blank=True, null=True)
-    
+
     class Meta:
         verbose_name = _('convênio')
         verbose_name_plural = _('convênios')
