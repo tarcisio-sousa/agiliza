@@ -87,7 +87,7 @@ TEMPLATES = [
 BREADCRUMBS_TEMPLATE = 'base/breadcrumb_default.html'
 
 # WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
-WKHTMLTOPDF_CMD = '../../wkhtmltox/bin/wkhtmltopdf'
+WKHTMLTOPDF_CMD = './wkhtmltox/bin/wkhtmltopdf'
 
 CRONJOBS = [
     ('*/5 * * * *', 'core.base.views.notification_scheduled_job')
