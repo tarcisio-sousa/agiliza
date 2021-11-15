@@ -67,7 +67,7 @@ def home(request):
 @login_required
 def propostas(request, filter_situacao=False):
     choices_situacao = Proposta.SituacaoChoice.choices
-    propostas = Proposta.objects.order_by('-id')
+    propostas = Proposta.objects.filter(status=True).order_by('-id')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
@@ -204,7 +204,7 @@ def declaracoes(request):
 
 @login_required
 def convenios(request):
-    convenios = Convenio.objects.order_by('-proposta__data')
+    convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
         convenios = Convenio.objects.filter(proposta__prefeitura=prefeitura)
