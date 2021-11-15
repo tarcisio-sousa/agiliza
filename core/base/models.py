@@ -119,6 +119,7 @@ class Proposta(models.Model):
     )
     extrato = models.FileField(upload_to='uploads/extrato/%Y/%m/%d', max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
+    status = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = _('proposta')
@@ -144,6 +145,7 @@ class Convenio(models.Model):
     numero = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
     tecnico_orgao = models.ForeignKey('TecnicoOrgao', on_delete=models.CASCADE, blank=True, null=True)
+    status = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = _('convênio')
