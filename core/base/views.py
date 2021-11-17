@@ -71,7 +71,7 @@ def propostas(request, filter_situacao=False):
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
-        propostas = propostas.objects.filter(prefeitura=prefeitura)
+        propostas = propostas.filter(prefeitura=prefeitura)
 
     propostas = propostas.filter(
         situacao=filter_situacao) if filter_situacao else propostas

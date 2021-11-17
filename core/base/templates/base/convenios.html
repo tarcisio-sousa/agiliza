@@ -49,13 +49,12 @@
 						<th>Proposta</th>
 						<th>Objeto</th>
 						<th>Prefeitura</th>
-						<th width="1%">R$ valor</th>
+						<th width="1%">R$ Valor</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for convenio in convenios %}
 					<tr>
-						{% if perms.base.add_convenio %}
 						<td class="text-center">
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown text-center">
@@ -64,14 +63,15 @@
 										<li>
 											<a href="{% url 'protocolo' convenio.id %}" class="dropdown-item"> Histórico </a>
 										</li>
+										{% if perms.base.add_convenio %}
 										<li>
 											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> Elaboração de Projeto </a>
 										</li>
+										{% endif %}
 									</ul>
 								</li>
 							</ul>
 						</td>
-						{% endif %}
 						<td>{{ convenio.numero }}</td>
 						<td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td>
 						<td>{{ convenio.proposta.objeto }}</td>
