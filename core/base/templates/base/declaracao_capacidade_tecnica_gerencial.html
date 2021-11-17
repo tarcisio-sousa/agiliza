@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+
+{% block body %}
+	<!--<img src="/media/{# proposta.prefeitura.timbre #}" alt="Declaração" width="595" height="842" />-->
+	<div></div>
+	<div class="row" style="background: no-repeat url('/media/{{ proposta.prefeitura.timbre }}'); background-size: 1110px 1571px; height: 1571px;">
+		<div class="col-md-12" style="padding: 184px;">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1 class="titulo" style="margin-top: 150px;">DECLARAÇÃO CAPACIDADE TÉCNICA E GERENCIAL</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h5 class="subtitulo" style="margin-top: 100px;">Declaração</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="texto" style="margin-top: 50px;">Declaramos para os devidos fins que a Prefeitura Municipal de {{ proposta.prefeitura.nome }} – {{ proposta.prefeitura.uf }} relativo ao Projeto de {{ proposta.objeto }} no Município de {{ proposta.prefeitura.nome }} – {{ proposta.prefeitura.uf }}. Conforme Proposta N° {{ proposta.numero }}, possui capacidade técnica e gerencial para a execução da referida obra e que contará com engenheiro responsável pela fiscalização e acompanhamento da obra.</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="data_proposta text-right" style="margin-top: 100px;">{{ proposta.prefeitura.nome }} - {{ proposta.prefeitura.uf }}, {{ proposta.data }}.</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="rodape text-right" style="margin-top: 470px;">
+						Prefeitura de {{ proposta.prefeitura.nome }}<br>
+						{{ proposta.prefeitura.endereco }} - {{ proposta.prefeitura.bairro }} – {{ proposta.prefeitura.cep }} - {{ proposta.prefeitura.nome }} – {{ proposta.prefeitura.uf }}. CNPJ: {{ proposta.prefeitura.cnpj }} <br>
+						Telefone: {{ proposta.prefeitura.telefone }}<br>
+						Email: {{ proposta.prefeitura.email }}<br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
