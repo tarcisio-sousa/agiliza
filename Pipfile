@@ -22,6 +22,7 @@ django-bootstrap-breadcrumbs = "*"
 django-crontab = "*"
 djangorestframework = "*"
 django-wkhtmltopdf = "*"
+num2words = "*"
 
 [requires]
 python_version = "3.6"
