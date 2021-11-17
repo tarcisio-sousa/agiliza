@@ -36,7 +36,7 @@ def signin(request):
         user = authenticate(username=username, password=password)
 
         if (user is not None) and (user.is_active):
-            if user.is_superuser or user.profissional.cargo.descricao == 'PREFEITO':
+            if user.is_superuser or user.profissional:
                 login(request, user)
                 is_auth = True
 
