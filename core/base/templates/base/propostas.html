@@ -93,6 +93,7 @@
 					<tr>
 						<!-- <td class="text-center"><i class="fas fa-caret-right"></i></td> -->
 						<td class="text-center">
+							{% if perms.base.add_convenio %}
 							<ul class="navbar-nav mr-auto">
 								<li class="nav-item dropdown">
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
@@ -118,6 +119,7 @@
 									</div>
 								</li>
 							</ul>
+							{% endif %}
 						</td>
 						<td>{{ proposta.prefeitura }}</td>
 						<td>{{ proposta.numero }}</td>
