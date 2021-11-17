@@ -121,7 +121,9 @@ def proposta(request, id=False, situacao=False):
             proposta_form = PropostaForm(request.POST, instance=proposta)
 
         if proposta_form.is_valid():
-            proposta = proposta_form.save()
+            proposta = proposta_form.save(commit=False)
+            proposta.status = True
+            proposta.save()
             messages.add_message(request, messages.SUCCESS, 'Proposta salva com sucesso!')
 
             # send_mail(
@@ -173,6 +175,7 @@ def _gerar_convenio(request, proposta, dados):
     if gerado:
         if (dados['numero']):
             convenio.numero = dados['numero']
+            convenio.status = True
             if (dados['nome']):
                 tecnico_orgao = TecnicoOrgao()
                 tecnico_orgao.nome = dados['nome']
