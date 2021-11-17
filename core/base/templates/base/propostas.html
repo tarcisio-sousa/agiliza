@@ -98,7 +98,7 @@
 								<li class="nav-item dropdown">
 									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
 									<div class="dropdown-menu">
-										{% if perms.base.edit_proposta %}
+										{% if perms.base.change_proposta %}
 											<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> Editar</a>
 											<div class="dropdown-divider"></div>
 											{% if proposta.verifica_situacao == 'em-analise' %}
