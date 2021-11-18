@@ -210,7 +210,7 @@ def convenios(request):
     convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
-        convenios = Convenio.objects.filter(proposta__prefeitura=prefeitura)
+        convenios = convenios.filter(proposta__prefeitura=prefeitura)
 
     if request.method == 'POST':
         if request.POST['search']:
