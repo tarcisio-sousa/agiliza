@@ -154,6 +154,7 @@ class ItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['descricao'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['descricao'].widget.attrs['rows'] = 3
         self.fields['subitem'].widget.attrs.update({
             'class': 'form-control form-control-sm custom-select custom-select-sm'})
         self.fields['projeto'].widget.attrs.update({
