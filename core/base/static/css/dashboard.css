@@ -44,6 +44,16 @@ a:hover {
   text-underline-offset: 2px;
 }
 
+.card-fill{
+  height: 100%;
+}
+
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
 .card-nav-agiliza {
   border-top: 0px;
   border-top-left-radius: 0;
