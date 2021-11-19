@@ -8,6 +8,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+from decimal import Decimal
+
 
 class Cliente(models.Model):
     nome = models.CharField(max_length=250, blank=False, null=False)
@@ -105,13 +107,13 @@ class Proposta(models.Model):
     data = models.DateField(_('Data'), blank=False, null=False)
     data_prevista = models.DateField(_('Data Prevista'), blank=False, null=False)
     valor_contrapartida = models.DecimalField(
-        _('Valor da contrapartida'), max_digits=19, default=0, decimal_places=2, blank=False, null=False)
+        _('Valor da contrapartida'), max_digits=19, default=Decimal('0.00'), decimal_places=2, blank=False, null=False)
     valor_convenio = models.DecimalField(
-        _('Valor do convênio'), max_digits=19, default=0, decimal_places=2, blank=True, null=True)
+        _('Valor do convênio'), max_digits=19, default=Decimal('0.00'), decimal_places=2, blank=True, null=True)
     valor_repasse = models.DecimalField(
-        _('Valor do repasse'), max_digits=19, default=0, decimal_places=2, blank=True, null=True)
+        _('Valor do repasse'), max_digits=19, default=Decimal('0.00'), decimal_places=2, blank=True, null=True)
     valor_liberado = models.DecimalField(
-        _('Valor liberado'), max_digits=19, default=0, decimal_places=2, blank=True, null=True)
+        _('Valor liberado'), max_digits=19, default=Decimal('0.00'), decimal_places=2, blank=True, null=True)
     objeto = models.CharField(max_length=150, blank=True, null=True)
     numero = models.CharField(_('Número da proposta'), max_length=150, blank=False, null=False)
     situacao = models.CharField(
