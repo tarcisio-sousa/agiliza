@@ -199,7 +199,7 @@ class Projeto(models.Model):
 
 
 class Item(OrderedModelBase):
-    descricao = models.CharField(max_length=250, blank=False, null=False)
+    descricao = models.TextField(blank=False, null=False)
     subitem = models.ForeignKey('Item', on_delete=models.CASCADE, blank=True, null=True)
     projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE, blank=True, null=True)
     observacoes = models.TextField(blank=True, null=True)
