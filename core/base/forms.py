@@ -151,8 +151,9 @@ class ItemForm(ModelForm):
         fields = '__all__'
         # exclude = ('sort_order',)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, projeto, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['subitem'].queryset = Item.objects.filter(projeto=projeto)
         self.fields['descricao'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['descricao'].widget.attrs['rows'] = 3
         self.fields['subitem'].widget.attrs.update({
