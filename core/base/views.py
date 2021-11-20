@@ -175,6 +175,7 @@ def _gerar_convenio(request, proposta, dados):
     if gerado:
         if (dados['numero']):
             convenio.numero = dados['numero']
+            convenio.orgao_id = dados['orgao_id']
             convenio.status = True
             if (dados['nome']):
                 tecnico_orgao = TecnicoOrgao()
@@ -299,7 +300,9 @@ def projeto_item(request, projeto_id, id=False):
             item_form = ItemForm(request.POST, instance=item)
 
         if item_form.is_valid():
-            item = item_form.save()
+            item = item_form.save(commit=False)
+            item.projeto = projeto
+            item.save()
             messages.add_message(request, messages.SUCCESS, 'Item salvo com sucesso!')
             return redirect(reverse('projeto_itens', args=[projeto.id]))
         else:

@@ -157,8 +157,6 @@ class ItemForm(ModelForm):
         self.fields['descricao'].widget.attrs['rows'] = 3
         self.fields['subitem'].widget.attrs.update({
             'class': 'form-control form-control-sm custom-select custom-select-sm'})
-        self.fields['projeto'].widget.attrs.update({
-            'class': 'form-control form-control-sm custom-select custom-select-sm'})
         self.fields['observacoes'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['observacoes'].widget.attrs['rows'] = 3
         self.fields['opcao'].widget.attrs.update({
