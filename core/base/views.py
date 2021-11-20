@@ -285,19 +285,19 @@ def projeto_itens(request, id=False):
 @login_required
 def projeto_item(request, projeto_id, id=False):
     projeto = Projeto.objects.get(id=projeto_id)
-    item_form = ItemForm()
+    item_form = ItemForm(projeto)
 
     if (id):
         item = Item.objects.get(id=id)
-        item_form = ItemForm(instance=item)
+        item_form = ItemForm(projeto, instance=item)
 
     if request.method == 'POST':
 
-        item_form = ItemForm(request.POST)
+        item_form = ItemForm(projeto, request.POST)
 
         if id:
             item = Item.objects.get(id=id)
-            item_form = ItemForm(request.POST, instance=item)
+            item_form = ItemForm(projeto, request.POST, instance=item)
 
         if item_form.is_valid():
             item = item_form.save(commit=False)
