@@ -178,8 +178,11 @@ def _gerar_convenio(request, proposta, dados):
             convenio.orgao_id = dados['orgao_id']
             convenio.status = True
             if (dados['nome']):
-                tecnico_orgao = TecnicoOrgao()
-                tecnico_orgao.nome = dados['nome']
+                if (dados['tecnico_orgao_id']):
+                    tecnico_orgao = TecnicoOrgao.objects.get(id=dados['tecnico_orgao_id'])
+                else:
+                    tecnico_orgao = TecnicoOrgao()
+                    tecnico_orgao.nome = dados['nome']
                 tecnico_orgao.telefone = dados['telefone']
                 tecnico_orgao.save()
                 convenio.tecnico_orgao = tecnico_orgao

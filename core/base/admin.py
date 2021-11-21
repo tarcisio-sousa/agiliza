@@ -5,7 +5,7 @@ from ordered_model.admin import OrderedModelAdmin
 from core.base.models import Prefeitura, Prefeito, Profissional, Cargo, Proposta, Convenio
 from core.base.models import Orgao, Projeto, Item, Opcao, ItemAlternativa
 from core.base.models import Responsavel, SecretarioDeObras, SecretarioFinanceiro
-from core.base.models import ProjetoControle, ProjetoControleItem
+from core.base.models import ProjetoControle, ProjetoControleItem, TecnicoOrgao
 
 
 @admin.register(Prefeitura)
@@ -97,6 +97,11 @@ class OpcaoAdmin(admin.ModelAdmin):
 @admin.register(ItemAlternativa)
 class ItemAlternativaAdmin(admin.ModelAdmin):
     list_display = ['item']
+
+
+@admin.register(TecnicoOrgao)
+class TecnicoOrgaoAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'telefone']
 
 
 class ProjetoControleItemStacked(admin.StackedInline):
