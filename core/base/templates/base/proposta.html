@@ -1,5 +1,12 @@
 {% extends 'base/base.html' %}
 
+{% load static %}
+
+{% block javascript %}
+{{ block.super }}	
+<script src="{% static 'js/proposta.js' %}"></script>
+{% endblock %}
+
 {% load django_bootstrap_breadcrumbs %}
 
 {% block title %}Propostas{% endblock %}
@@ -19,7 +26,9 @@
 				<div class="row">
 					<div class="col-md-12 form-group">
 						<label for="id_prefeitura">Prefeitura</label>
-						{{ proposta_form.prefeitura }}
+						<input type="text" id="nome_prefeitura" name="nome_prefeitura" class="form-control form-control-sm" />
+						<input type="hidden" id="id_prefeitura" name="prefeitura">
+						{# proposta_form.prefeitura #}
 					</div>
 				</div>
 				<div class="row">

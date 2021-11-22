@@ -161,7 +161,7 @@
 						<div class="row">
 							<div class="col-md-5 form-group">
 								<label for="id_prefeitura">Orgão</label>
-								<select name="orgao_id" id="orgao" class="custom-select form-control">
+								<select name="orgao_id" id="orgao" class="custom-select custom-select-sm form-control">
 									<option>-------</option>
 									{% for orgao in orgaos %}
 									<option value="{{orgao.id}}">{{ orgao.descricao }}</option>
@@ -170,7 +170,7 @@
 							</div>
 							<div class="col-md-7 form-group">
 								<label for="id_prefeitura">Tipo de projeto</label>
-								<select name="projeto_id" id="projeto" class="custom-select form-control">
+								<select name="projeto_id" id="projeto" class="custom-select custom-select-sm form-control">
 									<option>-------</option>
 									{% for projeto in projetos %}
 									<option value="{{projeto.id}}">{{ projeto }}</option>
