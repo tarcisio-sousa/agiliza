@@ -7,6 +7,7 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register('item/controle', views.ItemControleProjetoViewSet)
 router.register('tecnico/orgao', views.TecnicoOrgaoViewSet)
+router.register('prefeituras', views.PrefeituraViewSet)
 
 urlpatterns = [
     path('login', obtain_auth_token, name='login'),
