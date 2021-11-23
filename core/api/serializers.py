@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.base.models import ProjetoControleItem, Alternativa, Responsavel, TecnicoOrgao, Prefeitura
+from core.base.models import ProjetoControleItem, Alternativa, Responsavel, TecnicoOrgao, Prefeitura, Profissional
 
 
 class AlternativaSerializer(serializers.ModelSerializer):
@@ -10,7 +10,7 @@ class AlternativaSerializer(serializers.ModelSerializer):
 
 class ResponsavelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Responsavel
+        model = Profissional
         fields = ['id', 'nome']
 
 
