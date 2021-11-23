@@ -1,0 +1,71 @@
+{% extends 'base/base.html' %}
+
+{% block body %}
+	<!--<img src="/media/{# proposta.prefeitura.timbre #}" alt="Declaração" width="595" height="842" />-->
+	<div></div>
+	<div class="row" style="background: no-repeat url('/media/{{ proposta.prefeitura.timbre }}'); background-size: 1110px 1571px; height: 1571px;">
+		<div class="col-md-12" style="padding: 184px;">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1 class="titulo" style="margin-top: 150px;">EQUIPE DE COORDENAÇÃO</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="texto" style="margin-top: 50px;">Objeto: {{ proposta.objeto.nome}}, referente ao convênio no portal de Convênios – Siconv n° {{ convenio.numero }}</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>NOME</th>
+								<th>CARGO</th>
+								<th>FONE</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{ proposta.prefeitura.prefeito.nome }}</td>
+								<td>{{ proposta.prefeitura.prefeito.cargo }}</td>
+								<td>{{ proposta.prefeitura.prefeito.telefone }}</td>
+							</tr>
+							<tr>
+								<td>{{ proposta.prefeitura.secretario_obras.nome }}</td>
+								<td>{{ proposta.prefeitura.secretario_obras.cargo }}</td>
+								<td>{{ proposta.prefeitura.secretario_obras.telefone }}</td>
+							</tr>
+							<tr>
+								<td>{{ proposta.prefeitura.secretario_financeiro.nome }}</td>
+								<td>{{ proposta.prefeitura.secretario_financeiro.cargo }}</td>
+								<td>{{ proposta.prefeitura.secretario_financeiro.telefone }}</td>
+							</tr>
+							<tr>
+								<td>{{ proposta.prefeitura.engenheiro_civil.nome }}</td>
+								<td>{{ proposta.prefeitura.engenheiro_civil.cargo }}</td>
+								<td>{{ proposta.prefeitura.engenheiro_civil.telefone }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="data_proposta text-right" style="margin-top: 100px;">{{ proposta.prefeitura.nome }} - {{ proposta.prefeitura.uf }}, {{ proposta.data }}.</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-center">
+						<div class="font-weight-bold">{{ proposta.prefeitura.prefeito.nome }}</div>
+					</div>
+					<div class="text-center">
+						<div class="font-weight-bold">PREFEITO(A) MUNICIPAL</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
