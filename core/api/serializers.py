@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.base.models import ProjetoControleItem, Alternativa, Responsavel, TecnicoOrgao, Prefeitura, Profissional
+from core.base.models import ProjetoControleItem, Alternativa, TecnicoOrgao, Prefeitura, Profissional
 
 
 class AlternativaSerializer(serializers.ModelSerializer):
@@ -20,12 +20,13 @@ class ItemControleSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjetoControleItem
         fields = ['id', 'controle', 'item', 'alternativa', 'responsavel', 'observacoes', 'comentario', 'data_prevista']
+        depth = 1
 
-    def to_representation(self, item):
-        ret = super().to_representation(item)
-        ret['alternativa'] = AlternativaSerializer().to_representation(item.alternativa)
-        ret['responsavel'] = ResponsavelSerializer().to_representation(item.responsavel)
-        return ret
+    # def to_representation(self, item):
+    #     ret = super().to_representation(item)
+    #     ret['alternativa'] = AlternativaSerializer().to_representation(item.alternativa)
+    #     ret['responsavel'] = ResponsavelSerializer().to_representation(item.responsavel)
+    #     return ret
 
 
 class TecnicoOrgaoSerializer(serializers.ModelSerializer):
