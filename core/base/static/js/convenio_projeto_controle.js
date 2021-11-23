@@ -150,8 +150,10 @@ function pegarPosicaoItem(item) {
 }
 
 function formatarData(data) {
-    elemento = data.split('-')
-    data = [elemento[2], elemento[1], elemento[0]]
-    data = data.join('/')
+    if (data) { 
+        elemento = data.split('-')
+        data = [elemento[2], elemento[1], elemento[0]]
+        data = data.join('/')
+    }
     return data
 }
