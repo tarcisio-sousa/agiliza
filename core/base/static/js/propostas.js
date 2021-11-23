@@ -17,6 +17,7 @@ let seleciona_empenhar_proposta = (elemento) => {
 
     autocomplete({
         input: input,
+        minLength: 1,
         fetch: function(text, update) {
             text = text.toLowerCase();
             fetch(`${url_api}/${url_tecnico_orgao}/`, {

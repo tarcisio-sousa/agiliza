@@ -10,6 +10,7 @@ let idPrefeitura = document.getElementById("id_prefeitura")
 
 autocomplete({
     input: input,
+    minLength: 1,
     fetch: function(text, update) {
         text = text.toLowerCase();
         fetch(`${url_api}/${url_prefeituras}/`, {
@@ -28,4 +29,5 @@ autocomplete({
         idPrefeitura.value = item.value;
     },
     debounceWaitMs: 300,
+    emptyMsg: "Prefeitura não encontrada",
 });
