@@ -90,7 +90,7 @@ let apiCarregarFormularioItemControle = (id) => {
 let carregarFormularioItemControle = (item) => {
     document.getElementById('id_alternativa').value = item.alternativa.id
     document.getElementById('id_data_prevista').value = formatarData(item.data_prevista)
-    document.getElementById('id_responsavel').value = item.responsavel.id
+    document.getElementById('id_responsavel').value = (item.responsavel) ? item.responsavel.id : ''
     document.getElementById('id_observacoes').value = item.observacoes
     document.getElementById('id_comentario').value = item.comentario
 }
