@@ -104,7 +104,7 @@ let carregarItemControle = (item, posicao = false) => {
     let submeter = document.getElementsByClassName('botao_submeter_item_controle')[posicao]
     alternativa.innerHTML = item.alternativa.descricao
     observacoes.innerHTML = item.observacoes
-    responsavel.innerHTML = item.responsavel.nome
+    responsavel.innerHTML = (item.responsavel) ? item.responsavel.nome : ''
     data_prevista.innerHTML = formatarData(item.data_prevista)
     remover.innerHTML = `<a href='javascript: void(0);' onclick='removerItemControle(this)' data-posicao='${posicao}' data-item-id='${item.item}' data-id='${item.id}' class='btn btn-sm btn-link text-danger'><i class='fas fa-times-circle'></i></a>`
     submeter.dataset.id = item.id
