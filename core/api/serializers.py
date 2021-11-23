@@ -11,7 +11,7 @@ class AlternativaSerializer(serializers.ModelSerializer):
 class ResponsavelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Responsavel
-        fields = ['id']
+        fields = ['id', 'nome']
 
 
 class ItemControleSerializer(serializers.ModelSerializer):
