@@ -22,7 +22,19 @@ let submeterItemControle = (formulario) => {
     let posicao = formulario.dataset.posicao
     let id = formulario.dataset.id || false
     dados = new FormData(formulario)
+    console.log('salvando')
     apiSubmeterDadosItemControle(dados, id, posicao)
+        .then(response => {
+            let {data, posicao} = response
+            console.log("carregando")
+            apiCarregarDadosItemControle(data.id, posicao)
+                .then(response => {
+                    fecharItemModal()
+                })
+                .finally(_ => {
+                    console.log("carregado")
+                })
+        })
 }
 
 let removerItemControle = (el) => {
@@ -44,10 +56,10 @@ function pegarMetodoSubmeter(id) {
     return { url: `${url_api}/${url_item_controle}/`, method: 'POST' }
 }
 
-let apiSubmeterDadosItemControle = (dados, id, posicao = false) => {
+let apiSubmeterDadosItemControle = async (dados, id, posicao = false) => {
     let requisicao = pegarMetodoSubmeter(id)
 
-    fetch(requisicao.url, {
+    return await fetch(requisicao.url, {
         method: requisicao.method,
         headers: {
             'X-CSRFToken': token
@@ -56,13 +68,13 @@ let apiSubmeterDadosItemControle = (dados, id, posicao = false) => {
     })
     .then(response => response.json())
     .then(data => {
-        apiCarregarDadosItemControle(data.id, posicao)
-        fecharItemModal()
+        console.log('salvo')
+        return { data, posicao }
     })
     .catch(error => console.log('Error: ', error)) }
 
-let apiCarregarDadosItemControle = (id, posicao = false) => {
-    fetch(`${url_api}/${url_item_controle}/${id}/`, {
+let apiCarregarDadosItemControle = async (id, posicao = false) => {
+    await fetch(`${url_api}/${url_item_controle}/${id}/`, {
         method: 'GET',
         headers: {
             'X-CSRFToken': token
