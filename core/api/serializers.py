@@ -23,8 +23,9 @@ class ItemControleSerializer(serializers.ModelSerializer):
     def to_representation(self, item):
         ret = super().to_representation(item)
         ret['alternativa'] = AlternativaSerializer().to_representation(item.alternativa)
-        ret['responsavel'] = ResponsavelSerializer().to_representation(item.responsavel)
-        print(ret)
+        print(item.responsavel)
+        print(ResponsavelSerializer().to_representation(item.responsavel))
+        # ret['responsavel'] = ResponsavelSerializer().to_representation(item.responsavel)
         return ret
 
 
