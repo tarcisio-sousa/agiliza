@@ -15,17 +15,16 @@ class ResponsavelSerializer(serializers.ModelSerializer):
 
 
 class ItemControleSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ProjetoControleItem
         fields = ['id', 'controle', 'item', 'alternativa', 'responsavel', 'observacoes', 'comentario', 'data_prevista']
 
     def to_representation(self, item):
         ret = super().to_representation(item)
-        ret['alternativa'] = AlternativaSerializer().to_representation(item.alternativa)
-        print(item.responsavel)
-        print(ResponsavelSerializer().to_representation(item.responsavel))
-        # ret['responsavel'] = ResponsavelSerializer().to_representation(item.responsavel)
+        if item.alternativa:
+            ret['alternativa'] = AlternativaSerializer().to_representation(item.alternativa)
+        if item.responsavel:
+            ret['responsavel'] = ResponsavelSerializer().to_representation(item.responsavel)
         return ret
 
 
