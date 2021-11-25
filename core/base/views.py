@@ -112,13 +112,15 @@ def proposta(request, id=False, situacao=False):
 
     if (id):
         proposta = Proposta.objects.get(id=id)
-        proposta_form = PropostaForm(instance=proposta)
+        proposta_form = PropostaForm(
+            instance=proposta, initial={'auto_complete_prefeitura': proposta.prefeitura})
 
     if request.method == 'POST':
         proposta_form = PropostaForm(request.POST)
 
         if id:
-            proposta_form = PropostaForm(request.POST, instance=proposta)
+            proposta_form = PropostaForm(
+                request.POST, instance=proposta, initial={'auto_complete_prefeitura': proposta.prefeitura})
 
         if proposta_form.is_valid():
             proposta = proposta_form.save(commit=False)

@@ -12,7 +12,7 @@
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 
-	<form method="post" class="form">
+	<form method="post" class="form" autocomplete="off">
 		{% csrf_token %}
 		<br />
 		<div class="row">

@@ -5,7 +5,7 @@ const url_api = '/agiliza/api'
 
 const url_prefeituras = 'prefeituras'
 
-let input = document.getElementById("nome_prefeitura")
+let input = document.getElementById("id_auto_complete_prefeitura")
 let idPrefeitura = document.getElementById("id_prefeitura")
 
 autocomplete({
