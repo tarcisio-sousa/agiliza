@@ -8,10 +8,14 @@ let abrirItemModal = (el) => {
     let posicao = pegarPosicaoItem(el)
     $('#itemModal').modal('show')
     document.getElementById('itemControleForm').reset();
+    delete document.getElementById('itemControleForm').dataset.id
     document.getElementById('itemControleForm').dataset.posicao = posicao
     if (el.dataset.id != 'False') {
         document.getElementById('itemControleForm').dataset.id = el.dataset.id
         apiCarregarFormularioItemControle(el.dataset.id)
+            .then(data => {
+                carregarFormularioItemControle(data)
+            })
     }
     document.getElementById('id_item').value = el.dataset.itemId
 }
@@ -86,8 +90,8 @@ let apiCarregarDadosItemControle = async (id, posicao = false) => {
     })
     .catch(error => console.log('Error: ', error)) }
 
-let apiCarregarFormularioItemControle = (id) => {
-    fetch(`${url_api}/${url_item_controle}/${id}/`, {
+let apiCarregarFormularioItemControle = async (id) => {
+    return await fetch(`${url_api}/${url_item_controle}/${id}/`, {
         method: 'GET',
         headers: {
             'X-CSRFToken': token
@@ -95,7 +99,7 @@ let apiCarregarFormularioItemControle = (id) => {
     })
     .then(response => response.json())
     .then(data => {
-        carregarFormularioItemControle(data)
+        return data
     })
     .catch(error => console.log('Error: ', error)) }
 
