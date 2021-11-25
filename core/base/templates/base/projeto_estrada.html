@@ -3,7 +3,7 @@
 {% block title %}Projeto{% endblock %}
 {% block body %}
 	{{ projeto_form.errors }}
-	<form method="post">
+	<form method="post" autocomplete="off">
 		{% csrf_token %}
 		<div class="row">
 			<div class="col-md-12">

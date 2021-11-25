@@ -6,18 +6,20 @@ from core.base.models import Atividade, LicenciamentoAmbiental, ProjetoControle,
 
 
 class PropostaForm(ModelForm):
+    auto_complete_prefeitura = forms.CharField(max_length=250)
+
     class Meta:
         model = Proposta
         fields = '__all__'
         widgets = {
+            'prefeitura': forms.HiddenInput(),
             'valor_convenio': forms.TextInput(),
             'valor_contrapartida': forms.TextInput(),
             'valor_repasse': forms.TextInput()}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['prefeitura'].widget.attrs.update({
-            'class': 'form-control form-control-sm custom-select custom-select-sm'})
+        self.fields['auto_complete_prefeitura'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['lei_complementar'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['data'].widget.attrs.update({'class': 'form-control form-control-sm date'})
         self.fields['valor_convenio'].widget.attrs.update({

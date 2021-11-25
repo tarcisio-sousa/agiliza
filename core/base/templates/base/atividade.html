@@ -14,7 +14,7 @@
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 
-	<form method="post" enctype="multipart/form-data" class="form"> 
+	<form method="post" enctype="multipart/form-data" class="form" autocomplete="off"> 
 		{% csrf_token %}
 		<div class="row">
 			<div class="col-md-6"> 

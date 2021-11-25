@@ -18,7 +18,7 @@
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 
-	<form method="post" class="form">
+	<form method="post" class="form" autocomplete="off">
 		{% csrf_token %}
 		<br />
 		<div class="row">
@@ -26,9 +26,8 @@
 				<div class="row">
 					<div class="col-md-12 form-group">
 						<label for="id_prefeitura">Prefeitura</label>
-						<input type="text" id="nome_prefeitura" name="nome_prefeitura" class="form-control form-control-sm" autocomplete="off" />
-						<input type="hidden" id="id_prefeitura" name="prefeitura">
-						{# proposta_form.prefeitura #}
+						{{ proposta_form.auto_complete_prefeitura }}
+						{{ proposta_form.prefeitura }}
 					</div>
 				</div>
 				<div class="row">

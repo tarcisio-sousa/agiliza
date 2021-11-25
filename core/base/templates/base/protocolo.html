@@ -119,7 +119,7 @@
 									</div>
 								</div>
 								{% if perms.base.add_convenio %}
-								<form method="post" class="form">
+								<form method="post" class="form" autocomplete="off">
 								{% csrf_token %}
 								<div class="form-group row mb-2"> 
 									<label for="valor_liberado" class="col-sm-8 col-form-label-sm font-weight-bold">Liberado</label>
