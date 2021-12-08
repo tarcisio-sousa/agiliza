@@ -606,6 +606,13 @@ def atividades(request, convenio_id=False):
         })
 
 
+def atividade_resolver(request, id):
+    atividade = Atividade.objects.get(id=id)
+    atividade.situacao = 'resolvido'
+    atividade.save()
+    return redirect(reverse('protocolo', args=[atividade.convenio.id]))
+
+
 @login_required
 def licenciamentos_ambientais(request, convenio_id=False):
     convenio = Convenio.objects.get(id=convenio_id)
@@ -625,3 +632,10 @@ def licenciamentos_ambientais(request, convenio_id=False):
             'convenio': convenio,
             'licenciamento_form': licenciamento_form,
         })
+
+
+def licenciamento_resolver(request, id):
+    licenciamento = LicenciamentoAmbiental.objects.get(id=id)
+    licenciamento.situacao = 'resolvido'
+    licenciamento.save()
+    return redirect(reverse('protocolo', args=[licenciamento.convenio.id]))

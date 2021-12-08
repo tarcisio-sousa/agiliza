@@ -49,10 +49,12 @@ urlpatterns = [
     path('check/list/<int:id>', views.check_list, name='check_list'),
     path('protocolo/<int:convenio_id>', views.protocolo, name='protocolo'),
     path('atividades/<int:convenio_id>', views.atividades, name='atividades'),
+    path('atividade/resolver/<int:id>', views.atividade_resolver, name='atividade_resolver'),
     path(
         'licenciamentos/ambientais/<int:convenio_id>',
         views.licenciamentos_ambientais,
         name='licenciamentos_ambientais'),
+    path('licenciamento/resolver/<int:id>', views.licenciamento_resolver, name='licenciamento_resolver'),
 
     path('declaracoes', views.declaracoes, name='declaracoes'),
 
