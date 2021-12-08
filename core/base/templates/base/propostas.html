@@ -105,10 +105,10 @@
 												<a href="javascript:void(0);" class="dropdown-item"> Em análise </a>
 											{% endif %}
 											{% if proposta.verifica_situacao == 'aprovada' %}
-												<a href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item"> Aprovar</a>
+												<a href="javascript:void(0);" data-href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item" onclick="aprovar_proposta(this)"> Aprovar</a>
 											{% endif %}
 											{% if proposta.situacao not in 'empenhada,reprovada' %}
-												<a href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item"> Reprovar</a>
+												<a href="javascript:void(0);" data-href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item" onclick="reprovar_proposta(this)"> Reprovar</a>
 											{% endif %}
 											{% if proposta.verifica_situacao == 'empenhada' %}
 												<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#empenharPropostaModal" onclick="seleciona_empenhar_proposta(this)" data-id="{{ proposta.id }}"> Empenhar </a>

@@ -8,6 +8,21 @@ const url_prefeituras = 'prefeituras'
 let input = document.getElementById("id_auto_complete_prefeitura")
 let idPrefeitura = document.getElementById("id_prefeitura")
 
+function calculaRepasse() {
+    let valorConvenio = document.getElementById("id_valor_convenio").value
+    let valorContrapartida = document.getElementById("id_valor_contrapartida").value
+    let valorRepasse = document.getElementById("id_valor_repasse").value
+
+    valorConvenio = converteValor(valorConvenio)
+    valorContrapartida = converteValor(valorContrapartida)
+    valorRepasse = valorConvenio - valorContrapartida
+    document.getElementById("id_valor_repasse").value = converteValor(valorRepasse, true)
+}
+
+function converteValor(valor, padrao = false) {
+    return (padrao) ? valor.toLocaleString('pt-BR', {minimumFractionDigits: 2}) : valor.replace('.', '').replace(',', '.')
+}
+
 autocomplete({
     input: input,
     minLength: 1,
