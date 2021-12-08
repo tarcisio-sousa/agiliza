@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.formats import localize
+from datetime import datetime
 from .forms import PropostaForm, PropostaArquivoExtratoForm, PropostaValorLiberado, ConvenioArquivoExtratoForm
 from .forms import ProjetoForm, OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
 from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm
@@ -177,6 +178,7 @@ def _gerar_convenio(request, proposta, dados):
     if gerado:
         if (dados['numero']):
             convenio.numero = dados['numero']
+            convenio.data_suspensiva = datetime.strptime(dados['data_suspensiva'], '%d/%m/%Y')
             convenio.orgao_id = dados['orgao_id']
             convenio.status = True
             if (dados['nome']):

@@ -154,8 +154,12 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-md-8 form-group">
-								<label for="">Número convênio</label>
+								<label for="">Número Convênio</label>
 								<input type="text" name="numero" class="form-control form-control-sm" />
+							</div>
+							<div class="col-md-4 form-group">
+								<label for="">Data Suspensiva</label>
+								<input type="text" name="data_suspensiva" class="form-control form-control-sm date" />
 							</div>
 						</div>
 						<div class="row">
@@ -169,7 +173,7 @@
 								</select>
 							</div>
 							<div class="col-md-7 form-group">
-								<label for="id_prefeitura">Tipo de projeto</label>
+								<label for="id_prefeitura">Tipo de Projeto</label>
 								<select name="projeto_id" id="projeto" class="custom-select custom-select-sm form-control">
 									<option>-------</option>
 									{% for projeto in projetos %}
@@ -180,7 +184,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<h5>Técnico do orgão</h5>
+								<h5>Técnico do Orgão</h5>
 								<input type="hidden" name="tecnico_orgao_id" id="tecnico_orgao_id" />
 							</div>
 							<div class="col-md-8 form-group">

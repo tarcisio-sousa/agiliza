@@ -146,6 +146,7 @@ class Convenio(models.Model):
     arquivo_extrato = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
     numero = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
+    data_suspensiva = models.DateField(_('Data de Cláusula Suspensiva'), blank=True, null=True)
     tecnico_orgao = models.ForeignKey('TecnicoOrgao', on_delete=models.CASCADE, blank=True, null=True)
     status = models.BooleanField(default=True)
 
