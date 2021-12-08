@@ -44,3 +44,26 @@ let seleciona_proposta_arquivo_extrato = (elemento) => {
     let form_extrato = document.getElementById('formExtrato')
     form_extrato.action = `${url_base}/${url_proposta_arquivo_extrato}/${elemento.dataset.id}/`
 }
+
+let aprovar_proposta = (item) => {
+    alertify.confirm(
+        'Aprovar proposta',
+        'Tem certeza que deseja aprovar esta proposta?',
+        function() { 
+            window.location.href = item.dataset.href
+        },
+        function() { console.log('Não foi possível reprovar o item') })
+        .set('labels', {ok: 'Sim', cancel: 'Não'})
+} 
+
+
+let reprovar_proposta = (item) => {
+    alertify.confirm(
+        'Reprovar proposta',
+        'Tem certeza que deseja reprovar esta proposta?',
+        function() { 
+            window.location.href = item.dataset.href
+        },
+        function() { console.log('Não foi possível reprovar o item') })
+        .set('labels', {ok: 'Sim', cancel: 'Não'})
+} 

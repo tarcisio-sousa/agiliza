@@ -23,11 +23,11 @@ class PropostaForm(ModelForm):
         self.fields['lei_complementar'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['data'].widget.attrs.update({'class': 'form-control form-control-sm date'})
         self.fields['valor_convenio'].widget.attrs.update({
-            'class': 'form-control form-control-sm money'})
+            'class': 'form-control form-control-sm money', 'onblur': 'calculaRepasse(this)'})
         self.fields['valor_convenio'].localize = True
         self.fields['valor_convenio'].widget.is_localized = True
         self.fields['valor_contrapartida'].widget.attrs.update({
-            'class': 'form-control form-control-sm money'})
+            'class': 'form-control form-control-sm money', 'onblur': 'calculaRepasse(this)'})
         self.fields['valor_contrapartida'].localize = True
         self.fields['valor_contrapartida'].widget.is_localized = True
         self.fields['valor_repasse'].widget.attrs.update({
