@@ -307,6 +307,7 @@ class Protocolo(models.Model):
         ENVIADO_ANALISE = 'enviado_analise', _('Enviado p/ análise')
         SOLICITADA_COMPLEMENTACAO = 'solicitada_complementacao', _('Solicitada complementação')
         APROVADO = 'aprovado', _('Aprovado')
+        RESOLVIDO = 'resolvido', _('Resolvido')
 
     convenio = models.ForeignKey('Convenio', on_delete=models.CASCADE, blank=False, null=False)
     data = models.DateField(_('Data'), auto_now=True, blank=False, null=False)

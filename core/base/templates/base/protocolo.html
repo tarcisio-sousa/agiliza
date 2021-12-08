@@ -176,7 +176,13 @@
 					<tbody>
 						{% for atividade in atividades %}
 						<tr> 
-							<td class="text-center"><i class="fas fa-caret-right"></i></td>
+							<td class="text-center">
+								{% if atividade.situacao == 'resolvido' %}
+								<i class="fas fa-check"></i>
+								{% else %}
+								<a href="{% url 'atividade_resolver' atividade.id %}"><i class="fas fa-square"></i></a>
+								{% endif %}
+							</td>
 							<td>{{ atividade.data_protocolado|date:'d/m/Y' }}</td>
 							<td>{{ atividade.data_prevista|date:'d/m/Y' }}</td>
 							<td>{{ atividade.get_responsavel_display }}</td>
@@ -227,7 +233,13 @@
 					<tbody>
 						{% for licenciamento in licenciamentos %}
 						<tr>
-							<td class="text-center"><i class="fas fa-caret-right"></i></td>
+							<td class="text-center">
+								{% if licenciamento.situacao == 'resolvido' %}
+								<i class="fas fa-check"></i>
+								{% else %}
+								<a href="{% url 'licenciamento_resolver' licenciamento.id %}"><i class="fas fa-square"></i></a>
+								{% endif %}
+							</td>
 							<td>{{ licenciamento.data_protocolado|date:'d/m/Y' }}</td>
 							<td>{{ licenciamento.data_prevista|date:'d/m/Y' }}</td>
 							<td>{{ licenciamento.get_responsavel_display }}</td>
