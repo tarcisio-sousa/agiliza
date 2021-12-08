@@ -209,6 +209,14 @@ def _gerar_projeto(request, convenio, dados):
 
 
 @login_required
+def proposta_excluir(request, id):
+    proposta = Proposta.objects.get(id=id)
+    proposta.delete()
+    messages.add_message(request, messages.INFO, 'Proposta excluída com sucesso!')
+    return redirect(reverse('propostas'))
+
+
+@login_required
 def declaracoes(request):
     return render(request, 'base/declaracoes.html')
 

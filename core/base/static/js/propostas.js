@@ -67,3 +67,15 @@ let reprovar_proposta = (item) => {
         function() { console.log('Não foi possível reprovar o item') })
         .set('labels', {ok: 'Sim', cancel: 'Não'})
 } 
+
+let excluir_proposta = (item) => {
+    alertify.confirm(
+        'Tem certeza que deseja remover esta proposta?',
+        'Não será possível recuperar as informações deste registro',
+        function() {
+            console.log('Proposta excluída com sucesso')
+            window.location.href = item.dataset.href
+        },
+        function() { console.log('Não foi possível excluir o item') })
+        .set('labels', {ok: 'Sim, tenho certeza', cancel: 'Não'})
+}

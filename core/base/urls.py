@@ -16,6 +16,7 @@ urlpatterns = [
     path(
         'proposta/arquivo/extrato/<int:id>/', views.proposta_arquivo_extrato, name='proposta_arquivo_extrato'),
     path('proposta/empenhar/<int:id>/', views.proposta_empenhar, name='proposta_empenhar'),
+    path('proposta/excluir/<int:id>/', views.proposta_excluir, name='proposta_excluir'),
 
     path('convenios', views.convenios, name='convenios'),
     path(
