@@ -179,6 +179,7 @@ def _gerar_convenio(request, proposta, dados):
         if (dados['numero']):
             convenio.numero = dados['numero']
             convenio.data_suspensiva = datetime.strptime(dados['data_suspensiva'], '%d/%m/%Y')
+            convenio.data_vigencia = datetime.strptime(dados['data_vigencia'], '%d/%m/%Y')
             convenio.orgao_id = dados['orgao_id']
             convenio.status = True
             if (dados['nome']):

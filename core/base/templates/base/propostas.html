@@ -116,7 +116,7 @@
 										{% endif %}
 										<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#extratoModal" onclick="seleciona_proposta_arquivo_extrato(this)" data-id="{{ proposta.id }}"> Extrato </a>
 										<a href="{% url 'proposta_documento' proposta.id %}" class="dropdown-item"> Gerar declaração</a>
-										{% if perms.base.change_proposta %}
+										{% if perms.auth.is_super %}
 										<a href="javascript: void(0)" class="dropdown-item" data-href="{% url 'proposta_excluir' proposta.id %}" onclick="excluir_proposta(this)"> Excluir</a>
 										{% endif %}
 									</div>
@@ -160,9 +160,15 @@
 								<label for="">Número Convênio</label>
 								<input type="text" name="numero" class="form-control form-control-sm" />
 							</div>
+						</div>
+						<div class="row">
 							<div class="col-md-4 form-group">
-								<label for="">Data Suspensiva</label>
+								<label for="">Cláusula Suspensiva</label>
 								<input type="text" name="data_suspensiva" class="form-control form-control-sm date" />
+							</div>
+							<div class="col-md-4 form-group">
+								<label for="">Data Vigência</label>
+								<input type="text" name="data_vigencia" class="form-control form-control-sm date" />
 							</div>
 						</div>
 						<div class="row">
