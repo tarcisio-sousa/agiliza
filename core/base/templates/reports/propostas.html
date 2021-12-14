@@ -1,0 +1,39 @@
+{% extends 'reports/base.html' %}
+
+{% block body %}
+<h1>{{ title }}</h1>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<!-- <th class="p-0" width="1%"> </th> -->
+						<!-- <th width="1%"><i class="fas fa-asterisk"></i></th> -->
+						<th>Prefeitura</th>
+						<th>Número</th>
+						<th>Objeto</th>
+						<th>R$ Valor Convênio</th>
+						<th>Data</th>
+						<th>Situação</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for proposta in propostas %}
+					<tr>
+						<!-- <td class="text-center"><i class="fas fa-caret-right"></i></td> -->
+						<td>{{ proposta.prefeitura }}</td>
+						<td>{{ proposta.numero }}</td>
+						<td>{{ proposta.objeto }}</td>
+						<td class="text-right">{% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</td>
+						<td>{{ proposta.data|date:"d/m/Y" }}</td>
+						<td class="text-center">{{ proposta.get_situacao_display }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% if not propostas %}
+				<div class="alert alert-info mb-0">Nenhuma proposta cadastrada!</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

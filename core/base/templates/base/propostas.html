@@ -17,27 +17,26 @@
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 	{% block search %}
-	<div class="d-flex justify-content-between mb-2"> 
-		<div class="row">
-			<div class="col-md-12">
-				{% if perms.base.add_proposta %}
-					<a href="{% url 'proposta' %}" class="btn btn-sm link-agiliza">Nova <i class="fas fa-plus-circle"></i> </a>
-				{% endif %}
-			</div>
-		</div>
+	<div class="mb-2"> 
 		<div class="row">
 			<div class="col-md-12"> 
-				<div class="btn-toolbar mb-2 mb-md-0 ml-1">
+				<div>
 					<div class="row">
-						<div class="col-md-12 text-right">
+						<div class="col-md-6 text-right">
 							<form action="{% url 'propostas' %}" method="get" autocomplete="off"> 
 								<div class="input-group input-group-sm"> 
 							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
 									<div class="input-group-append"> 
-								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i></button>
+								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i> Buscar</button>
 									</div>
 								</div>
 							</form>
+						</div>
+						<div class="col-md-6 text-right">
+							{% if perms.base.add_proposta %}
+							<a href="{% url 'proposta' %}" class="btn btn-sm link-agiliza"><i class="fas fa-plus-circle"></i> Nova</a>
+							{% endif %}
+							<a href="{% url 'relatorio-propostas' filter_situacao %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
 						</div>
 					</div>
 				</div>
