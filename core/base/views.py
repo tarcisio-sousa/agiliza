@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.formats import localize
+from django.views.generic.base import View
 from datetime import datetime
 from .forms import PropostaForm, PropostaArquivoExtratoForm, PropostaValorLiberado, ConvenioArquivoExtratoForm
 from .forms import ProjetoForm, OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
@@ -13,6 +14,7 @@ from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
 from .models import TecnicoOrgao
+from wkhtmltopdf.views import PDFTemplateResponse
 
 
 def notification_scheduled_job():
@@ -640,3 +642,37 @@ def licenciamento_resolver(request, id):
     licenciamento.situacao = 'resolvido'
     licenciamento.save()
     return redirect(reverse('protocolo', args=[licenciamento.convenio.id]))
+
+
+class PropostasPDFView(View):
+    template = 'reports/propostas.html'
+
+    def get(self, request, filter_situacao=False):
+        propostas = Proposta.objects.filter(status=True).order_by('-id')
+
+        if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
+            prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
+            propostas = propostas.filter(prefeitura=prefeitura)
+
+        propostas = propostas.filter(
+            situacao=filter_situacao) if filter_situacao else propostas
+
+        data = {'title': 'Propostas', 'propostas': propostas}
+
+        response = PDFTemplateResponse(
+            request=request,
+            template=self.template,
+            filename='propostas.pdf',
+            context=data,
+            show_content_in_browser=True,
+            cmd_options={
+                'margin-top': 10,
+                'zoom': 1,
+                'quiet': None,
+                'enable-local-file-access': True,
+                'viewport-size': '1366 x 513',
+                'javascript-delay': 1000,
+                'footer-center': '[page]/[topage]',
+                'no-stop-slow-scripts': True},)
+
+        return response
