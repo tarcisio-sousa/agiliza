@@ -21,7 +21,10 @@
 		<link rel="stylesheet" href="{% static 'css/jquery.datetimepicker.min.css' %}" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
 
 		<style>
-			thead, tfoot { display: table-row-group !important }
+			/*thead, tfoot { display: table-row-group !important }*/
+			thead { display: table-header-group !important; }
+			tfoot { display: table-row-group !important; }
+			tr { page-break-inside: avoid !important; }
 		</style>	
 	</head>
 	<body>
