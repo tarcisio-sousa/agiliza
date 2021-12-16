@@ -19,9 +19,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 
-from core.base.views import PropostasPDFView, ConveniosPDFView
-
-from wkhtmltopdf.views import PDFTemplateView
+from core.base.views import PropostasPDFView, ConveniosPDFView, ElaboracaoProjetoPDFView
 
 favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 
@@ -33,7 +31,9 @@ urlpatterns = [
     path('relatorios/propostas', PropostasPDFView.as_view(), name='relatorio-propostas'),
     path('relatorios/propostas/<slug:filter_situacao>', PropostasPDFView.as_view(), name='relatorio-propostas'),
     path('relatorios/convenios', ConveniosPDFView.as_view(), name='relatorio-convenios'),
-    path('relatorios/convenio/<int:convenio_id>/projeto/controle', ConveniosPDFView.as_view(), name='relatorio-convenio-projeto-controle'),
+    path(
+        'relatorios/convenio/<int:convenio_id>/projeto/controle',
+        ElaboracaoProjetoPDFView.as_view(), name='relatorio-convenio-projeto-controle'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
