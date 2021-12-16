@@ -30,6 +30,12 @@
 	{% csrf_token %}
 
 	<div class="row">
+		<div class="col-md-12 text-right mb-2">
+			<a href="{% url 'relatorio-convenio-projeto-controle' convenio.id %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
+		</div>
+	</div>
+
+	<div class="row">
 		<div class="col-md-12">
 
 			{% if controle %}
@@ -137,8 +143,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-sm btn-primary px-3 py-1"> Salvar <i class="fas fa-paper-plane"></i> </button>
-					<button type="button" class="btn btn-sm btn-secondary px-3 py-1" data-dismiss="modal"> Cancelar <i class="fas fa-times"></i> </button>
+					<button type="submit" class="btn btn-sm btn-primary px-3 py-1"><i class="fas fa-paper-plane"></i> Salvar </button>
+					<button type="button" class="btn btn-sm btn-secondary px-3 py-1" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar </button>
 				</div>
 				</form>
 			</div>
