@@ -36,7 +36,7 @@
 							{% if perms.base.add_proposta %}
 							<a href="{% url 'proposta' %}" class="btn btn-sm link-agiliza"><i class="fas fa-plus-circle"></i> Nova</a>
 							{% endif %}
-							<a href="{% url 'relatorio-propostas' filter_situacao %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
+							<a href="{% if filter_situacao %}{% url 'relatorio-propostas' filter_situacao %}{% else %}{% url 'relatorio-propostas' %}{% endif %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
 						</div>
 					</div>
 				</div>

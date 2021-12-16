@@ -1,0 +1,35 @@
+{% extends 'reports/base.html' %}
+
+{% block body %}
+<h1>{{ title }}</h1>
+<div class="row">
+	<div class="col-md-12">
+		{% if convenios %}
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Número Convênio</th>
+					<th>Proposta</th>
+					<th>Objeto</th>
+					<th>Prefeitura</th>
+					<th width="1%">R$ Valor</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for convenio in convenios %}
+				<tr>
+					<td>{{ convenio.numero }}</td>
+					<td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td>
+					<td>{{ convenio.proposta.objeto }}</td>
+					<td>{{ convenio.proposta.prefeitura }}</td>
+					<td class="text-right">{% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<div class="alert alert-info mb-0">Nenhum convenio cadastrado!</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 
-from core.base.views import PropostasPDFView
+from core.base.views import PropostasPDFView, ConveniosPDFView
 
 from wkhtmltopdf.views import PDFTemplateView
 
@@ -30,10 +30,10 @@ urlpatterns = [
     path('api/', include('core.api.urls')),
     path('', include('core.base.urls')),
     path('admin/', admin.site.urls),
-    path('relatorios/', PDFTemplateView.as_view(
-        template_name='reports/my_template.html', filename='my_pdf.pdf'), name='pdf'),
     path('relatorios/propostas', PropostasPDFView.as_view(), name='relatorio-propostas'),
     path('relatorios/propostas/<slug:filter_situacao>', PropostasPDFView.as_view(), name='relatorio-propostas'),
+    path('relatorios/convenios', ConveniosPDFView.as_view(), name='relatorio-convenios'),
+    path('relatorios/convenio/<int:convenio_id>/projeto/controle', ConveniosPDFView.as_view(), name='relatorio-convenio-projeto-controle'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

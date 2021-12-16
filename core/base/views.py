@@ -227,6 +227,7 @@ def declaracoes(request):
 @login_required
 def convenios(request):
     convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
+
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
         convenios = convenios.filter(proposta__prefeitura=prefeitura)
@@ -663,6 +664,53 @@ class PropostasPDFView(View):
             request=request,
             template=self.template,
             filename='propostas.pdf',
+            context=data,
+            show_content_in_browser=True,
+            cmd_options={
+                'margin-top': 10,
+                'zoom': 1,
+                'quiet': None,
+                'enable-local-file-access': True,
+                'viewport-size': '1366 x 513',
+                'javascript-delay': 1000,
+                'footer-center': '[page]/[topage]',
+                'no-stop-slow-scripts': True},)
+
+        return response
+
+
+class ConveniosPDFView(View):
+    template = 'reports/convenio_projeto_controle.html'
+
+    def get(self, request, convenio_id=False):
+        convenio = Convenio.objects.get(id=convenio_id)
+        # projeto_controle_item_form = ProjetoControleItemForm()
+        try:
+            controle = ProjetoControle.objects.get(convenio__id=convenio.id)
+        except Exception:
+            controle = False
+
+        itens = False
+
+        if (controle):
+            itens = Item.objects.filter(projeto=controle.projeto)
+            for item in itens:
+                try:
+                    item.item_controle = ProjetoControleItem.objects.get(controle=controle, item=item)
+                except Exception:
+                    item.item_controle = False
+
+        data = {
+            'title': 'Elaboração de Projeto',
+            'convenio': convenio,
+            'controle': controle,
+            'itens': itens
+        }
+
+        response = PDFTemplateResponse(
+            request=request,
+            template=self.template,
+            filename='elaboracao_projeto.pdf',
             context=data,
             show_content_in_browser=True,
             cmd_options={
