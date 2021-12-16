@@ -670,10 +670,10 @@ class PropostasPDFView(View):
                 # 'margin-top': 10,
                 # 'zoom': 1,
                 'quiet': True,
-                # 'enable-local-file-access': True,
+                'enable-local-file-access': True,
                 # 'viewport-size': '1366 x 513',
                 # 'javascript-delay': 1000,
-                # 'footer-center': '[page]/[topage]',
+                'footer-center': '[page]/[topage]',
                 # 'no-stop-slow-scripts': True
                 },)
 
