@@ -669,12 +669,13 @@ class PropostasPDFView(View):
             cmd_options={
                 # 'margin-top': 10,
                 # 'zoom': 1,
-                'quiet': None,
-                'enable-local-file-access': True,
-                'viewport-size': '1366 x 513',
-                'javascript-delay': 1000,
-                'footer-center': '[page]/[topage]',
-                'no-stop-slow-scripts': True},)
+                'quiet': True,
+                # 'enable-local-file-access': True,
+                # 'viewport-size': '1366 x 513',
+                # 'javascript-delay': 1000,
+                # 'footer-center': '[page]/[topage]',
+                # 'no-stop-slow-scripts': True
+                },)
 
         return response
 
