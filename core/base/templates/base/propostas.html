@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% load static %}
+{% load function_extras %}
 
 {% block javascript %}
 {{ block.super }}	
@@ -51,7 +52,36 @@
 					<tr>
 						<!-- <th class="p-0" width="1%"> </th> -->
 						<th width="1%"><i class="fas fa-asterisk"></i></th>
-						<th>Prefeitura</th>
+						{% if perms.base.add_proposta %}
+						<th>
+							Prefeitura
+							<ul class="navbar-nav mr-auto d-inline-block float-right">
+								<li class="nav-item dropdown">
+									<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
+									<ul class="dropdown-menu dropdown-menu-right">
+										<li>
+											<a class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" href="{% url 'propostas' %}">
+												Todas
+												{% if not filter_prefeitura %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</li>
+									{% for prefeitura in choices_prefeitura %}
+										<li>
+											<a class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}">
+												{{ prefeitura.nome }}
+												{% if prefeitura.id == filter_prefeitura %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</li>
+									{% endfor %}
+									</ul>
+								</li>
+					     	</ul>
+					    </th>
+					    {% endif %}
 						<th>Número</th>
 						<th>Objeto</th>
 						<th>R$ Valor Convênio</th>
@@ -123,7 +153,9 @@
 							</ul>
 							{% endif %}
 						</td>
+						{% if perms.base.add_proposta %}
 						<td>{{ proposta.prefeitura }}</td>
+						{% endif %}
 						<td>{{ proposta.numero }}</td>
 						<td>{{ proposta.objeto }}</td>
 						<td class="text-right">{% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</td>

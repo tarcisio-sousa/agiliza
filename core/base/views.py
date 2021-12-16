@@ -69,7 +69,9 @@ def home(request):
 
 @login_required
 def propostas(request, filter_situacao=False):
+    filter_prefeitura = False
     choices_situacao = Proposta.SituacaoChoice.choices
+    choices_prefeitura = Prefeitura.objects.all()
     propostas = Proposta.objects.filter(status=True).order_by('-id')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
@@ -81,7 +83,13 @@ def propostas(request, filter_situacao=False):
 
     if request.method == 'GET':
         if 'search' in request.GET:
-            propostas = propostas.filter(Q(numero=request.GET['search']) | Q(objeto__contains=request.GET['search']))
+            propostas = propostas.filter(
+                Q(numero=request.GET['search']) |
+                Q(objeto__contains=request.GET['search']) |
+                Q(prefeitura__nome__contains=request.GET['search']))
+        if 'prefeitura' in request.GET:
+            filter_prefeitura = int(request.GET['prefeitura'])
+            propostas = propostas.filter(prefeitura=filter_prefeitura)
 
     orgaos = Orgao.objects.all()
     projetos = Projeto.objects.all()
@@ -92,6 +100,8 @@ def propostas(request, filter_situacao=False):
         {
             'choices_situacao': choices_situacao,
             'filter_situacao': filter_situacao,
+            'choices_prefeitura': choices_prefeitura,
+            'filter_prefeitura': filter_prefeitura,
             'propostas': propostas,
             'orgaos': orgaos,
             'projetos': projetos,
