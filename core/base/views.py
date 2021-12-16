@@ -667,6 +667,42 @@ class PropostasPDFView(View):
             context=data,
             show_content_in_browser=True,
             cmd_options={
+                # 'margin-top': 10,
+                # 'zoom': 1,
+                'quiet': None,
+                'enable-local-file-access': True,
+                'viewport-size': '1366 x 513',
+                'javascript-delay': 1000,
+                'footer-center': '[page]/[topage]',
+                'no-stop-slow-scripts': True},)
+
+        return response
+
+
+class ConveniosPDFView(View):
+    template = 'reports/convenios.html'
+
+    def get(self, request, filter_situacao=False):
+        convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
+
+        if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
+            prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
+            convenios = convenios.filter(proposta__prefeitura=prefeitura)
+
+        if request.method == 'POST':
+            if request.POST['search']:
+                convenios = convenios.filter(
+                    Q(numero=request.POST['search']) | Q(orgao=request.POST['search']))
+
+        data = {'title': 'Convênios', 'convenios': convenios}
+
+        response = PDFTemplateResponse(
+            request=request,
+            template=self.template,
+            filename='convenios.pdf',
+            context=data,
+            show_content_in_browser=True,
+            cmd_options={
                 'margin-top': 10,
                 'zoom': 1,
                 'quiet': None,
@@ -679,7 +715,7 @@ class PropostasPDFView(View):
         return response
 
 
-class ConveniosPDFView(View):
+class ElaboracaoProjetoPDFView(View):
     template = 'reports/convenio_projeto_controle.html'
 
     def get(self, request, convenio_id=False):
