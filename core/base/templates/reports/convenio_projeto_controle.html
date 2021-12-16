@@ -4,54 +4,54 @@
 
 <h1>{{ title }}</h1>
 
-	<div class="row">
-		<div class="col-md-12">
+<div class="row">
+	<div class="col-md-12">
 
-			{% if controle %}
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th>Orgão</th>
-						<th>Projeto</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>{{ controle.orgao }}</td>
-						<td>{{ controle.projeto.get_tipo_display }}</td>
-					</tr>
-				</tbody>
-			</table>
-			{% else %}
-			<div class="alert alert-info mb-0">Nenhum projeto criado!</div>
-			<br>
-			{% endif %}
-			<table class="table table-bordered table-hover">
-				<thead>
-					<tr>
-						<th>Item</th>
-						<th>Opção</th>
-						<th>Responsável</th>
-						<th style="white-space: nowrap;">Data Prevista</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% if itens %}
-					{% for item in itens %}
-					<tr class="item-controle">
-						<td>
-							<div class="descricao"><a href="javascript: void(0);" class="botao_submeter_item_controle" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)">{{ item.descricao }}</a></div>
-							<div class="observacoes text-danger">{{ item.item_controle.observacoes }}</div>
-						</td>
-						<td class="alternativa">{{ item.item_controle.alternativa|default:"" }}</td>
-						<td class="responsavel">{{ item.item_controle.responsavel|default:"" }}</td>
-						<td class="data_prevista">{{ item.item_controle.data_prevista|date:"d/m/Y"|default:"" }}</td>
-					</tr>
-					{% endfor %}
-					{% endif %}
-				</tbody>
-			</table>
-		</div>
+		{% if controle %}
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Orgão</th>
+					<th>Projeto</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ controle.orgao }}</td>
+					<td>{{ controle.projeto.get_tipo_display }}</td>
+				</tr>
+			</tbody>
+		</table>
+		{% else %}
+		<div class="alert alert-info mb-0">Nenhum projeto criado!</div>
+		<br>
+		{% endif %}
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Item</th>
+					<th>Opção</th>
+					<th>Responsável</th>
+					<th style="white-space: nowrap;">Data Prevista</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if itens %}
+				{% for item in itens %}
+				<tr class="item-controle">
+					<td>
+						<div class="descricao"><a href="javascript: void(0);" class="botao_submeter_item_controle" data-posicao="{{ forloop.counter0 }}" data-item-id="{{ item.id }}" data-id="{{ item.item_controle.id|default:False }}" onclick="abrirItemModal(this)">{{ item.descricao }}</a></div>
+						<div class="observacoes text-danger">{{ item.item_controle.observacoes }}</div>
+					</td>
+					<td class="alternativa">{{ item.item_controle.alternativa|default:"" }}</td>
+					<td class="responsavel">{{ item.item_controle.responsavel|default:"" }}</td>
+					<td class="data_prevista">{{ item.item_controle.data_prevista|date:"d/m/Y"|default:"" }}</td>
+				</tr>
+				{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
 	</div>
+</div>
 
 {% endblock %}
