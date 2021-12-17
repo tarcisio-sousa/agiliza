@@ -78,15 +78,15 @@ def propostas(request, filter_situacao=False):
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
         propostas = propostas.filter(prefeitura=prefeitura)
 
-    propostas = propostas.filter(
-        situacao=filter_situacao) if filter_situacao else propostas
-
     if request.method == 'GET':
         if 'search' in request.GET:
             propostas = propostas.filter(
                 Q(numero=request.GET['search']) |
                 Q(objeto__contains=request.GET['search']) |
                 Q(prefeitura__nome__contains=request.GET['search']))
+        if 'situacao' in request.GET:
+            filter_situacao = request.GET['situacao']
+            propostas = propostas.filter(situacao=filter_situacao)
         if 'prefeitura' in request.GET:
             filter_prefeitura = int(request.GET['prefeitura'])
             propostas = propostas.filter(prefeitura=filter_prefeitura)
@@ -665,8 +665,18 @@ class PropostasPDFView(View):
             prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
             propostas = propostas.filter(prefeitura=prefeitura)
 
-        propostas = propostas.filter(
-            situacao=filter_situacao) if filter_situacao else propostas
+        if request.method == 'GET':
+            if 'search' in request.GET:
+                propostas = propostas.filter(
+                    Q(numero=request.GET['search']) |
+                    Q(objeto__contains=request.GET['search']) |
+                    Q(prefeitura__nome__contains=request.GET['search']))
+            if 'situacao' in request.GET:
+                filter_situacao = request.GET['situacao']
+                propostas = propostas.filter(situacao=filter_situacao)
+            if 'prefeitura' in request.GET:
+                filter_prefeitura = int(request.GET['prefeitura'])
+                propostas = propostas.filter(prefeitura=filter_prefeitura)
 
         data = {'title': 'Propostas', 'propostas': propostas}
 

@@ -32,6 +32,8 @@ def in_full_format(value):
 
 @register.simple_tag
 def relative_url(value, field_name, urlencode=None):
+    if not value:
+        return ''
     url = '?{}={}'.format(field_name, value)
     if urlencode:
         querystring = urlencode.split('&')

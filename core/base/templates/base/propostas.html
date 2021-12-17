@@ -37,7 +37,7 @@
 							{% if perms.base.add_proposta %}
 							<a href="{% url 'proposta' %}" class="btn btn-sm link-agiliza"><i class="fas fa-plus-circle"></i> Nova</a>
 							{% endif %}
-							<a href="{% if filter_situacao %}{% url 'relatorio-propostas' filter_situacao %}{% else %}{% url 'relatorio-propostas' %}{% endif %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
+							<a href="{% url 'relatorio-propostas' %}{% relative_url filter_situacao 'situacao' %}{% relative_url filter_prefeitura 'prefeitura' %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
 						</div>
 					</div>
 				</div>
@@ -102,7 +102,7 @@
 										</li>
 									{% for choice_situacao, situacao in choices_situacao %}
 										<li>
-											<a class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" href="{% url 'propostas' choice_situacao %}">
+											<a class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" href="{% url 'propostas' %}{% relative_url choice_situacao 'situacao' %}">
 												{{ situacao }}
 												{% if choice_situacao == filter_situacao %}
 													<i class="fas fa-check"></i>
