@@ -19,6 +19,7 @@ let seleciona_empenhar_proposta = (elemento) => {
         input: input,
         minLength: 1,
         fetch: function(text, update) {
+            load(true)
             text = text.toLowerCase();
             fetch(`${url_api}/${url_tecnico_orgao}/`, {
                 method: 'GET'
@@ -30,6 +31,9 @@ let seleciona_empenhar_proposta = (elemento) => {
                 update(suggestions);
             })
             .catch(error => console.log('Error: ', error))
+            .finally(() => {
+                load(false)
+            })
         },
         onSelect: function(item) {
             input.value = item.label;

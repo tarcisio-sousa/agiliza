@@ -14,8 +14,26 @@ window.onload = function(){
     }
     
     btn_sair.onmouseover = btn_sair.onmouseleave = handler
+
 }
 
+let load = run => {
+    run ? loading() : ready()
+}
+
+let loading = _ => {
+    console.log('Carregando...')
+    document.querySelectorAll('.lds-ring').forEach((item, id) => {
+        item.classList.remove('d-none')
+    })
+}
+
+let ready = _ => {
+    console.log('Pronto...')
+    document.querySelectorAll('.lds-ring').forEach((item, id) => {
+        item.classList.add('d-none')
+    })
+}
 
 // libs 
 alertify.defaults = {
