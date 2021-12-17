@@ -19,7 +19,6 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 
-from core.base.views import PropostasPDFView, ConveniosPDFView, ElaboracaoProjetoPDFView
 
 favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 
@@ -27,12 +26,8 @@ urlpatterns = [
     re_path('favicon.ico', favicon_view),
     path('api/', include('core.api.urls')),
     path('', include('core.base.urls')),
+    path('relatorios/', include('core.reports.urls')),
     path('admin/', admin.site.urls),
-    path('relatorios/propostas/', PropostasPDFView.as_view(), name='relatorio-propostas'),
-    path('relatorios/convenios/', ConveniosPDFView.as_view(), name='relatorio-convenios'),
-    path(
-        'relatorios/convenio/<int:convenio_id>/projeto/controle/',
-        ElaboracaoProjetoPDFView.as_view(), name='relatorio-convenio-projeto-controle'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
