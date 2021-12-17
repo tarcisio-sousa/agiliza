@@ -28,11 +28,10 @@ urlpatterns = [
     path('api/', include('core.api.urls')),
     path('', include('core.base.urls')),
     path('admin/', admin.site.urls),
-    path('relatorios/propostas', PropostasPDFView.as_view(), name='relatorio-propostas'),
-    path('relatorios/propostas/<slug:filter_situacao>', PropostasPDFView.as_view(), name='relatorio-propostas'),
-    path('relatorios/convenios', ConveniosPDFView.as_view(), name='relatorio-convenios'),
+    path('relatorios/propostas/', PropostasPDFView.as_view(), name='relatorio-propostas'),
+    path('relatorios/convenios/', ConveniosPDFView.as_view(), name='relatorio-convenios'),
     path(
-        'relatorios/convenio/<int:convenio_id>/projeto/controle',
+        'relatorios/convenio/<int:convenio_id>/projeto/controle/',
         ElaboracaoProjetoPDFView.as_view(), name='relatorio-convenio-projeto-controle'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
