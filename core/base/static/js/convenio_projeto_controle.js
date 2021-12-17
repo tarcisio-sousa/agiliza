@@ -30,13 +30,13 @@ let submeterItemControle = (formulario) => {
     apiSubmeterDadosItemControle(dados, id, posicao)
         .then(response => {
             let {data, posicao} = response
-            console.log("carregando")
+            load(true)
             apiCarregarDadosItemControle(data.id, posicao)
                 .then(response => {
                     fecharItemModal()
                 })
                 .finally(_ => {
-                    console.log("carregado")
+                    load(false)
                 })
         })
 }
@@ -142,6 +142,7 @@ let deletarItemControle = (id, item, posicao = false) => {
 }
 
 let apiDeletarItemControle = (id, item, posicao = false) => {
+    load(true)
     fetch(`${url_api}/${url_item_controle}/${id}/`, {
         method: 'DELETE',
         headers: {
@@ -152,7 +153,11 @@ let apiDeletarItemControle = (id, item, posicao = false) => {
     .then(data => {
         deletarItemControle(id, item, posicao)
     })
-    .catch(error => console.log('Error: ', error)) }
+    .catch(error => console.log('Error: ', error))
+    .finally(() => {
+        load(false)
+    })
+}
 
 let fecharItemModal = () => {
     $('#itemModal').modal('hide')

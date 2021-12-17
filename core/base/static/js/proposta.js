@@ -27,6 +27,7 @@ autocomplete({
     input: input,
     minLength: 1,
     fetch: function(text, update) {
+        load(true)
         text = text.toLowerCase();
         fetch(`${url_api}/${url_prefeituras}/`, {
             method: 'GET'
@@ -38,6 +39,9 @@ autocomplete({
             update(suggestions);
         })
         .catch(error => console.log('Error: ', error))
+        .finally(() => {
+            load(false)
+        })
     },
     onSelect: function(item) {
         input.value = item.label;
