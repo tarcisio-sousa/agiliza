@@ -47,12 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core.api',
     'core.base',
+    'core.reports',
     'rest_framework',
     'rest_framework.authtoken',
     'ordered_model',
     'django_bootstrap_breadcrumbs',
     'django_crontab',
-    # 'wkhtmltopdf',
 ]
 
 MIDDLEWARE = [
