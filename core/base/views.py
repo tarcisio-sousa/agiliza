@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -88,6 +89,11 @@ def propostas(request, filter_situacao=False):
         if 'prefeitura' in request.GET:
             filter_prefeitura = int(request.GET['prefeitura'])
             propostas = propostas.filter(prefeitura=filter_prefeitura)
+
+    paginator = Paginator(propostas, 10)
+
+    page_number = request.GET.get('page')
+    propostas = paginator.get_page(page_number)
 
     orgaos = Orgao.objects.all()
     projetos = Projeto.objects.all()
