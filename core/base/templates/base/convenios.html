@@ -84,6 +84,38 @@
 					{% endfor %}
 				</tbody>
 			</table>
+
+			<div> 
+                <div class="float-right">
+                    <nav aria-label="Page navigation align-items-end">
+						<div class="pagination">
+						    <span class="step-links">
+						        {% if convenios.has_previous %}
+						            <a href="?page=1">
+			                            <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+			                        </a>
+						            <a href="?page={{ convenios.previous_page_number }}">
+			                        	<span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
+			                        </a>
+						        {% endif %}
+
+						        <span class="current">
+						            Página {{ convenios.number }} de {{ convenios.paginator.num_pages }}.
+						        </span>
+
+						        {% if convenios.has_next %}
+						            <a href="?page={{ convenios.next_page_number }}">
+			                            <span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
+			                        </a>
+						            <a href="?page={{ convenios.paginator.num_pages }}">
+			                            <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+			                        </a>
+						        {% endif %}
+						    </span>
+						</div>
+                    </nav>
+                </div>
+			</div>
 			{% else %}
 			<div class="alert alert-info mb-0">Nenhum convenio cadastrado!</div>
 			{% endif %}
