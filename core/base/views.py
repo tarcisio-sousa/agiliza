@@ -251,7 +251,7 @@ def convenios(request):
             convenios = convenios.filter(
                 Q(numero=request.POST['search']) | Q(orgao=request.POST['search']))
 
-    paginator = Paginator(convenios, 2)
+    paginator = Paginator(convenios, 10)
 
     page_number = request.GET.get('page')
     convenios = paginator.get_page(page_number)
