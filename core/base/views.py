@@ -240,11 +240,18 @@ def declaracoes(request):
 
 @login_required
 def convenios(request):
+    filter_prefeitura = False
+    choices_prefeitura = Prefeitura.objects.all()
     convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
         convenios = convenios.filter(proposta__prefeitura=prefeitura)
+
+    if request.method == 'GET':
+        if 'prefeitura' in request.GET:
+            filter_prefeitura = int(request.GET['prefeitura'])
+            convenios = convenios.filter(proposta__prefeitura=filter_prefeitura)
 
     if request.method == 'POST':
         if request.POST['search']:
@@ -261,6 +268,8 @@ def convenios(request):
         request,
         'base/convenios.html',
         {
+            'choices_prefeitura': choices_prefeitura,
+            'filter_prefeitura': filter_prefeitura,
             'convenios': convenios,
             'orgaos': orgaos,
         })
