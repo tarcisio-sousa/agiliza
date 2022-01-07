@@ -1,0 +1,112 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block title %}Serviços{% endblock %}
+{% block body %}
+	{% block breadcrumbs %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
+		{% breadcrumb " Serviços " "servicos" %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
+	{% block search %}
+	<div class="mb-2"> 
+		<div class="row">
+			<div class="col-md-12"> 
+				<div>
+					<div class="row">
+						<div class="col-md-6 text-right">
+							<form action="{% url 'servicos' %}" method="get" autocomplete="off"> 
+								<div class="input-group input-group-sm"> 
+							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
+									<div class="input-group-append"> 
+								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i> Buscar</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="col-md-6 text-right">
+							{% if perms.base.add_servico %}
+							<a href="{% url 'servico' %}" class="btn btn-sm link-agiliza"><i class="fas fa-plus-circle"></i> Novo</a>
+							{% endif %}
+							<a href="{% url 'relatorio-servicos' %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %}
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<!-- <th class="p-0" width="1%"> </th> -->
+						<th width="1%"><i class="fas fa-asterisk"></i></th>
+						<th>Prefeitura</th>
+						<th>Objeto</th>
+						<th>Observações</th>
+						<th>Responsáveis</th>
+						<th>Data do Cadastro</th>
+						<th>Data Prevista</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for servico in servicos %}
+					<tr>
+						<!-- <td class="text-center"><i class="fas fa-caret-right"></i></td> -->
+						<td class="text-center">
+						</td>
+						<td>{{ servico.prefeitura }}</td>
+						<td>{{ servico.objeto }}</td>
+						<td>{{ servico.observacoes }}</td>
+						<td>{{ servico.responsavel }}</td>
+						<td class="text-center">{{ servico.data_cadastro|date:"d/m/Y" }}</td>
+						<td class="text-center">{{ servico.data_prevista|date:"d/m/Y" }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% if servicos %}
+			<div> 
+                <div class="float-right">
+                    <nav aria-label="Page navigation align-items-end">
+						<div class="pagination">
+						    <span class="step-links">
+						        {% if servicos.has_previous %}
+						            <a href="?page=1">
+			                            <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+			                        </a>
+						            <a href="?page={{ servicos.previous_page_number }}">
+			                        	<span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
+			                        </a>
+						        {% endif %}
+
+						        <span class="current">
+						            Página {{ servicos.number }} de {{ servicos.paginator.num_pages }}.
+						        </span>
+
+						        {% if servicos.has_next %}
+						            <a href="?page={{ servicos.next_page_number }}">
+			                            <span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
+			                        </a>
+						            <a href="?page={{ servicos.paginator.num_pages }}">
+			                            <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+			                        </a>
+						        {% endif %}
+						    </span>
+						</div>
+                    </nav>
+                </div>
+			</div>
+			{% else %}
+				<div class="alert alert-info mb-0">Nenhum serviço cadastrado!</div>
+			{% endif %}
+		</div>
+	</div>
+
+
+{% endblock %}

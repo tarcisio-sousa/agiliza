@@ -159,6 +159,23 @@ class Convenio(models.Model):
         return f'{self.proposta}'
 
 
+class Servico(models.Model):
+    prefeitura = models.ForeignKey('Prefeitura', on_delete=models.CASCADE, blank=True, null=True)
+    objeto = models.CharField(max_length=150, blank=True, null=True)
+    observacoes = models.TextField(blank=True, null=True)
+    responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, blank=True, null=True)
+    data_cadastro = models.DateField(_('Data de Cadastro'), auto_now=True, blank=False, null=False)
+    data_prevista = models.DateField(_('Data Prevista'), blank=True, null=True)
+    status = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = _('serviço')
+        verbose_name_plural = _('serviços')
+
+    def __str__(self):
+        return f'{self.objeto}'
+
+
 class Orgao(models.Model):
     descricao = models.CharField(max_length=250, blank=False, null=False)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)

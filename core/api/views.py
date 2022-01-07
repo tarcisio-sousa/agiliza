@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .serializers import ItemControleSerializer, TecnicoOrgaoSerializer, PrefeituraSerializer
-from core.base.models import ProjetoControleItem, TecnicoOrgao, Prefeitura
+from .serializers import ItemControleSerializer, TecnicoOrgaoSerializer, PrefeituraSerializer, ResponsavelSerializer
+from core.base.models import ProjetoControleItem, TecnicoOrgao, Prefeitura, Responsavel
 
 
 class ItemControleProjetoViewSet(viewsets.ModelViewSet):
@@ -21,3 +21,9 @@ class PrefeituraViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Prefeitura.objects.all()
     serializer_class = PrefeituraSerializer
+
+
+class ResponsavelViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Responsavel.objects.all()
+    serializer_class = ResponsavelSerializer

@@ -59,6 +59,11 @@
 							</li>
 							{% if perms.auth.is_super %}
 							<li class="nav-item">
+								<a class="nav-link" href="{% url 'servicos' %}"> Serviços</a>
+							</li>
+							{% endif %}
+							{% if perms.auth.is_super %}
+							<li class="nav-item">
 								<a class="nav-link" href="{% url 'projetos' %}"> Projetos</a>
 							</li>
 							{% endif %}

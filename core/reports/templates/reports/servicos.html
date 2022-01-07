@@ -1,0 +1,41 @@
+{% extends 'reports/base.html' %}
+
+{% block body %}
+<h1>{{ title }}</h1>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<!-- <th class="p-0" width="1%"> </th> -->
+					<th width="1%"><i class="fas fa-asterisk"></i></th>
+					<th>Prefeitura</th>
+					<th>Objeto</th>
+					<th>Observações</th>
+					<th>Responsáveis</th>
+					<th>Data de Cadastro</th>
+					<th>Data Prevista</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for servico in servicos %}
+				<tr>
+					<!-- <td class="text-center"><i class="fas fa-caret-right"></i></td> -->
+					<td class="text-center">
+					</td>
+					<td>{{ servico.prefeitura }}</td>
+					<td>{{ servico.objeto }}</td>
+					<td>{{ servico.observacoes }}</td>
+					<td>{{ servico.responsavel }}</td>
+					<td class="text-center">{{ servico.data_cadastro|date:"d/m/Y" }}</td>
+					<td class="text-center">{{ servico.data_prevista|date:"d/m/Y" }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% if not servicos %}
+			<div class="alert alert-info mb-0">Nenhum serviço cadastrado!</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

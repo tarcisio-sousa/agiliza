@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from core.base.models import Proposta
+from core.base.models import Proposta, Servico
 from core.base.models import Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa
 from core.base.models import Atividade, LicenciamentoAmbiental, ProjetoControle, ProjetoControleItem
 
@@ -70,6 +70,28 @@ class ConvenioArquivoExtratoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class ServicoForm(ModelForm):
+    auto_complete_prefeitura = forms.CharField(max_length=250)
+    auto_complete_responsavel = forms.CharField(max_length=250)
+
+    class Meta:
+        model = Servico
+        fields = '__all__'
+        widgets = {
+            'prefeitura': forms.HiddenInput(),
+            'responsavel': forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['auto_complete_prefeitura'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['objeto'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['observacoes'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['observacoes'].widget.attrs['rows'] = 3
+        self.fields['auto_complete_responsavel'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['data_prevista'].widget.attrs.update({'class': 'form-control form-control-sm date'})
 
 
 class AtividadeForm(ModelForm):
