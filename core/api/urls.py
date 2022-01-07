@@ -8,6 +8,7 @@ router = DefaultRouter()
 router.register('item/controle', views.ItemControleProjetoViewSet)
 router.register('tecnico/orgao', views.TecnicoOrgaoViewSet)
 router.register('prefeituras', views.PrefeituraViewSet)
+router.register('responsaveis', views.ResponsavelViewSet)
 
 urlpatterns = [
     path('login', obtain_auth_token, name='login'),

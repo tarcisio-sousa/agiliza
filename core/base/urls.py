@@ -24,6 +24,9 @@ urlpatterns = [
         name='convenio_projeto_controle'),
     path('arquivo/extrato/<int:id>/', views.arquivo_extrato, name='arquivo_extrato'),
 
+    path('servicos/', views.servicos, name='servicos'),
+    path('servico/', views.servico, name='servico'),
+
     path('projetos/', views.projetos, name='projetos'),
     path('projeto/<int:id>/', views.projeto, name='projeto'),
     path('projeto/', views.projeto, name='projeto'),

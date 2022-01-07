@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.views.generic.base import View
-from core.base.models import Proposta, Convenio, Item, Prefeitura, ProjetoControle, ProjetoControleItem
+from core.base.models import Proposta, Convenio, Servico, Item, Prefeitura, ProjetoControle, ProjetoControleItem
 from wkhtmltopdf.views import PDFTemplateResponse
 
 
@@ -70,6 +70,33 @@ class ConveniosPDFView(View):
             request=request,
             template=self.template,
             filename='convenios.pdf',
+            context=data,
+            show_content_in_browser=True,
+            cmd_options={
+                'margin-top': 10,
+                'zoom': 1,
+                'quiet': None,
+                'enable-local-file-access': True,
+                'viewport-size': '1366 x 513',
+                'javascript-delay': 1000,
+                'footer-center': '[page]/[topage]',
+                'no-stop-slow-scripts': True},)
+
+        return response
+
+
+class ServicosPDFView(View):
+    template = 'reports/servicos.html'
+
+    def get(self, request, filter_situacao=False):
+        servicos = Servico.objects.filter(status=True).order_by('-data_cadastro')
+
+        data = {'title': 'Serviços', 'servicos': servicos}
+
+        response = PDFTemplateResponse(
+            request=request,
+            template=self.template,
+            filename='servicos.pdf',
             context=data,
             show_content_in_browser=True,
             cmd_options={

@@ -10,10 +10,10 @@ from django.utils.formats import localize
 from datetime import datetime
 from .forms import PropostaForm, PropostaArquivoExtratoForm, PropostaValorLiberado, ConvenioArquivoExtratoForm
 from .forms import ProjetoForm, OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
-from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm
+from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm, ServicoForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
-from .models import TecnicoOrgao
+from .models import TecnicoOrgao, Servico
 
 
 def notification_scheduled_job():
@@ -283,6 +283,66 @@ def arquivo_extrato(request, id):
         if form.is_valid():
             form.save()
     return redirect(reverse('convenios'))
+
+
+@login_required
+def servicos(request):
+    servicos = Servico.objects.filter(status=True).order_by('-data_cadastro')
+
+    paginator = Paginator(servicos, 10)
+
+    page_number = request.GET.get('page')
+    servicos = paginator.get_page(page_number)
+
+    return render(
+        request,
+        'base/servicos.html',
+        {
+            'servicos': servicos
+        })
+
+
+@login_required
+def servico(request, id=False, situacao=False):
+
+    servico_form = ServicoForm()
+
+    if (id):
+        servico = Servico.objects.get(id=id)
+        servico_form = ServicoForm(
+            instance=servico, initial={
+                'auto_complete_prefeitura': servico.prefeitura,
+                'auto_complete_responsavel': servico.responsavel,
+            })
+
+    if request.method == 'POST':
+        servico_form = ServicoForm(request.POST)
+
+        if id:
+            servico_form = ServicoForm(
+                request.POST, instance=servico, initial={
+                    'auto_complete_prefeitura': servico.prefeitura,
+                    'auto_complete_responsavel': servico.responsavel,
+                })
+
+        if servico_form.is_valid():
+            servico = servico_form.save(commit=False)
+            servico.status = True
+            servico.save()
+            messages.add_message(request, messages.SUCCESS, 'Serviço salvo com sucesso!')
+
+            # send_mail(
+            #     'Proposta Cadastrada',
+            #     'Agiliza Convênios > Proposta cadastrada com sucesso',
+            #     'sousa.tarcisio.s@gmail.com',
+            #     ['tarcisio.sales@bol.com.br', ],
+            #     fail_silently=False)
+
+            return redirect(reverse('servicos'))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar o serviço!')
+
+    return render(request, 'base/servico.html', {'servico_form': servico_form})
 
 
 @login_required
