@@ -1,5 +1,17 @@
 from rest_framework import serializers
-from core.base.models import ProjetoControleItem, Alternativa, TecnicoOrgao, Prefeitura, Profissional
+from core.base.models import Proposta, ProjetoControleItem, Alternativa, TecnicoOrgao, Prefeitura, Profissional
+
+
+class PropostaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Proposta
+        fields = ['id', 'data', 'data_prevista', 'objeto', 'valor_convenio', 'numero', 'situacao', 'prefeitura']
+
+    def to_representation(self, item):
+        ret = super().to_representation(item)
+        if item.prefeitura:
+            ret['prefeitura'] = PrefeituraSerializer().to_representation(item.prefeitura)
+        return ret
 
 
 class AlternativaSerializer(serializers.ModelSerializer):

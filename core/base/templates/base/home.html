@@ -1,5 +1,7 @@
 {% extends 'base/base.html' %}
 
+{% load static %}
+
 {% block title %} Bem Vindo {% endblock %}
 
 {% block body %}
@@ -13,7 +15,7 @@
 					<div class="card-body">
 						<span style="text-transform: uppercase; font-size: 12px;">Prefeituras</span>
 						<div class="text-left"> 
-							<h5 class="font-weight-bold">4</h5>
+							<h5 class="font-weight-bold">{{ data.total_prefeitura }}</h5>
 						</div>
 					</div>
 				</div>
@@ -23,17 +25,7 @@
 					<div class="card-body">
 						<span style="text-transform: uppercase; font-size: 12px;">Propostas</span>
 						<div class="text-left"> 
-							<h5 class="font-weight-bold">47</h5>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="card shadow-sm bg-body rounded">
-					<div class="card-body">
-						<span style="text-transform: uppercase; font-size: 12px;">Aprovados</span>
-						<div class="text-left"> 
-							<h5 class="font-weight-bold">8</h5>
+							<h5 class="font-weight-bold">{{ data.total_proposta }}</h5>
 						</div>
 					</div>
 				</div>
@@ -43,7 +35,17 @@
 					<div class="card-body">
 						<span style="text-transform: uppercase; font-size: 12px;">Convênios</span>
 						<div class="text-left"> 
-							<h5 class="font-weight-bold">23</h5>
+							<h5 class="font-weight-bold">{{ data.total_convenio }}</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card shadow-sm bg-body rounded">
+					<div class="card-body">
+						<span style="text-transform: uppercase; font-size: 12px;">Serviços</span>
+						<div class="text-left"> 
+							<h5 class="font-weight-bold">{{ data.total_servico }}</h5>
 						</div>
 					</div>
 				</div>
@@ -63,11 +65,14 @@
 								</tr>
 							</thead>
 							<tbody> 
+								{% for choice, situacao in data.situacoes.items %}
 								<tr>
-									<td>Em análise</td>
-									<td>3</td>
-									<td class="text-right">100.000,00</td>
+									<td>{{ situacao.situacao }}</td>
+									<td>{{ situacao.situacao__count }}</td>
+									<td class="text-right">{% load l10n %}{{ situacao.valor_convenio__sum|floatformat:2|localize }}</td>
 								</tr>
+								{% endfor %}
+								<!--
 								<tr>
 									<td>Aprovada</td>
 									<td>8</td>
@@ -83,6 +88,7 @@
 									<td>3</td>
 									<td class="text-right">50.000,00</td>
 								</tr>
+								-->
 							</tbody>
 						</table>
 					</div>

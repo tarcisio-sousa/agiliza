@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Count, Sum
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.formats import localize
@@ -59,11 +59,40 @@ def signout(request):
     return redirect(reverse('signin'))
 
 
+def cria_lista_situacoes(situacoes):
+    resultado = {}
+    for [chave, situacao] in situacoes:
+        resultado[chave] = {'situacao': situacao, 'situacao__count': 0, 'valor_convenio__sum': 0.0}
+    return resultado
+
+
+def cria_tabela_situacoes(situacoes, total):
+    for situacao in total:
+        situacoes[situacao['situacao']]['situacao__count'] = situacao['situacao__count']
+        situacoes[situacao['situacao']]['valor_convenio__sum'] = situacao['valor_convenio__sum']
+    return situacoes
+
+
 @login_required
 def home(request):
+    lista_situacoes = Proposta.SituacaoChoice.choices
+    resultado_situacoes = cria_lista_situacoes(lista_situacoes)
+    busca_total_propostas_situacao = Proposta.objects.values('situacao').annotate(Count('situacao'), Sum('valor_convenio'))
+    print(busca_total_propostas_situacao)
+    situacoes = cria_tabela_situacoes(resultado_situacoes, busca_total_propostas_situacao)
+
+    data = { 
+        'total_prefeitura': Prefeitura.objects.count(),
+        'total_proposta': Proposta.objects.count(),
+        'total_convenio': Convenio.objects.count(),
+        'total_servico': Servico.objects.count(),
+        # 'lista_propostas_situacao': situacoes,
+        'situacoes': situacoes
+    }
+
     return render(
         request,
-        'base/home.html')
+        'base/home.html', { 'data': data })
 
 
 @login_required
