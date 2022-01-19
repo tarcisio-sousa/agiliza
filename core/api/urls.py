@@ -5,6 +5,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
+router.register('propostas', views.PropostaViewSet)
 router.register('item/controle', views.ItemControleProjetoViewSet)
 router.register('tecnico/orgao', views.TecnicoOrgaoViewSet)
 router.register('prefeituras', views.PrefeituraViewSet)
