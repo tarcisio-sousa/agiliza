@@ -78,7 +78,6 @@ def home(request):
     lista_situacoes = Proposta.SituacaoChoice.choices
     resultado_situacoes = cria_lista_situacoes(lista_situacoes)
     busca_total_propostas_situacao = Proposta.objects.values('situacao').annotate(Count('situacao'), Sum('valor_convenio'))
-    print(busca_total_propostas_situacao)
     situacoes = cria_tabela_situacoes(resultado_situacoes, busca_total_propostas_situacao)
 
     data = { 
