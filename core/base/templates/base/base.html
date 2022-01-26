@@ -1,5 +1,4 @@
 {% load static %}
-{% load django_bootstrap_breadcrumbs %}
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -101,11 +100,7 @@
 					    {% endfor %}
 					</div>
 					{% endif %}
-					{% block breadcrumb %}
-					{% endblock %}
 					{% block body %}
-						{% block search %}
-						{% endblock %}
 					{% endblock %}
 				</main>
 			</div>
