@@ -21,5 +21,21 @@
 		<link rel="stylesheet" href="{% static 'css/jquery.datetimepicker.min.css' %}" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
 
 	</head>
-	<body></body>
+	<body>
+		{% block javascript %}
+		<!-- jQuery and JS bundle w/ Popper.js -->
+		<script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+		<script src="{% static 'js/docs.min.js' %}"></script>
+		<!-- <script src="{# static 'js/all.js' #}"></script> -->
+		<!-- XDSoft DateTimePicker -->
+		<script src="{% static 'js/jquery.datetimepicker.full.min.js' %}" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+		<script src="{% static 'js/jquery.mask.js' %}"></script>
+		<script src="{% static 'js/jquery.maskMoney.js' %}"></script>
+		<script src="{% static 'js/alertify.js' %}"></script>
+		<script src="{% static 'js/autocomplete.min.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+		{% endblock %}
+
+	</body>
 </html>
