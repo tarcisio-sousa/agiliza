@@ -161,7 +161,7 @@
 						<td class="text-right">{% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</td>
 						<td>{{ proposta.data|date:"d/m/Y" }}</td>
 						<td class="text-center">{{ proposta.get_situacao_display }}</td>
-						<td class="text-center">{% if proposta.extrato %}<a href="/agiliza/media/{{ proposta.extrato }}" target="_blank"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
+						<td class="text-center">{% if proposta.extrato %}<a href="/media/{{ proposta.extrato }}" target="_blank"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
 					</tr>
 					{% endfor %}
 				</tbody>
