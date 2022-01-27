@@ -77,10 +77,11 @@ def cria_tabela_situacoes(situacoes, total):
 def home(request):
     lista_situacoes = Proposta.SituacaoChoice.choices
     resultado_situacoes = cria_lista_situacoes(lista_situacoes)
-    busca_total_propostas_situacao = Proposta.objects.values('situacao').annotate(Count('situacao'), Sum('valor_convenio'))
+    busca_total_propostas_situacao = Proposta.objects.values('situacao').annotate(
+        Count('situacao'), Sum('valor_convenio'))
     situacoes = cria_tabela_situacoes(resultado_situacoes, busca_total_propostas_situacao)
 
-    data = { 
+    data = {
         'total_prefeitura': Prefeitura.objects.count(),
         'total_proposta': Proposta.objects.count(),
         'total_convenio': Convenio.objects.count(),
@@ -91,7 +92,7 @@ def home(request):
 
     return render(
         request,
-        'base/home.html', { 'data': data })
+        'base/home.html', {'data': data})
 
 
 @login_required

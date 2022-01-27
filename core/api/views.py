@@ -1,7 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .serializers import PropostaSerializer, ItemControleSerializer, TecnicoOrgaoSerializer, PrefeituraSerializer, ResponsavelSerializer
-from core.base.models import Proposta
+from .serializers import PropostaSerializer, ItemControleSerializer, TecnicoOrgaoSerializer
+from .serializers import ConvenioSerializer, PrefeituraSerializer, ResponsavelSerializer
+from core.base.models import Proposta, Convenio
 from core.base.models import ProjetoControleItem, TecnicoOrgao, Prefeitura, Responsavel
 
 
@@ -9,6 +10,13 @@ class PropostaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Proposta.objects.all()
     serializer_class = PropostaSerializer
+    lookup_field = 'pk'
+
+
+class ConvenioViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Convenio.objects.all()
+    serializer_class = ConvenioSerializer
     lookup_field = 'pk'
 
 
