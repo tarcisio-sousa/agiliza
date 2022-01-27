@@ -6,6 +6,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register('propostas', views.PropostaViewSet)
+router.register('convenios', views.ConvenioViewSet)
 router.register('item/controle', views.ItemControleProjetoViewSet)
 router.register('tecnico/orgao', views.TecnicoOrgaoViewSet)
 router.register('prefeituras', views.PrefeituraViewSet)
