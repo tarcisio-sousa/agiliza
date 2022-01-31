@@ -10,7 +10,7 @@ class PropostaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Proposta
-        fields = ['data', 'data_prevista', 'lei_complementar', 'objeto', 'valor_convenio', 'numero', 'situacao', 'prefeitura']
+        fields = ['data', 'data_prevista', 'lei_complementar', 'objeto', 'valor_convenio', 'numero', 'situacao', 'prefeitura', 'extrato']
 
     def to_representation(self, item):
         ret = super().to_representation(item)
