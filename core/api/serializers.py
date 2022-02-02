@@ -6,7 +6,7 @@ from core.base.models import TecnicoOrgao, Prefeitura, Profissional
 class PropostaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Proposta
-        fields = ['data', 'data_prevista', 'lei_complementar', 'objeto', 'valor_convenio', 'numero', 'situacao', 'get_situacao_display', 'prefeitura', 'extrato']
+        fields = ['data', 'data_prevista', 'lei_complementar', 'objeto', 'valor_contrapartida', 'valor_convenio', 'valor_repasse', 'numero', 'situacao', 'get_situacao_display', 'prefeitura', 'extrato']
 
     def to_representation(self, item):
         ret = super().to_representation(item)
@@ -18,7 +18,8 @@ class PropostaSerializer(serializers.ModelSerializer):
 class ConvenioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Convenio
-        fields = ['proposta', 'numero']
+        fields = ['proposta', 'numero', 'orgao', 'data_suspensiva', 'data_vigencia', 'tecnico_orgao']
+        depth = 2
 
     def to_representation(self, item):
         ret = super().to_representation(item)
