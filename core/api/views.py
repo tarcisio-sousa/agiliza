@@ -2,7 +2,8 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .serializers import PropostaSerializer, ItemControleSerializer, TecnicoOrgaoSerializer
 from .serializers import ConvenioSerializer, PrefeituraSerializer, ResponsavelSerializer
-from core.base.models import Proposta, Convenio
+from .serializers import AtividadeSerializer, LicenciamentoAmbientalSerializer
+from core.base.models import Proposta, Convenio, Atividade, LicenciamentoAmbiental
 from core.base.models import ProjetoControleItem, TecnicoOrgao, Prefeitura, Responsavel
 
 
@@ -17,6 +18,20 @@ class ConvenioViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Convenio.objects.all()
     serializer_class = ConvenioSerializer
+    lookup_field = 'pk'
+
+
+class AtividadeViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Atividade.objects.all()
+    serializer_class = AtividadeSerializer
+    lookup_field = 'pk'
+
+
+class LicenciamentoAmbientalViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = LicenciamentoAmbiental.objects.all()
+    serializer_class = LicenciamentoAmbientalSerializer
     lookup_field = 'pk'
 
 
