@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from core.base.models import Proposta, Convenio, ProjetoControleItem, Alternativa
-from core.base.models import TecnicoOrgao, Prefeitura, Profissional
+from core.base.models import TecnicoOrgao, Prefeitura, Profissional, Atividade, LicenciamentoAmbiental
 
 
 class PropostaSerializer(serializers.ModelSerializer):
@@ -26,6 +26,20 @@ class ConvenioSerializer(serializers.ModelSerializer):
         if item.proposta:
             ret['proposta'] = PropostaSerializer().to_representation(item.proposta)
         return ret
+
+
+class AtividadeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Atividade
+        fields = ['data_protocolado', 'data_prevista', 'responsavel', 'consideracoes', 'situacao', 'get_situacao_display']
+        depth = 2
+
+
+class LicenciamentoAmbientalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LicenciamentoAmbiental
+        fields = ['data_protocolado', 'data_prevista', 'responsavel', 'consideracoes', 'situacao', 'get_situacao_display']
+        depth = 2
 
 
 class AlternativaSerializer(serializers.ModelSerializer):
