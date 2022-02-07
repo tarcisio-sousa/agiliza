@@ -1,7 +1,7 @@
-const url_base = ''
-// const url_base = '/agiliza'
-const url_api = '/api'
-// const url_api = '/agiliza/api'
+// const url_base = ''
+const url_base = '/agiliza'
+// const url_api = '/api'
+const url_api = '/agiliza/api'
 const url_proposta_empenhar = `proposta/empenhar`
 const url_proposta_arquivo_extrato = `proposta/arquivo/extrato`
 
