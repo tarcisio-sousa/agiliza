@@ -5,6 +5,7 @@ from .serializers import ConvenioSerializer, PrefeituraSerializer, ResponsavelSe
 from .serializers import AtividadeSerializer, LicenciamentoAmbientalSerializer
 from core.base.models import Proposta, Convenio, Atividade, LicenciamentoAmbiental
 from core.base.models import ProjetoControleItem, TecnicoOrgao, Prefeitura, Responsavel
+from rest_framework.response import Response
 
 
 class PropostaViewSet(viewsets.ModelViewSet):
@@ -13,12 +14,34 @@ class PropostaViewSet(viewsets.ModelViewSet):
     serializer_class = PropostaSerializer
     lookup_field = 'pk'
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
+            prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
+            queryset = queryset.filter(prefeitura=prefeitura)
+        queryset = queryset.filter(status=True).order_by('-id')
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class ConvenioViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Convenio.objects.all()
     serializer_class = ConvenioSerializer
     lookup_field = 'pk'
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
+            prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
+            queryset = queryset.filter(proposta__prefeitura=prefeitura)
+        queryset = queryset.filter(status=True).order_by('-proposta__data')
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class AtividadeViewSet(viewsets.ModelViewSet):
