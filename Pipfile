@@ -23,6 +23,7 @@ django-crontab = "*"
 djangorestframework = "*"
 django-wkhtmltopdf = "*"
 num2words = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.6"

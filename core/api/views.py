@@ -1,5 +1,8 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
+from .filters import PropostaFilter
 from .serializers import PropostaSerializer, ItemControleSerializer, TecnicoOrgaoSerializer
 from .serializers import ConvenioSerializer, PrefeituraSerializer, ResponsavelSerializer
 from .serializers import AtividadeSerializer, LicenciamentoAmbientalSerializer
@@ -12,6 +15,9 @@ class PropostaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Proposta.objects.all()
     serializer_class = PropostaSerializer
+    filter_class = PropostaFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    # search_fields = ['nome']
     lookup_field = 'pk'
 
     def list(self, request, *args, **kwargs):
