@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'ordered_model',
     'django_bootstrap_breadcrumbs',
     'django_crontab',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -96,6 +97,7 @@ CRONJOBS = [
 REST_FRAMEWORK = {
     'DATE_INPUT_FORMATS': ['%d/%m/%Y', ],
     'DATE_FORMAT': '%Y-%m-%d',
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
