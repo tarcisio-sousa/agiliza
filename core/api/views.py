@@ -2,7 +2,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
-from .filters import PropostaFilter
+from .filters import PropostaFilter, ConvenioFilter
 from .serializers import PropostaSerializer, ItemControleSerializer, TecnicoOrgaoSerializer
 from .serializers import ConvenioSerializer, PrefeituraSerializer, ResponsavelSerializer
 from .serializers import AtividadeSerializer, LicenciamentoAmbientalSerializer
@@ -36,6 +36,8 @@ class ConvenioViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Convenio.objects.all()
     serializer_class = ConvenioSerializer
+    filter_class = ConvenioFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'pk'
 
     def list(self, request, *args, **kwargs):
