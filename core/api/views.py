@@ -1,5 +1,8 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from .filters import PropostaFilter, ConvenioFilter
@@ -8,7 +11,21 @@ from .serializers import ConvenioSerializer, PrefeituraSerializer, ResponsavelSe
 from .serializers import AtividadeSerializer, LicenciamentoAmbientalSerializer
 from core.base.models import Proposta, Convenio, Atividade, LicenciamentoAmbiental
 from core.base.models import ProjetoControleItem, TecnicoOrgao, Prefeitura, Responsavel
-from rest_framework.response import Response
+
+
+class AuthToken(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email,
+            'is_superuser': user.is_superuser
+        })
 
 
 class PropostaViewSet(viewsets.ModelViewSet):
