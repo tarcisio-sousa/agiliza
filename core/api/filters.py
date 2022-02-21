@@ -1,5 +1,5 @@
 from django_filters import FilterSet, ModelMultipleChoiceFilter
-from core.base.models import Prefeitura, Proposta, Convenio
+from core.base.models import Prefeitura, Proposta, Convenio, Atividade, LicenciamentoAmbiental
 
 
 class PropostaFilter(FilterSet):
@@ -24,3 +24,27 @@ class ConvenioFilter(FilterSet):
     class Meta:
         model = Convenio
         fields = ['prefeitura']
+
+
+class AtividadeFilter(FilterSet):
+    convenio = ModelMultipleChoiceFilter(
+        field_name='convenio',
+        to_field_name='id',
+        queryset=Convenio.objects.all(),
+    )
+
+    class Meta:
+        model = Atividade
+        fields = ['convenio']
+
+
+class LicenciamentoAmbientalFilter(FilterSet):
+    convenio = ModelMultipleChoiceFilter(
+        field_name='convenio',
+        to_field_name='id',
+        queryset=Convenio.objects.all(),
+    )
+
+    class Meta:
+        model = LicenciamentoAmbiental
+        fields = ['convenio']

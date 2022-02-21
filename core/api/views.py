@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
-from .filters import PropostaFilter, ConvenioFilter
+from .filters import PropostaFilter, ConvenioFilter, AtividadeFilter, LicenciamentoAmbientalFilter
 from .serializers import PropostaSerializer, ItemControleSerializer, TecnicoOrgaoSerializer
 from .serializers import ConvenioSerializer, PrefeituraSerializer, ResponsavelSerializer
 from .serializers import AtividadeSerializer, LicenciamentoAmbientalSerializer
@@ -73,6 +73,8 @@ class AtividadeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Atividade.objects.all()
     serializer_class = AtividadeSerializer
+    filter_class = AtividadeFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'pk'
 
 
@@ -80,6 +82,8 @@ class LicenciamentoAmbientalViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = LicenciamentoAmbiental.objects.all()
     serializer_class = LicenciamentoAmbientalSerializer
+    filter_class = LicenciamentoAmbientalFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'pk'
 
 
