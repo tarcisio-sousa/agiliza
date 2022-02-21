@@ -7,7 +7,7 @@ class PropostaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Proposta
         fields = [
-            'data', 'data_prevista', 'lei_complementar', 'objeto',
+            'id', 'data', 'data_prevista', 'lei_complementar', 'objeto',
             'valor_contrapartida', 'valor_convenio', 'valor_repasse',
             'numero', 'situacao', 'get_situacao_display', 'prefeitura',
             'extrato']
@@ -22,7 +22,8 @@ class PropostaSerializer(serializers.ModelSerializer):
 class ConvenioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Convenio
-        fields = ['proposta', 'numero', 'orgao', 'data_suspensiva', 'data_vigencia', 'tecnico_orgao']
+        fields = [
+            'id', 'proposta', 'numero', 'orgao', 'data_suspensiva', 'data_vigencia', 'tecnico_orgao']
         depth = 2
 
     def to_representation(self, item):
@@ -36,7 +37,7 @@ class AtividadeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Atividade
         fields = [
-            'data_protocolado', 'data_prevista', 'responsavel', 'consideracoes',
+            'id', 'data_protocolado', 'data_prevista', 'responsavel', 'consideracoes',
             'situacao', 'get_situacao_display']
         depth = 2
 
@@ -45,7 +46,8 @@ class LicenciamentoAmbientalSerializer(serializers.ModelSerializer):
     class Meta:
         model = LicenciamentoAmbiental
         fields = [
-            'data_protocolado', 'data_prevista', 'responsavel', 'consideracoes', 'situacao', 'get_situacao_display']
+            'id', 'data_protocolado', 'data_prevista', 'responsavel',
+            'consideracoes', 'situacao', 'get_situacao_display']
         depth = 2
 
 
