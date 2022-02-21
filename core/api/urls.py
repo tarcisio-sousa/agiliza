@@ -16,5 +16,6 @@ router.register('responsaveis', views.ResponsavelViewSet)
 
 urlpatterns = [
     path('login', obtain_auth_token, name='login'),
+    path('token-auth', views.AuthToken.as_view(), name='token-auth'),
 ]
 urlpatterns += router.urls
