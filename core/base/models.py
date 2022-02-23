@@ -208,13 +208,14 @@ class Projeto(models.Model):
         PAVIMENTACAO = 'pavimentacao', _('Pavimentação')
         CENTRO_ESPORTIVO = 'centro_esportivo', _('Centro Esportivo')
         EDIFICACAO = 'edificacao', _('Edificação')
+        OUTROS = 'outros', _('Outros')
 
     tipo = models.CharField(
         max_length=150, choices=TipoChoice.choices, default=None, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     def __str__(self):
-        return f'{self.id} - {self.get_tipo_display()}'
+        return f'{self.get_tipo_display()}'
 
 
 class Item(OrderedModelBase):
