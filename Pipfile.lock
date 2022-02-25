@@ -74,11 +74,10 @@
         },
         "django-wkhtmltopdf": {
             "hashes": [
-                "sha256:add8cbf6266a28bcc3691775dbe2f2eff7934f2c7fe9995b320270f3679f12b4",
-                "sha256:e4c42d771c7a1ef85faa0591e3c1fa7da3ef0d39a636baea4a1ec89bf7119a71"
+                "sha256:b12222a6c588c645d62d971a2a34e3802ac76023cf94c557068f39f478b2b984",
+                "sha256:c954d016b84b195bb52d8a22a1ed1c5e4eb499c9aa8f6aed89dac57247fc8fc1"
             ],
-            "index": "pypi",
-            "version": "==3.3.0"
+            "version": "==3.4.0"
         },
         "djangorestframework": {
             "hashes": [
