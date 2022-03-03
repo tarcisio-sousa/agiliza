@@ -24,6 +24,7 @@ djangorestframework = "*"
 django-wkhtmltopdf = "*"
 num2words = "*"
 django-filter = "*"
+sentry-sdk = "*"
 
 [requires]
 python_version = "3.6"

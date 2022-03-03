@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 
 import dj_database_url
+import sentry_sdk
+
+from sentry_sdk.integrations.django import DjangoIntegration
 
 from functools import partial
 # from pathlib import Path
@@ -190,3 +193,12 @@ EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'sousa.tarcisio.s@gmail.com'
 EMAIL_HOST_PASSWORD = 'lryomurvonnmwyqg'
+
+SENTRY_DSN = config('SENTRY_DSN', default=None)
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        send_default_pii=True
+    )
