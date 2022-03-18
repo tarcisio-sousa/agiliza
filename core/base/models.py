@@ -250,13 +250,13 @@ class Opcao(models.Model):
 
     def __str__(self):
         string = ''
-        if (self.descricao):
+        if self.descricao:
             string += f' Descrição: {self.descricao} '
-        if (self.alternativa):
+        if self.alternativa:
             string += f' Alternativa: {self.alternativa} '
-        if (self.texto):
+        if self.texto:
             string += f' Texto: {self.texto} '
-        if (self.responsavel):
+        if self.responsavel:
             string += f' responsavel: {self.responsavel} '
 
         return string
@@ -310,7 +310,7 @@ class ProjetoControleItem(models.Model):
 
     class Meta:
         verbose_name = 'item'
-        verbose_name = 'itens'
+        verbose_name_plural = 'itens'
 
     def __str__(self):
         return f'{self.item.descricao}'
