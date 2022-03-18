@@ -37,7 +37,7 @@ def signin(request):
 
         user = authenticate(username=username, password=password)
 
-        if (user is not None) and (user.is_active):
+        if (user is not None) and user.is_active:
             if user.is_superuser or user.profissional:
                 login(request, user)
                 is_auth = True
@@ -144,7 +144,7 @@ def propostas(request, filter_situacao=False):
 @login_required
 def proposta(request, id=False, situacao=False):
 
-    if (situacao):
+    if situacao:
         proposta = Proposta.objects.get(id=id)
         proposta.situacao = situacao
         proposta.save()
@@ -156,7 +156,7 @@ def proposta(request, id=False, situacao=False):
 
     proposta_form = PropostaForm()
 
-    if (id):
+    if id:
         proposta = Proposta.objects.get(id=id)
         proposta_form = PropostaForm(
             instance=proposta, initial={'auto_complete_prefeitura': proposta.prefeitura})
@@ -221,14 +221,14 @@ def proposta_documento(request, id):
 def _gerar_convenio(request, proposta, dados):
     (convenio, gerado) = Convenio.objects.get_or_create(proposta=proposta)
     if gerado:
-        if (dados['numero']):
+        if dados['numero']:
             convenio.numero = dados['numero']
             convenio.data_suspensiva = datetime.strptime(dados['data_suspensiva'], '%d/%m/%Y')
             convenio.data_vigencia = datetime.strptime(dados['data_vigencia'], '%d/%m/%Y')
             convenio.orgao_id = dados['orgao_id']
             convenio.status = True
-            if (dados['nome']):
-                if (dados['tecnico_orgao_id']):
+            if dados['nome']:
+                if dados['tecnico_orgao_id']:
                     tecnico_orgao = TecnicoOrgao.objects.get(id=dados['tecnico_orgao_id'])
                 else:
                     tecnico_orgao = TecnicoOrgao()
@@ -336,7 +336,7 @@ def servico(request, id=False, situacao=False):
 
     servico_form = ServicoForm()
 
-    if (id):
+    if id:
         servico = Servico.objects.get(id=id)
         servico_form = ServicoForm(
             instance=servico, initial={
@@ -389,7 +389,7 @@ def projetos(request):
 def projeto(request, id=False):
     projeto_form = ProjetoForm()
 
-    if (id):
+    if id:
         projeto = Projeto.objects.get(id=id)
         projeto_form = ProjetoForm(instance=projeto)
 

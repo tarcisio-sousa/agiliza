@@ -20,7 +20,7 @@ function calculaRepasse() {
 }
 
 function converteValor(valor, padrao = false) {
-    return (padrao) ? valor.toLocaleString('pt-BR', {minimumFractionDigits: 2}) : valor.replace('.', '').replace(',', '.')
+    return (padrao) ? valor.toLocaleString('pt-BR', {minimumFractionDigits: 2}) : valor.replace(/\./g, '').replace(/\,/g, '.')
 }
 
 autocomplete({
