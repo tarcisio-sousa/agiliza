@@ -50,6 +50,8 @@ urlpatterns = [
     path('item/alternativas/', views.item_alternativas, name='item_alternativas'),
     path('check/list/<int:id>/', views.check_list, name='check_list'),
     path('protocolo/<int:convenio_id>/', views.protocolo, name='protocolo'),
+    path('protocolos/<int:convenio_id>/', views.protocolos, name='protocolos'),
+    path('protocolo/resolver/<int:id>/', views.protocolo_resolver, name='protocolo_resolver'),
     path('atividades/<int:convenio_id>/', views.atividades, name='atividades'),
     path('atividade/resolver/<int:id>/', views.atividade_resolver, name='atividade_resolver'),
     path(

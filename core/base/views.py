@@ -10,10 +10,10 @@ from django.utils.formats import localize
 from datetime import datetime
 from .forms import PropostaForm, PropostaArquivoExtratoForm, PropostaValorLiberado, ConvenioArquivoExtratoForm
 from .forms import ProjetoForm, OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
-from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm, ServicoForm
+from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm, ServicoForm, ProtocoloForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
-from .models import TecnicoOrgao, Servico
+from .models import TecnicoOrgao, Servico, Protocolo
 
 
 def notification_scheduled_job():
@@ -704,6 +704,34 @@ def protocolo(request, convenio_id=False):
             'licenciamentos': licenciamentos,
             'proposta_form': proposta_form,
         })
+
+
+@login_required
+def protocolos(request, convenio_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
+    protocolo_form = ProtocoloForm()
+    if request.method == 'POST':
+        protocolo_form = ProtocoloForm(request.POST, request.FILES)
+        if protocolo_form.is_valid():
+            protocolo = protocolo_form.save(commit=False)
+            protocolo.convenio = convenio
+            protocolo.save()
+            return redirect(reverse('protocolo', args=[convenio.id]))
+
+    return render(
+        request,
+        'base/protocolos.html',
+        {
+            'convenio': convenio,
+            'protocolo_form': protocolo_form,
+        })
+
+
+def protocolo_resolver(request, id):
+    protocolo = Protocolo.objects.get(id=id)
+    protocolo.situacao = 'resolvido'
+    protocolo.save()
+    return redirect(reverse('protocolo', args=[protocolo.convenio.id]))
 
 
 @login_required

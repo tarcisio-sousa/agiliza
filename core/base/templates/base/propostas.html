@@ -4,7 +4,7 @@
 {% load function_extras %}
 
 {% block javascript %}
-{{ block.super }}	
+{{ block.super }}
 <script src="{% static 'js/propostas.js' %}"></script>
 {% endblock %}
 
@@ -18,16 +18,16 @@
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 	{% block search %}
-	<div class="mb-2"> 
+	<div class="mb-2">
 		<div class="row">
-			<div class="col-md-12"> 
+			<div class="col-md-12">
 				<div>
 					<div class="row">
 						<div class="col-md-6 text-right">
-							<form action="{% url 'propostas' %}" method="get" autocomplete="off"> 
-								<div class="input-group input-group-sm"> 
-							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
-									<div class="input-group-append"> 
+							<form action="{% url 'propostas' %}" method="get" autocomplete="off">
+								<div class="input-group input-group-sm">
+							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" />
+									<div class="input-group-append">
 								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i> Buscar</button>
 									</div>
 								</div>
@@ -52,6 +52,7 @@
 					<tr>
 						<!-- <th class="p-0" width="1%"> </th> -->
 						<th width="1%"><i class="fas fa-asterisk"></i></th>
+						<th>Proposta</th>
 						{% if perms.base.add_proposta %}
 						<th>
 							Prefeitura
@@ -82,12 +83,11 @@
 					     	</ul>
 					    </th>
 					    {% endif %}
-						<th>Número</th>
 						<th>Objeto</th>
 						<th>R$ Valor Convênio</th>
 						<th>Data</th>
 						<th>
-							Situação 
+							Situação
 							<ul class="navbar-nav mr-auto d-inline-block float-right">
 								<li class="nav-item dropdown">
 									<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
@@ -153,10 +153,10 @@
 							</ul>
 							{% endif %}
 						</td>
+						<td>{{ proposta.numero }}</td>
 						{% if perms.base.add_proposta %}
 						<td>{{ proposta.prefeitura }}</td>
 						{% endif %}
-						<td>{{ proposta.numero }}</td>
 						<td>{{ proposta.objeto }}</td>
 						<td class="text-right">{% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</td>
 						<td>{{ proposta.data|date:"d/m/Y" }}</td>
@@ -167,7 +167,7 @@
 				</tbody>
 			</table>
 			{% if propostas %}
-			<div> 
+			<div>
                 <div class="float-right">
                     <nav aria-label="Page navigation align-items-end">
 						<div class="pagination">

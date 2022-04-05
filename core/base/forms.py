@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from core.base.models import Proposta, Servico
-from core.base.models import Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa
+from core.base.models import Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Protocolo
 from core.base.models import Atividade, LicenciamentoAmbiental, ProjetoControle, ProjetoControleItem
 
 
@@ -92,6 +92,24 @@ class ServicoForm(ModelForm):
         self.fields['observacoes'].widget.attrs['rows'] = 3
         self.fields['auto_complete_responsavel'].widget.attrs.update({'class': 'form-control form-control-sm'})
         self.fields['data_prevista'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+
+
+class ProtocoloForm(ModelForm):
+    class Meta:
+        model = Protocolo
+        fields = ['data_prevista', 'data_protocolado', 'responsavel', 'consideracoes', 'situacao', 'anexo', ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['data_prevista'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+        self.fields['data_protocolado'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+        self.fields['responsavel'].widget.attrs.update({
+            'class': 'form-control form-control-sm custom-select custom-select-sm'})
+        self.fields['consideracoes'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['consideracoes'].widget.attrs['rows'] = 3
+        self.fields['situacao'].widget.attrs.update({
+            'class': 'form-control form-control-sm custom-select custom-select-sm'})
+        self.fields['anexo'].widget.attrs.update({'class': 'form-control form-control-sm'})
 
 
 class AtividadeForm(ModelForm):

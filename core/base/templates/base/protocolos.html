@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block title %}Protocolo{% endblock %}
+
+{% block body %}
+
+	{% block breadcrumbs %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
+		{% breadcrumb " Convênios " "convenios" %}
+		{% breadcrumb " Histórico " "protocolo" convenio.id %}
+		{% breadcrumb " Protocolo " "protocolos" convenio.id %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
+
+	<form method="post" enctype="multipart/form-data" class="form" autocomplete="off">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-3 form-group">
+						<label>Data</label>
+						{{ protocolo_form.data_protocolado }}
+					</div>
+					<div class="col-md-3 form-group">
+						<label>Data Prevista</label>
+						{{ protocolo_form.data_prevista }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 form-group">
+						<label>Responsável</label>
+						{{ protocolo_form.responsavel }}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-12 form-group">
+						<label>Situação</label>
+						{{ protocolo_form.situacao }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 form-group">
+						<label>Anexo</label>
+						{{ protocolo_form.anexo }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form-group">
+				<label>Considerações</label>
+				{{ protocolo_form.consideracoes }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right">
+				<button class="btn btn-sm btn-primary px-3 py-1">Salvar <i class="fas fa-paper-plane"></i></button>
+			</div>
+		</div>
+	</form>
+{% endblock %}
