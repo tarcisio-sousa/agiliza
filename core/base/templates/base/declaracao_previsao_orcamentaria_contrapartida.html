@@ -17,7 +17,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<div class="texto" style="margin-top: 50px;">Declaro, sob as penas da Lei, e em conformidade com a Lei de Diretrizes Orçamentárias vigente e com a Lei Complementar {{ proposta.lei_complementar}}, que dispomos dos recursos orçamentários, no valor de R$: {{ proposta.valor_contrapartida }} (Vinte e quatro mil reais), para participação, a título de contrapartida, no repasse de recursos destinados a {{ proposta.objeto }} para o Município de {{ proposta.prefeitura.nome }} – {{ proposta.prefeitura.uf }}, proposta de número {{ proposta.numero }}.</div>
+					<div class="texto" style="margin-top: 50px;">Declaro, sob as penas da Lei, e em conformidade com a Lei de Diretrizes Orçamentárias vigente{% if proposta.lei_complementar %} e com a Lei Complementar {{ proposta.lei_complementar}}{% endif %}, que dispomos dos recursos orçamentários, no valor de R$: {{ proposta.valor_contrapartida }} (Vinte e quatro mil reais), para participação, a título de contrapartida, no repasse de recursos destinados a {{ proposta.objeto }} para o Município de {{ proposta.prefeitura.nome }} – {{ proposta.prefeitura.uf }}, proposta de número {{ proposta.numero }}.</div>
 				</div>
 			</div>
 			<div class="row">
