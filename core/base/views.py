@@ -226,6 +226,9 @@ def _gerar_convenio(request, proposta, dados):
             convenio.data_suspensiva = datetime.strptime(dados['data_suspensiva'], '%d/%m/%Y')
             convenio.data_vigencia = datetime.strptime(dados['data_vigencia'], '%d/%m/%Y')
             convenio.orgao_id = dados['orgao_id']
+            convenio.banco = dados['banco']
+            convenio.agencia = dados['agencia']
+            convenio.conta = dados['conta']
             convenio.status = True
             if dados['nome']:
                 if dados['tecnico_orgao_id']:
@@ -684,8 +687,7 @@ def projeto_controle_item(request, controle_id=False):
 @login_required
 def protocolo(request, convenio_id=False):
     convenio = Convenio.objects.get(id=convenio_id)
-    atividades = Atividade.objects.filter(convenio=convenio)
-    licenciamentos = LicenciamentoAmbiental.objects.filter(convenio=convenio)
+    protocolos = Protocolo.objects.filter(convenio=convenio)
 
     proposta_form = PropostaValorLiberado(instance=convenio.proposta)
     if request.method == 'POST':
@@ -700,8 +702,7 @@ def protocolo(request, convenio_id=False):
         'base/protocolo.html',
         {
             'convenio': convenio,
-            'atividades': atividades,
-            'licenciamentos': licenciamentos,
+            'protocolos': protocolos,
             'proposta_form': proposta_form,
         })
 

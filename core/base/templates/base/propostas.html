@@ -207,7 +207,7 @@
 
 	<!-- Modal Empenhar Proposta -->
 	<div class="modal fade" id="empenharPropostaModal" tabindex="-1" aria-labelledby="empenharPropostaModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-lg">
 			<form method="post" id="formEmpenharProposta" autocomplete="off">
 				{% csrf_token %}
 				<div class="modal-content">
@@ -227,17 +227,17 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-4 form-group">
+							<div class="col-md-3 form-group">
 								<label for="">Cláusula Suspensiva</label>
 								<input type="text" name="data_suspensiva" class="form-control form-control-sm date" />
 							</div>
-							<div class="col-md-4 form-group">
+							<div class="col-md-3 form-group">
 								<label for="">Data Vigência</label>
 								<input type="text" name="data_vigencia" class="form-control form-control-sm date" />
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-5 form-group">
+							<div class="col-md-4 form-group">
 								<label for="id_prefeitura">Orgão</label>
 								<select name="orgao_id" id="orgao" class="custom-select custom-select-sm form-control">
 									<option>-------</option>
@@ -246,7 +246,7 @@
 									{% endfor %}
 								</select>
 							</div>
-							<div class="col-md-7 form-group">
+							<div class="col-md-5 form-group">
 								<label for="id_prefeitura">Tipo de Projeto</label>
 								<select name="projeto_id" id="projeto" class="custom-select custom-select-sm form-control">
 									<option>-------</option>
@@ -261,13 +261,30 @@
 								<h5>Técnico do Orgão</h5>
 								<input type="hidden" name="tecnico_orgao_id" id="tecnico_orgao_id" />
 							</div>
-							<div class="col-md-8 form-group">
+							<div class="col-md-6 form-group">
 								<label>Nome</label>
 								<input type="text" name="nome" id="tecnico_orgao_nome" class="form-control form-control-sm" autocomplete="off" />
 							</div>
-							<div class="col-md-4 form-group">
+							<div class="col-md-3 form-group">
 								<label>Telefone</label>
 								<input type="text" name="telefone" id="tecnico_orgao_telefone" class="form-control form-control-sm" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<h5>Dados Bancários</h5>
+							</div>
+							<div class="col-md-5 form-group">
+								<label>Banco</label>
+								<input type="text" name="banco" id="banco" class="form-control form-control-sm" autocomplete="off" />
+							</div>
+							<div class="col-md-3 form-group">
+								<label>Agência</label>
+								<input type="text" name="agencia" id="agencia" class="form-control form-control-sm" autocomplete="off" />
+							</div>
+							<div class="col-md-3 form-group">
+								<label>Conta</label>
+								<input type="text" name="conta" id="conta" class="form-control form-control-sm" autocomplete="off" />
 							</div>
 						</div>
 					</div>
