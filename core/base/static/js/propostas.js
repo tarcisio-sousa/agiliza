@@ -53,24 +53,24 @@ let aprovar_proposta = (item) => {
     alertify.confirm(
         'Aprovar proposta',
         'Tem certeza que deseja aprovar esta proposta?',
-        function() { 
+        function() {
             window.location.href = item.dataset.href
         },
         function() { console.log('Não foi possível reprovar o item') })
         .set('labels', {ok: 'Sim', cancel: 'Não'})
-} 
+}
 
 
 let reprovar_proposta = (item) => {
     alertify.confirm(
         'Reprovar proposta',
         'Tem certeza que deseja reprovar esta proposta?',
-        function() { 
+        function() {
             window.location.href = item.dataset.href
         },
         function() { console.log('Não foi possível reprovar o item') })
         .set('labels', {ok: 'Sim', cancel: 'Não'})
-} 
+}
 
 let excluir_proposta = (item) => {
     alertify.confirm(

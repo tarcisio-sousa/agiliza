@@ -149,6 +149,9 @@ class Convenio(models.Model):
     data_suspensiva = models.DateField(_('Data de Cláusula Suspensiva'), blank=True, null=True)
     data_vigencia = models.DateField(_('Data da Vigência'), blank=True, null=True)
     tecnico_orgao = models.ForeignKey('TecnicoOrgao', on_delete=models.CASCADE, blank=True, null=True)
+    banco = models.CharField(max_length=200, blank=True, null=True)
+    agencia = models.CharField(max_length=50, blank=True, null=True)
+    conta = models.CharField(max_length=50, blank=True, null=True)
     status = models.BooleanField(default=True)
 
     class Meta:
