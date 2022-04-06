@@ -20,319 +20,228 @@
 
 	<div class="mb-3">
 		<div class="row">
-			<div class="col-md-6">
-				<div class="row">
-					<div class="col-md-12">
-						<ul class="nav nav-tabs" id="myTab" role="tablist">
-							<li class="nav-item" role="presentation">
-								<h8 class="nav-link link-agiliza active">Dados</h8>
-							</li>
-						</ul>
-						<div class="card card-nav-agiliza mb-3">
-							<div class="card-body">
-								<div class="form-group row mb-0">
-									<label for="numero" class="col-sm-4 col-form-label-sm font-weight-bold">Nº Convênio</label>
-									<div class="col-sm-8">
-										<div class="form-control-sm form-control-plaintext">{{convenio.numero}}</div>
-									</div>
-								</div>
-								<div class="form-group row mb-0">
-									<label for="numero_proposta" class="col-sm-4 col-form-label-sm font-weight-bold">Nº Proposta</label>
-									<div class="col-sm-8">
-										<div class="form-control-sm form-control-plaintext">{{convenio.proposta.numero}}</div>
-									</div>
-								</div>
-								<div class="form-group row mb-0">
-									<label class="col-sm-4 col-form-label-sm font-weight-bold">Orgão</label>
-									<div class="col-sm-8">
-										<div class="form-control-sm form-control-plaintext">{{convenio.orgao}}</div>
-									</div>
-								</div>
-								<div class="form-group row mb-0">
-									<label class="col-sm-4 col-form-label-sm font-weight-bold">Objeto</label>
-									<div class="col-sm-8">
-										<div class="form-control-plaintext">{{convenio.proposta.objeto}}</div>
-									</div>
-								</div>
-								<div class="form-group row mb-0">
-									<label class="col-sm-3 col-form-label-sm font-weight-bold">Suspensiva</label>
-									<div class="col-sm-3">
-										<div class="form-control-sm form-control-plaintext">{{convenio.data_suspensiva|date:"d/m/Y"}}</div>
-									</div>
-									<label class="col-sm-3 col-form-label-sm font-weight-bold">Vigência</label>
-									<div class="col-sm-3">
-										<div class="form-control-sm form-control-plaintext">{{convenio.data_vigencia|date:"d/m/Y"}}</div>
-									</div>
-								</div>
-								<div class="form-group row mb-0">
-									<label class="col-sm-12 col-form-label-sm font-weight-bold">Técnico do órgão</label>
-									<div class="col-sm-12 ml-2">
-										<div class="row">
-											<div class="col-sm-4">
-												<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.telefone}}</div>
-											</div>
-											<div class="col-sm-6">
-												<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.nome}}</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="form-group row mb-0">
-									<label class="col-sm-12 col-form-label-sm font-weight-bold">Dados bancários</label>
-									<div class="col-sm-12 ml-2">
-										<div class="row">
-											<label class="col-sm-3 col-form-label-sm font-weight-bold">Banco</label>
-											<div class="col-sm-8">
-												<div class="form-control-sm form-control-plaintext">{{convenio.banco}}</div>
-											</div>
-											<label class="col-sm-3 col-form-label-sm font-weight-bold">Agência</label>
-											<div class="col-sm-8">
-												<div class="form-control-sm form-control-plaintext">{{convenio.agencia}}</div>
-											</div>
-											<label class="col-sm-3 col-form-label-sm font-weight-bold">Conta</label>
-											<div class="col-sm-8">
-												<div class="form-control-sm form-control-plaintext">{{convenio.conta}}</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+			<div class="col-md-12">
+				<div class="accordion" id="accordionExample">
+					<div class="card">
+						<div class="card-header p-0" id="headingOne">
+							<h2 class="mb-0">
+								<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Dados </a>
+							</h2>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="row">
-					<div class="col-md-12">
-						<ul class="nav nav-tabs" id="myTab" role="tablist">
-							<li class="nav-item" role="presentation">
-								<h8 class="nav-link link-agiliza active">Valores R$</h8>
-							</li>
-						</ul>
-						<div class="card card-nav-agiliza mb-3">
+
+						<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 							<div class="card-body">
-								<div class="form-group row mb-0">
-									<label for="valor_convenio" class="col-sm-4 col-form-label-sm font-weight-bold">Convênio</label>
-									<div class="col-sm-8">
-										<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_convenio}}</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group row mb-0">
+											<label for="numero" class="col-sm-3 col-form-label-sm font-weight-bold">Nº Convênio</label>
+											<div class="col-sm-8">
+												<div class="form-control-sm form-control-plaintext">{{convenio.numero}}</div>
+											</div>
+										</div>
+										<div class="form-group row mb-0">
+											<label for="numero_proposta" class="col-sm-3 col-form-label-sm font-weight-bold">Nº Proposta</label>
+											<div class="col-sm-8">
+												<div class="form-control-sm form-control-plaintext">{{convenio.proposta.numero}}</div>
+											</div>
+										</div>
+										<div class="form-group row mb-0">
+											<label class="col-sm-3 col-form-label-sm font-weight-bold">Orgão</label>
+											<div class="col-sm-8">
+												<div class="form-control-sm form-control-plaintext">{{convenio.orgao}}</div>
+											</div>
+										</div>
+										<div class="form-group row mb-0">
+											<label class="col-sm-12 col-form-label-sm font-weight-bold">Objeto</label>
+											<div class="col-sm-8">
+												<div class="form-control-plaintext">{{convenio.proposta.objeto}}</div>
+											</div>
+										</div>
+										<div class="form-group row mb-0">
+											<label class="col-sm-3 col-form-label-sm font-weight-bold">Suspensiva</label>
+											<div class="col-sm-3">
+												<div class="form-control-sm form-control-plaintext">{{convenio.data_suspensiva|date:"d/m/Y"}}</div>
+											</div>
+											<label class="col-sm-3 col-form-label-sm font-weight-bold">Vigência</label>
+											<div class="col-sm-3">
+												<div class="form-control-sm form-control-plaintext">{{convenio.data_vigencia|date:"d/m/Y"}}</div>
+											</div>
+										</div>
+										<div class="form-group row mb-3">
+											<label class="col-sm-12 col-form-label-sm font-weight-bold">Técnico do órgão</label>
+											<div class="col-sm-12 ml-2">
+												<div class="row">
+													<div class="col-sm-3">
+														<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.telefone}}</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.nome}}</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
-								</div>
-								<div class="form-group row mb-0">
-									<label for="valor_contrapartida" class="col-sm-4 col-form-label-sm font-weight-bold">Contrapartida</label>
-									<div class="col-sm-8">
-										<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_contrapartida}}</div>
-									</div>
-								</div>
-								<div class="form-group row mb-0">
-									<label for="valor_repasse" class="col-sm-4 col-form-label-sm font-weight-bold">Repasse</label>
-									<div class="col-sm-8">
-										<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_repasse}}</div>
-									</div>
-								</div>
-								<div class="form-group row mb-0">
-									<label for="valor_a_liberar" class="col-sm-8 col-form-label-sm font-weight-bold">À liberar</label>
-									<div class="col-sm-4">
-										<div class="form-control-sm form-control-plaintext text-right">{% load l10n %}{{ convenio.proposta.verifica_valor_liberar|floatformat:2|localize }}</div>
-									</div>
-								</div>
-								{% if perms.base.add_convenio %}
-								<form method="post" class="form" autocomplete="off">
-								{% csrf_token %}
-								<div class="form-group row mb-2">
-									<label for="valor_liberado" class="col-sm-8 col-form-label-sm font-weight-bold">Liberado</label>
-									<div class="col-sm-4">
-										<div class="form-control-sm form-control-plaintext text-right">
-											<!-- R$ 0,00 -->
-											<!-- <input type="text" class="form-control form-control-sm money" /> -->
-											{{ proposta_form.valor_liberado }}
+									<div class="col-md-6">
+										<div class="card">
+											<div class="card-body">
+												<div class="form-group row mb-0">
+													<label for="valor_convenio" class="col-sm-4 col-form-label-sm font-weight-bold">Convênio</label>
+													<div class="col-sm-8">
+														<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_convenio}}</div>
+													</div>
+												</div>
+												<div class="form-group row mb-0">
+													<label for="valor_contrapartida" class="col-sm-4 col-form-label-sm font-weight-bold">Contrapartida</label>
+													<div class="col-sm-8">
+														<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_contrapartida}}</div>
+													</div>
+												</div>
+												<div class="form-group row mb-0">
+													<label for="valor_repasse" class="col-sm-4 col-form-label-sm font-weight-bold">Repasse</label>
+													<div class="col-sm-8">
+														<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_repasse}}</div>
+													</div>
+												</div>
+												<div class="form-group row mb-0">
+													<label for="valor_a_liberar" class="col-sm-8 col-form-label-sm font-weight-bold">À liberar</label>
+													<div class="col-sm-4">
+														<div class="form-control-sm form-control-plaintext text-right">{% load l10n %}{{ convenio.proposta.verifica_valor_liberar|floatformat:2|localize }}</div>
+													</div>
+												</div>
+												{% if perms.base.add_convenio %}
+												<form method="post" class="form" autocomplete="off">
+												{% csrf_token %}
+												<div class="form-group row mb-2">
+													<label for="valor_liberado" class="col-sm-8 col-form-label-sm font-weight-bold">Liberado</label>
+													<div class="col-sm-4">
+														<div class="form-control-sm form-control-plaintext text-right">
+															<!-- R$ 0,00 -->
+															<!-- <input type="text" class="form-control form-control-sm money" /> -->
+															{{ proposta_form.valor_liberado }}
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12 text-right">
+														<button class="btn btn-sm btn-primary">Salvar  <i class="fas fa-paper-plane"></i></button>
+													</div>
+												</div>
+												</form>
+												{% endif %}
+											</div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-12 text-right">
-										<button class="btn btn-sm btn-primary">Salvar  <i class="fas fa-paper-plane"></i></button>
+									<div class="col-md-6">
+										<div class="form-group row mb-0">
+											<label class="col-sm-12 col-form-label-sm font-weight-bold">Dados bancários</label>
+											<div class="col-sm-12 ml-2">
+												<div class="row">
+													<label class="col-sm-2 col-form-label-sm font-weight-bold">Banco</label>
+													<div class="col-sm-8">
+														<div class="form-control-sm form-control-plaintext">{{convenio.banco}}</div>
+													</div>
+												</div>
+												<div class="row">
+													<label class="col-sm-2 col-form-label-sm font-weight-bold">Agência</label>
+													<div class="col-sm-8">
+														<div class="form-control-sm form-control-plaintext">{{convenio.agencia}}</div>
+													</div>
+												</div>
+												<div class="row">
+													<label class="col-sm-2 col-form-label-sm font-weight-bold">Conta</label>
+													<div class="col-sm-8">
+														<div class="form-control-sm form-control-plaintext">{{convenio.conta}}</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-								</form>
-								{% endif %}
 							</div>
+						</div>
+					</div>
+					<!--
+					<div class="card">
+						<div class="card-header p-0" id="headingTwo">
+							<h2 class="mb-0">
+								<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> Valores R$ </a>
+							</h2>
+						</div>
+
+						<div id="collapseTwo" class="collapse show">
+							<div class="card-body"></div>
+						</div>
+					</div>
+					-->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion" id="accordionExample">
+		<div class="card">
+			<div class="card-header p-0" id="headingOne">
+				<h2 class="mb-0">
+					<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree"> Protocolo </a>
+				</h2>
+			</div>
+
+			<div id="collapseThree" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<table class="table table-bordered m-0">
+								<thead>
+									<tr>
+										{% if perms.base.add_convenio %}
+										<th width="1%" class="p-0">
+											<a class="nav-link link-agiliza active mb-1" href="{% url 'protocolos' convenio.id %}"> <i class="fas fa-plus-circle"></i> </a>
+										</th>
+										{% else %}
+										<th width="1%"><i class="fas fa-asterisk"></i></th>
+										{% endif %}
+										<th width="1%">Data</th>
+										<th width="1%" style="white-space: nowrap;">Data prevista</th>
+										<th>Responsável</th>
+										<th>Considerações</th>
+										{# <th>Situação</th> #}
+										<th width="1%">Anexo</th>
+									</tr>
+								</thead>
+								{% if protocolos %}
+								<tbody>
+									{% for protocolo in protocolos %}
+									<tr>
+										<td class="text-center">
+											{% if protocolo.situacao == 'resolvido' %}
+											<i class="fas fa-check"></i>
+											{% else %}
+											<a href="{% url 'protocolo_resolver' protocolo.id %}"><i class="fas fa-square"></i></a>
+											{% endif %}
+										</td>
+										<td>{{ protocolo.data_protocolado|date:'d/m/Y' }}</td>
+										<td>{{ protocolo.data_prevista|date:'d/m/Y' }}</td>
+										<td>{{ protocolo.get_responsavel_display }}</td>
+										<td>{{ protocolo.consideracoes }}</td>
+										{# <td>{{ protocolo.get_situacao_display }}</td> #}
+										<td class="text-center">{% if protocolo.anexo %}<a href="/media/{{ protocolo.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+								{% else %}
+								<tfoot>
+									<tr>
+										<td colspan="7"><div class="alert alert-info mb-0">Nenhum protocolo cadastrado!</div></td>
+									</tr>
+								</tfoot>
+								{% endif %}
+							</table>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="tab-pane show" id="protocolo" role="tabpanel" aria-labelledby="protocolo-tab">
-		<ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item" role="presentation">
-				<a class="nav-link link-agiliza active" id="protocolo-tab" data-toggle="tab" href="#protocolo" role="tab" aria-controls="protocolo" aria-selected="true">Protocolo</a>
-			</li>
-		</ul>
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							{% if perms.base.add_convenio %}
-							<th width="1%" class="p-0">
-								<a class="nav-link link-agiliza active mb-1" href="{% url 'protocolos' convenio.id %}"> <i class="fas fa-plus-circle"></i> </a>
-							</th>
-							{% else %}
-							<th width="1%"><i class="fas fa-asterisk"></i></th>
-							{% endif %}
-							<th width="1%">Data</th>
-							<th width="1%" style="white-space: nowrap;">Data prevista</th>
-							<th>Responsável</th>
-							<th>Considerações</th>
-							{# <th>Situação</th> #}
-							<th width="1%">Anexo</th>
-						</tr>
-					</thead>
-					{% if protocolos %}
-					<tbody>
-						{% for protocolo in protocolos %}
-						<tr>
-							<td class="text-center">
-								{% if protocolo.situacao == 'resolvido' %}
-								<i class="fas fa-check"></i>
-								{% else %}
-								<a href="{% url 'protocolo_resolver' protocolo.id %}"><i class="fas fa-square"></i></a>
-								{% endif %}
-							</td>
-							<td>{{ protocolo.data_protocolado|date:'d/m/Y' }}</td>
-							<td>{{ protocolo.data_prevista|date:'d/m/Y' }}</td>
-							<td>{{ protocolo.get_responsavel_display }}</td>
-							<td>{{ protocolo.consideracoes }}</td>
-							{# <td>{{ protocolo.get_situacao_display }}</td> #}
-							<td class="text-center">{% if protocolo.anexo %}<a href="/media/{{ protocolo.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-					{% else %}
-					<tfoot>
-						<tr>
-							<td colspan="7"><div class="alert alert-info mb-0">Nenhum protocolo cadastrado!</div></td>
-						</tr>
-					</tfoot>
-					{% endif %}
-				</table>
-			</div>
-		</div>
-	</div>
-	{% comment %}
-	<div class="tab-pane show" id="orgao-concedente" role="tabpanel" aria-labelledby="orgao-concedente-tab">
-		<ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item" role="presentation">
-				<a class="nav-link link-agiliza active" id="orgao-concedente-tab" data-toggle="tab" href="#orgao-concedente" role="tab" aria-controls="orgao-concedente" aria-selected="true">Orgão Concedente</a>
-			</li>
-		</ul>
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							{% if perms.base.add_convenio %}
-							<th width="1%" class="p-0">
-								<a class="nav-link link-agiliza active mb-1" href="{% url 'atividades' convenio.id %}"> <i class="fas fa-plus-circle"></i> </a>
-							</th>
-							{% else %}
-							<th width="1%"><i class="fas fa-asterisk"></i></th>
-							{% endif %}
-							<th width="1%">Data</th>
-							<th width="1%" style="white-space: nowrap;">Data prevista</th>
-							<th>Responsável</th>
-							<th>Considerações</th>
-							<th>Situação</th>
-							<th width="1%">Anexo</th>
-						</tr>
-					</thead>
-					{% if atividades %}
-					<tbody>
-						{% for atividade in atividades %}
-						<tr>
-							<td class="text-center">
-								{% if atividade.situacao == 'resolvido' %}
-								<i class="fas fa-check"></i>
-								{% else %}
-								<a href="{% url 'atividade_resolver' atividade.id %}"><i class="fas fa-square"></i></a>
-								{% endif %}
-							</td>
-							<td>{{ atividade.data_protocolado|date:'d/m/Y' }}</td>
-							<td>{{ atividade.data_prevista|date:'d/m/Y' }}</td>
-							<td>{{ atividade.get_responsavel_display }}</td>
-							<td>{{ atividade.consideracoes }}</td>
-							<td>{{ atividade.get_situacao_display }}</td>
-							<td class="text-center">{% if atividade.anexo %}<a href="/media/{{ atividade.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-					{% else %}
-					<tfoot>
-						<tr>
-							<td colspan="7"><div class="alert alert-info mb-0">Nenhuma atividade cadastrada!</div></td>
-						</tr>
-					</tfoot>
-					{% endif %}
-				</table>
-			</div>
-		</div>
-	</div>
-	<div class="tab-pane" id="licenciamento" role="tabpanel" aria-labelledby="licenciamento-tab">
-		<ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item" role="presentation">
-				<a class="nav-link link-agiliza active" id="licenciamento-tab" data-toggle="tab" href="#licenciamento" role="tab" aria-controls="licenciamento" aria-selected="true">SEMAR</a>
-			</li>
-		</ul>
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							{% if perms.base.add_convenio %}
-							<th width="1%" class="p-0">
-								<a class="nav-link link-agiliza mb-1" href="{% url 'licenciamentos_ambientais' convenio.id %}"> <i class="fas fa-plus-circle"></i> </a>
-							</th>
-							{% else %}
-							<th width="1%"><i class="fas fa-asterisk"></i></th>
-							{% endif %}
-							<th width="1%">Data</th>
-							<th width="1%" style="white-space: nowrap;">Data prevista</th>
-							<th>Responsável</th>
-							<th>Considerações</th>
-							<th>Situação</th>
-							<th width="1%">Anexo</th>
-						</tr>
-					</thead>
-					{% if licenciamentos %}
-					<tbody>
-						{% for licenciamento in licenciamentos %}
-						<tr>
-							<td class="text-center">
-								{% if licenciamento.situacao == 'resolvido' %}
-								<i class="fas fa-check"></i>
-								{% else %}
-								<a href="{% url 'licenciamento_resolver' licenciamento.id %}"><i class="fas fa-square"></i></a>
-								{% endif %}
-							</td>
-							<td>{{ licenciamento.data_protocolado|date:'d/m/Y' }}</td>
-							<td>{{ licenciamento.data_prevista|date:'d/m/Y' }}</td>
-							<td>{{ licenciamento.get_responsavel_display }}</td>
-							<td>{{ licenciamento.consideracoes }}</td>
-							<td>{{ licenciamento.get_situacao_display }}</td>
-							<td class="text-center">{% if licenciamento.anexo %}<a href="/media/{{ licenciamento.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-					{% else %}
-					<tfoot>
-						<tr>
-							<td colspan="7"><div class="alert alert-info mb-0">Nenhum licenciamento ambiental cadastrado!</div></td>
-						</tr>
-					</tfoot>
-					{% endif %}
-				</table>
-			</div>
-		</div>
-	</div>
-	{% endcomment %}
 {% endblock %}
