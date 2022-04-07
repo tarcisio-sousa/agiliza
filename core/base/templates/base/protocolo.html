@@ -21,7 +21,7 @@
 	<div class="mb-3">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="accordion" id="accordionExample">
+				<div class="accordion" id="accordionOne">
 					<div class="card">
 						<div class="card-header p-0" id="headingOne">
 							<h2 class="mb-0">
@@ -29,7 +29,7 @@
 							</h2>
 						</div>
 
-						<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+						<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionOne">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-6">
@@ -86,98 +86,116 @@
 										</div>
 									</div>
 									<div class="col-md-6">
-										<div class="accordion" id="accordionOneOne">
-											<div class="card">
-												<div class="card-header p-0" id="headingOneOne">
-													<h2 class="mb-0">
-														<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseOneOne" aria-expanded="true" aria-controls="collapseOneOne"> Valores R$ </a>
-													</h2>
-												</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="accordion mb-3" id="accordionOneOne">
+													<div class="card">
+														<div class="card-header p-0" id="headingOneOne">
+															<h2 class="mb-0">
+																<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseOneOne" aria-expanded="true" aria-controls="collapseOneOne"> Valores R$ </a>
+															</h2>
+														</div>
 
-												<div id="collapseOneOne" class="collapse show" aria-labelledby="headingOneOne" data-parent="#accordionOneOne">
-													<div class="card-body">
-														<div class="form-group row mb-0">
-															<label for="valor_convenio" class="col-sm-4 col-form-label-sm font-weight-bold">Convênio</label>
-															<div class="col-sm-8">
-																<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_convenio}}</div>
-															</div>
-														</div>
-														<div class="form-group row mb-0">
-															<label for="valor_contrapartida" class="col-sm-4 col-form-label-sm font-weight-bold">Contrapartida</label>
-															<div class="col-sm-8">
-																<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_contrapartida}}</div>
-															</div>
-														</div>
-														<div class="form-group row mb-0">
-															<label for="valor_repasse" class="col-sm-4 col-form-label-sm font-weight-bold">Repasse</label>
-															<div class="col-sm-8">
-																<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_repasse}}</div>
-															</div>
-														</div>
-														<div class="form-group row mb-0">
-															<label for="valor_a_liberar" class="col-sm-8 col-form-label-sm font-weight-bold">À liberar</label>
-															<div class="col-sm-4">
-																<div class="form-control-sm form-control-plaintext text-right">{% load l10n %}{{ convenio.proposta.verifica_valor_liberar|floatformat:2|localize }}</div>
-															</div>
-														</div>
-														{% if perms.base.add_convenio %}
-														<form method="post" class="form" autocomplete="off">
-														{% csrf_token %}
-														<div class="form-group row mb-2">
-															<label for="valor_liberado" class="col-sm-8 col-form-label-sm font-weight-bold">Liberado</label>
-															<div class="col-sm-4">
-																<div class="form-control-sm form-control-plaintext text-right">
-																	<!-- R$ 0,00 -->
-																	<!-- <input type="text" class="form-control form-control-sm money" /> -->
-																	{{ proposta_form.valor_liberado }}
+														<div id="collapseOneOne" class="collapse show" aria-labelledby="headingOneOne" data-parent="#accordionOneOne">
+															<div class="card-body">
+																<div class="form-group row mb-0">
+																	<label for="valor_convenio" class="col-sm-4 col-form-label-sm font-weight-bold">Convênio</label>
+																	<div class="col-sm-8">
+																		<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_convenio}}</div>
+																	</div>
 																</div>
+																<div class="form-group row mb-0">
+																	<label for="valor_contrapartida" class="col-sm-4 col-form-label-sm font-weight-bold">Contrapartida</label>
+																	<div class="col-sm-8">
+																		<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_contrapartida}}</div>
+																	</div>
+																</div>
+																<div class="form-group row mb-0">
+																	<label for="valor_repasse" class="col-sm-4 col-form-label-sm font-weight-bold">Repasse</label>
+																	<div class="col-sm-8">
+																		<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_repasse}}</div>
+																	</div>
+																</div>
+																{% comment %}
+																<div class="form-group row mb-0">
+																	<label for="valor_a_liberar" class="col-sm-8 col-form-label-sm font-weight-bold">À liberar</label>
+																	<div class="col-sm-4">
+																		<div class="form-control-sm form-control-plaintext text-right">{% load l10n %}{{ convenio.proposta.verifica_valor_liberar|floatformat:2|localize }}</div>
+																	</div>
+																</div>
+																{% if perms.base.add_convenio %}
+																<form method="post" class="form" autocomplete="off">
+																{% csrf_token %}
+																<div class="form-group row mb-2">
+																	<label for="valor_liberado" class="col-sm-8 col-form-label-sm font-weight-bold">Liberado</label>
+																	<div class="col-sm-4">
+																		<div class="form-control-sm form-control-plaintext text-right">
+																			<!-- R$ 0,00 -->
+																			<!-- <input type="text" class="form-control form-control-sm money" /> -->
+																			{{ proposta_form.valor_liberado }}
+																		</div>
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-12 text-right">
+																		<button class="btn btn-sm btn-primary">Salvar  <i class="fas fa-paper-plane"></i></button>
+																	</div>
+																</div>
+																</form>
+																{% endif %}
+																{% endcomment %}
 															</div>
 														</div>
-														<div class="row">
-															<div class="col-md-12 text-right">
-																<button class="btn btn-sm btn-primary">Salvar  <i class="fas fa-paper-plane"></i></button>
-															</div>
-														</div>
-														</form>
-														{% endif %}
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group row mb-0">
-											<label class="col-sm-12 col-form-label-sm font-weight-bold">Dados bancários</label>
-											{% if convenio.banco %}
-											<div class="col-sm-12 ml-2">
-												<div class="row">
-													<label class="col-sm-2 col-form-label-sm font-weight-bold">Banco</label>
-													<div class="col-sm-8">
-														<div class="form-control-sm form-control-plaintext">
-														{% if convenio.banco %}{{convenio.banco}}{% endif %}
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="accordion" id="accordionOneTwo">
+													<div class="card">
+														<div class="card-header p-0" id="headingOneTwo">
+															<h2 class="mb-0">
+																<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseOneTwo" aria-expanded="true" aria-controls="collapseOneTwo"> Dados bancários </a>
+															</h2>
 														</div>
-													</div>
-												</div>
-												<div class="row">
-													<label class="col-sm-2 col-form-label-sm font-weight-bold">Agência</label>
-													<div class="col-sm-8">
-														<div class="form-control-sm form-control-plaintext">
-														{% if convenio.agencia %}{{convenio.agencia}}{% endif %}
-														</div>
-													</div>
-												</div>
-												<div class="row">
-													<label class="col-sm-2 col-form-label-sm font-weight-bold">Conta</label>
-													<div class="col-sm-8">
-														<div class="form-control-sm form-control-plaintext">
-														{% if convenio.conta %}{{convenio.conta}}{% endif %}
+
+														<div id="collapseOneTwo" class="collapse show" aria-labelledby="headingOneTwo" data-parent="#accordionOneTwo">
+															<div class="card-body">
+																{% if convenio.banco %}
+																<div class="col-sm-12">
+																	<div class="row">
+																		<label class="col-sm-3 col-form-label-sm font-weight-bold">Banco</label>
+																		<div class="col-sm-7">
+																			<div class="form-control-sm form-control-plaintext">
+																			{% if convenio.banco %}{{convenio.banco}}{% endif %}
+																			</div>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<label class="col-sm-3 col-form-label-sm font-weight-bold">Agência</label>
+																		<div class="col-sm-7">
+																			<div class="form-control-sm form-control-plaintext">
+																			{% if convenio.agencia %}{{convenio.agencia}}{% endif %}
+																			</div>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<label class="col-sm-3 col-form-label-sm font-weight-bold">Conta</label>
+																		<div class="col-sm-7">
+																			<div class="form-control-sm form-control-plaintext">
+																			{% if convenio.conta %}{{convenio.conta}}{% endif %}
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																{% endif %}
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-											{% endif %}
 										</div>
 									</div>
 								</div>
@@ -189,7 +207,7 @@
 		</div>
 	</div>
 
-	<div class="accordion mb-4" id="accordionExample">
+	<div class="accordion mb-4" id="accordionTwo">
 		<div class="card">
 			<div class="card-header p-0" id="headingOne">
 				<h2 class="mb-0">
@@ -197,11 +215,11 @@
 				</h2>
 			</div>
 
-			<div id="collapseThree" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+			<div id="collapseThree" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionTwo">
 				<div>
 					<div class="row">
 						<div class="col-md-12">
-							<table class="table table-bordered m-0 border-0">
+							<table class="table table-bordered m-0">
 								<thead>
 									<tr>
 										{% if perms.base.add_convenio %}
