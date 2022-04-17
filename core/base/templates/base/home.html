@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %} Bem Vindo {% endblock %}
+{% block title %} Bem Vindo!!! {% endblock %}
 
 {% block body %}
 	{% if not perms.base.add_proposta %}
@@ -14,7 +14,7 @@
 				<div class="card shadow-sm bg-body rounded">
 					<div class="card-body">
 						<span style="text-transform: uppercase; font-size: 12px;">Prefeituras</span>
-						<div class="text-left"> 
+						<div class="text-left">
 							<h5 class="font-weight-bold">{{ data.total_prefeitura }}</h5>
 						</div>
 					</div>
@@ -24,7 +24,7 @@
 				<div class="card shadow-sm bg-body rounded">
 					<div class="card-body">
 						<span style="text-transform: uppercase; font-size: 12px;">Propostas</span>
-						<div class="text-left"> 
+						<div class="text-left">
 							<h5 class="font-weight-bold">{{ data.total_proposta }}</h5>
 						</div>
 					</div>
@@ -34,7 +34,7 @@
 				<div class="card shadow-sm bg-body rounded">
 					<div class="card-body">
 						<span style="text-transform: uppercase; font-size: 12px;">Convênios</span>
-						<div class="text-left"> 
+						<div class="text-left">
 							<h5 class="font-weight-bold">{{ data.total_convenio }}</h5>
 						</div>
 					</div>
@@ -44,7 +44,7 @@
 				<div class="card shadow-sm bg-body rounded">
 					<div class="card-body">
 						<span style="text-transform: uppercase; font-size: 12px;">Serviços</span>
-						<div class="text-left"> 
+						<div class="text-left">
 							<h5 class="font-weight-bold">{{ data.total_servico }}</h5>
 						</div>
 					</div>
@@ -55,16 +55,16 @@
 			<div class="col-md-6">
 				<div class="card shadow-sm bg-body rounded">
 					<div class="card-body">
-						<div class="mb-2" style="text-transform: uppercase; font-size: 12px;">Propostas</div> 
+						<div class="mb-2" style="text-transform: uppercase; font-size: 12px;">Propostas</div>
 						<table class="table">
-							<thead> 
+							<thead>
 								<tr>
 									<th>Situação</th>
 									<th>#</th>
 									<th class="text-right">R$</th>
 								</tr>
 							</thead>
-							<tbody> 
+							<tbody>
 								{% for choice, situacao in data.situacoes.items %}
 								<tr>
 									<td>{{ situacao.situacao }}</td>
@@ -96,7 +96,7 @@
 			</div>
 			<div class="col-md-6">
 		  		<div class="card card-fill shadow-sm bg-body rounded">
-		  			<div class="card-body"> 
+		  			<div class="card-body">
 		  				Gráfico
 		  			</div>
 		  		</div>

@@ -22,10 +22,12 @@ urlpatterns = [
         'convenio/<int:convenio_id>/projeto/controle/',
         views.convenio_projeto_controle,
         name='convenio_projeto_controle'),
+    path('convenio/excluir/<int:id>/', views.convenio_excluir, name='convenio_excluir'),
     path('arquivo/extrato/<int:id>/', views.arquivo_extrato, name='arquivo_extrato'),
 
     path('servicos/', views.servicos, name='servicos'),
     path('servico/', views.servico, name='servico'),
+    path('servico/excluir/<int:id>/', views.servico_excluir, name='servico_excluir'),
 
     path('projetos/', views.projetos, name='projetos'),
     path('projeto/<int:id>/', views.projeto, name='projeto'),
@@ -52,6 +54,8 @@ urlpatterns = [
     path('protocolo/<int:convenio_id>/', views.protocolo, name='protocolo'),
     path('protocolos/<int:convenio_id>/', views.protocolos, name='protocolos'),
     path('protocolo/resolver/<int:id>/', views.protocolo_resolver, name='protocolo_resolver'),
+    path('protocolo/excluir/<int:id>/', views.protocolo_excluir, name='protocolo_excluir'),
+
     path('atividades/<int:convenio_id>/', views.atividades, name='atividades'),
     path('atividade/resolver/<int:id>/', views.atividade_resolver, name='atividade_resolver'),
     path(

@@ -2,6 +2,11 @@
 
 {% load static %}
 
+{% block javascript %}
+{{ block.super }}
+<script src="{% static 'js/servicos.js' %}"></script>
+{% endblock %}
+
 {% load django_bootstrap_breadcrumbs %}
 
 {% block title %}Serviços{% endblock %}
@@ -59,6 +64,18 @@
 					<tr>
 						<!-- <td class="text-center"><i class="fas fa-caret-right"></i></td> -->
 						<td class="text-center">
+							{% if perms.auth.is_super %}
+							<ul class="navbar-nav mr-auto">
+								<li class="nav-item dropdown text-center">
+									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
+									<ul class="dropdown-menu">
+										<li>
+											<a href="javascript: void(0)" class="dropdown-item" data-href="{% url 'servico_excluir' servico.id %}" onclick="excluir_servico(this)"> Excluir</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							{% endif %}
 						</td>
 						<td>{{ servico.prefeitura }}</td>
 						<td>{{ servico.objeto }}</td>
@@ -71,7 +88,7 @@
 				</tbody>
 			</table>
 			{% if servicos %}
-			<div> 
+			<div>
                 <div class="float-right">
                     <nav aria-label="Page navigation align-items-end">
 						<div class="pagination">
