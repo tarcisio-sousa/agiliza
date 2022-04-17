@@ -98,6 +98,11 @@
 											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> Elaboração de Projeto </a>
 										</li>
 										{% endif %}
+										{% if perms.auth.is_super %}
+										<li>
+											<a href="javascript: void(0)" class="dropdown-item" data-href="{% url 'convenio_excluir' convenio.id %}" onclick="excluir_convenio(this)"> Excluir</a>
+										</li>
+										{% endif %}
 									</ul>
 								</li>
 							</ul>

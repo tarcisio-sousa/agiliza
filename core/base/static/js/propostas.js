@@ -80,6 +80,6 @@ let excluir_proposta = (item) => {
             console.log('Proposta excluída com sucesso')
             window.location.href = item.dataset.href
         },
-        function() { console.log('Não foi possível excluir o item') })
+        function() { console.log('Não foi possível excluir a proposta') })
         .set('labels', {ok: 'Sim, tenho certeza', cancel: 'Não'})
 }

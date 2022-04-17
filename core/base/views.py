@@ -308,6 +308,14 @@ def convenios(request):
 
 
 @login_required
+def convenio_excluir(request, id):
+    convenio = Convenio.objects.get(id=id)
+    convenio.delete()
+    messages.add_message(request, messages.INFO, 'Convênio excluído com sucesso!')
+    return redirect(reverse('convenios'))
+
+
+@login_required
 def arquivo_extrato(request, id):
     if request.method == 'POST':
         convenio = Convenio.objects.get(id=id)
@@ -375,6 +383,14 @@ def servico(request, id=False, situacao=False):
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar o serviço!')
 
     return render(request, 'base/servico.html', {'servico_form': servico_form})
+
+
+@login_required
+def servico_excluir(request, id):
+    servico = Servico.objects.get(id=id)
+    servico.delete()
+    messages.add_message(request, messages.INFO, 'Serviço excluído com sucesso!')
+    return redirect(reverse('servicos'))
 
 
 @login_required
@@ -732,6 +748,14 @@ def protocolo_resolver(request, id):
     protocolo = Protocolo.objects.get(id=id)
     protocolo.situacao = 'resolvido'
     protocolo.save()
+    return redirect(reverse('protocolo', args=[protocolo.convenio.id]))
+
+
+@login_required
+def protocolo_excluir(request, id):
+    protocolo = Protocolo.objects.get(id=id)
+    protocolo.delete()
+    messages.add_message(request, messages.INFO, 'Protocolo excluído com sucesso!')
     return redirect(reverse('protocolo', args=[protocolo.convenio.id]))
 
 
