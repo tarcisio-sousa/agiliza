@@ -271,7 +271,7 @@
 										</td>
 										<td>{{ protocolo.data_protocolado|date:'d/m/Y' }}</td>
 										<td>{{ protocolo.data_prevista|date:'d/m/Y' }}</td>
-										<td>{{ protocolo.get_responsavel_display }}</td>
+										<td>{{ protocolo.get_responsavel_display|default:"-" }}</td>
 										<td>{{ protocolo.consideracoes }}</td>
 										{# <td>{{ protocolo.get_situacao_display }}</td> #}
 										<td class="text-center border-right-0">{% if protocolo.anexo %}<a href="/media/{{ protocolo.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>

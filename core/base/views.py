@@ -11,6 +11,7 @@ from datetime import datetime
 from .forms import PropostaForm, PropostaArquivoExtratoForm, PropostaValorLiberado, ConvenioArquivoExtratoForm
 from .forms import ProjetoForm, OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
 from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm, ServicoForm, ProtocoloForm
+from .forms import ConvenioRecursoContaForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
 from .models import TecnicoOrgao, Servico, Protocolo
@@ -313,6 +314,175 @@ def convenio_excluir(request, id):
     convenio.delete()
     messages.add_message(request, messages.INFO, 'Convênio excluído com sucesso!')
     return redirect(reverse('convenios'))
+
+
+@login_required
+def convenio_aprovar_projeto(request, id):
+    if request.method == 'POST':
+        dados = request.POST
+        convenio = Convenio.objects.get(id=id)
+        convenio.data_aprovacao_projeto = datetime.strptime(dados['data_aprovacao_projeto'], '%d/%m/%Y')
+        convenio.situacao = 'projeto-aprovado'
+        convenio.save()
+        protocolos = Protocolo(
+            convenio=convenio,
+            data=convenio.data_aprovacao_projeto,
+            data_prevista=convenio.data_aprovacao_projeto,
+            data_protocolado=convenio.data_aprovacao_projeto,
+            consideracoes=convenio.get_situacao_display())
+        protocolos.save()
+        situacao = convenio.get_situacao_display()
+        messages.add_message(
+            request,
+            messages.INFO,
+            f'Convênio {convenio.numero} {convenio.proposta.objeto} ({situacao})')
+        return redirect(reverse('convenios'))
+
+
+@login_required
+def convenio_licitar_projeto(request, id):
+    if request.method == 'POST':
+        dados = request.POST
+        convenio = Convenio.objects.get(id=id)
+        convenio.data_licitacao_projeto = datetime.strptime(dados['data_licitacao_projeto'], '%d/%m/%Y')
+        convenio.situacao = 'aguardando-licitacao'
+        convenio.save()
+        protocolos = Protocolo(
+            convenio=convenio,
+            data=convenio.data_licitacao_projeto,
+            data_prevista=convenio.data_licitacao_projeto,
+            data_protocolado=convenio.data_licitacao_projeto,
+            consideracoes=convenio.get_situacao_display())
+        protocolos.save()
+        situacao = convenio.get_situacao_display()
+        messages.add_message(
+            request,
+            messages.INFO,
+            f'Convênio {convenio.numero} {convenio.proposta.objeto} ({situacao})')
+        return redirect(reverse('convenios'))
+
+
+@login_required
+def convenio_analisar_licitacao(request, id):
+    if request.method == 'POST':
+        dados = request.POST
+        convenio = Convenio.objects.get(id=id)
+        convenio.data_analise_licitacao = datetime.strptime(dados['data_analise_licitacao'], '%d/%m/%Y')
+        convenio.situacao = 'aguardando-aceite-licitacao'
+        convenio.save()
+        protocolos = Protocolo(
+            convenio=convenio,
+            data=convenio.data_analise_licitacao,
+            data_prevista=convenio.data_analise_licitacao,
+            data_protocolado=convenio.data_analise_licitacao,
+            consideracoes=convenio.get_situacao_display())
+        protocolos.save()
+        situacao = convenio.get_situacao_display()
+        messages.add_message(
+            request,
+            messages.INFO,
+            f'Convênio {convenio.numero} {convenio.proposta.objeto} ({situacao})')
+        return redirect(reverse('convenios'))
+
+
+@login_required
+def convenio_aprovar_licitacao(request, id):
+    if request.method == 'POST':
+        dados = request.POST
+        convenio = Convenio.objects.get(id=id)
+        convenio.data_aceite_licitacao = datetime.strptime(dados['data_aceite_licitacao'], '%d/%m/%Y')
+        convenio.situacao = 'licitacao-aprovada'
+        convenio.save()
+        protocolos = Protocolo(
+            convenio=convenio,
+            data=convenio.data_aceite_licitacao,
+            data_prevista=convenio.data_aceite_licitacao,
+            data_protocolado=convenio.data_aceite_licitacao,
+            consideracoes=convenio.get_situacao_display())
+        protocolos.save()
+        situacao = convenio.get_situacao_display()
+        messages.add_message(
+            request,
+            messages.INFO,
+            f'Convênio {convenio.numero} {convenio.proposta.objeto} ({situacao})')
+        return redirect(reverse('convenios'))
+
+
+@login_required
+def convenio_recurso_conta(request, id):
+    if request.method == 'POST':
+        # dados = request.POST
+        convenio = Convenio.objects.get(id=id)
+
+        # convenio.data_liberacao_recurso = datetime.strptime(dados['data_liberacao_recurso'], '%d/%m/%Y')
+        # convenio.valor_recurso = localize(dados['valor_recurso'])
+        # convenio.save()
+        print(request.POST)
+        convenio_form = ConvenioRecursoContaForm(request.POST, instance=convenio)
+        if convenio_form.is_valid():
+            convenio = convenio_form.save(commit=False)
+            convenio.situacao = 'recurso-em-conta'
+            convenio.save()
+
+            protocolos = Protocolo(
+                convenio=convenio,
+                data=convenio.data_liberacao_recurso,
+                data_prevista=convenio.data_liberacao_recurso,
+                data_protocolado=convenio.data_liberacao_recurso,
+                consideracoes=convenio.get_situacao_display())
+            protocolos.save()
+            situacao = convenio.get_situacao_display()
+            messages.add_message(
+                request,
+                messages.INFO,
+                f'Convênio {convenio.numero} {convenio.proposta.objeto} ({situacao})')
+        return redirect(reverse('convenios'))
+
+
+@login_required
+def convenio_concluir(request, id):
+    if request.method == 'POST':
+        dados = request.POST
+        convenio = Convenio.objects.get(id=id)
+        convenio.data_conclusao = datetime.strptime(dados['data_conclusao'], '%d/%m/%Y')
+        convenio.situacao = 'convenio-concluido'
+        convenio.save()
+        protocolos = Protocolo(
+            convenio=convenio,
+            data=convenio.data_conclusao,
+            data_prevista=convenio.data_conclusao,
+            data_protocolado=convenio.data_conclusao,
+            consideracoes=convenio.get_situacao_display())
+        protocolos.save()
+        situacao = convenio.get_situacao_display()
+        messages.add_message(
+            request,
+            messages.INFO,
+            f'Convênio {convenio.numero} {convenio.proposta.objeto} ({situacao})')
+        return redirect(reverse('convenios'))
+
+
+@login_required
+def convenio_concluir_prestacao_contas(request, id):
+    if request.method == 'POST':
+        dados = request.POST
+        convenio = Convenio.objects.get(id=id)
+        convenio.data_prestacao_contas = datetime.strptime(dados['data_prestacao_contas'], '%d/%m/%Y')
+        convenio.situacao = 'prestacao-de-contas-concluida'
+        convenio.save()
+        protocolos = Protocolo(
+            convenio=convenio,
+            data=convenio.data_prestacao_contas,
+            data_prevista=convenio.data_prestacao_contas,
+            data_protocolado=convenio.data_prestacao_contas,
+            consideracoes=convenio.get_situacao_display())
+        protocolos.save()
+        situacao = convenio.get_situacao_display()
+        messages.add_message(
+            request,
+            messages.INFO,
+            f'Convênio {convenio.numero} {convenio.proposta.objeto} ({situacao})')
+        return redirect(reverse('convenios'))
 
 
 @login_required

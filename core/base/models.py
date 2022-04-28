@@ -141,6 +141,17 @@ class Proposta(models.Model):
 
 
 class Convenio(models.Model):
+
+    class SituacaoChoice(models.TextChoices):
+        AGUARDANDO_APROVACAO_PROJETO = 'aguardando-aprovacao', _('Aguardando aprovação do projeto')
+        PROJETO_APROVADO = 'projeto-aprovado', _('Projeto aprovado')
+        AGUARDANDO_LICITACAO = 'aguardando-licitacao', _('Aguardando licitação')
+        AGUARDANDO_ACEITE_LICITACAO = 'aguardando-aceite-licitacao', _('Aguardando aceite da licitação')
+        LICITACAO_APROVADA = 'licitacao-aprovada', _('Licitação aprovada, aguardando recurso')
+        RECURSO_EM_CONTA = 'recurso-em-conta', _('Recurso em conta, em execução')
+        CONVENIO_CONCLUIDO = 'convenio-concluido', _('Convenio concluído')
+        PRESTACAO_DE_CONTAS_CONCLUIDA = 'prestacao-de-contas-concluida', _('Prestação de contas concluída')
+
     proposta = models.ForeignKey('Proposta', on_delete=models.CASCADE, blank=True, null=True)
     orgao = models.ForeignKey('Orgao', on_delete=models.CASCADE, blank=True, null=True)
     arquivo_extrato = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
@@ -149,9 +160,28 @@ class Convenio(models.Model):
     data_suspensiva = models.DateField(_('Data de Cláusula Suspensiva'), blank=True, null=True)
     data_vigencia = models.DateField(_('Data da Vigência'), blank=True, null=True)
     tecnico_orgao = models.ForeignKey('TecnicoOrgao', on_delete=models.CASCADE, blank=True, null=True)
+
     banco = models.CharField(max_length=200, blank=True, null=True)
     agencia = models.CharField(max_length=50, blank=True, null=True)
     conta = models.CharField(max_length=50, blank=True, null=True)
+
+    data_aprovacao_projeto = models.DateField(_('Data Aprovação de Projeto'), blank=True, null=True)
+    data_licitacao_projeto = models.DateField(_('Data Licitação de Projeto'), blank=True, null=True)
+    data_analise_licitacao = models.DateField(_('Data Análise de Licitação'), blank=True, null=True)
+    data_aceite_licitacao = models.DateField(_('Data Aceite de Licitação'), blank=True, null=True)
+    data_liberacao_recurso = models.DateField(_('Data Liberação do Recurso'), blank=True, null=True)
+    valor_recurso = models.DecimalField(
+        _('Valor do recurso'), max_digits=19, default=Decimal('0.00'), decimal_places=2, blank=True, null=True)
+    data_conclusao = models.DateField(_('Data Conclusão'), blank=True, null=True)
+    data_prestacao_contas = models.DateField(_('Data Conclusão'), blank=True, null=True)
+
+    situacao = models.CharField(
+        max_length=50,
+        choices=SituacaoChoice.choices,
+        default=SituacaoChoice.AGUARDANDO_APROVACAO_PROJETO,
+        blank=True,
+        null=True
+    )
     status = models.BooleanField(default=True)
 
     class Meta:

@@ -72,6 +72,22 @@ class ConvenioArquivoExtratoForm(ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class ConvenioRecursoContaForm(ModelForm):
+    class Meta:
+        model = Convenio
+        fields = ['data_liberacao_recurso', 'valor_recurso', ]
+        widgets = {
+            'valor_recurso': forms.TextInput()}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['data_liberacao_recurso'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+        self.fields['valor_recurso'].widget.attrs.update({
+            'class': 'form-control form-control-sm money'})
+        self.fields['valor_recurso'].localize = True
+        self.fields['valor_recurso'].widget.is_localized = True
+
+
 class ServicoForm(ModelForm):
     auto_complete_prefeitura = forms.CharField(max_length=250)
     auto_complete_responsavel = forms.CharField(max_length=250)
