@@ -79,6 +79,7 @@
 						<th>Objeto</th>
 						<th>Número Convênio</th>
 						<th>Proposta</th>
+						<th>Situação</th>
 						<th width="1%">R$ Valor</th>
 					</tr>
 				</thead>
@@ -98,6 +99,27 @@
 											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> Elaboração de Projeto </a>
 										</li>
 										{% endif %}
+										{% if convenio.situacao == 'aguardando-aprovacao' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarProjetoModal" data-id="{{ convenio.id }}" onclick="aprovar_projeto_convenio(this)">Aprovar projeto</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'projeto-aprovado' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#licitarProjetoModal" data-id="{{ convenio.id }}" onclick="licitar_projeto_convenio(this)">Licitar projeto</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'aguardando-licitacao' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#analisarLicitacaoModal" data-id="{{ convenio.id }}" onclick="analisar_licitacao_convenio(this)">Analisar licitação</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'aguardando-aceite-licitacao' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarLicitacaoModal" data-id="{{ convenio.id }}" onclick="aprovar_licitacao_convenio(this)">Aprovar licitação</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'licitacao-aprovada' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#recursoContaModal" data-id="{{ convenio.id }}" onclick="recurso_em_conta_convenio(this)">Recurso em conta</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'recurso-em-conta' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirConvenioModal" data-id="{{ convenio.id }}" onclick="concluir_convenio(this)">Concluir convênio</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'convenio-concluido' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirPrestacaoContasModal" data-id="{{ convenio.id }}" onclick="concluir_prestacao_contas(this)">Concluir prestação de contas</a></li>
+										{% endif %}
 										{% if perms.auth.is_super %}
 										<li>
 											<a href="javascript: void(0)" class="dropdown-item" data-href="{% url 'convenio_excluir' convenio.id %}" onclick="excluir_convenio(this)"> Excluir</a>
@@ -111,6 +133,7 @@
 						<td>{{ convenio.proposta.objeto }}</td>
 						<td>{{ convenio.numero }}</td>
 						<td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td>
+						<td>{{ convenio.get_situacao_display }}</td>
 						<td class="text-right">{% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}</td>
 					</tr>
 					{% endfor %}
@@ -213,6 +236,213 @@
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary btn-sm"> <i class="fas fa-check-circle"></i> Salvar </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- Modal Aprovação de Convênio -->
+	<div class="modal fade" id="aprovarProjetoModal" tabindex="-1" aria-labelledby="aprovarProjetoModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" id="formAprovarProjeto" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="aprovarProjetoModalLabel">Aprovação de projeto</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-4 form-group">
+							    <label>Data aprovação</label>
+							    <input type="text" name="data_aprovacao_projeto" class="form-control form-control-sm date">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- Modal Licitação de Projeto -->
+	<div class="modal fade" id="licitarProjetoModal" tabindex="-1" aria-labelledby="licitarProjetoModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" id="formLicitarProjeto" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="licitarProjetoModalLabel">Licitação de projeto</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-4 form-group">
+							    <label>Data licitação</label>
+							    <input type="text" name="data_licitacao_projeto" class="form-control form-control-sm date">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- Modal Analisar Licitação -->
+	<div class="modal fade" id="analisarLicitacaoModal" tabindex="-1" aria-labelledby="analisarLicitacaoModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" id="formAnalisarLicitacao" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="analisarLicitacaoModalLabel">Analisar Licitação</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-4 form-group">
+							    <label>Data análise licitação</label>
+							    <input type="text" name="data_analise_licitacao" class="form-control form-control-sm date">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- Modal Aprovar Licitação -->
+	<div class="modal fade" id="aprovarLicitacaoModal" tabindex="-1" aria-labelledby="aprovarLicitacaoModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" id="formAprovarLicitacao" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="aprovarLicitacaoModalLabel">Aprovar Licitação</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-4 form-group">
+							    <label>Data aceite licitação</label>
+							    <input type="text" name="data_aceite_licitacao" class="form-control form-control-sm date">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- Modal Recurso em Conta -->
+	<div class="modal fade" id="recursoContaModal" tabindex="-1" aria-labelledby="recursoContaModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" id="formRecursoConta" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="recursoContaModalLabel">Recurso em conta</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-4 form-group">
+							    <label>Data liberação</label>
+							    <input type="text" name="data_liberacao_recurso" class="form-control form-control-sm date">
+							</div>
+							<div class="col-md-5 form-group">
+							    <label>Valor</label>
+							    <input type="text" name="valor_recurso" class="form-control form-control-sm money">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- Modal Concluir Convenio -->
+	<div class="modal fade" id="concluirConvenioModal" tabindex="-1" aria-labelledby="concluirConvenioModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" id="formConcluirConvenio" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="concluirConvenioModalLabel">Concluir Convênio</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-4 form-group">
+							    <label>Data conclusão</label>
+							    <input type="text" name="data_conclusao" class="form-control form-control-sm date">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- Modal Concluir Prestação de Contas -->
+	<div class="modal fade" id="concluirPrestacaoContasModal" tabindex="-1" aria-labelledby="concluirPrestacaoContasModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" id="formConcluirPrestacaoContas" autocomplete="off">
+				{% csrf_token %}
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="concluirPrestacaoContasModalLabel">Concluir Prestação de Contas</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-4 form-group">
+							    <label>Data prestação</label>
+							    <input type="text" name="data_prestacao_contas" class="form-control form-control-sm date">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
 					</div>
 				</div>
 			</form>
