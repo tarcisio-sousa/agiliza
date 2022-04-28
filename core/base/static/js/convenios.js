@@ -1,5 +1,5 @@
-const url_base = ''
-// const url_base = '/agiliza'
+// const url_base = ''
+const url_base = '/agiliza'
 const url_projeto = 'projeto'
 const url_convenio_aprovar_projeto = `convenio/aprovar/projeto`
 const url_convenio_licitar_projeto = `convenio/licitar/projeto`
