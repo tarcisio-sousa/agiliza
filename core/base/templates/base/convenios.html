@@ -103,10 +103,7 @@
 										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarProjetoModal" data-id="{{ convenio.id }}" onclick="aprovar_projeto_convenio(this)">Aprovar projeto</a></li>
 										{% endif %}
 										{% if convenio.situacao == 'projeto-aprovado' %}
-										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#licitarProjetoModal" data-id="{{ convenio.id }}" onclick="licitar_projeto_convenio(this)">Licitar projeto</a></li>
-										{% endif %}
-										{% if convenio.situacao == 'aguardando-licitacao' %}
-										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#analisarLicitacaoModal" data-id="{{ convenio.id }}" onclick="analisar_licitacao_convenio(this)">Analisar licitação</a></li>
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#licitarProjetoModal" data-id="{{ convenio.id }}" onclick="licitar_projeto_convenio(this)">Projeto licitado</a></li>
 										{% endif %}
 										{% if convenio.situacao == 'aguardando-aceite-licitacao' %}
 										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarLicitacaoModal" data-id="{{ convenio.id }}" onclick="aprovar_licitacao_convenio(this)">Aprovar licitação</a></li>

@@ -24,10 +24,6 @@ urlpatterns = [
         name='convenio_projeto_controle'),
     path('convenio/aprovar/projeto/<int:id>/', views.convenio_aprovar_projeto, name='convenio_aprovar_projeto'),
     path('convenio/licitar/projeto/<int:id>/', views.convenio_licitar_projeto, name='convenio_licitar_projeto'),
-    path(
-        'convenio/analisar/licitacao/<int:id>/',
-        views.convenio_analisar_licitacao,
-        name='convenio_analisar_licitacao'),
     path('convenio/aprovar/licitacao/<int:id>/', views.convenio_aprovar_licitacao, name='convenio_aprovar_licitacao'),
     path('convenio/recurso/em/conta/<int:id>/', views.convenio_recurso_conta, name='convenio_recurso_conta'),
     path('convenio/concluir/<int:id>/', views.convenio_concluir, name='convenio_concluir'),
