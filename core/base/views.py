@@ -345,36 +345,13 @@ def convenio_licitar_projeto(request, id):
         dados = request.POST
         convenio = Convenio.objects.get(id=id)
         convenio.data_licitacao_projeto = datetime.strptime(dados['data_licitacao_projeto'], '%d/%m/%Y')
-        convenio.situacao = 'aguardando-licitacao'
+        convenio.situacao = 'aguardando-aceite-licitacao'
         convenio.save()
         protocolos = Protocolo(
             convenio=convenio,
             data=convenio.data_licitacao_projeto,
             data_prevista=convenio.data_licitacao_projeto,
             data_protocolado=convenio.data_licitacao_projeto,
-            consideracoes=convenio.get_situacao_display())
-        protocolos.save()
-        situacao = convenio.get_situacao_display()
-        messages.add_message(
-            request,
-            messages.INFO,
-            f'Convênio {convenio.numero} {convenio.proposta.objeto} ({situacao})')
-        return redirect(reverse('convenios'))
-
-
-@login_required
-def convenio_analisar_licitacao(request, id):
-    if request.method == 'POST':
-        dados = request.POST
-        convenio = Convenio.objects.get(id=id)
-        convenio.data_analise_licitacao = datetime.strptime(dados['data_analise_licitacao'], '%d/%m/%Y')
-        convenio.situacao = 'aguardando-aceite-licitacao'
-        convenio.save()
-        protocolos = Protocolo(
-            convenio=convenio,
-            data=convenio.data_analise_licitacao,
-            data_prevista=convenio.data_analise_licitacao,
-            data_protocolado=convenio.data_analise_licitacao,
             consideracoes=convenio.get_situacao_display())
         protocolos.save()
         situacao = convenio.get_situacao_display()

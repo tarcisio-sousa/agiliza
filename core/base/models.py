@@ -144,8 +144,8 @@ class Convenio(models.Model):
 
     class SituacaoChoice(models.TextChoices):
         AGUARDANDO_APROVACAO_PROJETO = 'aguardando-aprovacao', _('Aguardando aprovação do projeto')
-        PROJETO_APROVADO = 'projeto-aprovado', _('Projeto aprovado')
-        AGUARDANDO_LICITACAO = 'aguardando-licitacao', _('Aguardando licitação')
+        PROJETO_APROVADO = 'projeto-aprovado', _('Projeto aprovado, aguardando licitação')
+        # AGUARDANDO_LICITACAO = 'aguardando-licitacao', _('Aguardando licitação')
         AGUARDANDO_ACEITE_LICITACAO = 'aguardando-aceite-licitacao', _('Aguardando aceite da licitação')
         LICITACAO_APROVADA = 'licitacao-aprovada', _('Licitação aprovada, aguardando recurso')
         RECURSO_EM_CONTA = 'recurso-em-conta', _('Recurso em conta, em execução')
