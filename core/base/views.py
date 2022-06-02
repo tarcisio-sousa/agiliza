@@ -22,7 +22,7 @@ def notification_scheduled_job():
         'Proposta Cadastrada',
         'Agiliza Convênios - Proposta cadastrada com sucesso',
         'sousa.tarcisio.s@gmail.com',
-        ['tarcisio.sales@bol.com.br', 'lucasdantas.eng@gmail.com'],
+        ['tarcisio.sales@bol.com.br',],
         fail_silently=False)
 
 
