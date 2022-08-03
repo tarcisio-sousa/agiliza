@@ -111,12 +111,8 @@
             "version": "==20.1.0"
         },
         "num2words": {
-            "hashes": [
-                "sha256:0b6e5f53f11d3005787e206d9c03382f459ef048a43c544e3db3b1e05a961548",
-                "sha256:37cd4f60678f7e1045cdc3adf6acf93c8b41bf732da860f97d301f04e611cc57"
-            ],
-            "index": "pypi",
-            "version": "==0.5.10"
+            "hashes": [],
+            "version": "==0.5.11"
         },
         "pillow": {
             "hashes": [
