@@ -123,34 +123,6 @@
 																		<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_repasse}}</div>
 																	</div>
 																</div>
-																{% comment %}
-																<div class="form-group row mb-0">
-																	<label for="valor_a_liberar" class="col-sm-8 col-form-label-sm font-weight-bold">À liberar</label>
-																	<div class="col-sm-4">
-																		<div class="form-control-sm form-control-plaintext text-right">{% load l10n %}{{ convenio.proposta.verifica_valor_liberar|floatformat:2|localize }}</div>
-																	</div>
-																</div>
-																{% if perms.base.add_convenio %}
-																<form method="post" class="form" autocomplete="off">
-																{% csrf_token %}
-																<div class="form-group row mb-2">
-																	<label for="valor_liberado" class="col-sm-8 col-form-label-sm font-weight-bold">Liberado</label>
-																	<div class="col-sm-4">
-																		<div class="form-control-sm form-control-plaintext text-right">
-																			<!-- R$ 0,00 -->
-																			<!-- <input type="text" class="form-control form-control-sm money" /> -->
-																			{{ proposta_form.valor_liberado }}
-																		</div>
-																	</div>
-																</div>
-																<div class="row">
-																	<div class="col-md-12 text-right">
-																		<button class="btn btn-sm btn-primary">Salvar  <i class="fas fa-paper-plane"></i></button>
-																	</div>
-																</div>
-																</form>
-																{% endif %}
-																{% endcomment %}
 															</div>
 														</div>
 													</div>
@@ -195,6 +167,7 @@
 																		</div>
 																	</div>
 																</div>
+																<a href="{% url 'protocolo_dados_bancarios_editar' convenio.id %}" class="btn btn-block"><i class="fas fa-pen"></i> Editar</a>
 																{% endif %}
 															</div>
 														</div>

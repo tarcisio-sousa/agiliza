@@ -128,6 +128,18 @@ class ProtocoloForm(ModelForm):
         self.fields['anexo'].widget.attrs.update({'class': 'form-control form-control-sm'})
 
 
+class ProtocoloDadosBancariosForm(ModelForm):
+    class Meta:
+        model = Convenio
+        fields = ['banco', 'agencia', 'conta', ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['banco'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['agencia'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['conta'].widget.attrs.update({'class': 'form-control form-control-sm'})
+
+
 class AtividadeForm(ModelForm):
     class Meta:
         model = Atividade
