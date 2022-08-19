@@ -11,6 +11,7 @@ from datetime import datetime
 from .forms import PropostaForm, PropostaArquivoExtratoForm, PropostaValorLiberado, ConvenioArquivoExtratoForm
 from .forms import ProjetoForm, OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
 from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm, ServicoForm, ProtocoloForm
+from .forms import ProtocoloDadosBancariosForm
 from .forms import ConvenioRecursoContaForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
@@ -891,6 +892,37 @@ def protocolos(request, convenio_id=False):
         })
 
 
+def protocolo_dados_bancarios(request, convenio_id):
+    convenio = Convenio.objects.get(id=convenio_id)
+    if convenio_id:
+        protocolo_dados_bancarios_form = ProtocoloDadosBancariosForm(instance=convenio)
+    if request.method == 'POST':
+        if convenio_id:
+            protocolo_dados_bancarios_form = ProtocoloDadosBancariosForm(request.POST, instance=convenio)
+
+        if protocolo_dados_bancarios_form.is_valid():
+            proposta = protocolo_dados_bancarios_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Dados bancários salvos com sucesso!')
+
+            # send_mail(
+            #     'Proposta Cadastrada',
+            #     'Agiliza Convênios > Proposta cadastrada com sucesso',
+            #     'sousa.tarcisio.s@gmail.com',
+            #     ['tarcisio.sales@bol.com.br', ],
+            #     fail_silently=False)
+
+            return redirect(reverse('protocolo', args=[convenio.id]))
+        else:
+            messages.add_message(request, messages.ERROR, 'Não foi possível salvar os dados bancários!')
+
+    return render(request, 'base/protocolo_dados_bancarios_editar.html', {
+        'convenio': convenio,
+        'protocolo_dados_bancarios_form': protocolo_dados_bancarios_form
+    })
+
+
+
+@login_required
 def protocolo_resolver(request, id):
     protocolo = Protocolo.objects.get(id=id)
     protocolo.situacao = 'resolvido'
@@ -927,6 +959,7 @@ def atividades(request, convenio_id=False):
         })
 
 
+@login_required
 def atividade_resolver(request, id):
     atividade = Atividade.objects.get(id=id)
     atividade.situacao = 'resolvido'
@@ -955,6 +988,7 @@ def licenciamentos_ambientais(request, convenio_id=False):
         })
 
 
+@login_required
 def licenciamento_resolver(request, id):
     licenciamento = LicenciamentoAmbiental.objects.get(id=id)
     licenciamento.situacao = 'resolvido'

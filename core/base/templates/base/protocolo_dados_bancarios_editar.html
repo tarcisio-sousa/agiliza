@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+{{ block.super }}
+{% endblock %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block title %}Dados Bancários{% endblock %}
+{% block body %}
+	{% block breadcrumbs %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
+		{% breadcrumb " Convênios " "convenios" %}
+		{% breadcrumb " Histórico " "protocolo" convenio.id %}
+		{% breadcrumb " Dados bancários " "protocolo_dados_bancarios_editar" convenio.id %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
+
+	<form method="post" class="form" autocomplete="off">
+		{% csrf_token %}
+		<br />
+		<div class="row">
+			<div class="col-md-7 form-group">
+				<label>Banco</label>
+				{{ protocolo_dados_bancarios_form.banco }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2 form-group">
+				<label>Agência</label>
+				{{ protocolo_dados_bancarios_form.agencia }}
+			</div>
+			<div class="col-md-2 form-group">
+				<label>Conta</label>
+				{{ protocolo_dados_bancarios_form.conta }}
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right">
+				<button class="btn btn-sm btn-primary px-3 py-1">Atualizar <i class="fas fa-paper-plane"></i></button>
+			</div>
+		</div>
+		<br>
+	</form>
+{% endblock %}
