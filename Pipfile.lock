@@ -41,12 +41,8 @@
             "version": "==0.5.0"
         },
         "django": {
-            "hashes": [
-                "sha256:115baf5049d5cf4163e43492cdc7139c306ed6d451e7d3571fe9612903903713",
-                "sha256:f71934b1a822f14a86c9ac9634053689279cd04ae69cb6ade4a59471b886582b"
-            ],
-            "index": "pypi",
-            "version": "==3.2.15"
+            "hashes": [],
+            "version": "==4.1"
         },
         "django-bootstrap-breadcrumbs": {
             "hashes": [
@@ -323,9 +319,7 @@
             "version": "==2.1.12"
         },
         "coverage": {
-            "extras": [
-
-            ],
+            "extras": [],
             "hashes": [
                 "sha256:01778769097dbd705a24e221f42be885c544bb91251747a8a3efdec6eb4788f2",
                 "sha256:08002f9251f51afdcc5e3adf5d5d66bb490ae893d9e21359b085f0e03390a820",
