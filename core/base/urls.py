@@ -64,7 +64,7 @@ urlpatterns = [
     path('protocolos/<int:convenio_id>/', views.protocolos, name='protocolos'),
     path('protocolo/resolver/<int:id>/', views.protocolo_resolver, name='protocolo_resolver'),
     path('protocolo/excluir/<int:id>/', views.protocolo_excluir, name='protocolo_excluir'),
-    path('protocolo/dados-bancarios/<int:convenio_id>/', views.protocolo_dados_bancarios, name='protocolo_dados_bancarios_editar'),
+    path('protocolo/dados-bancarios/<int:convenio_id>/', views.protocolo_dados_bancarios, name='protocolo_dados_bancarios'),
 
     path('atividades/<int:convenio_id>/', views.atividades, name='atividades'),
     path('atividade/resolver/<int:id>/', views.atividade_resolver, name='atividade_resolver'),

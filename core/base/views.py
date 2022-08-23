@@ -915,7 +915,7 @@ def protocolo_dados_bancarios(request, convenio_id):
         else:
             messages.add_message(request, messages.ERROR, 'Não foi possível salvar os dados bancários!')
 
-    return render(request, 'base/protocolo_dados_bancarios_editar.html', {
+    return render(request, 'base/protocolo_dados_bancarios.html', {
         'convenio': convenio,
         'protocolo_dados_bancarios_form': protocolo_dados_bancarios_form
     })
