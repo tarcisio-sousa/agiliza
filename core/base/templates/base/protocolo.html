@@ -167,7 +167,9 @@
 																		</div>
 																	</div>
 																</div>
-																<a href="{% url 'protocolo_dados_bancarios_editar' convenio.id %}" class="btn btn-block"><i class="fas fa-pen"></i> Editar</a>
+																<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" class="btn btn-block"><i class="fas fa-pen"></i> Editar</a>
+																{% else %}
+																<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" class="btn btn-block"><i class="fas fa-plus"></i> Adicionar</a>
 																{% endif %}
 															</div>
 														</div>
