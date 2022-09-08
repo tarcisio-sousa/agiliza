@@ -145,7 +145,6 @@ class Convenio(models.Model):
     class SituacaoChoice(models.TextChoices):
         AGUARDANDO_APROVACAO_PROJETO = 'aguardando-aprovacao', _('Aguardando aprovação do projeto')
         PROJETO_APROVADO = 'projeto-aprovado', _('Projeto aprovado, aguardando licitação')
-        # AGUARDANDO_LICITACAO = 'aguardando-licitacao', _('Aguardando licitação')
         AGUARDANDO_ACEITE_LICITACAO = 'aguardando-aceite-licitacao', _('Aguardando aceite da licitação')
         LICITACAO_APROVADA = 'licitacao-aprovada', _('Licitação aprovada, aguardando recurso')
         RECURSO_EM_CONTA = 'recurso-em-conta', _('Recurso em conta, em execução')
@@ -174,6 +173,14 @@ class Convenio(models.Model):
         _('Valor do recurso'), max_digits=19, default=Decimal('0.00'), decimal_places=2, blank=True, null=True)
     data_conclusao = models.DateField(_('Data Conclusão'), blank=True, null=True)
     data_prestacao_contas = models.DateField(_('Data Conclusão'), blank=True, null=True)
+
+    nome_empresa_contratada = models.CharField(_('Empresa contratada'), max_length=250, blank=True, null=True)
+    cnpj_empresa_contratada = models.CharField(_('CNPJ empresa contratada'), max_length=20, blank=True, null=True)
+    numero_contrato = models.CharField(_('Número contrato'), max_length=150, blank=True, null=True)
+    data_contrato = models.DateField(_('Data contrato'), max_length=150, blank=True, null=True)
+    vigencia_contrato = models.DateField(_('Vigência contrato'), max_length=150, blank=True, null=True)
+    valor_contrato = models.DecimalField(
+        _('Valor contrato'), max_digits=19, default=Decimal('0.00'), decimal_places=2, blank=True, null=True)
 
     situacao = models.CharField(
         max_length=50,
