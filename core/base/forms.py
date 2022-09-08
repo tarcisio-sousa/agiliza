@@ -72,6 +72,27 @@ class ConvenioArquivoExtratoForm(ModelForm):
         super().__init__(*args, **kwargs)
 
 
+class ConvenioAprovacaoLicitacaoForm(ModelForm):
+    class Meta:
+        model = Convenio
+        fields = [
+            'data_aceite_licitacao',
+            'nome_empresa_contratada',
+            'cnpj_empresa_contratada',
+            'numero_contrato',
+            'data_contrato',
+            'vigencia_contrato',
+            'valor_contrato']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.fields['data_liberacao_recurso'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+        self.fields['valor_contrato'].widget.attrs.update({
+            'class': 'form-control form-control-sm money'})
+        self.fields['valor_contrato'].localize = True
+        self.fields['valor_contrato'].widget.is_localized = True
+
+
 class ConvenioRecursoContaForm(ModelForm):
     class Meta:
         model = Convenio

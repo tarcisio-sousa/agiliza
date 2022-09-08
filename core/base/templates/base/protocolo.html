@@ -28,15 +28,22 @@
 	<div class="mb-3">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="accordion" id="accordionOne">
+				<div class="accordion" id="accordionDados">
 					<div class="card">
-						<div class="card-header p-0" id="headingOne">
+						<div class="card-header p-0" id="headingDados">
 							<h2 class="mb-0">
-								<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Dados </a>
+								<a class="btn btn-block text-left"
+									data-toggle="collapse" 
+									data-target="#collapseDados" 
+									aria-expanded="true" 
+									aria-controls="collapseDados"> Dados </a>
 							</h2>
 						</div>
 
-						<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionOne">
+						<div id="collapseDados" 
+							class="collapse show" 
+							aria-labelledby="headingDados" 
+							data-parent="#accordionDados">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-6">
@@ -95,15 +102,22 @@
 									<div class="col-md-6">
 										<div class="row">
 											<div class="col-md-12">
-												<div class="accordion mb-3" id="accordionOneOne">
+												<div class="accordion mb-3" id="accordionValores">
 													<div class="card">
-														<div class="card-header p-0" id="headingOneOne">
+														<div class="card-header p-0" id="headingValores">
 															<h2 class="mb-0">
-																<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseOneOne" aria-expanded="true" aria-controls="collapseOneOne"> Valores R$ </a>
+																<a class="btn btn-block text-left" 
+																	data-toggle="collapse" 
+																	data-target="#collapseValores" 
+																	aria-expanded="true" 
+																	aria-controls="collapseValores"> Valores R$ </a>
 															</h2>
 														</div>
 
-														<div id="collapseOneOne" class="collapse show" aria-labelledby="headingOneOne" data-parent="#accordionOneOne">
+														<div id="collapseValores" 
+															class="collapse show" 
+															aria-labelledby="headingValores" 
+															data-parent="#accordionValores">
 															<div class="card-body">
 																<div class="form-group row mb-0">
 																	<label for="valor_convenio" class="col-sm-4 col-form-label-sm font-weight-bold">Convênio</label>
@@ -132,15 +146,22 @@
 
 										<div class="row">
 											<div class="col-md-12">
-												<div class="accordion" id="accordionOneTwo">
+												<div class="accordion" id="accordionDadosBancarios">
 													<div class="card">
-														<div class="card-header p-0" id="headingOneTwo">
+														<div class="card-header p-0" id="headingDadosBancarios">
 															<h2 class="mb-0">
-																<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseOneTwo" aria-expanded="true" aria-controls="collapseOneTwo"> Dados bancários </a>
+																<a class="btn btn-block text-left" 
+																	data-toggle="collapse" 
+																	data-target="#collapseDadosBancarios" 
+																	aria-expanded="true" 
+																	aria-controls="collapseDadosBancarios"> Dados bancários </a>
 															</h2>
 														</div>
 
-														<div id="collapseOneTwo" class="collapse show" aria-labelledby="headingOneTwo" data-parent="#accordionOneTwo">
+														<div id="collapseDadosBancarios" 
+															class="collapse show" 
+															aria-labelledby="headingDadosBancarios" 
+															data-parent="#accordionDadosBancarios">
 															<div class="card-body">
 																{% if convenio.banco %}
 																<div class="row">
@@ -167,9 +188,15 @@
 																		</div>
 																	</div>
 																</div>
-																<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" class="btn btn-block"><i class="fas fa-pen"></i> Editar</a>
+																<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" 
+																	class="btn btn-block">
+																	<i class="fas fa-pen"></i> Editar
+																</a>
 																{% else %}
-																<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" class="btn btn-block"><i class="fas fa-plus"></i> Adicionar</a>
+																<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" 
+																	class="btn btn-block">
+																	<i class="fas fa-plus"></i> Adicionar
+																</a>
 																{% endif %}
 															</div>
 														</div>
@@ -187,81 +214,279 @@
 		</div>
 	</div>
 
-	<div class="mb-4" id="accordionTwo">
+	<div class="mb-3" class="accordion" id="accordionExecucaoOrcamentaria">
 		<div class="card">
-			<div class="card-header p-0" id="headingOne">
+			<div class="card-header p-0" id="headingExecucaoOrcamentaria">
 				<h2 class="mb-0">
-					<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree"> Histórico </a>
+					<a class="btn btn-block text-left" 
+						data-toggle="collapse" 
+						data-target="#collapseExecucaoOrcamentaria" 
+						aria-expanded="true" 
+						aria-controls="collapseExecucaoOrcamentaria"> Execução Orçamentária </a>
 				</h2>
 			</div>
 
-			<div id="collapseThree" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionTwo">
-				<div>
-					<div class="row">
-						<div class="col-md-12">
-							<table class="table table-bordered m-0 border-0">
-								<thead>
-									<tr>
-										{% if perms.base.add_convenio %}
-										<th width="1%" class="p-0 border-left-0">
-											<a class="nav-link link-agiliza active mb-1" href="{% url 'protocolos' convenio.id %}"> <i class="fas fa-plus"></i> </a>
-										</th>
-										{% else %}
-										<th width="1%"><i class="fas fa-asterisk"></i></th>
-										{% endif %}
-										<th width="1%">Data</th>
-										<th width="1%" style="white-space: nowrap;">Data prevista</th>
-										<th>Responsável</th>
-										<th>Considerações</th>
-										{# <th>Situação</th> #}
-										<th width="1%" class="border-right-0">Anexo</th>
-									</tr>
-								</thead>
-								{% if protocolos %}
-								<tbody>
-									{% for protocolo in protocolos %}
-									<tr>
-										<td class="text-center border-left-0">
-											<ul class="navbar-nav mr-auto">
-												<li class="nav-item dropdown text-center">
-													<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													{% if protocolo.situacao == 'resolvido' %}
-														<i class="fas fa-check"></i>
-													{% else %}
-														<i class="fas fa-bars"></i>
-													{% endif %}
-													</a>
-													<ul class="dropdown-menu">
-														{% if protocolo.situacao != 'resolvido' %}
-														<li>
-															<a href="{% url 'protocolo_resolver' protocolo.id %}" class="dropdown-item"> Resolver </a>
-														</li>
-														{% endif %}
-														<li>
-															<a href="javascript: void(0)" class="dropdown-item" data-href="{% url 'protocolo_excluir' protocolo.id %}" onclick="excluir_protocolo(this)"> Excluir </a>
-														</li>
-													</ul>
-												</li>
-											</ul>
-										</td>
-										<td>{{ protocolo.data_protocolado|date:'d/m/Y' }}</td>
-										<td>{{ protocolo.data_prevista|date:'d/m/Y' }}</td>
-										<td>{{ protocolo.get_responsavel_display|default:"-" }}</td>
-										<td>{{ protocolo.consideracoes }}</td>
-										{# <td>{{ protocolo.get_situacao_display }}</td> #}
-										<td class="text-center border-right-0">{% if protocolo.anexo %}<a href="/media/{{ protocolo.anexo }}"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
-									</tr>
-									{% endfor %}
-								</tbody>
-								{% else %}
-								<tfoot>
-									<tr>
-										<td colspan="7"><div class="alert alert-info mb-0">Nenhum protocolo cadastrado!</div></td>
-									</tr>
-								</tfoot>
-								{% endif %}
-							</table>
+			<div id="collapseExecucaoOrcamentaria" 
+				class="collapse show" 
+				aria-labelledby="headingExecucaoOrcamentaria" 
+				data-parent="#accordionExecucaoOrcamentaria">
+				<div class="row">
+					<div class="col-md-12" id="accordionEmpresaContratada">
+						<div class="card mx-3 mt-3 mb-3">
+							<div class="card-header p-0" id="headingEmpresaContratada">
+								<h2 class="mb-0">
+									<a class="btn btn-block text-left" 
+										data-toggle="collapse" 
+										data-target="#collapseEmpresaContratada" 
+										aria-expanded="true" 
+										aria-controls="collapseEmpresaContratada"> Empresa contratada </a>
+								</h2>
+							</div>
+
+							<div id="collapseEmpresaContratada" 
+								class="collapse show" 
+								aria-labelledby="headingEmpresaContratada" 
+								data-parent="#accordionEmpresaContratada">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group row mb-0">
+												{% if convenio.cnpj_empresa_contratada %}
+												<label for="numero" class="col-sm-1 col-form-label-sm font-weight-bold">CNPJ</label>
+												<div class="col-sm-2">
+													<div class="form-control-sm form-control-plaintext">{{convenio.cnpj_empresa_contratada}}</div>
+												</div>
+												{% endif %}
+												{% if convenio.nome_empresa_contratada %}
+												<label for="numero_proposta" class="col-sm-1 col-form-label-sm font-weight-bold">Nome</label>
+												<div class="col-sm-5">
+													<div class="form-control-sm form-control-plaintext">{{convenio.nome_empresa_contratada}}</div>
+												</div>
+												{% endif %}
+											</div>
+											<div class="form-group row mb-0">
+												{% if convenio.numero_contrato %}
+												<label for="numero_proposta" class="col-sm-1 col-form-label-sm font-weight-bold">Nº contrato</label>
+												<div class="col-sm-8">
+													<div class="form-control-sm form-control-plaintext">{{convenio.numero_contrato}}</div>
+												</div>
+												{% endif %}
+											</div>
+											<div class="form-group row mb-0">
+												{% if convenio.data_contrato %}
+												<label for="numero_proposta" class="col-sm-1 col-form-label-sm font-weight-bold">Data contrato</label>
+												<div class="col-sm-2">
+													<div class="form-control-sm form-control-plaintext">{{convenio.data_contrato|date:"d/m/Y"}}</div>
+												</div>
+												{% endif %}
+												{% if convenio.vigencia_contrato %}
+												<label for="numero_proposta" class="col-sm-1 col-form-label-sm font-weight-bold">Vigência</label>
+												<div class="col-sm-2">
+													<div class="form-control-sm form-control-plaintext">{{convenio.vigencia_contrato|date:"d/m/Y"}}</div>
+												</div>
+												{% endif %}
+												{% if convenio.valor_contrato %}
+												<label for="numero_proposta" class="col-sm-1 col-form-label-sm font-weight-bold">Valor</label>
+												<div class="col-sm-3">
+													<div class="form-control-sm form-control-plaintext">{{convenio.valor_contrato}}</div>
+												</div>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
+					</div>
+				</div>
+				<!--
+				<div class="row">
+					<div class="col-md-12" id="accordionExecucaoConvenente">
+						<div class="card mx-3 mt-3">
+							<div class="card-header p-0" id="headingExecucaoConvenente">
+								<h2 class="mb-0">
+									<a class="btn btn-block text-left" 
+										data-toggle="collapse" 
+										data-target="#collapseExecucaoConvenente" 
+										aria-expanded="true" 
+										aria-controls="collapseExecucaoConvenente"> Execução convenente </a>
+								</h2>
+							</div>
+
+							<div id="collapseExecucaoConvenente" 
+								class="collapse show" 
+								aria-labelledby="headingExecucaoConvenente" 
+								data-parent="#accordionExecucaoConvenente">
+								<div class="row">
+									<div class="col-md-12">
+										<table class="table table-bordered m-0 border-0">
+											<thead>
+												<tr>
+													<th width="1%" class="border-left-0">Parcela</th>
+													<th width="1%">Data</th>
+													<th>Número</th>
+													<th>Valor</th>
+													<th width="1%" class="border-right-0">Percentual</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="border-left-0">1ª</td>
+													<td>01/09/2022</td>
+													<td>02934</td>
+													<td class="text-right">R$ 10.000,00</td>
+													<td class="text-right border-right-0">30%</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12" id="accordionExecucaoConcedente">
+						<div class="card mx-3 mt-3 mb-4">
+							<div class="card-header p-0" id="headingExecucaoConcedente">
+								<h2 class="mb-0">
+									<a class="btn btn-block text-left" 
+										data-toggle="collapse" 
+										data-target="#collapseExecucaoConcedente" 
+										aria-expanded="true" 
+										aria-controls="collapseExecucaoConcedente"> Execução concedente </a>
+								</h2>
+							</div>
+
+							<div id="collapseExecucaoConcedente" 
+								class="collapse show" 
+								aria-labelledby="headingExecucaoConcedente" 
+								data-parent="#accordionExecucaoConcedente">
+								<div class="row">
+									<div class="col-md-12">
+										<table class="table table-bordered m-0 border-0">
+											<thead>
+												<tr>
+													<th width="1%" class="border-left-0">Parcela</th>
+													<th width="1%">Data</th>
+													<th>Valor</th>
+													<th width="1%" class="border-right-0">Percentual</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="border-left-0">1ª</td>
+													<td>01/09/2022</td>
+													<td class="text-right">R$ 10.000,00</td>
+													<td class="text-right border-right-0">30%</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				-->
+			</div>
+		</div>
+	</div>
+
+	<div class="mb-4" id="accordionHistorico">
+		<div class="card">
+			<div class="card-header p-0" id="headingHistorico">
+				<h2 class="mb-0">
+					<a class="btn btn-block text-left" 
+						data-toggle="collapse" 
+						data-target="#collapseHistorico" 
+						aria-expanded="true" 
+						aria-controls="collapseHistorico"> Histórico </a>
+				</h2>
+			</div>
+
+			<div id="collapseHistorico" 
+				class="collapse show" 
+				aria-labelledby="headingHistorico" 
+				data-parent="#accordionHistorico">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-bordered m-0 border-0">
+							<thead>
+								<tr>
+									{% if perms.base.add_convenio %}
+									<th width="1%" class="p-0 border-left-0">
+										<a class="nav-link link-agiliza active mb-1" 
+											href="{% url 'protocolos' convenio.id %}"> <i class="fas fa-plus"></i> </a>
+									</th>
+									{% else %}
+									<th width="1%"><i class="fas fa-asterisk"></i></th>
+									{% endif %}
+									<th width="1%">Data</th>
+									<th width="1%" style="white-space: nowrap;">Data prevista</th>
+									<th>Responsável</th>
+									<th>Considerações</th>
+									<th width="1%" class="border-right-0">Anexo</th>
+								</tr>
+							</thead>
+							{% if protocolos %}
+							<tbody>
+								{% for protocolo in protocolos %}
+								<tr>
+									<td class="text-center border-left-0">
+										<ul class="navbar-nav mr-auto">
+											<li class="nav-item dropdown text-center">
+												<a href="javascript: void(0)" 
+													class="nav-link link-agiliza dropdown-toggle p-0" 
+													role="button" 
+													data-toggle="dropdown" 
+													aria-haspopup="true" 
+													aria-expanded="false">
+												{% if protocolo.situacao == 'resolvido' %}
+													<i class="fas fa-check"></i>
+												{% else %}
+													<i class="fas fa-bars"></i>
+												{% endif %}
+												</a>
+												<ul class="dropdown-menu">
+													{% if protocolo.situacao != 'resolvido' %}
+													<li>
+														<a href="{% url 'protocolo_resolver' protocolo.id %}" 
+															class="dropdown-item"> Resolver </a>
+													</li>
+													{% endif %}
+													<li>
+														<a href="javascript: void(0)" 
+															class="dropdown-item" 
+															data-href="{% url 'protocolo_excluir' protocolo.id %}" 
+															onclick="excluir_protocolo(this)"> Excluir </a>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+									<td>{{ protocolo.data_protocolado|date:'d/m/Y' }}</td>
+									<td>{{ protocolo.data_prevista|date:'d/m/Y' }}</td>
+									<td>{{ protocolo.get_responsavel_display|default:"-" }}</td>
+									<td>{{ protocolo.consideracoes }}</td>
+									<td class="text-center border-right-0">
+									{% if protocolo.anexo %}
+										<a href="/media/{{ protocolo.anexo }}"><i class="fas fa-file-alt"></i></a>
+									{% endif %}
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+							{% else %}
+							<tfoot>
+								<tr>
+									<td colspan="7">
+										<div class="alert alert-info mb-0">Nenhum protocolo cadastrado!</div>
+									</td>
+								</tr>
+							</tfoot>
+							{% endif %}
+						</table>
 					</div>
 				</div>
 			</div>
