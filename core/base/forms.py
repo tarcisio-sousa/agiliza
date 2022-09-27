@@ -161,6 +161,32 @@ class ProtocoloDadosBancariosForm(ModelForm):
         self.fields['conta'].widget.attrs.update({'class': 'form-control form-control-sm'})
 
 
+class ProtocoloEmpresaContratadaForm(ModelForm):
+    class Meta:
+        model = Convenio
+        fields = [
+            'nome_empresa_contratada',
+            'cnpj_empresa_contratada',
+            'numero_contrato',
+            'data_contrato',
+            'vigencia_contrato',
+            'valor_contrato'
+        ]
+        widgets = {
+            'valor_contrato': forms.TextInput()}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nome_empresa_contratada'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['cnpj_empresa_contratada'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['numero_contrato'].widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.fields['data_contrato'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+        self.fields['vigencia_contrato'].widget.attrs.update({'class': 'form-control form-control-sm date'})
+        self.fields['valor_contrato'].widget.attrs.update({'class': 'form-control form-control-sm money'})
+        self.fields['valor_contrato'].localize = True
+        self.fields['valor_contrato'].widget.is_localized = True
+
+
 class AtividadeForm(ModelForm):
     class Meta:
         model = Atividade
