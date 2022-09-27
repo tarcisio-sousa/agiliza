@@ -8,13 +8,13 @@
 
 {% load django_bootstrap_breadcrumbs %}
 
-{% block title %}Dados Bancários{% endblock %}
+{% block title %}Empresa contratada{% endblock %}
 {% block body %}
 	{% block breadcrumbs %}
 		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
 		{% breadcrumb " Convênios " "convenios" %}
 		{% breadcrumb " Histórico " "protocolo" convenio.id %}
-		{% breadcrumb " Dados bancários " "protocolo_dados_bancarios_editar" convenio.id %}
+		{% breadcrumb " Empresa contratada " "protocolo_empresa_contratada" convenio.id %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 
@@ -22,19 +22,35 @@
 		{% csrf_token %}
 		<br />
 		<div class="row">
+			<div class="col-md-3 form-group">
+				<label>CNPJ</label>
+				{{ protocolo_empresa_contratada_form.cnpj_empresa_contratada }}
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-md-7 form-group">
-				<label>Banco</label>
-				{{ protocolo_dados_bancarios_form.banco }}
+				<label>Nome</label>
+				{{ protocolo_empresa_contratada_form.nome_empresa_contratada }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 form-group">
+				<label>Número contrato</label>
+				{{ protocolo_empresa_contratada_form.numero_contrato }}
+			</div>
+			<div class="col-md-2 form-group">
+				<label>Data contrato</label>
+				{{ protocolo_empresa_contratada_form.data_contrato }}
+			</div>
+			<div class="col-md-2 form-group">
+				<label>Vigênia contrato</label>
+				{{ protocolo_empresa_contratada_form.vigencia_contrato }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-2 form-group">
-				<label>Agência</label>
-				{{ protocolo_dados_bancarios_form.agencia }}
-			</div>
-			<div class="col-md-2 form-group">
-				<label>Conta</label>
-				{{ protocolo_dados_bancarios_form.conta }}
+				<label>Valor contrato</label>
+				{{ protocolo_empresa_contratada_form.valor_contrato }}
 			</div>
 		</div>
 		<hr>
