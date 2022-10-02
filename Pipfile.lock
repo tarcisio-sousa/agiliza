@@ -233,11 +233,8 @@
             "version": "==3.6"
         },
         "pytz": {
-            "hashes": [
-                "sha256:220f481bdafa09c3955dfbdddb7b57780e9a94f5127e35456a48589b9e0c0197",
-                "sha256:cea221417204f2d1a2aa03ddae3e867921971d0d76f14d87abb4414415bbdcf5"
-            ],
-            "version": "==2022.2.1"
+            "hashes": [],
+            "version": "==2022.4"
         },
         "sentry-sdk": {
             "hashes": [
@@ -323,9 +320,7 @@
             "version": "==2.1.12"
         },
         "coverage": {
-            "extras": [
-
-            ],
+            "extras": [],
             "hashes": [
                 "sha256:01778769097dbd705a24e221f42be885c544bb91251747a8a3efdec6eb4788f2",
                 "sha256:08002f9251f51afdcc5e3adf5d5d66bb490ae893d9e21359b085f0e03390a820",
