@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+{{ block.super }}
+{% endblock %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block title %}Execução convenente{% endblock %}
+{% block body %}
+	{% block breadcrumbs %}
+		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
+		{% breadcrumb " Convênios " "convenios" %}
+		{% breadcrumb " Histórico " "protocolo" convenio.id %}
+		{% breadcrumb " Execução convenente " "protocolo_execucao_concedente" convenio.id %}
+		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
+	{% endblock %}
+
+	<form method="post" class="form" autocomplete="off">
+		{% csrf_token %}
+		<br />
+		<div class="row">
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-2 form-group">
+						<label>Parcela</label>
+						{{ protocolo_execucao_concedente_form.parcela }}
+					</div>
+					<div class="col-md-3 form-group">
+						<label>Data liberação</label>
+						{{ protocolo_execucao_concedente_form.data_liberacao }}
+					</div>
+					<div class="col-md-3 form-group">
+						<label>Valor</label>
+						{{ protocolo_execucao_concedente_form.valor_pagamento }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 text-right">
+				<button class="btn btn-sm btn-primary px-3 py-1">Salvar <i class="fas fa-paper-plane"></i></button>
+			</div>
+		</div>
+		<br>
+	</form>
+{% endblock %}

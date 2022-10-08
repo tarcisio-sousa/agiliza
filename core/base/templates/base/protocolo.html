@@ -312,7 +312,6 @@
 						</div>
 					</div>
 				</div>
-				<!--
 				<div class="row">
 					<div class="col-md-12" id="accordionExecucaoConvenente">
 						<div class="card mx-3 mt-3">
@@ -335,21 +334,52 @@
 										<table class="table table-bordered m-0 border-0">
 											<thead>
 												<tr>
+													<th width="1%" class="p-0 border-left-0">
+														<a class="nav-link link-agiliza active mb-1" 
+															href="{% url 'protocolo_execucao_convenente' convenio.id %}"> <i class="fas fa-plus"></i> </a>
+													</th>
 													<th width="1%" class="border-left-0">Parcela</th>
 													<th width="1%">Data</th>
-													<th>Número</th>
 													<th>Valor</th>
 													<th width="1%" class="border-right-0">Percentual</th>
 												</tr>
 											</thead>
 											<tbody>
+												{% for execucao_convenente in execucoes_convenente %}
 												<tr>
-													<td class="border-left-0">1ª</td>
-													<td>01/09/2022</td>
-													<td>02934</td>
-													<td class="text-right">R$ 10.000,00</td>
-													<td class="text-right border-right-0">30%</td>
+													<td>
+														<ul class="navbar-nav mr-auto">
+															<li class="nav-item dropdown text-center">
+																<a href="javascript: void(0)" 
+																	class="nav-link link-agiliza dropdown-toggle p-0" 
+																	role="button" 
+																	data-toggle="dropdown" 
+																	aria-haspopup="true" 
+																	aria-expanded="false">
+																	<i class="fas fa-bars"></i>
+																</a>
+																<ul class="dropdown-menu">
+																	<li>
+																		<a href="{% url 'protocolo_execucao_convenente' convenio.id execucao_convenente.id %}" 
+																			class="dropdown-item" 
+																			onclick="editar_protocolo_execucao_convenente(this)"> Editar </a>
+																	</li>
+																	<li>
+																		<a href="javascript: void(0)" 
+																			class="dropdown-item" 
+																			data-href="{% url 'protocolo_execucao_convenente_excluir' execucao_convenente.id %}" 
+																			onclick="excluir_registro(this)"> Excluir </a>
+																	</li>
+																</ul>
+															</li>
+														</ul>
+													</td>
+													<td class="border-left-0">{{ execucao_convenente.parcela }}ª</td>
+													<td>{{ execucao_convenente.data_pagamento|date:'d/m/Y' }}</td>
+													<td class="text-right">{{ execucao_convenente.valor_pagamento }}</td>
+													<td class="text-right border-right-0">{{ execucao_convenente.percentual|floatformat:"2" }}%</td>
 												</tr>
+												{% endfor %}
 											</tbody>
 										</table>
 									</div>
@@ -380,6 +410,10 @@
 										<table class="table table-bordered m-0 border-0">
 											<thead>
 												<tr>
+													<th width="1%" class="p-0 border-left-0">
+														<a class="nav-link link-agiliza active mb-1" 
+															href="{% url 'protocolo_execucao_concedente' convenio.id %}"> <i class="fas fa-plus"></i> </a>
+													</th>
 													<th width="1%" class="border-left-0">Parcela</th>
 													<th width="1%">Data</th>
 													<th>Valor</th>
@@ -387,12 +421,41 @@
 												</tr>
 											</thead>
 											<tbody>
+												{% for execucao_concedente in execucoes_concedente %}
 												<tr>
-													<td class="border-left-0">1ª</td>
-													<td>01/09/2022</td>
-													<td class="text-right">R$ 10.000,00</td>
-													<td class="text-right border-right-0">30%</td>
+													<td>
+														<ul class="navbar-nav mr-auto">
+															<li class="nav-item dropdown text-center">
+																<a href="javascript: void(0)" 
+																	class="nav-link link-agiliza dropdown-toggle p-0" 
+																	role="button" 
+																	data-toggle="dropdown" 
+																	aria-haspopup="true" 
+																	aria-expanded="false">
+																	<i class="fas fa-bars"></i>
+																</a>
+																<ul class="dropdown-menu">
+																	<li>
+																		<a href="{% url 'protocolo_execucao_concedente' convenio.id execucao_concedente.id %}" 
+																			class="dropdown-item" 
+																			onclick="editar_protocolo_execucao_concedente(this)"> Editar </a>
+																	</li>
+																	<li>
+																		<a href="javascript: void(0)" 
+																			class="dropdown-item" 
+																			data-href="{% url 'protocolo_execucao_concedente_excluir' execucao_concedente.id %}" 
+																			onclick="excluir_registro(this)"> Excluir </a>
+																	</li>
+																</ul>
+															</li>
+														</ul>
+													</td>
+													<td class="border-left-0">{{ execucao_concedente.parcela }}ª</td>
+													<td>{{ execucao_concedente.data_liberacao|date:'d/m/Y' }}</td>
+													<td class="text-right">{{ execucao_concedente.valor_pagamento }}</td>
+													<td class="text-right border-right-0">{{ execucao_concedente.percentual|floatformat:"2" }}%</td>
 												</tr>
+												{% endfor %}
 											</tbody>
 										</table>
 									</div>
@@ -401,7 +464,6 @@
 						</div>
 					</div>
 				</div>
-				-->
 			</div>
 		</div>
 	</div>

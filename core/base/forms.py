@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from core.base.models import Proposta, Servico
 from core.base.models import Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Protocolo
 from core.base.models import Atividade, LicenciamentoAmbiental, ProjetoControle, ProjetoControleItem
+from core.base.models import ExecucaoConcedente, ExecucaoConvenente
 
 
 class PropostaForm(ModelForm):
@@ -86,7 +87,6 @@ class ConvenioAprovacaoLicitacaoForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.fields['data_liberacao_recurso'].widget.attrs.update({'class': 'form-control form-control-sm date'})
         self.fields['valor_contrato'].widget.attrs.update({
             'class': 'form-control form-control-sm money'})
         self.fields['valor_contrato'].localize = True
@@ -187,6 +187,54 @@ class ProtocoloEmpresaContratadaForm(ModelForm):
         self.fields['valor_contrato'].widget.is_localized = True
 
 
+class ProtocoloExecucaoConvenenteForm(ModelForm):
+    class Meta:
+        model = ExecucaoConvenente
+        exclude = ('convenio',)
+        widgets = {
+            'parcela': forms.TextInput(),
+            'valor_pagamento': forms.TextInput()
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['parcela'].widget.attrs.update({
+            'class': 'form-control form-control-sm'
+        })
+        self.fields['data_pagamento'].widget.attrs.update({
+            'class': 'form-control form-control-sm date'
+        })
+        self.fields['valor_pagamento'].widget.attrs.update({
+            'class': 'form-control form-control-sm money'
+        })
+        self.fields['valor_pagamento'].localize = True
+        self.fields['valor_pagamento'].widget.is_localized = True
+
+
+class ProtocoloExecucaoConcedenteForm(ModelForm):
+    class Meta:
+        model = ExecucaoConcedente
+        exclude = ('convenio',)
+        widgets = {
+            'parcela': forms.TextInput(),
+            'valor_pagamento': forms.TextInput()
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['parcela'].widget.attrs.update({
+            'class': 'form-control form-control-sm'
+        })
+        self.fields['data_liberacao'].widget.attrs.update({
+            'class': 'form-control form-control-sm date'
+        })
+        self.fields['valor_pagamento'].widget.attrs.update({
+            'class': 'form-control form-control-sm money'
+        })
+        self.fields['valor_pagamento'].localize = True
+        self.fields['valor_pagamento'].widget.is_localized = True
+
+
 class AtividadeForm(ModelForm):
     class Meta:
         model = Atividade
@@ -248,7 +296,6 @@ class ProjetoControleForm(ModelForm):
 class ProjetoControleItemForm(ModelForm):
     class Meta:
         model = ProjetoControleItem
-        # fields = '__all__'
         exclude = ('controle',)
 
     def __init__(self, *args, **kwargs):
@@ -266,7 +313,6 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         fields = '__all__'
-        # exclude = ('sort_order',)
 
     def __init__(self, projeto, *args, **kwargs):
         super().__init__(*args, **kwargs)

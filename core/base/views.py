@@ -12,10 +12,10 @@ from .forms import PropostaForm, PropostaArquivoExtratoForm, PropostaValorLibera
 from .forms import ProjetoForm, OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
 from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm, ServicoForm, ProtocoloForm
 from .forms import ProtocoloDadosBancariosForm, ProtocoloEmpresaContratadaForm, ConvenioAprovacaoLicitacaoForm
-from .forms import ConvenioRecursoContaForm
+from .forms import ConvenioRecursoContaForm, ProtocoloExecucaoConvenenteForm, ProtocoloExecucaoConcedenteForm
 from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
 from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
-from .models import TecnicoOrgao, Servico, Protocolo
+from .models import TecnicoOrgao, Servico, Protocolo, ExecucaoConvenente, ExecucaoConcedente
 
 
 def notification_scheduled_job():
@@ -851,14 +851,23 @@ def projeto_controle_item(request, controle_id=False):
 @login_required
 def protocolo(request, convenio_id=False):
     convenio = Convenio.objects.get(id=convenio_id)
+    execucoes_convenente = ExecucaoConvenente.objects.filter(convenio=convenio)
+    execucoes_concedente = ExecucaoConcedente.objects.filter(convenio=convenio)
     protocolos = Protocolo.objects.filter(convenio=convenio)
 
     proposta_form = PropostaValorLiberado(instance=convenio.proposta)
     if request.method == 'POST':
-        proposta_form = PropostaValorLiberado(request.POST, instance=convenio.proposta)
+        proposta_form = PropostaValorLiberado(
+            request.POST,
+            instance=convenio.proposta
+        )
         if proposta_form.is_valid():
             proposta = proposta_form.save()
-            messages.add_message(request, messages.SUCCESS, 'Valor liberado R$ %s' % localize(proposta.valor_liberado))
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Valor liberado R$ %s' % localize(proposta.valor_liberado)
+            )
             return redirect(reverse('protocolo', args=[convenio.id]))
 
     return render(
@@ -866,6 +875,8 @@ def protocolo(request, convenio_id=False):
         'base/protocolo.html',
         {
             'convenio': convenio,
+            'execucoes_convenente': execucoes_convenente,
+            'execucoes_concedente': execucoes_concedente,
             'protocolos': protocolos,
             'proposta_form': proposta_form,
         })
@@ -943,6 +954,116 @@ def protocolo_empresa_contratada(request, convenio_id):
         'convenio': convenio,
         'protocolo_empresa_contratada_form': protocolo_empresa_contratada_form
     })
+
+
+@login_required
+def protocolo_execucao_convenente(
+        request,
+        convenio_id,
+        execucao_convenente_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
+
+    protocolo_execucao_convenente_form = ProtocoloExecucaoConvenenteForm()
+    if execucao_convenente_id:
+        execucao_convenente = ExecucaoConvenente.objects.get(
+            id=execucao_convenente_id
+        )
+        protocolo_execucao_convenente_form = ProtocoloExecucaoConvenenteForm(
+            instance=execucao_convenente
+        )
+
+    if request.method == 'POST':
+        protocolo_execucao_convenente_form = ProtocoloExecucaoConvenenteForm(
+            request.POST
+        )
+        if execucao_convenente_id:
+            protocolo_execucao_convenente_form.instance = execucao_convenente
+
+        if protocolo_execucao_convenente_form.is_valid():
+            protocolo_execucao_convenente = protocolo_execucao_convenente_form.save(commit=False)
+            protocolo_execucao_convenente.convenio = convenio
+            protocolo_execucao_convenente.save()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Parcela cadastrada com sucesso!'
+            )
+
+            return redirect(reverse('protocolo', args=[convenio.id]))
+        else:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                'Não foi possível cadastrar a parcela!'
+            )
+
+    return render(request, 'base/protocolo_execucao_convenente.html', {
+        'convenio': convenio,
+        'protocolo_execucao_convenente_form': protocolo_execucao_convenente_form
+    })
+
+
+@login_required
+def protocolo_execucao_convenente_excluir(request, id):
+    execucao_convenente = ExecucaoConvenente.objects.get(id=id)
+    execucao_convenente.delete()
+    messages.add_message(request, messages.INFO, 'Pagamento excluído com sucesso!')
+    return redirect(reverse('protocolo', args=[execucao_convenente.convenio.id]))
+
+
+@login_required
+def protocolo_execucao_concedente(
+        request,
+        convenio_id,
+        execucao_concedente_id=False):
+    convenio = Convenio.objects.get(id=convenio_id)
+
+    protocolo_execucao_concedente_form = ProtocoloExecucaoConcedenteForm()
+    if execucao_concedente_id:
+        execucao_concedente = ExecucaoConcedente.objects.get(
+            id=execucao_concedente_id
+        )
+        protocolo_execucao_concedente_form = ProtocoloExecucaoConcedenteForm(
+            instance=execucao_concedente
+        )
+
+    if request.method == 'POST':
+        protocolo_execucao_concedente_form = ProtocoloExecucaoConcedenteForm(
+            request.POST
+        )
+        if execucao_concedente_id:
+            protocolo_execucao_concedente_form.instance = execucao_concedente
+
+        if protocolo_execucao_concedente_form.is_valid():
+            protocolo_execucao_concedente = protocolo_execucao_concedente_form.save(commit=False)
+            protocolo_execucao_concedente.convenio = convenio
+            protocolo_execucao_concedente.save()
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                'Parcela cadastrada com sucesso!'
+            )
+
+            return redirect(reverse('protocolo', args=[convenio.id]))
+        else:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                'Não foi possível cadastrar a parcela!'
+            )
+
+    return render(request, 'base/protocolo_execucao_concedente.html', {
+        'convenio': convenio,
+        'protocolo_execucao_concedente_form': protocolo_execucao_concedente_form
+    })
+
+
+@login_required
+def protocolo_execucao_concedente_excluir(request, id):
+    execucao_concedente = ExecucaoConcedente.objects.get(id=id)
+    execucao_concedente.delete()
+    messages.add_message(request, messages.INFO, 'Pagamento excluído com sucesso!')
+    return redirect(reverse('protocolo', args=[execucao_concedente.convenio.id]))
 
 
 @login_required

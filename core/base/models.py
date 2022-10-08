@@ -199,6 +199,68 @@ class Convenio(models.Model):
         return f'{self.proposta}'
 
 
+class ExecucaoConvenente(models.Model):
+    convenio = models.ForeignKey(
+        'Convenio',
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False
+    )
+    parcela = models.IntegerField(
+        _('Parcela'),
+        blank=False,
+        null=False
+    )
+    data_pagamento = models.DateField(
+        _('Data pagamento'),
+        blank=False,
+        null=False
+    )
+    valor_pagamento = models.DecimalField(
+        _('Valor pagamento'),
+        max_digits=19,
+        default=Decimal('0.00'),
+        decimal_places=2,
+        blank=False,
+        null=False
+    )
+
+    @property
+    def percentual(self):
+        return (self.valor_pagamento / self.convenio.valor_contrato) * 100
+
+
+class ExecucaoConcedente(models.Model):
+    convenio = models.ForeignKey(
+        'Convenio',
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False
+    )
+    parcela = models.IntegerField(
+        _('Parcela'),
+        blank=False,
+        null=False
+    )
+    data_liberacao = models.DateField(
+        _('Data liberação'),
+        blank=False,
+        null=False
+    )
+    valor_pagamento = models.DecimalField(
+        _('Valor pagamento'),
+        max_digits=19,
+        default=Decimal('0.00'),
+        decimal_places=2,
+        blank=False,
+        null=False
+    )
+
+    @property
+    def percentual(self):
+        return (self.valor_pagamento / self.convenio.proposta.valor_repasse) * 100
+
+
 class Servico(models.Model):
     prefeitura = models.ForeignKey('Prefeitura', on_delete=models.CASCADE, blank=True, null=True)
     objeto = models.CharField(max_length=150, blank=True, null=True)
