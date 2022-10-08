@@ -12,3 +12,15 @@ let excluir_protocolo = (item) => {
         function() { console.log('Não foi possível excluir o registro') })
         .set('labels', {ok: 'Sim, tenho certeza', cancel: 'Não'})
 }
+
+let excluir_registro = (item) => {
+    alertify.confirm(
+        'Tem certeza que deseja remover este registro?',
+        'Não será possível recuperar as informações deste registro',
+        function() {
+            console.log('Registro excluído com sucesso')
+            window.location.href = item.dataset.href
+        },
+        function() { console.log('Não foi possível excluir o registro') })
+        .set('labels', {ok: 'Sim, tenho certeza', cancel: 'Não'})
+}

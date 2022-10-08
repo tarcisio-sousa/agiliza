@@ -122,6 +122,34 @@ urlpatterns = [
         views.protocolo_empresa_contratada,
         name='protocolo_empresa_contratada'),
 
+    path(
+        'protocolo/execucao-convenente/<int:convenio_id>/',
+        views.protocolo_execucao_convenente,
+        name='protocolo_execucao_convenente'),
+    path(
+        'protocolo/execucao-convenente/<int:convenio_id>/<int:execucao_convenente_id>/',
+        views.protocolo_execucao_convenente,
+        name='protocolo_execucao_convenente'),
+    path(
+        'protocolo/execucao-convenente/excluir/<int:id>/',
+        views.protocolo_execucao_convenente_excluir,
+        name='protocolo_execucao_convenente_excluir'
+    ),
+
+    path(
+        'protocolo/execucao-concedente/<int:convenio_id>/',
+        views.protocolo_execucao_concedente,
+        name='protocolo_execucao_concedente'),
+    path(
+        'protocolo/execucao-concedente/<int:convenio_id>/<int:execucao_concedente_id>/',
+        views.protocolo_execucao_concedente,
+        name='protocolo_execucao_concedente'),
+    path(
+        'protocolo/execucao-concedente/excluir/<int:id>/',
+        views.protocolo_execucao_concedente_excluir,
+        name='protocolo_execucao_concedente_excluir'
+    ),
+
     path('atividades/<int:convenio_id>/', views.atividades, name='atividades'),
     path(
         'atividade/resolver/<int:id>/',
