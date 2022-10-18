@@ -1,0 +1,15 @@
+django==3.2.15
+gunicorn==20.1.0
+python-decouple==3.6
+whitenoise==5.3.0
+dj-database-url==1.0.0
+psycopg2-binary==2.9.4
+pillow==9.2.0
+django-ordered-model==3.6
+django-bootstrap-breadcrumbs==0.9.2
+django-crontab==0.7.1
+djangorestframework==3.14.0
+django-wkhtmltopdf==3.4.0
+num2words==0.5.12
+django-filter==22.1
+sentry-sdk==1.5.6
