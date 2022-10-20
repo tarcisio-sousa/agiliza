@@ -10,7 +10,7 @@ pytest-cov = "*"
 codecov = "*"
 
 [packages]
-django = "==3.2.15"
+django = "==3.2.16"
 gunicorn = "*"
 python-decouple = "*"
 whitenoise = "==5.3.0"
