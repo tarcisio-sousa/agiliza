@@ -19,159 +19,198 @@
 	{% endblock %}
 	{% block search %}
 	<div class="mb-2"> 
-		<div class="row">
-			<div class="col-md-12"> 
-				<div>
-					<div class="row">
-						<div class="col-md-6 text-right">
-							<form action="{% url 'convenios' %}" method="get" autocomplete="off"> 
-								<div class="input-group input-group-sm"> 
-							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
-									<div class="input-group-append"> 
-								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i> Buscar</button>
-									</div>
-								</div>
-							</form>
-						</div>
-						<div class="col-md-6 text-right">
-							<a href="{% url 'relatorio-convenios' %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
-						</div>
+		<div class="row  row-btns">
+			
+			<form action="{% url 'convenios' %}" method="get" autocomplete="off" class="btngroup1"> 
+				<div class="input-group input-group-sm"> 
+					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
+					<div class="input-group-append"> 
+						<button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i> Buscar</button>
 					</div>
 				</div>
+			</form>
+			<div class="btngroup2">
+				{% if perms.base.add_convenio %}
+
+				{% endif %}
+				<a href="{% url 'relatorio-convenios' %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
+				
 			</div>
+					
 		</div>
 	</div>
 	{% endblock %}
 	<div class="row">
-		<div class="col-md-12">
-			{% if convenios %}
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th width="1%"><i class="fas fa-asterisk"></i></th>
-						<th>Prefeitura
-							<ul class="navbar-nav mr-auto d-inline-block float-right">
-								<li class="nav-item dropdown">
-									<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li>
-											<a class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}">
-												Todas
-												{% if not filter_prefeitura %}
-													<i class="fas fa-check"></i>
-												{% endif %}
-											</a>
-										</li>
-									{% for prefeitura in choices_prefeitura %}
-										<li>
-											<a class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}{% relative_url prefeitura.id 'prefeitura' %}">
-												{{ prefeitura.nome }}
-												{% if prefeitura.id == filter_prefeitura %}
-													<i class="fas fa-check"></i>
-												{% endif %}
-											</a>
-										</li>
-									{% endfor %}
-									</ul>
-								</li>
-					     	</ul>
-					     </th>
-						<th>Objeto</th>
-						<th>Número Convênio</th>
-						<th>Proposta</th>
-						<th>Situação</th>
-						<th width="1%">R$ Valor</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for convenio in convenios %}
-					<tr>
-						<td class="text-center">
-							<ul class="navbar-nav mr-auto">
-								<li class="nav-item dropdown text-center">
-									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
-									<ul class="dropdown-menu">
-										<li>
-											<a href="{% url 'protocolo' convenio.id %}" class="dropdown-item"> Histórico </a>
-										</li>
-										{% if perms.base.add_convenio %}
-										<li>
-											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> Elaboração de Projeto </a>
-										</li>
-										{% endif %}
-										{% if convenio.situacao == 'aguardando-aprovacao' %}
-										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarProjetoModal" data-id="{{ convenio.id }}" onclick="aprovar_projeto_convenio(this)">Aprovar projeto</a></li>
-										{% endif %}
-										{% if convenio.situacao == 'projeto-aprovado' %}
-										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#licitarProjetoModal" data-id="{{ convenio.id }}" onclick="licitar_projeto_convenio(this)">Projeto licitado</a></li>
-										{% endif %}
-										{% if convenio.situacao == 'aguardando-aceite-licitacao' %}
-										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarLicitacaoModal" data-id="{{ convenio.id }}" onclick="aprovar_licitacao_convenio(this)">Aprovar licitação</a></li>
-										{% endif %}
-										{% if convenio.situacao == 'licitacao-aprovada' %}
-										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#recursoContaModal" data-id="{{ convenio.id }}" onclick="recurso_em_conta_convenio(this)">Recurso em conta</a></li>
-										{% endif %}
-										{% if convenio.situacao == 'recurso-em-conta' %}
-										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirConvenioModal" data-id="{{ convenio.id }}" onclick="concluir_convenio(this)">Concluir convênio</a></li>
-										{% endif %}
-										{% if convenio.situacao == 'convenio-concluido' %}
-										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirPrestacaoContasModal" data-id="{{ convenio.id }}" onclick="concluir_prestacao_contas(this)">Concluir prestação de contas</a></li>
-										{% endif %}
-										{% if perms.auth.is_super %}
-										<li>
-											<a href="javascript: void(0)" class="dropdown-item" data-href="{% url 'convenio_excluir' convenio.id %}" onclick="excluir_convenio(this)"> Excluir</a>
-										</li>
-										{% endif %}
-									</ul>
-								</li>
-							</ul>
-						</td>
-						<td>{{ convenio.proposta.prefeitura }}</td>
-						<td>{{ convenio.proposta.objeto }}</td>
-						<td>{{ convenio.numero }}</td>
-						<td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td>
-						<td>{{ convenio.get_situacao_display }}</td>
-						<td class="text-right">{% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-
-			<div> 
-                <div class="float-right">
-                    <nav aria-label="Page navigation align-items-end">
-						<div class="pagination">
-						    <span class="step-links">
-						        {% if convenios.has_previous %}
-						            <a href="?page=1">
-			                            <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
-			                        </a>
-						            <a href="?page={{ convenios.previous_page_number }}">
-			                        	<span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
-			                        </a>
-						        {% endif %}
-
-						        <span class="current">
-						            Página {{ convenios.number }} de {{ convenios.paginator.num_pages }}.
-						        </span>
-
-						        {% if convenios.has_next %}
-						            <a href="?page={{ convenios.next_page_number }}">
-			                            <span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
-			                        </a>
-						            <a href="?page={{ convenios.paginator.num_pages }}">
-			                            <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
-			                        </a>
-						        {% endif %}
-						    </span>
+		{% if convenios %}
+		<div class="tableplus">
+			{% for convenio in convenios %}
+				<div class="tp-item">
+					<div class="divline"></div>
+					<div class="tp-prefeitura">
+						<div>
+							{{ convenio.proposta.prefeitura }}
 						</div>
-                    </nav>
-                </div>
-			</div>
-			{% else %}
-			<div class="alert alert-info mb-0">Nenhum convenio cadastrado!</div>
-			{% endif %}
+						<div>
+							<a href="{% url 'protocolo' convenio.id %}" class="#mgr5" target="_blank">
+								<i class="fas fa-history"></i>
+							</a>
+						</div>
+					</div>
+					<div class="tp-dados">
+						<div class="tp-dados-left">
+							{{ convenio.proposta.objeto }}
+						</div>
+						<div class="tp-dados-right">
+							R$ {% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}
+						</div>
+					</div>
+					<div class="tp-situacao">
+						<div>
+							{{ convenio.numero }}
+						</div>
+						{% if convenio.situacao == 'aguardando-aprovacao' %}
+							<div class="prop prop-{{ convenio.situacao }}">1º - Aguardando Aprovação</div>
+						{% elif convenio.situacao == 'projeto-aprovado' %}
+							<div class="prop prop-{{ convenio.situacao }}">2º - Projeto Aprovado</div>
+						{% elif convenio.situacao == 'aguardando-aceite-licitacao' %}
+							<div class="prop prop-{{ convenio.situacao }}">3º - Aguardando Licitação</div>
+						{% elif convenio.situacao == 'licitacao-aprovada' %}
+							<div class="prop prop-{{ convenio.situacao }}">4º - Licitação Aprovada</div>
+						{% elif convenio.situacao == 'recurso-em-conta' %}
+							<div class="prop prop-{{ convenio.situacao }}">5º - Recurso em Conta</div>
+						{% elif convenio.situacao == 'convenio-concluido' %}
+							<div class="prop prop-{{ convenio.situacao }}">6º - Convênio Concluído</div>
+						{% endif %}
+						
+					</div>
+				</div>
+			{% endfor %}
 		</div>
+		<table class="table table-bordered tableless">
+			<thead>
+				<tr>
+					<th width="1%"><i class="fas fa-asterisk"></i></th>
+					<th>Prefeitura
+						<ul class="navbar-nav mr-auto d-inline-block float-right">
+							<li class="nav-item dropdown">
+								<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li>
+										<a class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}">
+											Todas
+											{% if not filter_prefeitura %}
+												<i class="fas fa-check"></i>
+											{% endif %}
+										</a>
+									</li>
+								{% for prefeitura in choices_prefeitura %}
+									<li>
+										<a class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}{% relative_url prefeitura.id 'prefeitura' %}">
+											{{ prefeitura.nome }}
+											{% if prefeitura.id == filter_prefeitura %}
+												<i class="fas fa-check"></i>
+											{% endif %}
+										</a>
+									</li>
+								{% endfor %}
+								</ul>
+							</li>
+						</ul>
+						</th>
+					<th>Objeto</th>
+					<th>Número Convênio</th>
+					<th>Proposta</th>
+					<th>Situação</th>
+					<th width="1%">R$ Valor</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for convenio in convenios %}
+				<tr>
+					<td class="text-center">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item dropdown text-center">
+								<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{% url 'protocolo' convenio.id %}" class="dropdown-item"> Histórico </a>
+									</li>
+									{% if perms.base.add_convenio %}
+									<li>
+										<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> Elaboração de Projeto </a>
+									</li>
+									{% endif %}
+									{% if convenio.situacao == 'aguardando-aprovacao' %}
+									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarProjetoModal" data-id="{{ convenio.id }}" onclick="aprovar_projeto_convenio(this)">Aprovar projeto</a></li>
+									{% endif %}
+									{% if convenio.situacao == 'projeto-aprovado' %}
+									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#licitarProjetoModal" data-id="{{ convenio.id }}" onclick="licitar_projeto_convenio(this)">Projeto licitado</a></li>
+									{% endif %}
+									{% if convenio.situacao == 'aguardando-aceite-licitacao' %}
+									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarLicitacaoModal" data-id="{{ convenio.id }}" onclick="aprovar_licitacao_convenio(this)">Aprovar licitação</a></li>
+									{% endif %}
+									{% if convenio.situacao == 'licitacao-aprovada' %}
+									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#recursoContaModal" data-id="{{ convenio.id }}" onclick="recurso_em_conta_convenio(this)">Recurso em conta</a></li>
+									{% endif %}
+									{% if convenio.situacao == 'recurso-em-conta' %}
+									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirConvenioModal" data-id="{{ convenio.id }}" onclick="concluir_convenio(this)">Concluir convênio</a></li>
+									{% endif %}
+									{% if convenio.situacao == 'convenio-concluido' %}
+									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirPrestacaoContasModal" data-id="{{ convenio.id }}" onclick="concluir_prestacao_contas(this)">Concluir prestação de contas</a></li>
+									{% endif %}
+									{% if perms.auth.is_super %}
+									<li>
+										<a href="javascript: void(0)" class="dropdown-item" data-href="{% url 'convenio_excluir' convenio.id %}" onclick="excluir_convenio(this)"> Excluir</a>
+									</li>
+									{% endif %}
+								</ul>
+							</li>
+						</ul>
+					</td>
+					<td>{{ convenio.proposta.prefeitura }}</td>
+					<td>{{ convenio.proposta.objeto }}</td>
+					<td>{{ convenio.numero }}</td>
+					<td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td>
+					<td>{{ convenio.get_situacao_display }}</td>
+					<td class="text-right">{% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		 
+		<div class="paginacao">
+			<nav aria-label="Page navigation align-items-end">
+				<div class="pagination">
+					<span class="step-links">
+						{% if convenios.has_previous %}
+							<a href="?page=1">
+								<span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+							</a>
+							<a href="?page={{ convenios.previous_page_number }}">
+								<span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
+							</a>
+						{% endif %}
+
+						<span class="current">
+							Página {{ convenios.number }} de {{ convenios.paginator.num_pages }}.
+						</span>
+
+						{% if convenios.has_next %}
+							<a href="?page={{ convenios.next_page_number }}">
+								<span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
+							</a>
+							<a href="?page={{ convenios.paginator.num_pages }}">
+								<span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+							</a>
+						{% endif %}
+					</span>
+				</div>
+			</nav>
+		</div>
+		{% else %}
+		<div class="alert alert-info mb-0">Nenhum convenio cadastrado!</div>
+		{% endif %}
 	</div>
 
 	<!-- Modal Cadastrar Projeto -->
