@@ -19,35 +19,144 @@
 	{% endblock %}
 	{% block search %}
 	<div class="mb-2">
-		<div class="row">
-			<div class="col-md-12">
-				<div>
-					<div class="row">
-						<div class="col-md-6 text-right">
-							<form action="{% url 'propostas' %}" method="get" autocomplete="off">
-								<div class="input-group input-group-sm">
-							        <input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" />
-									<div class="input-group-append">
-								        <button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i> Buscar</button>
-									</div>
+		<div class="row row-btns">
+			
+			<form action="{% url 'propostas' %}" method="get" autocomplete="off" class="btngroup1">
+				<div class="input-group input-group-sm">
+					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" />
+					<div class="input-group-append">
+						<button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i> Buscar</button>
+					</div>
+				</div>
+			</form>
+			<div class="btngroup2">
+				{% if perms.base.add_proposta %}
+					<a href="{% url 'proposta' %}" class="btn btn-sm link-agiliza mgr5 office"><i class="fas fa-plus-circle"></i> Nova</a>
+					<a href="javascript: void(0)" data-toggle="modal" data-target="#fltr-prefeitura" class="btn btn-sm link-agiliza mgr5 mobile"><i class="fas fa-filter"></i> Prefeitura</a>
+					<!-- Modal -->
+					<div class="modal fade" id="fltr-prefeitura" tabindex="-1" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Prefeitura</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+										<span aria-hidden="true">&times;</span>
+									</button>
 								</div>
-							</form>
+								<div class="modal-body">
+									<div class="row">
+										<a class="mod-item {% if not filter_prefeitura %}disabled{% endif %}" href="{% url 'propostas' %}">
+											Todas
+											{% if not filter_prefeitura %}
+												<i class="fas fa-check"></i>
+											{% endif %}
+										</a>
+									</div>
+									{% for prefeitura in choices_prefeitura %}
+										<div class="row">
+											<a class="mod-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}">
+												{{ prefeitura.nome }}
+												{% if prefeitura.id == filter_prefeitura %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</div>
+									{% endfor %}
+								</div>
+								<!--
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
+								</div>
+								-->
+							</div>
 						</div>
-						<div class="col-md-6 text-right">
-							{% if perms.base.add_proposta %}
-							<a href="{% url 'proposta' %}" class="btn btn-sm link-agiliza"><i class="fas fa-plus-circle"></i> Nova</a>
-							{% endif %}
-							<a href="{% url 'relatorio-propostas' %}{% relative_url filter_situacao 'situacao' %}{% relative_url filter_prefeitura 'prefeitura' %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
+					</div>
+					<!-- Modal -->
+				{% endif %}				
+				<a href="javascript: void(0)" data-toggle="modal" data-target="#fltr-situacao" class="btn btn-sm link-agiliza mgr5 mobile"><i class="fas fa-filter"></i> Situação</a>
+				<!-- Modal -->
+				<div class="modal fade" id="fltr-situacao" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Situação</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="row">
+									<a class="mod-item {% if not filter_situacao %}disabled{% endif %}" href="{% url 'propostas' %}">
+										Todas
+										{% if not filter_situacao %}
+											<i class="fas fa-check"></i>
+										{% endif %}
+									</a>
+								</div>
+								{% for choice_situacao, situacao in choices_situacao %}
+									<div class="row">
+										<a class="mod-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" href="{% url 'propostas' %}{% relative_url choice_situacao 'situacao' %}">
+											{{ situacao }}
+											{% if choice_situacao == filter_situacao %}
+												<i class="fas fa-check"></i>
+											{% endif %}
+										</a>
+									</div>
+								{% endfor %}
+							</div>
+							<!--
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
+							</div>
+							-->
 						</div>
 					</div>
 				</div>
-			</div>
+				<!-- Modal -->
+				<a href="{% url 'relatorio-propostas' %}{% relative_url filter_situacao 'situacao' %}{% relative_url filter_prefeitura 'prefeitura' %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
+			</div>		
 		</div>
 	</div>
 	{% endblock %}
 	<div class="row">
-		<div class="col-md-12">
-			<table class="table table-bordered">
+			<div class="tableplus">
+				{% for proposta in propostas %}
+					<div class="tp-item">
+						<div class="divline"></div>
+						<div class="tp-prefeitura">
+							<div>
+								{% if perms.base.add_proposta %}
+									{{ proposta.prefeitura }}
+								{% endif %}
+							</div>
+							<div>
+								{% if proposta.extrato %}
+									<a href="/media/{{ proposta.extrato }}" target="_blank">
+										<i class="fas fa-file-alt"></i>
+									</a>
+								{% else %}
+										<i class="fas fa-file-alt"></i>
+								{% endif %}
+							</div>
+						</div>
+						<div class="tp-dados">
+							<div class="tp-dados-left">
+								{{ proposta.objeto }}
+							</div>
+							<div class="tp-dados-right">
+								R$ {% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}
+							</div>
+						</div>
+						<div class="tp-situacao">
+							<div>
+								{{ proposta.numero }}
+							</div>
+							<div class="prop prop-{{ proposta.situacao }}">{{ proposta.get_situacao_display }}</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<table class="table table-bordered tableless">
 				<thead>
 					<tr>
 						<!-- <th class="p-0" width="1%"> </th> -->
@@ -68,23 +177,23 @@
 												{% endif %}
 											</a>
 										</li>
-									{% for prefeitura in choices_prefeitura %}
-										<li>
-											<a class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}">
-												{{ prefeitura.nome }}
-												{% if prefeitura.id == filter_prefeitura %}
-													<i class="fas fa-check"></i>
-												{% endif %}
-											</a>
-										</li>
-									{% endfor %}
+										{% for prefeitura in choices_prefeitura %}
+											<li>
+												<a class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}">
+													{{ prefeitura.nome }}
+													{% if prefeitura.id == filter_prefeitura %}
+														<i class="fas fa-check"></i>
+													{% endif %}
+												</a>
+											</li>
+										{% endfor %}
 									</ul>
 								</li>
 					     	</ul>
 					    </th>
 					    {% endif %}
 						<th>Objeto</th>
-						<th>R$ Valor Convênio</th>
+						<th>R$ Valor</th>
 						<th>Data</th>
 						<th>
 							Situação
@@ -153,13 +262,13 @@
 							</ul>
 							{% endif %}
 						</td>
-						<td>{{ proposta.numero }}</td>
+						<td class="text-center">{{ proposta.numero }}</td>
 						{% if perms.base.add_proposta %}
 						<td>{{ proposta.prefeitura }}</td>
 						{% endif %}
 						<td>{{ proposta.objeto }}</td>
 						<td class="text-right">{% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</td>
-						<td>{{ proposta.data|date:"d/m/Y" }}</td>
+						<td class="text-center">{{ proposta.data|date:"d/m/Y" }}</td>
 						<td class="text-center">{{ proposta.get_situacao_display }}</td>
 						<td class="text-center">{% if proposta.extrato %}<a href="/media/{{ proposta.extrato }}" target="_blank"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
 					</tr>
@@ -167,41 +276,39 @@
 				</tbody>
 			</table>
 			{% if propostas %}
-			<div>
-                <div class="float-right">
-                    <nav aria-label="Page navigation align-items-end">
-						<div class="pagination">
-						    <span class="step-links">
-						        {% if propostas.has_previous %}
-						            <a href="?page=1">
-			                            <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
-			                        </a>
-						            <a href="?page={{ propostas.previous_page_number }}">
-			                        	<span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
-			                        </a>
-						        {% endif %}
+			
+			<div class="paginacao">
+				<nav aria-label="Page navigation align-items-end">
+					<div class="pagination">
+						<span class="step-links">
+							{% if propostas.has_previous %}
+								<a href="?page=1">
+									<span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+								</a>
+								<a href="?page={{ propostas.previous_page_number }}">
+									<span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
+								</a>
+							{% endif %}
 
-						        <span class="current">
-						            Página {{ propostas.number }} de {{ propostas.paginator.num_pages }}.
-						        </span>
+							<span class="current">
+								Página {{ propostas.number }} de {{ propostas.paginator.num_pages }}.
+							</span>
 
-						        {% if propostas.has_next %}
-						            <a href="?page={{ propostas.next_page_number }}">
-			                            <span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
-			                        </a>
-						            <a href="?page={{ propostas.paginator.num_pages }}">
-			                            <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
-			                        </a>
-						        {% endif %}
-						    </span>
-						</div>
-                    </nav>
-                </div>
+							{% if propostas.has_next %}
+								<a href="?page={{ propostas.next_page_number }}">
+									<span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
+								</a>
+								<a href="?page={{ propostas.paginator.num_pages }}">
+									<span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+								</a>
+							{% endif %}
+						</span>
+					</div>
+				</nav>
 			</div>
 			{% else %}
 				<div class="alert alert-info mb-0">Nenhuma proposta cadastrada!</div>
 			{% endif %}
-		</div>
 	</div>
 
 

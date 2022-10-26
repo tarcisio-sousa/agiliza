@@ -123,12 +123,12 @@ alertify.defaults.theme.input = "form-control";
 
 // JQuery
 $(function () {
-    $.datetimepicker.setLocale('pt-BR')
+    $.datetimepicker.setLocale('pt-BR');
     $('.date').datetimepicker({
         format: 'd/m/Y',
         timepicker: false,
         mask: true,
-    })
-    $('.money').maskMoney({thousands:'.', decimal:',', allowZero: true})
-})
+    });
+    $('.money').maskMoney({thousands:'.', decimal:',', allowZero: true});
+});
 
