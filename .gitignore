@@ -61,4 +61,4 @@ venv.bak/
 
 staticfiles/
 
-dbsqlite3
+db.sqlite3
