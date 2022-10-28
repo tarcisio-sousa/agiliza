@@ -10,7 +10,7 @@
 
 {% load django_bootstrap_breadcrumbs %}
 
-{% block title %}Convênios teste{% endblock %}
+{% block title %}Convênios{% endblock %}
 {% block body %}
 	{% block breadcrumbs %}
 		{% breadcrumb_safe "<i class='fas fa-home'></i>" "home" %}
@@ -31,7 +31,46 @@
 			</form>
 			<div class="btngroup2">
 				{% if perms.base.add_convenio %}
-
+					<a href="javascript: void(0)" data-toggle="modal" data-target="#fltr-prefeitura" class="btn btn-sm link-agiliza mgr5 mobile"><i class="fas fa-filter"></i> Prefeitura</a>
+					<!-- Modal -->
+					<div class="modal fade" id="fltr-prefeitura" tabindex="-1" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Prefeitura</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<a class="mod-item {% if not filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}">
+											Todas
+											{% if not filter_prefeitura %}
+												<i class="fas fa-check"></i>
+											{% endif %}
+										</a>
+									</div>
+									{% for prefeitura in choices_prefeitura %}
+										<div class="row">
+											<a class="mod-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}{% relative_url prefeitura.id 'prefeitura' %}">
+												{{ prefeitura.nome }}
+												{% if prefeitura.id == filter_prefeitura %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</div>
+									{% endfor %}
+								</div>
+								<!--
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary btn-sm"> Salvar <i class="fas fa-paper-plane"></i> </button>
+								</div>
+								-->
+							</div>
+						</div>
+					</div>
+					<!-- Modal -->
 				{% endif %}
 				<a href="{% url 'relatorio-convenios' %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
 				
@@ -45,13 +84,12 @@
 		<div class="tableplus">
 			{% for convenio in convenios %}
 				<div class="tp-item">
-					<div class="divline"></div>
 					<div class="tp-prefeitura">
 						<div>
 							{{ convenio.proposta.prefeitura }}
 						</div>
 						<div>
-							<a href="{% url 'protocolo' convenio.id %}" class="#mgr5" target="_blank">
+							<a href="{% url 'protocolo' convenio.id %}" class="medicon" target="_blank">
 								<i class="fas fa-history"></i>
 							</a>
 						</div>
@@ -68,20 +106,27 @@
 						<div>
 							{{ convenio.numero }}
 						</div>
+						<div class="sit-convenio">
 						{% if convenio.situacao == 'aguardando-aprovacao' %}
-							<div class="prop prop-{{ convenio.situacao }}">1º - Aguardando Aprovação</div>
+							<div class="conv">1º - Aguardando Aprovação</div>
+							<div class="conv conv-{{ convenio.situacao }}"></div>
 						{% elif convenio.situacao == 'projeto-aprovado' %}
-							<div class="prop prop-{{ convenio.situacao }}">2º - Projeto Aprovado</div>
+							<div class="conv">2º - Projeto Aprovado</div>
+							<div class="conv conv-{{ convenio.situacao }}"></div>
 						{% elif convenio.situacao == 'aguardando-aceite-licitacao' %}
-							<div class="prop prop-{{ convenio.situacao }}">3º - Aguardando Licitação</div>
+							<div class="conv">3º - Aguardando Licitação</div>
+							
 						{% elif convenio.situacao == 'licitacao-aprovada' %}
-							<div class="prop prop-{{ convenio.situacao }}">4º - Licitação Aprovada</div>
+							<div class="conv">4º - Licitação Aprovada</div>
+							
 						{% elif convenio.situacao == 'recurso-em-conta' %}
-							<div class="prop prop-{{ convenio.situacao }}">5º - Recurso em Conta</div>
+							<div class="conv">5º - Recurso em Conta</div>
+							<div class="conv conv-{{ convenio.situacao }}"></div>
 						{% elif convenio.situacao == 'convenio-concluido' %}
-							<div class="prop prop-{{ convenio.situacao }}">6º - Convênio Concluído</div>
+							<div class="conv">6º - Convênio Concluído</div>
+							<div class="conv conv-{{ convenio.situacao }}"></div>
 						{% endif %}
-						
+						</div>
 					</div>
 				</div>
 			{% endfor %}
@@ -116,7 +161,7 @@
 								</ul>
 							</li>
 						</ul>
-						</th>
+					</th>
 					<th>Objeto</th>
 					<th>Número Convênio</th>
 					<th>Proposta</th>
@@ -185,10 +230,10 @@
 					<span class="step-links">
 						{% if convenios.has_previous %}
 							<a href="?page=1">
-								<span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+								<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
 							</a>
 							<a href="?page={{ convenios.previous_page_number }}">
-								<span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
+								<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
 							</a>
 						{% endif %}
 
@@ -198,10 +243,10 @@
 
 						{% if convenios.has_next %}
 							<a href="?page={{ convenios.next_page_number }}">
-								<span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
+								<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
 							</a>
 							<a href="?page={{ convenios.paginator.num_pages }}">
-								<span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+								<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
 							</a>
 						{% endif %}
 					</span>
