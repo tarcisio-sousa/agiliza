@@ -122,9 +122,8 @@
 			<div class="tableplus">
 				{% for proposta in propostas %}
 					<div class="tp-item">
-						<div class="divline"></div>
 						<div class="tp-prefeitura">
-							<div>
+							<div class="bolds">
 								{% if perms.base.add_proposta %}
 									{{ proposta.prefeitura }}
 								{% endif %}
@@ -132,10 +131,10 @@
 							<div>
 								{% if proposta.extrato %}
 									<a href="/media/{{ proposta.extrato }}" target="_blank">
-										<i class="fas fa-file-alt"></i>
+										<i class="fas fa-file-alt medicon"></i>
 									</a>
 								{% else %}
-										<i class="fas fa-file-alt"></i>
+										<i class="fas fa-file-alt medicon"></i>
 								{% endif %}
 							</div>
 						</div>
@@ -144,11 +143,12 @@
 								{{ proposta.objeto }}
 							</div>
 							<div class="tp-dados-right">
-								R$ {% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}
+								<div>{{ proposta.data|date:"d/m/Y" }}</div>
+								<div>R$ {% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</div>
 							</div>
 						</div>
 						<div class="tp-situacao">
-							<div>
+							<div class="bolds">
 								{{ proposta.numero }}
 							</div>
 							<div class="prop prop-{{ proposta.situacao }}">{{ proposta.get_situacao_display }}</div>
@@ -283,10 +283,10 @@
 						<span class="step-links">
 							{% if propostas.has_previous %}
 								<a href="?page=1">
-									<span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+									<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
 								</a>
 								<a href="?page={{ propostas.previous_page_number }}">
-									<span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
+									<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
 								</a>
 							{% endif %}
 
@@ -296,10 +296,10 @@
 
 							{% if propostas.has_next %}
 								<a href="?page={{ propostas.next_page_number }}">
-									<span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
+									<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
 								</a>
 								<a href="?page={{ propostas.paginator.num_pages }}">
-									<span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+									<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
 								</a>
 							{% endif %}
 						</span>

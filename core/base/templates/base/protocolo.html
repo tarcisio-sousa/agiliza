@@ -25,184 +25,116 @@
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
 
-	<div class="mb-3">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="accordion" id="accordionDados">
-					<div class="card">
-						<div class="card-header p-0" id="headingDados">
-							<h2 class="mb-0">
-								<a class="btn btn-block text-left"
-									data-toggle="collapse" 
-									data-target="#collapseDados" 
-									aria-expanded="true" 
-									aria-controls="collapseDados"> Dados </a>
-							</h2>
-						</div>
+	
+	<div class="accordion mb-3" id="accordionDados">
+		<div class="card">
+			<div class="card-header p-0" id="headingDados">
+				<h2 class="mb-0">
+					<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseDados" aria-expanded="true" aria-controls="collapseDados"> Dados </a>
+				</h2>
+			</div>
 
-						<div id="collapseDados" 
-							class="collapse show" 
-							aria-labelledby="headingDados" 
-							data-parent="#accordionDados">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group row mb-0">
-											<label for="numero" class="col-sm-3 col-form-label-sm font-weight-bold">Nº Convênio</label>
-											<div class="col-sm-8">
-												<div class="form-control-sm form-control-plaintext">{{convenio.numero}}</div>
+			<div id="collapseDados" class="collapse show" aria-labelledby="headingDados" data-parent="#accordionDados">
+				<div class="card-body cbmain">
+					<div class="cbcolumn">
+						<div class="cbrow">
+							<div class="font-weight-bold mgr5">Nº Convênio:</div>
+							<div>{{convenio.numero}}</div>
+						</div>
+						<div class="cbrow">
+							<div class="font-weight-bold mgr5">Nº Proposta:</div>
+							<div>{{convenio.proposta.numero}}</div>
+						</div>
+						<div class="cbrow">
+							<div class="font-weight-bold mgr5">Órgão:</div>
+							<div>{{convenio.orgao}}</div>
+						</div>
+						<div class="cbrow">
+							<div class="font-weight-bold mgr5">Objeto:</div>
+							<div>{{convenio.proposta.objeto}}</div>
+						</div>
+						{% if convenio.data_suspensiva %}
+						<div class="cbrow">
+							<div class="font-weight-bold mgr5">Suspensiva:</div>
+							<div>{{convenio.data_suspensiva|date:"d/m/Y"}}</div>
+						</div>
+						{% endif %}
+						{% if convenio.data_vigencia %}
+						<div class="cbrow">
+							<div class="font-weight-bold mgr5">Vigência:</div>
+							<div>{{convenio.data_vigencia|date:"d/m/Y"}}</div>
+						</div>
+						{% endif %}
+						<div class="cbrow">
+							<div class="font-weight-bold mgr5">Técnico do órgão:</div>
+							<div>{{convenio.tecnico_orgao.nome}}</div>
+						</div>
+						<div class="cbrow">
+							<div class="font-weight-bold mgr5">Contato do técnico:</div>
+							<div>{{convenio.tecnico_orgao.telefone}}</div>
+						</div>
+					</div>
+					<div class="cbcolumn">
+						<div class="accordion mb-3" id="accordionValores">
+							<div class="card">
+								<div class="card-header p-0" id="headingValores">
+									<h2 class="mb-0">
+										<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseValores" aria-expanded="true" aria-controls="collapseValores">Valores R$</a>
+									</h2>
+								</div>
+		
+								<div id="collapseValores" class="collapse show" aria-labelledby="headingValores" data-parent="#accordionValores">
+									<div class="card-body cbsecond">
+										<div class="cbcolumn">
+											<div class="cbrow">
+												<div class="font-weight-bold mgr5">Convênio:</div>
+												<div>{{convenio.proposta.valor_convenio}}</div>
 											</div>
-										</div>
-										<div class="form-group row mb-0">
-											<label for="numero_proposta" class="col-sm-3 col-form-label-sm font-weight-bold">Nº Proposta</label>
-											<div class="col-sm-8">
-												<div class="form-control-sm form-control-plaintext">{{convenio.proposta.numero}}</div>
+											<div class="cbrow">
+												<div class="font-weight-bold mgr5">Contrapartida:</div>
+												<div>{{convenio.proposta.valor_contrapartida}}</div>
 											</div>
-										</div>
-										<div class="form-group row mb-0">
-											<label class="col-sm-3 col-form-label-sm font-weight-bold">Orgão</label>
-											<div class="col-sm-8">
-												<div class="form-control-sm form-control-plaintext">{{convenio.orgao}}</div>
-											</div>
-										</div>
-										<div class="form-group row mb-0">
-											<label class="col-sm-12 col-form-label-sm font-weight-bold">Objeto</label>
-											<div class="col-sm-8">
-												<div class="form-control-plaintext">{{convenio.proposta.objeto}}</div>
-											</div>
-										</div>
-										<div class="form-group row mb-0">
-											{% if convenio.data_suspensiva %}
-											<label class="col-sm-3 col-form-label-sm font-weight-bold">Suspensiva</label>
-											<div class="col-sm-3">
-												<div class="form-control-sm form-control-plaintext">{{convenio.data_suspensiva|date:"d/m/Y"}}</div>
-											</div>
-											{% endif %}
-											{% if convenio.data_vigencia %}
-											<label class="col-sm-3 col-form-label-sm font-weight-bold">Vigência</label>
-											<div class="col-sm-3">
-												<div class="form-control-sm form-control-plaintext">{{convenio.data_vigencia|date:"d/m/Y"}}</div>
-											</div>
-											{% endif %}
-										</div>
-										<div class="form-group row mb-3">
-											<label class="col-sm-12 col-form-label-sm font-weight-bold">Técnico do órgão</label>
-											<div class="col-sm-12 ml-2">
-												<div class="row">
-													<div class="col-sm-3">
-														<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.telefone}}</div>
-													</div>
-													<div class="col-sm-6">
-														<div class="form-control-sm form-control-plaintext">{{convenio.tecnico_orgao.nome}}</div>
-													</div>
-												</div>
+											<div class="cbrow">
+												<div class="font-weight-bold mgr5">Repasse:</div>
+												<div>{{convenio.proposta.valor_repasse}}</div>
 											</div>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-md-12">
-												<div class="accordion mb-3" id="accordionValores">
-													<div class="card">
-														<div class="card-header p-0" id="headingValores">
-															<h2 class="mb-0">
-																<a class="btn btn-block text-left" 
-																	data-toggle="collapse" 
-																	data-target="#collapseValores" 
-																	aria-expanded="true" 
-																	aria-controls="collapseValores"> Valores R$ </a>
-															</h2>
-														</div>
-
-														<div id="collapseValores" 
-															class="collapse show" 
-															aria-labelledby="headingValores" 
-															data-parent="#accordionValores">
-															<div class="card-body">
-																<div class="form-group row mb-0">
-																	<label for="valor_convenio" class="col-sm-4 col-form-label-sm font-weight-bold">Convênio</label>
-																	<div class="col-sm-8">
-																		<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_convenio}}</div>
-																	</div>
-																</div>
-																<div class="form-group row mb-0">
-																	<label for="valor_contrapartida" class="col-sm-4 col-form-label-sm font-weight-bold">Contrapartida</label>
-																	<div class="col-sm-8">
-																		<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_contrapartida}}</div>
-																	</div>
-																</div>
-																<div class="form-group row mb-0">
-																	<label for="valor_repasse" class="col-sm-4 col-form-label-sm font-weight-bold">Repasse</label>
-																	<div class="col-sm-8">
-																		<div class="form-control-sm form-control-plaintext text-right">{{convenio.proposta.valor_repasse}}</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
+								</div>
+							</div>
+						</div>
+						<div class="accordion mb-3" id="accordionDadosBancarios">
+							<div class="card">
+								<div class="card-header p-0" id="headingDadosBancarios">
+									<h2 class="mb-0">
+										<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseDadosBancarios" aria-expanded="true" aria-controls="collapseDadosBancarios">Dados Bancários</a>
+									</h2>
+								</div>
+		
+								<div id="collapseDadosBancarios" class="collapse show" aria-labelledby="headingDadosBancarios" data-parent="#accordionDadosBancarios">
+									<div class="card-body cbsecond">
+										<div class="cbcolumn">
+											{% if convenio.banco %}
+												<div class="cbrow">
+													<div class="font-weight-bold mgr5">Banco:</div>
+													<div>{% if convenio.banco %}{{convenio.banco}}{% endif %}</div>
 												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-12">
-												<div class="accordion" id="accordionDadosBancarios">
-													<div class="card">
-														<div class="card-header p-0" id="headingDadosBancarios">
-															<h2 class="mb-0">
-																<a class="btn btn-block text-left" 
-																	data-toggle="collapse" 
-																	data-target="#collapseDadosBancarios" 
-																	aria-expanded="true" 
-																	aria-controls="collapseDadosBancarios"> Dados bancários </a>
-															</h2>
-														</div>
-
-														<div id="collapseDadosBancarios" 
-															class="collapse show" 
-															aria-labelledby="headingDadosBancarios" 
-															data-parent="#accordionDadosBancarios">
-															<div class="card-body">
-																{% if convenio.banco %}
-																<div class="row">
-																	<label class="col-sm-3 col-form-label-sm font-weight-bold">Banco</label>
-																	<div class="col-sm-7">
-																		<div class="form-control-sm form-control-plaintext">
-																		{% if convenio.banco %}{{convenio.banco}}{% endif %}
-																		</div>
-																	</div>
-																</div>
-																<div class="row">
-																	<label class="col-sm-3 col-form-label-sm font-weight-bold">Agência</label>
-																	<div class="col-sm-7">
-																		<div class="form-control-sm form-control-plaintext">
-																		{% if convenio.agencia %}{{convenio.agencia}}{% endif %}
-																		</div>
-																	</div>
-																</div>
-																<div class="row">
-																	<label class="col-sm-3 col-form-label-sm font-weight-bold">Conta</label>
-																	<div class="col-sm-7">
-																		<div class="form-control-sm form-control-plaintext">
-																		{% if convenio.conta %}{{convenio.conta}}{% endif %}
-																		</div>
-																	</div>
-																</div>
-																<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" 
-																	class="btn btn-block">
-																	<i class="fas fa-pen"></i> Editar
-																</a>
-																{% else %}
-																<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" 
-																	class="btn btn-block">
-																	<i class="fas fa-plus"></i> Adicionar
-																</a>
-																{% endif %}
-															</div>
-														</div>
-													</div>
+												<div class="cbrow">
+													<div class="font-weight-bold mgr5">Agência:</div>
+													<div>{% if convenio.agencia %}{{convenio.agencia}}{% endif %}</div>
 												</div>
-											</div>
+												<div class="cbrow">
+													<div class="font-weight-bold mgr5">Conta:</div>
+													<div>{% if convenio.conta %}{{convenio.conta}}{% endif %}</div>
+												</div>
+												<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" class="btn btn-block">
+													<i class="fas fa-pen"> Editar</i>
+												</a>
+											{% else %}
+												<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" class="btn btn-block">
+													<i class="fas fa-plus"> Adicionar</i>
+												</a>
+											{% endif %}
 										</div>
 									</div>
 								</div>
@@ -214,251 +146,197 @@
 		</div>
 	</div>
 
-	<div class="mb-3" class="accordion" id="accordionExecucaoOrcamentaria">
+	<div class="accordion mb-3" id="accordionExecucaoOrcamentaria">
 		<div class="card">
 			<div class="card-header p-0" id="headingExecucaoOrcamentaria">
 				<h2 class="mb-0">
-					<a class="btn btn-block text-left" 
-						data-toggle="collapse" 
-						data-target="#collapseExecucaoOrcamentaria" 
-						aria-expanded="true" 
-						aria-controls="collapseExecucaoOrcamentaria"> Execução Orçamentária </a>
+					<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseExecucaoOrcamentaria" aria-expanded="true" aria-controls="collapseExecucaoOrcamentaria"> Execução Orçamentária </a>
 				</h2>
 			</div>
 
-			<div id="collapseExecucaoOrcamentaria" 
-				class="collapse show" 
-				aria-labelledby="headingExecucaoOrcamentaria" 
-				data-parent="#accordionExecucaoOrcamentaria">
-				<div class="row">
-					<div class="col-md-12" id="accordionEmpresaContratada">
-						<div class="card mx-3 mt-3 mb-3">
+			<div id="collapseExecucaoOrcamentaria" class="collapse show" aria-labelledby="headingExecucaoOrcamentaria" data-parent="#accordionExecucaoOrcamentaria">
+				<div class="card-body cbthird">
+					<div class="accordion mb-3" id="accordionEmpresaContratada">
+						<div class="card">
 							<div class="card-header p-0" id="headingEmpresaContratada">
 								<h2 class="mb-0">
-									<a class="btn btn-block text-left" 
-										data-toggle="collapse" 
-										data-target="#collapseEmpresaContratada" 
-										aria-expanded="true" 
-										aria-controls="collapseEmpresaContratada"> Empresa contratada </a>
+									<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseEmpresaContratada" aria-expanded="true" aria-controls="collapseEmpresaContratada"> Empresa Contratada </a>
 								</h2>
 							</div>
-
-							<div id="collapseEmpresaContratada" 
-								class="collapse show" 
-								aria-labelledby="headingEmpresaContratada" 
-								data-parent="#accordionEmpresaContratada">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-12">
+				
+							<div id="collapseEmpresaContratada" class="collapse show" aria-labelledby="headingEmpresaContratada" data-parent="#accordionEmpresaContratada">
+								<div class="card-body cbthird">
+									<div class="cbcolumn">
+										{% if convenio.cnpj_empresa_contratada %}
 											{% if convenio.cnpj_empresa_contratada %}
-											<div class="form-group row mb-0">
-												{% if convenio.cnpj_empresa_contratada %}
-												<label for="numero" class="col-sm-1 col-form-label-sm font-weight-bold">CNPJ</label>
-												<div class="col-sm-2">
-													<div class="form-control-sm form-control-plaintext">{{convenio.cnpj_empresa_contratada}}</div>
+												<div class="cbrow">
+													<div class="font-weight-bold mgr5">CNPJ:</div>
+													<div>{{convenio.cnpj_empresa_contratada}}</div>
 												</div>
-												{% endif %}
-												{% if convenio.nome_empresa_contratada %}
-												<label for="numero_proposta" class="col-sm-1 col-form-label-sm font-weight-bold">Nome</label>
-												<div class="col-sm-5">
-													<div class="form-control-sm form-control-plaintext">{{convenio.nome_empresa_contratada}}</div>
-												</div>
-												{% endif %}
-											</div>
-											<div class="form-group row mb-0">
-												{% if convenio.numero_contrato %}
-												<label for="numero_proposta" class="col-sm-2 col-form-label-sm font-weight-bold">Nº contrato</label>
-												<div class="col-sm-8">
-													<div class="form-control-sm form-control-plaintext">{{convenio.numero_contrato}}</div>
-												</div>
-												{% endif %}
-											</div>
-											<div class="form-group row mb-0">
-												{% if convenio.data_contrato %}
-												<label for="numero_proposta" class="col-sm-2 col-form-label-sm font-weight-bold">Data contrato</label>
-												<div class="col-sm-2">
-													<div class="form-control-sm form-control-plaintext">{{convenio.data_contrato|date:"d/m/Y"}}</div>
-												</div>
-												{% endif %}
-												{% if convenio.vigencia_contrato %}
-												<label for="numero_proposta" class="col-sm-2 col-form-label-sm font-weight-bold">Vigência</label>
-												<div class="col-sm-2">
-													<div class="form-control-sm form-control-plaintext">{{convenio.vigencia_contrato|date:"d/m/Y"}}</div>
-												</div>
-												{% endif %}
-											</div>
-											<div class="form-group row mb-0">
-												{% if convenio.valor_contrato %}
-												<label for="numero_proposta" class="col-sm-1 col-form-label-sm font-weight-bold">Valor</label>
-												<div class="col-sm-3">
-													<div class="form-control-sm form-control-plaintext">{{convenio.valor_contrato}}</div>
-												</div>
-												{% endif %}
-											</div>
-											<a href="{% url 'protocolo_empresa_contratada' convenio.id %}" 
-												class="btn btn-block">
-												<i class="fas fa-pen"></i> Editar
-											</a>
-											{% else %}
-											<a href="{% url 'protocolo_empresa_contratada' convenio.id %}" 
-												class="btn btn-block">
-												<i class="fas fa-plus"></i> Adicionar
-											</a>
 											{% endif %}
-										</div>
+											{% if convenio.nome_empresa_contratada %}
+												<div class="cbrow">
+													<div class="font-weight-bold mgr5">Nome:</div>
+													<div>{{convenio.nome_empresa_contratada}}</div>
+												</div>
+											{% endif %}
+											{% if convenio.numero_contrato %}
+												<div class="cbrow">
+													<div class="font-weight-bold mgr5">Nº Contrato:</div>
+													<div>{{convenio.numero_contrato}}</div>
+												</div>
+											{% endif %}
+											{% if convenio.data_contrato %}
+												<div class="cbrow">
+													<div class="font-weight-bold mgr5">Data Contrato:</div>
+													<div>{{convenio.data_contrato|date:"d/m/Y"}}</div>
+												</div>
+											{% endif %}
+											{% if convenio.vigencia_contrato %}
+												<div class="cbrow">
+													<div class="font-weight-bold mgr5">Vigência:</div>
+													<div>{{convenio.vigencia_contrato|date:"d/m/Y"}}</div>
+												</div>
+											{% endif %}
+											{% if convenio.valor_contrato %}
+												<div class="cbrow">
+													<div class="font-weight-bold mgr5">Valor R$:</div>
+													<div>{{convenio.valor_contrato}}</div>
+												</div>
+											{% endif %}
+
+											<a href="{% url 'protocolo_empresa_contratada' convenio.id %}" class="btn btn-block">
+												<i class="fas fa-pen"> Editar</i>
+											</a>
+										{% else %}
+											<a href="{% url 'protocolo_empresa_contratada' convenio.id %}" class="btn btn-block">
+												<i class="fas fa-plus"> Adicionar</i>
+											</a>
+										{% endif %}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12" id="accordionExecucaoConvenente">
-						<div class="card mx-3 mt-3">
+
+					<div class="accordion mb-3" id="accordionExecucaoConvenente">
+						<div class="card">
 							<div class="card-header p-0" id="headingExecucaoConvenente">
 								<h2 class="mb-0">
-									<a class="btn btn-block text-left" 
-										data-toggle="collapse" 
-										data-target="#collapseExecucaoConvenente" 
-										aria-expanded="true" 
-										aria-controls="collapseExecucaoConvenente"> Execução convenente </a>
+									<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseExecucaoConvenente" aria-expanded="true" aria-controls="collapseExecucaoConvenente"> Execução Convenente </a>
 								</h2>
 							</div>
-
-							<div id="collapseExecucaoConvenente" 
-								class="collapse show" 
-								aria-labelledby="headingExecucaoConvenente" 
-								data-parent="#accordionExecucaoConvenente">
-								<div class="row">
-									<div class="col-md-12">
-										<table class="table table-bordered m-0 border-0">
-											<thead>
-												<tr>
-													<th width="1%" class="p-0 border-left-0">
-														<a class="nav-link link-agiliza active mb-1" 
-															href="{% url 'protocolo_execucao_convenente' convenio.id %}"> <i class="fas fa-plus"></i> </a>
-													</th>
-													<th width="1%" class="border-left-0">Parcela</th>
-													<th width="1%">Data</th>
-													<th>Valor</th>
-													<th width="1%" class="border-right-0">Percentual</th>
-												</tr>
-											</thead>
-											<tbody>
-												{% for execucao_convenente in execucoes_convenente %}
-												<tr>
-													<td>
-														<ul class="navbar-nav mr-auto">
-															<li class="nav-item dropdown text-center">
-																<a href="javascript: void(0)" 
-																	class="nav-link link-agiliza dropdown-toggle p-0" 
-																	role="button" 
-																	data-toggle="dropdown" 
-																	aria-haspopup="true" 
-																	aria-expanded="false">
-																	<i class="fas fa-bars"></i>
-																</a>
-																<ul class="dropdown-menu">
-																	<li>
-																		<a href="{% url 'protocolo_execucao_convenente' convenio.id execucao_convenente.id %}" 
-																			class="dropdown-item" 
-																			onclick="editar_protocolo_execucao_convenente(this)"> Editar </a>
-																	</li>
-																	<li>
-																		<a href="javascript: void(0)" 
-																			class="dropdown-item" 
-																			data-href="{% url 'protocolo_execucao_convenente_excluir' execucao_convenente.id %}" 
-																			onclick="excluir_registro(this)"> Excluir </a>
-																	</li>
-																</ul>
-															</li>
-														</ul>
-													</td>
-													<td class="border-left-0">{{ execucao_convenente.parcela }}ª</td>
-													<td>{{ execucao_convenente.data_pagamento|date:'d/m/Y' }}</td>
-													<td class="text-right">{{ execucao_convenente.valor_pagamento }}</td>
-													<td class="text-right border-right-0">{{ execucao_convenente.percentual|floatformat:"2" }}%</td>
-												</tr>
-												{% endfor %}
-											</tbody>
-										</table>
+				
+							<div id="collapseExecucaoConvenente" class="collapse show" aria-labelledby="headingExecucaoConvenente" data-parent="#accordionExecucaoConvenente">
+								<div class="cbcolumn p-0">
+									<div class="cbrow p-0">
+										<div class="tb-head tb-10">
+											<a title="Adicionar" class="nav-link link-agiliza active" href="{% url 'protocolo_execucao_convenente' convenio.id %}">
+												<i class="fas fa-plus"></i>
+											</a>
+										</div>
+										<div class="tb-head tb-20">Parcela</div>
+										<div class="tb-head tb-23">Data</div>
+										<div class="tb-head tb-27">Valor R$</div>
+										<div class="tb-head tb-20">%</div>
 									</div>
+									{% for execucao_convenente in execucoes_convenente %}
+										<div class="cbrow p-0">
+											<div class="tb-row tb-10">
+												
+												<a href="javascript: void(0)" data-toggle="modal" data-target="#conv{{ execucao_convenente.id }}"><i class="fas fa-bars"></i></a>
+												<!-- Modal -->
+												<div class="modal fade" id="conv{{ execucao_convenente.id }}" tabindex="-1" aria-hidden="true">
+													<div class="modal-dialog modal-dialog-centered">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title">Convenente - {{ execucao_convenente.parcela }}ª Parcela</h5>
+																<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="modal-body">
+																<div class="row">
+																	{% if perms.base.add_convenio %}
+																		<a class="mod-item" href="{% url 'protocolo_execucao_convenente' convenio.id execucao_convenente.id %}" onclick="editar_protocolo_execucao_convenente(this)">Editar</a>
+																		<a class="mod-item" href="javascript: void(0)" data-href="{% url 'protocolo_execucao_convenente_excluir' execucao_convenente.id %}" onclick="excluir_registro(this)">Excluir</a>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- Modal -->
+
+
+											</div>
+											<div class="tb-row tb-20">{{ execucao_convenente.parcela }}ª</div>
+											<div class="tb-row tb-23">{{ execucao_convenente.data_pagamento|date:'d/m/Y' }}</div>
+											<div class="tb-row tb-27">{{ execucao_convenente.valor_pagamento }}</div>
+											<div class="tb-row tb-20">{{ execucao_convenente.percentual|floatformat:"2" }}</div>
+										</div>
+									{% endfor %}
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12" id="accordionExecucaoConcedente">
-						<div class="card mx-3 mt-3 mb-4">
+					
+					<div class="accordion mb-3" id="accordionExecucaoConcedente">
+						<div class="card">
 							<div class="card-header p-0" id="headingExecucaoConcedente">
 								<h2 class="mb-0">
-									<a class="btn btn-block text-left" 
-										data-toggle="collapse" 
-										data-target="#collapseExecucaoConcedente" 
-										aria-expanded="true" 
-										aria-controls="collapseExecucaoConcedente"> Execução concedente </a>
+									<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseExecucaoConcedente" aria-expanded="true" aria-controls="collapseExecucaoConcedente"> Execução Concedente </a>
 								</h2>
 							</div>
-
-							<div id="collapseExecucaoConcedente" 
-								class="collapse show" 
-								aria-labelledby="headingExecucaoConcedente" 
-								data-parent="#accordionExecucaoConcedente">
-								<div class="row">
-									<div class="col-md-12">
-										<table class="table table-bordered m-0 border-0">
-											<thead>
-												<tr>
-													<th width="1%" class="p-0 border-left-0">
-														<a class="nav-link link-agiliza active mb-1" 
-															href="{% url 'protocolo_execucao_concedente' convenio.id %}"> <i class="fas fa-plus"></i> </a>
-													</th>
-													<th width="1%" class="border-left-0">Parcela</th>
-													<th width="1%">Data</th>
-													<th>Valor</th>
-													<th width="1%" class="border-right-0">Percentual</th>
-												</tr>
-											</thead>
-											<tbody>
-												{% for execucao_concedente in execucoes_concedente %}
-												<tr>
-													<td>
-														<ul class="navbar-nav mr-auto">
-															<li class="nav-item dropdown text-center">
-																<a href="javascript: void(0)" 
-																	class="nav-link link-agiliza dropdown-toggle p-0" 
-																	role="button" 
-																	data-toggle="dropdown" 
-																	aria-haspopup="true" 
-																	aria-expanded="false">
-																	<i class="fas fa-bars"></i>
-																</a>
-																<ul class="dropdown-menu">
-																	<li>
-																		<a href="{% url 'protocolo_execucao_concedente' convenio.id execucao_concedente.id %}" 
-																			class="dropdown-item" 
-																			onclick="editar_protocolo_execucao_concedente(this)"> Editar </a>
-																	</li>
-																	<li>
-																		<a href="javascript: void(0)" 
-																			class="dropdown-item" 
-																			data-href="{% url 'protocolo_execucao_concedente_excluir' execucao_concedente.id %}" 
-																			onclick="excluir_registro(this)"> Excluir </a>
-																	</li>
-																</ul>
-															</li>
-														</ul>
-													</td>
-													<td class="border-left-0">{{ execucao_concedente.parcela }}ª</td>
-													<td>{{ execucao_concedente.data_liberacao|date:'d/m/Y' }}</td>
-													<td class="text-right">{{ execucao_concedente.valor_pagamento }}</td>
-													<td class="text-right border-right-0">{{ execucao_concedente.percentual|floatformat:"2" }}%</td>
-												</tr>
-												{% endfor %}
-											</tbody>
-										</table>
+				
+							<div id="collapseExecucaoConcedente" class="collapse show" aria-labelledby="headingExecucaoConcedente" data-parent="#accordionExecucaoConcedente">
+								<div class="cbcolumn p-0">
+									<div class="cbrow p-0">
+										<div class="tb-head tb-10">
+											<a title="Adicionar" class="nav-link link-agiliza active" href="{% url 'protocolo_execucao_concedente' convenio.id %}">
+												<i class="fas fa-plus"></i>
+											</a>
+										</div>
+										<div class="tb-head tb-20">Parcela</div>
+										<div class="tb-head tb-23">Data</div>
+										<div class="tb-head tb-27">Valor R$</div>
+										<div class="tb-head tb-20">%</div>
 									</div>
+									{% for execucao_concedente in execucoes_concedente %}
+										<div class="cbrow p-0">
+											<div class="tb-row tb-10">
+												
+												<a href="javascript: void(0)" data-toggle="modal" data-target="#conced{{ execucao_concedente.id }}"><i class="fas fa-bars"></i></a>
+												<!-- Modal -->
+												<div class="modal fade" id="conced{{ execucao_concedente.id }}" tabindex="-1" aria-hidden="true">
+													<div class="modal-dialog modal-dialog-centered">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title">Concedente - {{ execucao_concedente.parcela }}ª Parcela</h5>
+																<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="modal-body">
+																<div class="row">
+																	{% if perms.base.add_convenio %}
+																		<a class="mod-item" href="{% url 'protocolo_execucao_concedente' convenio.id execucao_concedente.id %}" onclick="editar_protocolo_execucao_concedente(this)">Editar</a>
+																		<a class="mod-item" href="javascript: void(0)" data-href="{% url 'protocolo_execucao_concedente_excluir' execucao_concedente.id %}" onclick="excluir_registro(this)">Excluir</a>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- Modal -->
+
+											</div>
+											<div class="tb-row tb-20">{{ execucao_concedente.parcela }}ª</div>
+											<div class="tb-row tb-23">{{ execucao_concedente.data_liberacao|date:'d/m/Y' }}</div>
+											<div class="tb-row tb-27">{{ execucao_concedente.valor_pagamento }}</div>
+											<div class="tb-row tb-20">{{ execucao_concedente.percentual|floatformat:"2" }}</div>
+										</div>
+									{% endfor %}
 								</div>
 							</div>
 						</div>
@@ -468,103 +346,80 @@
 		</div>
 	</div>
 
-	<div class="mb-4" id="accordionHistorico">
+	
+	<div class="accordion mb-3" id="accordionHistorico">
 		<div class="card">
 			<div class="card-header p-0" id="headingHistorico">
 				<h2 class="mb-0">
-					<a class="btn btn-block text-left" 
-						data-toggle="collapse" 
-						data-target="#collapseHistorico" 
-						aria-expanded="true" 
-						aria-controls="collapseHistorico"> Histórico </a>
+					<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseHistorico" aria-expanded="true" aria-controls="collapseHistorico">Histórico</a>
 				</h2>
 			</div>
 
-			<div id="collapseHistorico" 
-				class="collapse show" 
-				aria-labelledby="headingHistorico" 
-				data-parent="#accordionHistorico">
-				<div class="row">
-					<div class="col-md-12">
-						<table class="table table-bordered m-0 border-0">
-							<thead>
-								<tr>
-									{% if perms.base.add_convenio %}
-									<th width="1%" class="p-0 border-left-0">
-										<a class="nav-link link-agiliza active mb-1" 
-											href="{% url 'protocolos' convenio.id %}"> <i class="fas fa-plus"></i> </a>
-									</th>
-									{% else %}
-									<th width="1%"><i class="fas fa-asterisk"></i></th>
-									{% endif %}
-									<th width="1%">Data</th>
-									<th width="1%" style="white-space: nowrap;">Data prevista</th>
-									<th>Responsável</th>
-									<th>Considerações</th>
-									<th width="1%" class="border-right-0">Anexo</th>
-								</tr>
-							</thead>
-							{% if protocolos %}
-							<tbody>
-								{% for protocolo in protocolos %}
-								<tr>
-									<td class="text-center border-left-0">
-										<ul class="navbar-nav mr-auto">
-											<li class="nav-item dropdown text-center">
-												<a href="javascript: void(0)" 
-													class="nav-link link-agiliza dropdown-toggle p-0" 
-													role="button" 
-													data-toggle="dropdown" 
-													aria-haspopup="true" 
-													aria-expanded="false">
-												{% if protocolo.situacao == 'resolvido' %}
-													<i class="fas fa-check"></i>
-												{% else %}
-													<i class="fas fa-bars"></i>
-												{% endif %}
-												</a>
-												<ul class="dropdown-menu">
-													{% if protocolo.situacao != 'resolvido' %}
-													<li>
-														<a href="{% url 'protocolo_resolver' protocolo.id %}" 
-															class="dropdown-item"> Resolver </a>
-													</li>
-													{% endif %}
-													<li>
-														<a href="javascript: void(0)" 
-															class="dropdown-item" 
-															data-href="{% url 'protocolo_excluir' protocolo.id %}" 
-															onclick="excluir_protocolo(this)"> Excluir </a>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</td>
-									<td>{{ protocolo.data_protocolado|date:'d/m/Y' }}</td>
-									<td>{{ protocolo.data_prevista|date:'d/m/Y' }}</td>
-									<td>{{ protocolo.get_responsavel_display|default:"-" }}</td>
-									<td>{{ protocolo.consideracoes }}</td>
-									<td class="text-center border-right-0">
+			<div id="collapseHistorico" class="collapse show" aria-labelledby="headingHistorico" data-parent="#accordionHistorico">
+				<div class="cbcolumn p-0">
+					{% if protocolos %}
+						{% for protocolo in protocolos %}
+							<div class="cbrow vflex p-0 bbottom">
+								<div class="tb-line tac tb-10">
+									
+									<a href="javascript: void(0)" data-toggle="modal" data-target="#hist{{ protocolo.id }}"><i class="fas fa-bars"></i></a>
+									<!-- Modal -->
+									<div class="modal fade" id="hist{{ protocolo.id }}" tabindex="-1" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">Histórico</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														{% if protocolo.situacao != 'resolvido' %}
+															<a class="mod-item" href="{% url 'protocolo_resolver' protocolo.id %}">Resolver</i></a>
+														{% endif %}
+														{% if perms.base.add_convenio %}
+															<a class="mod-item" href="javascript: void(0)" data-href="{% url 'protocolo_excluir' protocolo.id %}" onclick="excluir_protocolo(this)">Excluir</a>
+														{% endif %}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- Modal -->
+								</div>
+								<div class="tb-line tb-80">
+									<div>Data: {{ protocolo.data_protocolado|date:'d/m/Y' }}</div>
+									
+									<div>{{ protocolo.consideracoes }}</div>
+									
+									<div class="cbrow spb">
+										<div>Previsão: {{ protocolo.data_prevista|date:'d/m/Y' }}</div>
+
+										<div>{{ protocolo.get_responsavel_display|default:"-" }}</div>
+									</div>
+								</div>
+								<div class="tb-line tac tb-10">
 									{% if protocolo.anexo %}
 										<a href="/media/{{ protocolo.anexo }}"><i class="fas fa-file-alt"></i></a>
+									{% else %}
+										<i class="fas fa-file"></i>
 									{% endif %}
-									</td>
-								</tr>
-								{% endfor %}
-							</tbody>
-							{% else %}
-							<tfoot>
-								<tr>
-									<td colspan="7">
-										<div class="alert alert-info mb-0">Nenhum protocolo cadastrado!</div>
-									</td>
-								</tr>
-							</tfoot>
-							{% endif %}
-						</table>
-					</div>
+								</div>
+							</div>
+						{% endfor %}
+					{% else %}
+						<div class="alert alert-info mb-0">Nenhum protocolo cadastrado!</div>
+					{% endif %}
+					{% if perms.base.add_convenio %}
+						<a href="{% url 'protocolos' convenio.id %}" class="btn btn-block">
+							<i class="fas fa-plus"> Adicionar</i>
+						</a>
+					{% endif %}
 				</div>
 			</div>
 		</div>
 	</div>
+
+	
 {% endblock %}
