@@ -7,6 +7,10 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+label{
+    cursor: pointer;
+}
+
 .medicon{
     font-size: 20px;
 }
@@ -117,6 +121,7 @@ body::-webkit-scrollbar {
     display: flex;
     flex-direction: column;
     align-items: center;
+    white-space: nowrap;
 }
 
 .tp-dados-right div{
@@ -124,6 +129,7 @@ body::-webkit-scrollbar {
 }
 
 .tp-situacao {
+    margin-top: 10px;
     width:100%;
     display: flex;
     justify-content: space-between;
@@ -165,7 +171,7 @@ body::-webkit-scrollbar {
 }
 
 .conv {
-    width: 200px;
+    width: 280px;
     border-radius: 15px;
     -webkit-radius: 15px;
     -moz-radius: 15px;
@@ -178,47 +184,62 @@ body::-webkit-scrollbar {
     z-index: 2;
 }
 
-.conv-aguardando-aprovacao{
-    background-color: #058830;
+.conv-aguardando-aprovacao {
+    border: none;
+    background-color: #59db84;
     position: absolute;
-    width: 33px;
+    width: 40px;
     z-index: 1;
 }
 
-.conv-projeto-aprovado{
-    background-color: #058830;
+.conv-projeto-aprovado {
+    border: none;
+    background-color: #59db84;
     position: absolute;
-    width: 67px;
+    width: 80px;
     z-index: 1;
 }
 
-.conv-aguardando-aceite-licitacao{
-    background-color: #058830;
+.conv-aguardando-aceite-licitacao {
+    border: none;
+    background-color: #59db84;
     position: absolute;
-    width: 100px;
+    width: 120px;
     z-index: 1;
 }
 
-.conv-licitacao-aprovada{
-    background-color: #058830;
+.conv-licitacao-aprovada {
+    border: none;
+    background-color: #59db84;
     position: absolute;
-    width: 133px;
+    width: 160px;
     z-index: 1;
 }
 
-.conv-recurso-em-conta{
-    background-color: #058830;
-    position: absolute;
-    width: 167px;
-    z-index: 1;
-}
-
-.conv-convenio-concluido{
-    background-color: #058830;
+.conv-recurso-em-conta {
+    border: none;
+    background-color: #59db84;
     position: absolute;
     width: 200px;
     z-index: 1;
 }
+
+.conv-convenio-concluido {
+    border: none;
+    background-color: #59db84;
+    position: absolute;
+    width: 240px;
+    z-index: 1;
+}
+
+.conv-prestacao-de-contas-concluida {
+    border: none;
+    background-color: #59db84;
+    position: absolute;
+    width: 280px;
+    z-index: 1;
+}
+
 
 .sidebar{
     width: 15%;
