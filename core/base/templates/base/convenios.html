@@ -107,25 +107,23 @@
 							{{ convenio.numero }}
 						</div>
 						<div class="sit-convenio">
-						{% if convenio.situacao == 'aguardando-aprovacao' %}
-							<div class="conv">1º - Aguardando Aprovação</div>
+							{% if convenio.situacao == 'aguardando-aprovacao' %}
+								<div class="conv">1º - Aguardando Aprovação do Projeto</div>
+							{% elif convenio.situacao == 'projeto-aprovado' %}
+								<div class="conv">2º - Projeto Aprovado, Aguardando Licitação</div>
+							{% elif convenio.situacao == 'aguardando-aceite-licitacao' %}
+								<div class="conv">3º - Licitação Enviada, Aguardando Aceite</div>
+							{% elif convenio.situacao == 'licitacao-aprovada' %}
+								<div class="conv">4º - Licitação Aprovada, Aguardando Recurso</div>
+							{% elif convenio.situacao == 'recurso-em-conta' %}
+								<div class="conv">5º - Recurso em Conta, Em execução</div>
+							{% elif convenio.situacao == 'convenio-concluido' %}
+								<div class="conv">6º - Concluído, Aguardando Prestação de Contas</div>
+							{% elif convenio.situacao == 'prestacao-de-contas-concluida' %}
+								<div class="conv">7º - Prestação de Contas Concluída</div>
+							{% endif %}
 							<div class="conv conv-{{ convenio.situacao }}"></div>
-						{% elif convenio.situacao == 'projeto-aprovado' %}
-							<div class="conv">2º - Projeto Aprovado</div>
-							<div class="conv conv-{{ convenio.situacao }}"></div>
-						{% elif convenio.situacao == 'aguardando-aceite-licitacao' %}
-							<div class="conv">3º - Aguardando Licitação</div>
-							
-						{% elif convenio.situacao == 'licitacao-aprovada' %}
-							<div class="conv">4º - Licitação Aprovada</div>
-							
-						{% elif convenio.situacao == 'recurso-em-conta' %}
-							<div class="conv">5º - Recurso em Conta</div>
-							<div class="conv conv-{{ convenio.situacao }}"></div>
-						{% elif convenio.situacao == 'convenio-concluido' %}
-							<div class="conv">6º - Convênio Concluído</div>
-							<div class="conv conv-{{ convenio.situacao }}"></div>
-						{% endif %}
+						
 						</div>
 					</div>
 				</div>
@@ -163,7 +161,7 @@
 						</ul>
 					</th>
 					<th>Objeto</th>
-					<th>Número Convênio</th>
+					<th>Convênio</th>
 					<th>Proposta</th>
 					<th>Situação</th>
 					<th width="1%">R$ Valor</th>
@@ -189,7 +187,7 @@
 									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarProjetoModal" data-id="{{ convenio.id }}" onclick="aprovar_projeto_convenio(this)">Aprovar projeto</a></li>
 									{% endif %}
 									{% if convenio.situacao == 'projeto-aprovado' %}
-									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#licitarProjetoModal" data-id="{{ convenio.id }}" onclick="licitar_projeto_convenio(this)">Projeto licitado</a></li>
+									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#licitarProjetoModal" data-id="{{ convenio.id }}" onclick="licitar_projeto_convenio(this)">Enviar Licitação</a></li>
 									{% endif %}
 									{% if convenio.situacao == 'aguardando-aceite-licitacao' %}
 									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarLicitacaoModal" data-id="{{ convenio.id }}" onclick="aprovar_licitacao_convenio(this)">Aprovar licitação</a></li>
@@ -360,7 +358,7 @@
 				{% csrf_token %}
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="licitarProjetoModalLabel">Licitação de projeto</h5>
+						<h5 class="modal-title" id="licitarProjetoModalLabel">Envio da Licitação</h5>
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
