@@ -1,21 +1,31 @@
+from datetime import datetime
+
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, logout, login
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
-from django.db.models import Q, Count, Sum
-from django.shortcuts import render, redirect
+from django.db.models import Count, Q, Sum
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.formats import localize
-from datetime import datetime
-from .forms import PropostaForm, PropostaArquivoExtratoForm, PropostaValorLiberado, ConvenioArquivoExtratoForm
-from .forms import ProjetoForm, OpcaoForm, AlternativaForm, ItemAlternativaForm, AtividadeForm, LicenciamentoForm
-from .forms import ProjetoControleForm, ProjetoControleItemForm, ItemForm, ServicoForm, ProtocoloForm
-from .forms import ProtocoloDadosBancariosForm, ProtocoloEmpresaContratadaForm, ConvenioAprovacaoLicitacaoForm
-from .forms import ConvenioRecursoContaForm, ProtocoloExecucaoConvenenteForm, ProtocoloExecucaoConcedenteForm
-from .models import Proposta, Convenio, Projeto, Item, Opcao, Alternativa, ItemAlternativa, Orgao, Prefeitura
-from .models import Atividade, LicenciamentoAmbiental, Responsavel, ProjetoControle, ProjetoControleItem
-from .models import TecnicoOrgao, Servico, Protocolo, ExecucaoConvenente, ExecucaoConcedente
+
+from .forms import (AlternativaForm, AtividadeForm,
+                    ConvenioAprovacaoLicitacaoForm, ConvenioArquivoExtratoForm,
+                    ConvenioRecursoContaForm, ItemAlternativaForm, ItemForm,
+                    LicenciamentoForm, OpcaoForm, ProjetoControleForm,
+                    ProjetoControleItemForm, ProjetoForm,
+                    PropostaArquivoExtratoForm, PropostaForm,
+                    PropostaValorLiberado, ProtocoloDadosBancariosForm,
+                    ProtocoloEmpresaContratadaForm,
+                    ProtocoloExecucaoConcedenteForm,
+                    ProtocoloExecucaoConvenenteForm, ProtocoloForm,
+                    ServicoForm)
+from .models import (Alternativa, Atividade, Convenio, ExecucaoConcedente,
+                     ExecucaoConvenente, Item, ItemAlternativa,
+                     LicenciamentoAmbiental, Opcao, Orgao, Prefeitura, Projeto,
+                     ProjetoControle, ProjetoControleItem, Proposta, Protocolo,
+                     Responsavel, Servico, TecnicoOrgao)
 
 
 def notification_scheduled_job():
@@ -23,7 +33,7 @@ def notification_scheduled_job():
         'Proposta Cadastrada',
         'Agiliza Convênios - Proposta cadastrada com sucesso',
         'sousa.tarcisio.s@gmail.com',
-        ['tarcisio.sales@bol.com.br',],
+        ['tarcisio.sales@bol.com.br', ],
         fail_silently=False)
 
 
@@ -102,7 +112,7 @@ def propostas(request, filter_situacao=False):
     filter_prefeitura = False
     choices_situacao = Proposta.SituacaoChoice.choices
     choices_prefeitura = Prefeitura.objects.all()
-    propostas = Proposta.objects.filter(status=True).order_by('-id')
+    propostas = Proposta.objects.filter(status=True).order_by('-data__year, -id')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
@@ -366,7 +376,6 @@ def convenio_licitar_projeto(request, id):
 @login_required
 def convenio_aprovar_licitacao(request, id):
     if request.method == 'POST':
-        dados = request.POST
         convenio = Convenio.objects.get(id=id)
         convenio_form = ConvenioAprovacaoLicitacaoForm(request.POST, instance=convenio)
         if convenio_form.is_valid():
@@ -913,7 +922,7 @@ def protocolo_dados_bancarios(request, convenio_id):
             protocolo_dados_bancarios_form = ProtocoloDadosBancariosForm(request.POST, instance=convenio)
 
         if protocolo_dados_bancarios_form.is_valid():
-            proposta = protocolo_dados_bancarios_form.save()
+            protocolo_dados_bancarios_form.save()
             messages.add_message(request, messages.SUCCESS, 'Dados bancários salvos com sucesso!')
 
             # send_mail(
@@ -943,7 +952,7 @@ def protocolo_empresa_contratada(request, convenio_id):
             protocolo_empresa_contratada_form = ProtocoloEmpresaContratadaForm(request.POST, instance=convenio)
 
         if protocolo_empresa_contratada_form.is_valid():
-            proposta = protocolo_empresa_contratada_form.save()
+            protocolo_empresa_contratada_form.save()
             messages.add_message(request, messages.SUCCESS, 'Empresa contratada cadastrada com sucesso!')
 
             return redirect(reverse('protocolo', args=[convenio.id]))

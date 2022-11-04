@@ -127,13 +127,17 @@
 													<div class="font-weight-bold mgr5">Conta:</div>
 													<div>{% if convenio.conta %}{{convenio.conta}}{% endif %}</div>
 												</div>
+												{% if perms.base.edit_convenio %}
 												<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" class="btn btn-block">
 													<i class="fas fa-pen"> Editar</i>
 												</a>
+												{% endif %}
 											{% else %}
+												{% if perms.base.add_convenio %}
 												<a href="{% url 'protocolo_dados_bancarios' convenio.id %}" class="btn btn-block">
 													<i class="fas fa-plus"> Adicionar</i>
 												</a>
+												{% endif %}
 											{% endif %}
 										</div>
 									</div>
@@ -205,15 +209,81 @@
 												</div>
 											{% endif %}
 
+											{% if perms.base.edit_convenio %}
 											<a href="{% url 'protocolo_empresa_contratada' convenio.id %}" class="btn btn-block">
 												<i class="fas fa-pen"> Editar</i>
 											</a>
+											{% endif %}
+											
 										{% else %}
+											{% if perms.base.add_convenio %}
 											<a href="{% url 'protocolo_empresa_contratada' convenio.id %}" class="btn btn-block">
 												<i class="fas fa-plus"> Adicionar</i>
 											</a>
+											{% endif %}
 										{% endif %}
 									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="accordion mb-3" id="accordionExecucaoConcedente">
+						<div class="card">
+							<div class="card-header p-0" id="headingExecucaoConcedente">
+								<h2 class="mb-0">
+									<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseExecucaoConcedente" aria-expanded="true" aria-controls="collapseExecucaoConcedente"> Execução Concedente </a>
+								</h2>
+							</div>
+				
+							<div id="collapseExecucaoConcedente" class="collapse show" aria-labelledby="headingExecucaoConcedente" data-parent="#accordionExecucaoConcedente">
+								<div class="cbcolumn p-0">
+									<div class="cbrow p-0">
+										<div class="tb-head tb-10">
+											<a title="Adicionar" class="nav-link link-agiliza active" href="{% url 'protocolo_execucao_concedente' convenio.id %}">
+												<i class="fas fa-plus"></i>
+											</a>
+										</div>
+										<div class="tb-head tb-20">Parcela</div>
+										<div class="tb-head tb-23">Data</div>
+										<div class="tb-head tb-27">Valor R$</div>
+										<div class="tb-head tb-20">%</div>
+									</div>
+									{% for execucao_concedente in execucoes_concedente %}
+										<div class="cbrow p-0">
+											<div class="tb-row tb-10">
+												
+												<a href="javascript: void(0)" data-toggle="modal" data-target="#conced{{ execucao_concedente.id }}"><i class="fas fa-bars"></i></a>
+												<!-- Modal -->
+												<div class="modal fade" id="conced{{ execucao_concedente.id }}" tabindex="-1" aria-hidden="true">
+													<div class="modal-dialog modal-dialog-centered">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title">Concedente - {{ execucao_concedente.parcela }}ª Parcela</h5>
+																<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="modal-body">
+																<div class="row">
+																	{% if perms.base.add_convenio %}
+																		<a class="mod-item" href="{% url 'protocolo_execucao_concedente' convenio.id execucao_concedente.id %}" onclick="editar_protocolo_execucao_concedente(this)">Editar</a>
+																		<a class="mod-item" href="javascript: void(0)" data-href="{% url 'protocolo_execucao_concedente_excluir' execucao_concedente.id %}" onclick="excluir_registro(this)">Excluir</a>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- Modal -->
+
+											</div>
+											<div class="tb-row tb-20">{{ execucao_concedente.parcela }}ª</div>
+											<div class="tb-row tb-23">{{ execucao_concedente.data_liberacao|date:'d/m/Y' }}</div>
+											<div class="tb-row tb-27">{{ execucao_concedente.valor_pagamento }}</div>
+											<div class="tb-row tb-20">{{ execucao_concedente.percentual|floatformat:"2" }}</div>
+										</div>
+									{% endfor %}
 								</div>
 							</div>
 						</div>
@@ -274,67 +344,6 @@
 											<div class="tb-row tb-23">{{ execucao_convenente.data_pagamento|date:'d/m/Y' }}</div>
 											<div class="tb-row tb-27">{{ execucao_convenente.valor_pagamento }}</div>
 											<div class="tb-row tb-20">{{ execucao_convenente.percentual|floatformat:"2" }}</div>
-										</div>
-									{% endfor %}
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="accordion mb-3" id="accordionExecucaoConcedente">
-						<div class="card">
-							<div class="card-header p-0" id="headingExecucaoConcedente">
-								<h2 class="mb-0">
-									<a class="btn btn-block text-left" data-toggle="collapse" data-target="#collapseExecucaoConcedente" aria-expanded="true" aria-controls="collapseExecucaoConcedente"> Execução Concedente </a>
-								</h2>
-							</div>
-				
-							<div id="collapseExecucaoConcedente" class="collapse show" aria-labelledby="headingExecucaoConcedente" data-parent="#accordionExecucaoConcedente">
-								<div class="cbcolumn p-0">
-									<div class="cbrow p-0">
-										<div class="tb-head tb-10">
-											<a title="Adicionar" class="nav-link link-agiliza active" href="{% url 'protocolo_execucao_concedente' convenio.id %}">
-												<i class="fas fa-plus"></i>
-											</a>
-										</div>
-										<div class="tb-head tb-20">Parcela</div>
-										<div class="tb-head tb-23">Data</div>
-										<div class="tb-head tb-27">Valor R$</div>
-										<div class="tb-head tb-20">%</div>
-									</div>
-									{% for execucao_concedente in execucoes_concedente %}
-										<div class="cbrow p-0">
-											<div class="tb-row tb-10">
-												
-												<a href="javascript: void(0)" data-toggle="modal" data-target="#conced{{ execucao_concedente.id }}"><i class="fas fa-bars"></i></a>
-												<!-- Modal -->
-												<div class="modal fade" id="conced{{ execucao_concedente.id }}" tabindex="-1" aria-hidden="true">
-													<div class="modal-dialog modal-dialog-centered">
-														<div class="modal-content">
-															<div class="modal-header">
-																<h5 class="modal-title">Concedente - {{ execucao_concedente.parcela }}ª Parcela</h5>
-																<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-																	<span aria-hidden="true">&times;</span>
-																</button>
-															</div>
-															<div class="modal-body">
-																<div class="row">
-																	{% if perms.base.add_convenio %}
-																		<a class="mod-item" href="{% url 'protocolo_execucao_concedente' convenio.id execucao_concedente.id %}" onclick="editar_protocolo_execucao_concedente(this)">Editar</a>
-																		<a class="mod-item" href="javascript: void(0)" data-href="{% url 'protocolo_execucao_concedente_excluir' execucao_concedente.id %}" onclick="excluir_registro(this)">Excluir</a>
-																	{% endif %}
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<!-- Modal -->
-
-											</div>
-											<div class="tb-row tb-20">{{ execucao_concedente.parcela }}ª</div>
-											<div class="tb-row tb-23">{{ execucao_concedente.data_liberacao|date:'d/m/Y' }}</div>
-											<div class="tb-row tb-27">{{ execucao_concedente.valor_pagamento }}</div>
-											<div class="tb-row tb-20">{{ execucao_concedente.percentual|floatformat:"2" }}</div>
 										</div>
 									{% endfor %}
 								</div>
