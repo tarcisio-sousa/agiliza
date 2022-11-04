@@ -162,7 +162,7 @@
 					</th>
 					<th>Objeto</th>
 					<th>Convênio</th>
-					<th>Proposta</th>
+					<th>Vencimento</th>
 					<th>Situação</th>
 					<th width="1%">R$ Valor</th>
 				</tr>
@@ -179,27 +179,27 @@
 										<a href="{% url 'protocolo' convenio.id %}" class="dropdown-item"> Histórico </a>
 									</li>
 									{% if perms.base.add_convenio %}
-									<li>
-										<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> Elaboração de Projeto </a>
-									</li>
-									{% endif %}
-									{% if convenio.situacao == 'aguardando-aprovacao' %}
-									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarProjetoModal" data-id="{{ convenio.id }}" onclick="aprovar_projeto_convenio(this)">Aprovar projeto</a></li>
-									{% endif %}
-									{% if convenio.situacao == 'projeto-aprovado' %}
-									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#licitarProjetoModal" data-id="{{ convenio.id }}" onclick="licitar_projeto_convenio(this)">Enviar Licitação</a></li>
-									{% endif %}
-									{% if convenio.situacao == 'aguardando-aceite-licitacao' %}
-									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarLicitacaoModal" data-id="{{ convenio.id }}" onclick="aprovar_licitacao_convenio(this)">Aprovar licitação</a></li>
-									{% endif %}
-									{% if convenio.situacao == 'licitacao-aprovada' %}
-									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#recursoContaModal" data-id="{{ convenio.id }}" onclick="recurso_em_conta_convenio(this)">Recurso em conta</a></li>
-									{% endif %}
-									{% if convenio.situacao == 'recurso-em-conta' %}
-									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirConvenioModal" data-id="{{ convenio.id }}" onclick="concluir_convenio(this)">Concluir convênio</a></li>
-									{% endif %}
-									{% if convenio.situacao == 'convenio-concluido' %}
-									<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirPrestacaoContasModal" data-id="{{ convenio.id }}" onclick="concluir_prestacao_contas(this)">Concluir prestação de contas</a></li>
+										<li>
+											<a href="{% url 'convenio_projeto_controle' convenio.id %}" class="dropdown-item"> Elaboração de Projeto </a>
+										</li>
+										{% if convenio.situacao == 'aguardando-aprovacao' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarProjetoModal" data-id="{{ convenio.id }}" onclick="aprovar_projeto_convenio(this)">Aprovar projeto</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'projeto-aprovado' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#licitarProjetoModal" data-id="{{ convenio.id }}" onclick="licitar_projeto_convenio(this)">Enviar Licitação</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'aguardando-aceite-licitacao' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#aprovarLicitacaoModal" data-id="{{ convenio.id }}" onclick="aprovar_licitacao_convenio(this)">Aprovar licitação</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'licitacao-aprovada' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#recursoContaModal" data-id="{{ convenio.id }}" onclick="recurso_em_conta_convenio(this)">Recurso em conta</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'recurso-em-conta' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirConvenioModal" data-id="{{ convenio.id }}" onclick="concluir_convenio(this)">Concluir convênio</a></li>
+										{% endif %}
+										{% if convenio.situacao == 'convenio-concluido' %}
+										<li><a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#concluirPrestacaoContasModal" data-id="{{ convenio.id }}" onclick="concluir_prestacao_contas(this)">Concluir prestação de contas</a></li>
+										{% endif %}
 									{% endif %}
 									{% if perms.auth.is_super %}
 									<li>
@@ -212,7 +212,13 @@
 					</td>
 					<td>{{ convenio.proposta.prefeitura }}</td>
 					<td>{{ convenio.proposta.objeto }}</td>
-					<td>{{ convenio.numero }}</td>
+					<td>
+						{% if convenio.data_suspensiva %}
+							{{ convenio.data_suspensiva }}
+						{% elif convenio.data_vigencia %}
+							{{ convenio.data_vigencia }}
+						{% endif %}
+					</td>
 					<td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td>
 					<td>{{ convenio.get_situacao_display }}</td>
 					<td class="text-right">{% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}</td>
