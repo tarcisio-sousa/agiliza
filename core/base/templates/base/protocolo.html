@@ -240,9 +240,11 @@
 								<div class="cbcolumn p-0">
 									<div class="cbrow p-0">
 										<div class="tb-head tb-10">
+											{% if perms.base.add_convenio %}
 											<a title="Adicionar" class="nav-link link-agiliza active" href="{% url 'protocolo_execucao_concedente' convenio.id %}">
 												<i class="fas fa-plus"></i>
 											</a>
+											{% endif %}
 										</div>
 										<div class="tb-head tb-20">Parcela</div>
 										<div class="tb-head tb-23">Data</div>
@@ -301,9 +303,11 @@
 								<div class="cbcolumn p-0">
 									<div class="cbrow p-0">
 										<div class="tb-head tb-10">
+											{% if perms.base.add_convenio %}
 											<a title="Adicionar" class="nav-link link-agiliza active" href="{% url 'protocolo_execucao_convenente' convenio.id %}">
 												<i class="fas fa-plus"></i>
 											</a>
+											{% endif %}
 										</div>
 										<div class="tb-head tb-20">Parcela</div>
 										<div class="tb-head tb-23">Data</div>
@@ -384,7 +388,7 @@
 												</div>
 												<div class="modal-body">
 													<div class="row">
-														{% if protocolo.situacao != 'resolvido' %}
+														{% if perms.base.add_convenio and protocolo.situacao != 'resolvido' %}
 															<a class="mod-item" href="{% url 'protocolo_resolver' protocolo.id %}">Resolver</i></a>
 														{% endif %}
 														{% if perms.base.add_convenio %}
