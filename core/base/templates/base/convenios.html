@@ -212,14 +212,15 @@
 					</td>
 					<td>{{ convenio.proposta.prefeitura }}</td>
 					<td>{{ convenio.proposta.objeto }}</td>
+					<td>{{ convenio.numero }}</td>
 					<td>
 						{% if convenio.data_suspensiva %}
-							{{ convenio.data_suspensiva }}
+							{{ convenio.data_suspensiva|date:"d/m/Y" }}
 						{% elif convenio.data_vigencia %}
-							{{ convenio.data_vigencia }}
+							{{ convenio.data_vigencia|date:"d/m/Y" }}
 						{% endif %}
 					</td>
-					<td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td>
+					<!-- <td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td> -->
 					<td>{{ convenio.get_situacao_display }}</td>
 					<td class="text-right">{% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}</td>
 				</tr>
