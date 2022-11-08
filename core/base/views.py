@@ -112,7 +112,7 @@ def propostas(request, filter_situacao=False):
     filter_prefeitura = False
     choices_situacao = Proposta.SituacaoChoice.choices
     choices_prefeitura = Prefeitura.objects.all()
-    propostas = Proposta.objects.filter(status=True).order_by('-id')
+    propostas = Proposta.objects.filter(status=True).order_by('-data__year', '-id')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
