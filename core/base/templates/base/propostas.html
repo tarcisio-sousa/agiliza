@@ -163,7 +163,8 @@
 					<th width="1%"><i class="fas fa-asterisk"></i></th>
 					<th>Proposta</th>
 					{% if perms.base.add_proposta %}
-					<th style="display: flex;">
+					<th>
+						<span style="display: flex;">
 						Prefeitura
 						<ul class="navbar-nav mr-auto d-inline-block float-right">
 							<li class="nav-item dropdown">
@@ -194,12 +195,14 @@
 								</ul>
 							</li>
 						</ul>
+						</span>
 					</th>
 					{% endif %}
 					<th>Objeto</th>
-					<th>R$ Valor</th>
+					<th><span style="display: flex;">R$ Valor</span></th>
 					<th>Data</th>
-					<th style="display: flex;">
+					<th>
+						<span style="display: flex;">
 						Situação
 						<ul class="navbar-nav mr-auto d-inline-block float-right">
 							<li class="nav-item dropdown">
@@ -230,6 +233,7 @@
 								</ul>
 							</li>
 						</ul>
+						</span>
 					</th>
 					<th width="1%">Extrato</th>
 				</tr>
