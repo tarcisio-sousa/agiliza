@@ -108,7 +108,8 @@ def home(request):
 
 
 @login_required
-def propostas(request, filter_situacao=False):
+def propostas(request):
+    filter_situacao = False
     filter_prefeitura = False
     choices_situacao = Proposta.SituacaoChoice.choices
     choices_prefeitura = Prefeitura.objects.all()
@@ -296,11 +297,9 @@ def convenios(request):
         if 'prefeitura' in request.GET:
             filter_prefeitura = int(request.GET['prefeitura'])
             convenios = convenios.filter(proposta__prefeitura=filter_prefeitura)
-
-    if request.method == 'POST':
-        if request.POST['search']:
+        if 'search' in request.GET:
             convenios = convenios.filter(
-                Q(numero=request.POST['search']) | Q(orgao=request.POST['search']))
+                Q(numero=request.GET['search']) | Q(orgao=request.GET['search']))
 
     paginator = Paginator(convenios, 10)
 
