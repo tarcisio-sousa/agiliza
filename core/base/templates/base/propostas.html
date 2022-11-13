@@ -170,7 +170,9 @@
 									<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
 									<ul class="dropdown-menu dropdown-menu-right">
 										<li>
-											<a class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" href="{% url 'propostas' %}">
+											<a 
+												class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" 
+												href="{% url 'propostas' %}{% if filter_situacao %}{% relative_url filter_situacao 'situacao' %}{% endif %}">
 												Todas
 												{% if not filter_prefeitura %}
 													<i class="fas fa-check"></i>
@@ -179,7 +181,9 @@
 										</li>
 										{% for prefeitura in choices_prefeitura %}
 											<li>
-												<a class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}">
+												<a 
+													class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" 
+													href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}{% if filter_situacao %}{% relative_url filter_situacao 'situacao' %}{% endif %}">
 													{{ prefeitura.nome }}
 													{% if prefeitura.id == filter_prefeitura %}
 														<i class="fas fa-check"></i>
@@ -209,16 +213,18 @@
 												{% endif %}
 											</a>
 										</li>
-									{% for choice_situacao, situacao in choices_situacao %}
+										{% for choice_situacao, situacao in choices_situacao %}
 										<li>
-											<a class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" href="{% url 'propostas' %}{% relative_url choice_situacao 'situacao' %}">
+											<a 
+												class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" 
+												href="{% url 'propostas' %}{% if filter_prefeitura %}{% relative_url filter_prefeitura 'prefeitura' %}{% endif %}{% relative_url choice_situacao 'situacao' %}">
 												{{ situacao }}
 												{% if choice_situacao == filter_situacao %}
 													<i class="fas fa-check"></i>
 												{% endif %}
 											</a>
 										</li>
-									{% endfor %}
+										{% endfor %}
 									</ul>
 								</li>
 					     	</ul>
@@ -282,10 +288,10 @@
 					<div class="pagination">
 						<span class="step-links">
 							{% if propostas.has_previous %}filter_situacao
-								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page=1">
+								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page=1">
 									<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
 								</a>
-								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page={{ propostas.previous_page_number }}">
+								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.previous_page_number }}">
 									<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
 								</a>
 							{% endif %}
@@ -295,10 +301,10 @@
 							</span>
 
 							{% if propostas.has_next %}
-								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page={{ propostas.next_page_number }}">
+								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.next_page_number }}">
 									<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
 								</a>
-								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page={{ propostas.paginator.num_pages }}">
+								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.paginator.num_pages }}">
 									<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
 								</a>
 							{% endif %}
