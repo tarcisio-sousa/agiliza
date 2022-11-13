@@ -119,204 +119,204 @@
 	</div>
 	{% endblock %}
 	<div class="row">
-			<div class="tableplus">
+		<div class="tableplus">
+			{% for proposta in propostas %}
+				<div class="tp-item">
+					<div class="tp-prefeitura">
+						<div class="bolds">
+							{% if perms.base.add_proposta %}
+								{{ proposta.prefeitura }}
+							{% endif %}
+						</div>
+						<div>
+							{% if proposta.extrato %}
+								<a href="/media/{{ proposta.extrato }}" target="_blank">
+									<i class="fas fa-file-alt medicon"></i>
+								</a>
+							{% else %}
+									<i class="fas fa-file-alt medicon"></i>
+							{% endif %}
+						</div>
+					</div>
+					<div class="tp-dados">
+						<div class="tp-dados-left">
+							{{ proposta.objeto }}
+						</div>
+						<div class="tp-dados-right">
+							<div>{{ proposta.data|date:"d/m/Y" }}</div>
+							<div>R$ {% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</div>
+						</div>
+					</div>
+					<div class="tp-situacao">
+						<div class="bolds">
+							{{ proposta.numero }}
+						</div>
+						<div class="prop prop-{{ proposta.situacao }}">{{ proposta.get_situacao_display }}</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<table class="table table-bordered tableless">
+			<thead>
+				<tr>
+					<!-- <th class="p-0" width="1%"> </th> -->
+					<th width="1%"><i class="fas fa-asterisk"></i></th>
+					<th>Proposta</th>
+					{% if perms.base.add_proposta %}
+					<th style="display: flex;">
+						Prefeitura
+						<ul class="navbar-nav mr-auto d-inline-block float-right">
+							<li class="nav-item dropdown">
+								<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li>
+										<a 
+											class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" 
+											href="{% url 'propostas' %}{% if filter_situacao %}&situacao={{ filter_situacao }}{% endif %}">
+											Todas
+											{% if not filter_prefeitura %}
+												<i class="fas fa-check"></i>
+											{% endif %}
+										</a>
+									</li>
+									{% for prefeitura in choices_prefeitura %}
+										<li>
+											<a 
+												class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" 
+												href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}{% if filter_situacao %}&situacao={{ filter_situacao }}{% endif %}">
+												{{ prefeitura.nome }}
+												{% if prefeitura.id == filter_prefeitura %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</li>
+									{% endfor %}
+								</ul>
+							</li>
+						</ul>
+					</th>
+					{% endif %}
+					<th>Objeto</th>
+					<th>R$ Valor</th>
+					<th>Data</th>
+					<th style="display: flex;">
+						Situação
+						<ul class="navbar-nav mr-auto d-inline-block float-right">
+							<li class="nav-item dropdown">
+								<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li>
+										<a 
+											class="dropdown-item {% if not filter_situacao %}disabled{% endif %}" 
+											href="{% url 'propostas' %}">
+											Todas
+											{% if not filter_situacao %}
+												<i class="fas fa-check"></i>
+											{% endif %}
+										</a>
+									</li>
+									{% for choice_situacao, situacao in choices_situacao %}
+									<li>
+										<a 
+											class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" 
+											href="{% url 'propostas' %}{% relative_url choice_situacao 'situacao' %}{% if filter_prefeitura %}&prefeitura={{ filter_prefeitura }}{% endif %}">
+											{{ situacao }}
+											{% if choice_situacao == filter_situacao %}
+												<i class="fas fa-check"></i>
+											{% endif %}
+										</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+						</ul>
+					</th>
+					<th width="1%">Extrato</th>
+				</tr>
+			</thead>
+			<tbody>
 				{% for proposta in propostas %}
-					<div class="tp-item">
-						<div class="tp-prefeitura">
-							<div class="bolds">
-								{% if perms.base.add_proposta %}
-									{{ proposta.prefeitura }}
-								{% endif %}
-							</div>
-							<div>
-								{% if proposta.extrato %}
-									<a href="/media/{{ proposta.extrato }}" target="_blank">
-										<i class="fas fa-file-alt medicon"></i>
-									</a>
-								{% else %}
-										<i class="fas fa-file-alt medicon"></i>
-								{% endif %}
-							</div>
-						</div>
-						<div class="tp-dados">
-							<div class="tp-dados-left">
-								{{ proposta.objeto }}
-							</div>
-							<div class="tp-dados-right">
-								<div>{{ proposta.data|date:"d/m/Y" }}</div>
-								<div>R$ {% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</div>
-							</div>
-						</div>
-						<div class="tp-situacao">
-							<div class="bolds">
-								{{ proposta.numero }}
-							</div>
-							<div class="prop prop-{{ proposta.situacao }}">{{ proposta.get_situacao_display }}</div>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-			<table class="table table-bordered tableless">
-				<thead>
-					<tr>
-						<!-- <th class="p-0" width="1%"> </th> -->
-						<th width="1%"><i class="fas fa-asterisk"></i></th>
-						<th>Proposta</th>
-						{% if perms.base.add_proposta %}
-						<th style="display: flex;">
-							Prefeitura
-							<ul class="navbar-nav mr-auto d-inline-block float-right">
-								<li class="nav-item dropdown">
-									<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li>
-											<a 
-												class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" 
-												href="{% url 'propostas' %}{% if filter_situacao %}&situacao={{ filter_situacao }}{% endif %}">
-												Todas
-												{% if not filter_prefeitura %}
-													<i class="fas fa-check"></i>
-												{% endif %}
-											</a>
-										</li>
-										{% for prefeitura in choices_prefeitura %}
-											<li>
-												<a 
-													class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" 
-													href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}{% if filter_situacao %}&situacao={{ filter_situacao }}{% endif %}">
-													{{ prefeitura.nome }}
-													{% if prefeitura.id == filter_prefeitura %}
-														<i class="fas fa-check"></i>
-													{% endif %}
-												</a>
-											</li>
-										{% endfor %}
-									</ul>
-								</li>
-					     	</ul>
-					    </th>
-					    {% endif %}
-						<th>Objeto</th>
-						<th>R$ Valor</th>
-						<th>Data</th>
-						<th style="display: flex;">
-							Situação
-							<ul class="navbar-nav mr-auto d-inline-block float-right">
-								<li class="nav-item dropdown">
-									<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li>
-											<a 
-												class="dropdown-item {% if not filter_situacao %}disabled{% endif %}" 
-												href="{% url 'propostas' %}">
-												Todas
-												{% if not filter_situacao %}
-													<i class="fas fa-check"></i>
-												{% endif %}
-											</a>
-										</li>
-										{% for choice_situacao, situacao in choices_situacao %}
-										<li>
-											<a 
-												class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" 
-												href="{% url 'propostas' %}{% relative_url choice_situacao 'situacao' %}{% if filter_prefeitura %}&prefeitura={{ filter_prefeitura }}{% endif %}">
-												{{ situacao }}
-												{% if choice_situacao == filter_situacao %}
-													<i class="fas fa-check"></i>
-												{% endif %}
-											</a>
-										</li>
-										{% endfor %}
-									</ul>
-								</li>
-					     	</ul>
-						</th>
-						<th width="1%">Extrato</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for proposta in propostas %}
-					<tr>
-						<!-- <td class="text-center"><i class="fas fa-caret-right"></i></td> -->
-						<td class="text-center">
-							{% if perms.base.add_convenio %}
-							<ul class="navbar-nav mr-auto">
-								<li class="nav-item dropdown">
-									<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
-									<div class="dropdown-menu">
-										{% if perms.base.change_proposta %}
-											<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> Editar</a>
-											<div class="dropdown-divider"></div>
-											{% if proposta.verifica_situacao == 'em-analise' %}
-												<a href="javascript:void(0);" class="dropdown-item"> Em análise </a>
-											{% endif %}
-											{% if proposta.verifica_situacao == 'aprovada' %}
-												<a href="javascript:void(0);" data-href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item" onclick="aprovar_proposta(this)"> Aprovar</a>
-											{% endif %}
-											{% if proposta.situacao not in 'empenhada,reprovada' %}
-												<a href="javascript:void(0);" data-href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item" onclick="reprovar_proposta(this)"> Reprovar</a>
-											{% endif %}
-											{% if proposta.verifica_situacao == 'empenhada' %}
-												<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#empenharPropostaModal" onclick="seleciona_empenhar_proposta(this)" data-id="{{ proposta.id }}"> Empenhar </a>
-											{% endif %}
+				<tr>
+					<!-- <td class="text-center"><i class="fas fa-caret-right"></i></td> -->
+					<td class="text-center">
+						{% if perms.base.add_convenio %}
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item dropdown">
+								<a href="javascript: void(0)" class="nav-link link-agiliza dropdown-toggle p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-bars"></i> </a>
+								<div class="dropdown-menu">
+									{% if perms.base.change_proposta %}
+										<a href="{% url 'proposta' proposta.id %}" class="dropdown-item"> Editar</a>
+										<div class="dropdown-divider"></div>
+										{% if proposta.verifica_situacao == 'em-analise' %}
+											<a href="javascript:void(0);" class="dropdown-item"> Em análise </a>
 										{% endif %}
-										<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#extratoModal" onclick="seleciona_proposta_arquivo_extrato(this)" data-id="{{ proposta.id }}"> Extrato </a>
-										<a href="{% url 'proposta_documento' proposta.id %}" class="dropdown-item"> Gerar declaração</a>
-										{% if perms.auth.is_super %}
-										<a href="javascript: void(0)" class="dropdown-item" data-href="{% url 'proposta_excluir' proposta.id %}" onclick="excluir_proposta(this)"> Excluir</a>
+										{% if proposta.verifica_situacao == 'aprovada' %}
+											<a href="javascript:void(0);" data-href="{% url 'proposta' proposta.id 'aprovada' %}" class="dropdown-item" onclick="aprovar_proposta(this)"> Aprovar</a>
 										{% endif %}
-									</div>
-								</li>
-							</ul>
-							{% endif %}
-						</td>
-						<td class="text-center">{{ proposta.numero }}</td>
-						{% if perms.base.add_proposta %}
-						<td>{{ proposta.prefeitura }}</td>
+										{% if proposta.situacao not in 'empenhada,reprovada' %}
+											<a href="javascript:void(0);" data-href="{% url 'proposta' proposta.id 'reprovada' %}" class="dropdown-item" onclick="reprovar_proposta(this)"> Reprovar</a>
+										{% endif %}
+										{% if proposta.verifica_situacao == 'empenhada' %}
+											<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#empenharPropostaModal" onclick="seleciona_empenhar_proposta(this)" data-id="{{ proposta.id }}"> Empenhar </a>
+										{% endif %}
+									{% endif %}
+									<a href="javascript: void(0)" class="dropdown-item" data-toggle="modal" data-target="#extratoModal" onclick="seleciona_proposta_arquivo_extrato(this)" data-id="{{ proposta.id }}"> Extrato </a>
+									<a href="{% url 'proposta_documento' proposta.id %}" class="dropdown-item"> Gerar declaração</a>
+									{% if perms.auth.is_super %}
+									<a href="javascript: void(0)" class="dropdown-item" data-href="{% url 'proposta_excluir' proposta.id %}" onclick="excluir_proposta(this)"> Excluir</a>
+									{% endif %}
+								</div>
+							</li>
+						</ul>
 						{% endif %}
-						<td>{{ proposta.objeto }}</td>
-						<td class="text-right">{% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</td>
-						<td class="text-center">{{ proposta.data|date:"d/m/Y" }}</td>
-						<td class="text-center">{{ proposta.get_situacao_display }}</td>
-						<td class="text-center">{% if proposta.extrato %}<a href="/media/{{ proposta.extrato }}" target="_blank"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-			{% if propostas %}
-			
-			<div class="paginacao">
-				<nav aria-label="Page navigation align-items-end">
-					<div class="pagination">
-						<span class="step-links">
-							{% if propostas.has_previous %}filter_situacao
-								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page=1">
-									<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
-								</a>
-								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.previous_page_number }}">
-									<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
-								</a>
-							{% endif %}
+					</td>
+					<td class="text-center">{{ proposta.numero }}</td>
+					{% if perms.base.add_proposta %}
+					<td>{{ proposta.prefeitura }}</td>
+					{% endif %}
+					<td>{{ proposta.objeto }}</td>
+					<td class="text-right">{% load l10n %}{{ proposta.valor_convenio|floatformat:2|localize }}</td>
+					<td class="text-center">{{ proposta.data|date:"d/m/Y" }}</td>
+					<td class="text-center">{{ proposta.get_situacao_display }}</td>
+					<td class="text-center">{% if proposta.extrato %}<a href="/media/{{ proposta.extrato }}" target="_blank"><i class="fas fa-file-alt"></i></a>{% endif %}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% if propostas %}
+		
+		<div class="paginacao">
+			<nav aria-label="Page navigation align-items-end">
+				<div class="pagination">
+					<span class="step-links">
+						{% if propostas.has_previous %}filter_situacao
+							<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page=1">
+								<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
+							</a>
+							<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.previous_page_number }}">
+								<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
+							</a>
+						{% endif %}
 
-							<span class="current">
-								Página {{ propostas.number }} de {{ propostas.paginator.num_pages }}.
-							</span>
-
-							{% if propostas.has_next %}
-								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.next_page_number }}">
-									<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
-								</a>
-								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.paginator.num_pages }}">
-									<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
-								</a>
-							{% endif %}
+						<span class="current">
+							Página {{ propostas.number }} de {{ propostas.paginator.num_pages }}.
 						</span>
-					</div>
-				</nav>
-			</div>
-			{% else %}
-				<div class="alert alert-info mb-0">Nenhuma proposta cadastrada!</div>
-			{% endif %}
+
+						{% if propostas.has_next %}
+							<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.next_page_number }}">
+								<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
+							</a>
+							<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.paginator.num_pages }}">
+								<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
+							</a>
+						{% endif %}
+					</span>
+				</div>
+			</nav>
+		</div>
+		{% else %}
+		<div class="alert alert-info mb-0">Nenhuma proposta cadastrada!</div>
+		{% endif %}
 	</div>
 
 

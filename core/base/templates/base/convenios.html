@@ -80,7 +80,6 @@
 	</div>
 	{% endblock %}
 	<div class="row">
-		{% if convenios %}
 		<div class="tableplus">
 			{% for convenio in convenios %}
 				<div class="tp-item">
@@ -227,7 +226,7 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
+		{% if convenios %}
 		 
 		<div class="paginacao">
 			<nav aria-label="Page navigation align-items-end">
