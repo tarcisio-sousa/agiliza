@@ -133,7 +133,7 @@
 			<thead>
 				<tr>
 					<th width="1%"><i class="fas fa-asterisk"></i></th>
-					<th>Prefeitura
+					<th style="display: flex;">Prefeitura
 						<ul class="navbar-nav mr-auto d-inline-block float-right">
 							<li class="nav-item dropdown">
 								<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
@@ -214,9 +214,9 @@
 					<td>{{ convenio.proposta.objeto }}</td>
 					<td>{{ convenio.numero }}</td>
 					<td>
-						{% if convenio.data_suspensiva %}
+						{% if convenio.situacao == 'aguardando-aprovacao' %}
 							{{ convenio.data_suspensiva|date:"d/m/Y" }}
-						{% elif convenio.data_vigencia %}
+						{% else %}
 							{{ convenio.data_vigencia|date:"d/m/Y" }}
 						{% endif %}
 					</td>
@@ -234,10 +234,10 @@
 				<div class="pagination">
 					<span class="step-links">
 						{% if convenios.has_previous %}
-							<a href="?page=1">
+							<a href="?{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page=1">
 								<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
 							</a>
-							<a href="?page={{ convenios.previous_page_number }}">
+							<a href="?{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page={{ convenios.previous_page_number }}">
 								<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
 							</a>
 						{% endif %}
@@ -247,10 +247,10 @@
 						</span>
 
 						{% if convenios.has_next %}
-							<a href="?page={{ convenios.next_page_number }}">
+							<a href="?{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page={{ convenios.next_page_number }}">
 								<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
 							</a>
-							<a href="?page={{ convenios.paginator.num_pages }}">
+							<a href="?{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page={{ convenios.paginator.num_pages }}">
 								<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
 							</a>
 						{% endif %}

@@ -163,7 +163,7 @@
 						<th width="1%"><i class="fas fa-asterisk"></i></th>
 						<th>Proposta</th>
 						{% if perms.base.add_proposta %}
-						<th>
+						<th style="display: flex;">
 							Prefeitura
 							<ul class="navbar-nav mr-auto d-inline-block float-right">
 								<li class="nav-item dropdown">
@@ -195,7 +195,7 @@
 						<th>Objeto</th>
 						<th>R$ Valor</th>
 						<th>Data</th>
-						<th>
+						<th style="display: flex;">
 							Situação
 							<ul class="navbar-nav mr-auto d-inline-block float-right">
 								<li class="nav-item dropdown">
@@ -281,11 +281,11 @@
 				<nav aria-label="Page navigation align-items-end">
 					<div class="pagination">
 						<span class="step-links">
-							{% if propostas.has_previous %}
-								<a href="?page=1">
+							{% if propostas.has_previous %}filter_situacao
+								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page=1">
 									<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
 								</a>
-								<a href="?page={{ propostas.previous_page_number }}">
+								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page={{ propostas.previous_page_number }}">
 									<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
 								</a>
 							{% endif %}
@@ -295,10 +295,10 @@
 							</span>
 
 							{% if propostas.has_next %}
-								<a href="?page={{ propostas.next_page_number }}">
+								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page={{ propostas.next_page_number }}">
 									<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
 								</a>
-								<a href="?page={{ propostas.paginator.num_pages }}">
+								<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}{% endif %}page={{ propostas.paginator.num_pages }}">
 									<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
 								</a>
 							{% endif %}
