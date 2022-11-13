@@ -299,7 +299,7 @@ def convenios(request):
             convenios = convenios.filter(proposta__prefeitura=filter_prefeitura)
         if 'search' in request.GET:
             convenios = convenios.filter(
-                Q(numero=request.GET['search']) |
+                Q(numero__contains=request.GET['search']) |
                 Q(orgao__descricao=request.GET['search']))
 
     paginator = Paginator(convenios, 10)
