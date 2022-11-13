@@ -172,7 +172,7 @@
 										<li>
 											<a 
 												class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" 
-												href="{% url 'propostas' %}{% if filter_situacao %}{% relative_url filter_situacao 'situacao' %}{% endif %}">
+												href="{% url 'propostas' %}{% if filter_situacao %}&situacao={{ filter_situacao }}{% endif %}">
 												Todas
 												{% if not filter_prefeitura %}
 													<i class="fas fa-check"></i>
@@ -183,7 +183,7 @@
 											<li>
 												<a 
 													class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" 
-													href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}{% if filter_situacao %}{% relative_url filter_situacao 'situacao' %}{% endif %}">
+													href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}{% if filter_situacao %}&situacao={{ filter_situacao }}{% endif %}">
 													{{ prefeitura.nome }}
 													{% if prefeitura.id == filter_prefeitura %}
 														<i class="fas fa-check"></i>
@@ -206,7 +206,9 @@
 									<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
 									<ul class="dropdown-menu dropdown-menu-right">
 										<li>
-											<a class="dropdown-item {% if not filter_situacao %}disabled{% endif %}" href="{% url 'propostas' %}">
+											<a 
+												class="dropdown-item {% if not filter_situacao %}disabled{% endif %}" 
+												href="{% url 'propostas' %}">
 												Todas
 												{% if not filter_situacao %}
 													<i class="fas fa-check"></i>
@@ -217,7 +219,7 @@
 										<li>
 											<a 
 												class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" 
-												href="{% url 'propostas' %}{% if filter_prefeitura %}{% relative_url filter_prefeitura 'prefeitura' %}{% endif %}{% relative_url choice_situacao 'situacao' %}">
+												href="{% url 'propostas' %}{% relative_url choice_situacao 'situacao' %}{% if filter_prefeitura %}&prefeitura={{ filter_prefeitura }}{% endif %}">
 												{{ situacao }}
 												{% if choice_situacao == filter_situacao %}
 													<i class="fas fa-check"></i>
