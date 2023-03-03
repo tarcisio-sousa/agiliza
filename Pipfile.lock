@@ -69,12 +69,8 @@
             "version": "==21.1"
         },
         "django-ordered-model": {
-            "hashes": [
-                "sha256:26c6b5a87a6e51323c53e0233d999dd1a9f40d43b0f17e478de951bc1f999c73",
-                "sha256:a840b475ca0f2bac5f6e4918e107a8e075578babcd94b3b8d0ba7f009eaf1450"
-            ],
-            "index": "pypi",
-            "version": "==3.5"
+            "hashes": [],
+            "version": "==3.7"
         },
         "django-wkhtmltopdf": {
             "hashes": [
