@@ -23,7 +23,7 @@ num2words = "*"
 pillow = "==9.1.1"
 psycopg2-binary = "*"
 python-decouple = "*"
-sentry-sdk = "==1.5.6"
+sentry-sdk = "==1.30.0"
 whitenoise = "==5.3.0"
 
 [requires]
