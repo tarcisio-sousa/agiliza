@@ -42,7 +42,7 @@
         },
         "django": {
             "hashes": [],
-            "version": "==4.1.3"
+            "version": "==4.2.6"
         },
         "django-bootstrap-breadcrumbs": {
             "hashes": [
