@@ -857,11 +857,31 @@ def projeto_controle_item(request, controle_id=False):
     )
 
 
+def calcula_soma_valor_pagamento_convenente(execucoes_convenente):
+    return sum([execucao_convenente.valor_pagamento for execucao_convenente in execucoes_convenente])
+
+
+def calcula_percentual_convenente(execucoes_convenente):
+    return sum([execucao_convenente.percentual for execucao_convenente in execucoes_convenente])
+
+
+def calcula_soma_valor_pagamento_concedente(execucoes_concedente):
+    return sum([execucao_concedente.valor_pagamento for execucao_concedente in execucoes_concedente])
+
+
+def calcula_percentual_concedente(execucoes_concedente):
+    return sum([execucao_concedente.percentual for execucao_concedente in execucoes_concedente])
+
+
 @login_required
 def protocolo(request, convenio_id=False):
     convenio = Convenio.objects.get(id=convenio_id)
     execucoes_convenente = ExecucaoConvenente.objects.filter(convenio=convenio)
+    total_execucoes_convenentes = calcula_soma_valor_pagamento_convenente(execucoes_convenente)
+    percentual_execucoes_convenentes = calcula_percentual_convenente(execucoes_convenente)
     execucoes_concedente = ExecucaoConcedente.objects.filter(convenio=convenio)
+    total_execucoes_concedentes = calcula_soma_valor_pagamento_concedente(execucoes_concedente)
+    percentual_execucoes_concedentes = calcula_percentual_concedente(execucoes_concedente)
     protocolos = Protocolo.objects.filter(convenio=convenio)
 
     proposta_form = PropostaValorLiberado(instance=convenio.proposta)
@@ -885,7 +905,11 @@ def protocolo(request, convenio_id=False):
         {
             'convenio': convenio,
             'execucoes_convenente': execucoes_convenente,
+            'total_execucoes_convenentes': total_execucoes_convenentes,
+            'percentual_execucoes_convenentes': percentual_execucoes_convenentes,
             'execucoes_concedente': execucoes_concedente,
+            'total_execucoes_concedentes': total_execucoes_concedentes,
+            'percentual_execucoes_concedentes': percentual_execucoes_concedentes,
             'protocolos': protocolos,
             'proposta_form': proposta_form,
         })
