@@ -303,7 +303,7 @@ def convenios(request):
             convenios = convenios.filter(
                 Q(numero__contains=search) |
                 Q(orgao__descricao=search) |
-                Q(proposta__objeto=search))
+                Q(proposta__objeto__contains=search))
         if order_by:
             order_description = order_by
             if order == 'desc':

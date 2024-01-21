@@ -172,17 +172,16 @@
 					<th>Convênio</th>
 					<th>Vencimento</th>
 					<th>Situação</th>
-					<th width="1%">
+					<th width="100">
+						R$ Valor 
 						{% if order == 'asc' %}
-						<a href="{% url 'convenios' %}?order_by=proposta__valor_convenio,desc">
-							R$ Valor 
+							<a href="{% url 'convenios' %}?order_by=proposta__valor_convenio,desc">
 								<i class="fas fa-chevron-up"></i>
-						</a>
-						{% elif order == 'desc' %}
-						<a href="{% url 'convenios' %}?order_by=proposta__valor_convenio,asc">
-							R$ Valor 
+							</a>
+						{% else %}
+							<a href="{% url 'convenios' %}?order_by=proposta__valor_convenio,asc">
 								<i class="fas fa-chevron-down"></i>
-						</a>
+							</a>
 						{% endif %}
 					</th>
 				</tr>
