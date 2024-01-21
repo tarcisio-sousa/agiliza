@@ -285,6 +285,8 @@ def declaracoes(request):
 
 @login_required
 def convenios(request):
+    search = request.GET['search'] if 'search' in request.GET else None
+    [order_by, order] = request.GET['order_by'].split(',') if 'order_by' in request.GET else [None, None]
     filter_prefeitura = False
     choices_prefeitura = Prefeitura.objects.all()
     convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
@@ -297,10 +299,16 @@ def convenios(request):
         if 'prefeitura' in request.GET:
             filter_prefeitura = int(request.GET['prefeitura'])
             convenios = convenios.filter(proposta__prefeitura=filter_prefeitura)
-        if 'search' in request.GET:
+        if search:
             convenios = convenios.filter(
-                Q(numero__contains=request.GET['search']) |
-                Q(orgao__descricao=request.GET['search']))
+                Q(numero__contains=search) |
+                Q(orgao__descricao=search) |
+                Q(proposta__objeto=search))
+        if order_by:
+            order_description = order_by
+            if order == 'desc':
+                order_description = '-' + order_by
+            convenios = convenios.order_by(order_description)
 
     paginator = Paginator(convenios, 10)
 
@@ -316,6 +324,8 @@ def convenios(request):
             'filter_prefeitura': filter_prefeitura,
             'convenios': convenios,
             'orgaos': orgaos,
+            'search': search,
+            'order': order,
         })
 
 
