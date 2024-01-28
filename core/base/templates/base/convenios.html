@@ -155,13 +155,13 @@
 										</a>
 									</li>
 								{% for prefeitura in choices_prefeitura %}
+									{% if perms.auth.is_super or prefeitura.id == user_prefeitura.id %}
 									<li>
 										<a class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}{% relative_url prefeitura.id 'prefeitura' %}">
 											{{ prefeitura.nome }}
-											{% if prefeitura.id == filter_prefeitura %}
-											{% endif %}
 										</a>
 									</li>
+									{% endif %}
 								{% endfor %}
 								</ul>
 							</li>
@@ -170,6 +170,7 @@
 					</th>
 					<th>Objeto</th>
 					<th>Convênio</th>
+					<th>Dias</th>
 					<th>Vencimento</th>
 					<th>Situação</th>
 					<th width="100">
@@ -232,6 +233,7 @@
 					<td>{{ convenio.proposta.prefeitura }}</td>
 					<td>{{ convenio.proposta.objeto }}</td>
 					<td>{{ convenio.numero }}</td>
+					<td class="text-center">{{ convenio.dias }}</td>
 					<td>
 						{% if convenio.situacao == 'aguardando-aprovacao' %}
 							{{ convenio.data_suspensiva|date:"d/m/Y" }}
