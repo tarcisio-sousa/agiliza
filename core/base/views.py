@@ -289,6 +289,7 @@ def convenios(request):
     [order_by, order] = request.GET['order_by'].split(',') if 'order_by' in request.GET else [None, None]
     filter_prefeitura = False
     choices_prefeitura = Prefeitura.objects.all()
+    prefeitura = None
     convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
 
     for convenio in convenios:
