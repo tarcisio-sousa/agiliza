@@ -170,8 +170,8 @@
 					</th>
 					<th>Objeto</th>
 					<th>Convênio</th>
-					<th>Dias</th>
 					<th>Vencimento</th>
+					<th>Dias</th>
 					<th>Situação</th>
 					<th width="100">
 						R$ Valor 
@@ -233,7 +233,6 @@
 					<td>{{ convenio.proposta.prefeitura }}</td>
 					<td>{{ convenio.proposta.objeto }}</td>
 					<td>{{ convenio.numero }}</td>
-					<td class="text-center">{{ convenio.dias }}</td>
 					<td>
 						{% if convenio.situacao == 'aguardando-aprovacao' %}
 							{{ convenio.data_suspensiva|date:"d/m/Y" }}
@@ -242,6 +241,7 @@
 						{% endif %}
 					</td>
 					<!-- <td><a href="{% url 'proposta' convenio.proposta.id %}">{{ convenio.proposta.numero }}</a></td> -->
+					<td class="text-center">{{ convenio.dias }}</td>
 					<td>{{ convenio.get_situacao_display }}</td>
 					<td class="text-right">{% load l10n %}{{ convenio.proposta.valor_convenio|floatformat:2|localize }}</td>
 				</tr>
