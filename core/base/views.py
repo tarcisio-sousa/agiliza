@@ -292,15 +292,6 @@ def convenios(request):
     prefeitura = None
     convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
 
-    for convenio in convenios:
-        protocolo = Protocolo.objects.filter(convenio_id=convenio.id).order_by('-data_criacao').first()
-        convenio.protocolo = protocolo
-        if protocolo:
-            data_criacao = protocolo.data_criacao
-        else:
-            data_criacao = convenio.data_criacao
-        convenio.dias = abs((date.today() - data_criacao).days)
-
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
         prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
         convenios = convenios.filter(proposta__prefeitura=prefeitura)
@@ -319,6 +310,15 @@ def convenios(request):
             if order == 'desc':
                 order_description = '-' + order_by
             convenios = convenios.order_by(order_description)
+
+    for convenio in convenios:
+        protocolo = Protocolo.objects.filter(convenio_id=convenio.id).order_by('-data_criacao').first()
+        convenio.protocolo = protocolo
+        if protocolo:
+            data_criacao = protocolo.data_criacao
+        else:
+            data_criacao = convenio.data_criacao
+        convenio.dias = abs((date.today() - data_criacao).days)
 
     paginator = Paginator(convenios, 10)
 
