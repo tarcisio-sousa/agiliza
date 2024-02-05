@@ -317,7 +317,7 @@ def convenios(request):
         if protocolo:
             data = protocolo.data
         else:
-            data = convenio.data
+            data = convenio.data_criacao
         convenio.dias = abs((date.today() - data).days)
 
     paginator = Paginator(convenios, 10)
