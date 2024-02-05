@@ -312,13 +312,13 @@ def convenios(request):
             convenios = convenios.order_by(order_description)
 
     for convenio in convenios:
-        protocolo = Protocolo.objects.filter(convenio_id=convenio.id).order_by('-data_criacao').first()
+        protocolo = Protocolo.objects.filter(convenio_id=convenio.id).order_by('-data').first()
         convenio.protocolo = protocolo
         if protocolo:
-            data_criacao = protocolo.data_criacao
+            data = protocolo.data
         else:
-            data_criacao = convenio.data_criacao
-        convenio.dias = abs((date.today() - data_criacao).days)
+            data = convenio.data
+        convenio.dias = abs((date.today() - data).days)
 
     paginator = Paginator(convenios, 10)
 
