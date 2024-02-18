@@ -301,11 +301,18 @@ def convenios(request):
             filter_prefeitura = int(request.GET['prefeitura'])
             convenios = convenios.filter(proposta__prefeitura=filter_prefeitura)
         if search:
+            STATUS_CHOICES_FILTERED = [
+                value
+                for value, display in Convenio.SituacaoChoice.choices
+                if search in display
+            ]
+
             convenios = convenios.filter(
-                Q(numero__contains=search) |
+                Q(situacao__in=STATUS_CHOICES_FILTERED) |
+                Q(numero__iendswith=search) |
                 Q(orgao__descricao=search) |
-                Q(proposta__objeto__contains=search))
-        if order_by:
+                Q(proposta__objeto__icontains=search))
+        if order_by and order_by != 'dias':
             order_description = order_by
             if order == 'desc':
                 order_description = '-' + order_by
@@ -320,7 +327,11 @@ def convenios(request):
             data = convenio.data_criacao
         convenio.dias = abs((date.today() - data).days)
 
-    paginator = Paginator(convenios, 10)
+    if (order_by == 'dias'):
+        option = False if order == 'asc' else True
+        convenios = sorted(convenios, key=lambda x: x.dias, reverse=option)
+
+    paginator = Paginator(convenios, 50)
 
     page_number = request.GET.get('page')
     convenios = paginator.get_page(page_number)
@@ -336,6 +347,7 @@ def convenios(request):
             'convenios': convenios,
             'orgaos': orgaos,
             'search': search,
+            'order_by': order_by,
             'order': order,
         })
 

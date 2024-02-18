@@ -171,7 +171,16 @@
 					<th>Objeto</th>
 					<th>Convênio</th>
 					<th>Vencimento</th>
-					<th>Dias</th>
+					<th>Dias 
+						{% if order == 'asc' %}
+							<a href="{% url 'convenios' %}?order_by=dias,desc">
+								<i class="fas fa-chevron-up"></i>
+							</a>
+						{% else %}
+							<a href="{% url 'convenios' %}?order_by=dias,asc">
+								<i class="fas fa-chevron-down"></i>
+							</a>
+						{% endif %}</th>
 					<th>Situação</th>
 					<th width="100">
 						R$ Valor 
@@ -255,10 +264,10 @@
 				<div class="pagination">
 					<span class="step-links">
 						{% if convenios.has_previous %}
-							<a href="?{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page=1">
+							<a href="?{% if order_by %}&order_by={{ order_by}},{{ order}}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page=1">
 								<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
 							</a>
-							<a href="?{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ convenios.previous_page_number }}">
+							<a href="?{% if order_by %}&order_by={{ order_by}},{{ order}}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ convenios.previous_page_number }}">
 								<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
 							</a>
 						{% endif %}
@@ -268,10 +277,10 @@
 						</span>
 
 						{% if convenios.has_next %}
-							<a href="?{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ convenios.next_page_number }}">
+							<a href="?{% if order_by %}&order_by={{ order_by}},{{ order}}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ convenios.next_page_number }}">
 								<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
 							</a>
-							<a href="?{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ convenios.paginator.num_pages }}">
+							<a href="?{% if order_by %}&order_by={{ order_by}},{{ order}}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ convenios.paginator.num_pages }}">
 								<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
 							</a>
 						{% endif %}
