@@ -226,7 +226,7 @@ class ExecucaoConvenente(models.Model):
 
     @property
     def percentual(self):
-        return (self.valor_pagamento / self.convenio.valor_contrato) * 100
+        return (self.valor_pagamento / self.convenio.valor_contrato) * 100 if self.convenio.valor_contrato > 0 else 0
 
 
 class ExecucaoConcedente(models.Model):

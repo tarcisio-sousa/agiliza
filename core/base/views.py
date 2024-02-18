@@ -253,6 +253,15 @@ def _gerar_convenio(request, proposta, dados):
                 tecnico_orgao.save()
                 convenio.tecnico_orgao = tecnico_orgao
             convenio.save()
+
+            protocolos = Protocolo(
+                convenio=convenio,
+                data=convenio.data_criacao,
+                data_prevista=convenio.data_criacao,
+                data_protocolado=convenio.data_criacao,
+                consideracoes=proposta.get_situacao_display())
+            protocolos.save()
+
             messages.add_message(request, messages.SUCCESS, 'Convênio gerado com sucesso!')
             _gerar_projeto(request, convenio, dados)
     else:
@@ -1049,6 +1058,15 @@ def protocolo_execucao_convenente(
             protocolo_execucao_convenente = protocolo_execucao_convenente_form.save(commit=False)
             protocolo_execucao_convenente.convenio = convenio
             protocolo_execucao_convenente.save()
+
+            protocolos = Protocolo(
+                convenio=convenio,
+                data=protocolo_execucao_convenente.data_pagamento,
+                data_prevista=protocolo_execucao_convenente.data_pagamento,
+                data_protocolado=protocolo_execucao_convenente.data_pagamento,
+                consideracoes='Execução convenente - Parcela cadastrada com sucesso!')
+            protocolos.save()
+
             messages.add_message(
                 request,
                 messages.SUCCESS,
@@ -1104,6 +1122,15 @@ def protocolo_execucao_concedente(
             protocolo_execucao_concedente = protocolo_execucao_concedente_form.save(commit=False)
             protocolo_execucao_concedente.convenio = convenio
             protocolo_execucao_concedente.save()
+
+            protocolos = Protocolo(
+                convenio=convenio,
+                data=protocolo_execucao_concedente.data_liberacao,
+                data_prevista=protocolo_execucao_concedente.data_liberacao,
+                data_protocolado=protocolo_execucao_concedente.data_liberacao,
+                consideracoes='Execução concedente - Parcela cadastrada com sucesso!')
+            protocolos.save()
+
             messages.add_message(
                 request,
                 messages.SUCCESS,
