@@ -331,7 +331,7 @@ def convenios(request):
         option = False if order == 'asc' else True
         convenios = sorted(convenios, key=lambda x: x.dias, reverse=option)
 
-    paginator = Paginator(convenios, 1)
+    paginator = Paginator(convenios, 50)
 
     page_number = request.GET.get('page')
     convenios = paginator.get_page(page_number)
