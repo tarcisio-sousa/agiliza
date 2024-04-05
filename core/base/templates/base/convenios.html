@@ -42,7 +42,7 @@
 				</div>
 				{% endif %}
 			</form>
-			<div class="btngroup2">
+			<div>
 				{% if perms.base.add_convenio %}
 					<a href="javascript: void(0)" data-toggle="modal" data-target="#fltr-prefeitura" class="btn btn-sm link-agiliza mgr5 mobile"><i class="fas fa-filter"></i> Prefeitura</a>
 					<!-- Modal -->
@@ -151,7 +151,7 @@
 						<ul class="navbar-nav mr-auto d-inline-block float-right ml-2">
 							<li class="nav-item dropdown">
 								<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
-								<ul class="dropdown-menu dropdown-menu-right">
+								<ul class="dropdown-menu dropdown-menu-right" style="max-height: 200px; overflow-y: auto;">
 									<li>
 										<a class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}">
 											Todas
@@ -187,7 +187,40 @@
 								<i class="fas fa-chevron-down"></i>
 							</a>
 						{% endif %}</th>
-					<th>Situação</th>
+					<th>
+						<span style="display: flex;">
+							Situação
+							<ul class="navbar-nav mr-auto d-inline-block float-right">
+								<li class="nav-item dropdown">
+									<a class="nav-link link-agiliza dropdown-toggle p-0 pl-1" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
+									<ul class="dropdown-menu dropdown-menu-right">
+										<li>
+											<a 
+												class="dropdown-item {% if not filter_situacao %}disabled{% endif %}" 
+												href="{% url_set_param search=search %}">
+												Todas
+												{% if not filter_situacao %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</li>
+										{% for choice_situacao, situacao in choices_situacao %}
+										<li>
+											<a 
+												class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" 
+												href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=choice_situacao %}">
+												{{ situacao }}
+												{% if choice_situacao == filter_situacao %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</li>
+										{% endfor %}
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</th>
 					<th width="100">
 						R$ Valor 
 						{% if order == 'asc' %}

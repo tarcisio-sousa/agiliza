@@ -306,7 +306,7 @@
 			<nav aria-label="Page navigation align-items-end">
 				<div class="pagination">
 					<span class="step-links">
-						{% if propostas.has_previous %}filter_situacao
+						{% if propostas.has_previous %}
 							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao page=1 %}">
 								<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
 							</a>

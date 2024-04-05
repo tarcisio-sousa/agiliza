@@ -296,8 +296,10 @@ def declaracoes(request):
 def convenios(request):
     search = request.GET['search'] if 'search' in request.GET else None
     [order_by, order] = request.GET['order_by'].split(',') if 'order_by' in request.GET else [None, None]
+    filter_situacao = request.GET['situacao'] if 'situacao' in request.GET else False
     filter_prefeitura = False
     choices_prefeitura = Prefeitura.objects.all()
+    choices_situacao = Convenio.SituacaoChoice.choices
     prefeitura = None
     convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
 
@@ -309,6 +311,8 @@ def convenios(request):
         if 'prefeitura' in request.GET:
             filter_prefeitura = int(request.GET['prefeitura'])
             convenios = convenios.filter(proposta__prefeitura=filter_prefeitura)
+        if filter_situacao:
+            convenios = convenios.filter(situacao=filter_situacao)
         if search:
             STATUS_CHOICES_FILTERED = [
                 value
@@ -352,6 +356,8 @@ def convenios(request):
         {
             'choices_prefeitura': choices_prefeitura,
             'filter_prefeitura': filter_prefeitura,
+            'choices_situacao': choices_situacao,
+            'filter_situacao': filter_situacao,
             'user_prefeitura': prefeitura,
             'convenios': convenios,
             'orgaos': orgaos,
