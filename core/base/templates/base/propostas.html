@@ -24,12 +24,25 @@
 			<form action="{% url 'propostas' %}" method="get" autocomplete="off" class="btngroup1">
 				<div class="input-group input-group-sm">
 					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" />
+					{% if filter_prefeitura %}
+					<input name="prefeitura" value="{{ filter_prefeitura }}" type="hidden" />
+					{% endif %}
+					{% if filter_situacao %}
+					<input name="situacao" value="{{ filter_situacao }}" type="hidden" />
+					{% endif %}
 					<div class="input-group-append">
 						<button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i> Buscar</button>
 					</div>
 				</div>
+				{% if search %}
+				<div>
+					<strong>Filtrado por: </strong>
+					<span class="mr-2"><u>{{ search }}</u></span>
+					<a href="{% url_set_param prefeitura=filter_prefeitura situacao=filter_situacao %}"><strong>Limpar</strong></a>
+				</div>
+				{% endif %}
 			</form>
-			<div class="btngroup2">
+			<div>
 				{% if perms.base.add_proposta %}
 					<a href="{% url 'proposta' %}" class="btn btn-sm link-agiliza mgr5 office"><i class="fas fa-plus-circle"></i> Nova</a>
 					<a href="javascript: void(0)" data-toggle="modal" data-target="#fltr-prefeitura" class="btn btn-sm link-agiliza mgr5 mobile"><i class="fas fa-filter"></i> Prefeitura</a>
@@ -168,12 +181,12 @@
 						Prefeitura
 						<ul class="navbar-nav mr-auto d-inline-block float-right">
 							<li class="nav-item dropdown">
-								<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
+								<a class="nav-link link-agiliza dropdown-toggle p-0 pl-1" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
 								<ul class="dropdown-menu dropdown-menu-right">
 									<li>
 										<a 
 											class="dropdown-item {% if not filter_prefeitura %}disabled{% endif %}" 
-											href="{% url 'propostas' %}{% if filter_situacao %}&situacao={{ filter_situacao }}{% endif %}">
+											href="{% url_set_param search=search filter_situacao=filter_situacao page=1 %}">
 											Todas
 											{% if not filter_prefeitura %}
 												<i class="fas fa-check"></i>
@@ -184,7 +197,7 @@
 										<li>
 											<a 
 												class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" 
-												href="{% url 'propostas' %}{% relative_url prefeitura.id 'prefeitura' %}{% if filter_situacao %}&situacao={{ filter_situacao }}{% endif %}">
+												href="{% url_set_param search=search prefeitura=prefeitura.id filter_situacao=filter_situacao %}">
 												{{ prefeitura.nome }}
 												{% if prefeitura.id == filter_prefeitura %}
 													<i class="fas fa-check"></i>
@@ -206,12 +219,12 @@
 						Situação
 						<ul class="navbar-nav mr-auto d-inline-block float-right">
 							<li class="nav-item dropdown">
-								<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
+								<a class="nav-link link-agiliza dropdown-toggle p-0 pl-1" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
 								<ul class="dropdown-menu dropdown-menu-right">
 									<li>
 										<a 
 											class="dropdown-item {% if not filter_situacao %}disabled{% endif %}" 
-											href="{% url 'propostas' %}">
+											href="{% url_set_param search=search %}">
 											Todas
 											{% if not filter_situacao %}
 												<i class="fas fa-check"></i>
@@ -222,7 +235,7 @@
 									<li>
 										<a 
 											class="dropdown-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" 
-											href="{% url 'propostas' %}{% relative_url choice_situacao 'situacao' %}{% if filter_prefeitura %}&prefeitura={{ filter_prefeitura }}{% endif %}">
+											href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=choice_situacao %}">
 											{{ situacao }}
 											{% if choice_situacao == filter_situacao %}
 												<i class="fas fa-check"></i>
@@ -294,10 +307,10 @@
 				<div class="pagination">
 					<span class="step-links">
 						{% if propostas.has_previous %}filter_situacao
-							<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page=1">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao page=1 %}">
 								<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
 							</a>
-							<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.previous_page_number }}">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao page=propostas.previous_page_number %}">
 								<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
 							</a>
 						{% endif %}
@@ -307,10 +320,10 @@
 						</span>
 
 						{% if propostas.has_next %}
-							<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.next_page_number }}">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao page=propostas.next_page_number %}">
 								<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
 							</a>
-							<a href="?{% if filter_situacao %}situacao={{ filter_situacao }}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ propostas.paginator.num_pages }}">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao page=propostas.paginator.num_pages %}">
 								<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
 							</a>
 						{% endif %}

@@ -24,6 +24,12 @@
 			<form action="{% url 'convenios' %}" method="get" autocomplete="off" class="btngroup1"> 
 				<div class="input-group input-group-sm"> 
 					<input name="search" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" /> 
+					{% if filter_prefeitura %}
+					<input name="prefeitura" value="{{ filter_prefeitura }}" type="hidden" />
+					{% endif %}
+					{% if filter_situacao %}
+					<input name="situacao" value="{{ filter_situacao }}" type="hidden" />
+					{% endif %}
 					<div class="input-group-append"> 
 						<button class="btn btn-outline-agiliza" type="submit"><i class="fas fa-search"></i> Buscar</button>
 					</div>
@@ -32,7 +38,7 @@
 				<div>
 					<strong>Filtrado por: </strong>
 					<span class="mr-2"><u>{{ search }}</u></span>
-					<a href="{% url 'convenios' %}"><strong>Limpar</strong></a>
+					<a href="{% url_set_param prefeitura=filter_prefeitura situacao=filter_situacao %}"><strong>Limpar</strong></a>
 				</div>
 				{% endif %}
 			</form>
@@ -141,7 +147,7 @@
 					<th width="1%"><i class="fas fa-asterisk"></i></th>
 					<th>
 						<span style="display: flex;">
-						Cliente
+						Orgão
 						<ul class="navbar-nav mr-auto d-inline-block float-right ml-2">
 							<li class="nav-item dropdown">
 								<a class="nav-link link-agiliza dropdown-toggle p-0" href="javascript: void(0)" role="button" data-toggle="dropdown" aria-expanded="false"> <i class="fas fa-filter"></i> </a>
@@ -173,11 +179,11 @@
 					<th>Vencimento</th>
 					<th>Dias 
 						{% if order == 'asc' %}
-							<a href="{% url 'convenios' %}?order_by=dias,desc">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao %}&order_by=dias,desc">
 								<i class="fas fa-chevron-up"></i>
 							</a>
 						{% else %}
-							<a href="{% url 'convenios' %}?order_by=dias,asc">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao %}&order_by=dias,asc">
 								<i class="fas fa-chevron-down"></i>
 							</a>
 						{% endif %}</th>
@@ -185,11 +191,11 @@
 					<th width="100">
 						R$ Valor 
 						{% if order == 'asc' %}
-							<a href="{% url 'convenios' %}?order_by=proposta__valor_convenio,desc">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao %}&order_by=proposta__valor_convenio,desc">
 								<i class="fas fa-chevron-up"></i>
 							</a>
 						{% else %}
-							<a href="{% url 'convenios' %}?order_by=proposta__valor_convenio,asc">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao %}&order_by=proposta__valor_convenio,asc">
 								<i class="fas fa-chevron-down"></i>
 							</a>
 						{% endif %}
@@ -264,10 +270,10 @@
 				<div class="pagination">
 					<span class="step-links">
 						{% if convenios.has_previous %}
-							<a href="?{% if order_by %}&order_by={{ order_by}},{{ order}}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page=1">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao page=1 %}{% if order_by %}&order_by={{ order_by}},{{ order}}{% endif %}">
 								<span aria-hidden="true"><i class="fas fa-angle-double-left pgdouble"></i></span>
 							</a>
-							<a href="?{% if order_by %}&order_by={{ order_by}},{{ order}}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ convenios.previous_page_number }}">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao page=convenios.previous_page_number %}{% if order_by %}&order_by={{ order_by}},{{ order}}{% endif %}">
 								<span aria-hidden="true"><i class="fas fa-angle-left pgsimple"></i></span>
 							</a>
 						{% endif %}
@@ -277,10 +283,10 @@
 						</span>
 
 						{% if convenios.has_next %}
-							<a href="?{% if order_by %}&order_by={{ order_by}},{{ order}}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ convenios.next_page_number }}">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao page=convenios.next_page_number %}{% if order_by %}&order_by={{ order_by}},{{ order}}{% endif %}">
 								<span aria-hidden="true"><i class="fas fa-angle-right pgsimple"></i></span>
 							</a>
-							<a href="?{% if order_by %}&order_by={{ order_by}},{{ order}}&{% endif %}{% if filter_prefeitura %}prefeitura={{ filter_prefeitura }}&{% endif %}page={{ convenios.paginator.num_pages }}">
+							<a href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=filter_situacao page=convenios.paginator.num_pages %}{% if order_by %}&order_by={{ order_by}},{{ order}}{% endif %}">
 								<span aria-hidden="true"><i class="fas fa-angle-double-right pgdouble"></i></span>
 							</a>
 						{% endif %}
