@@ -332,10 +332,11 @@ def convenios(request):
             convenios = convenios.order_by(order_description)
 
     for convenio in convenios:
-        protocolo = Protocolo.objects.filter(convenio_id=convenio.id).order_by('-data').first()
+        protocolo = Protocolo.objects.filter(convenio_id=convenio.id)\
+            .order_by('-data_criacao', '-data_protocolado').first()
         convenio.protocolo = protocolo
         if protocolo:
-            data = protocolo.data
+            data = protocolo.data_protocolado
         else:
             data = convenio.data_criacao
         convenio.dias = abs((date.today() - data).days)
