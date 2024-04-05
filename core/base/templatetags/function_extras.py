@@ -41,3 +41,11 @@ def relative_url(value, field_name, urlencode=None):
         encoded_querystring = '&'.join(filtered_querystring)
         url = '{}&{}'.format(url, encoded_querystring)
     return url
+
+
+@register.simple_tag(takes_context=True)
+def url_set_param(context, **kwargs):
+    filtered_querystring = ['{}={}'.format(k, v) for k, v in kwargs.items() if v]
+    encoded_querystring = '&'.join(filtered_querystring)
+    url = '{}?{}'.format(context.request.path, encoded_querystring)
+    return url

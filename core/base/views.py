@@ -109,8 +109,9 @@ def home(request):
 
 @login_required
 def propostas(request):
-    filter_situacao = False
-    filter_prefeitura = False
+    search = request.GET['search'] if 'search' in request.GET else None
+    filter_situacao = request.GET['situacao'] if 'situacao' in request.GET else False
+    filter_prefeitura = int(request.GET['prefeitura']) if 'prefeitura' in request.GET else False
     choices_situacao = Proposta.SituacaoChoice.choices
     choices_prefeitura = Prefeitura.objects.all()
     propostas = Proposta.objects.filter(status=True).order_by('-data__year', '-id')
@@ -122,14 +123,12 @@ def propostas(request):
     if request.method == 'GET':
         if 'search' in request.GET:
             propostas = propostas.filter(
-                Q(numero=request.GET['search']) |
-                Q(objeto__contains=request.GET['search']) |
-                Q(prefeitura__nome__contains=request.GET['search']))
+                Q(numero__contains=search) |
+                Q(objeto__icontains=search) |
+                Q(prefeitura__nome__contains=search))
         if 'situacao' in request.GET:
-            filter_situacao = request.GET['situacao']
             propostas = propostas.filter(situacao=filter_situacao)
         if 'prefeitura' in request.GET:
-            filter_prefeitura = int(request.GET['prefeitura'])
             propostas = propostas.filter(prefeitura=filter_prefeitura)
 
     paginator = Paginator(propostas, 10)
@@ -151,6 +150,7 @@ def propostas(request):
             'propostas': propostas,
             'orgaos': orgaos,
             'projetos': projetos,
+            'search': search,
         })
 
 
@@ -318,7 +318,7 @@ def convenios(request):
 
             convenios = convenios.filter(
                 Q(situacao__in=STATUS_CHOICES_FILTERED) |
-                Q(numero__iendswith=search) |
+                Q(numero__contains=search) |
                 Q(orgao__descricao=search) |
                 Q(proposta__objeto__icontains=search))
         if order_by and order_by != 'dias':
