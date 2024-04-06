@@ -17,6 +17,16 @@
 		{% breadcrumb " Convênios " "convenios" %}
 		{% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap4.html" %}
 	{% endblock %}
+	{% block alert %}
+	{% if quantidade_protocolos_nao_resolvidos > 0 %}
+	<div class="alert alert-danger fade show" role="alert">
+		<strong>Total de {{ quantidade_protocolos_nao_resolvidos }} protocolo(s) não resolvido(s)! Utilize o filtro de <i>'<u>Data prevista</u>'</i> para identificar os registros com pendências</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+	</div>
+	{% endif %}
+	{% endblock %}
 	{% block search %}
 	<div class="mb-2"> 
 		<div class="row  row-btns">
@@ -44,13 +54,13 @@
 			</form>
 			<div>
 				{% if perms.base.add_convenio %}
-					<a href="javascript: void(0)" data-toggle="modal" data-target="#fltr-prefeitura" class="btn btn-sm link-agiliza mgr5 mobile"><i class="fas fa-filter"></i> Prefeitura</a>
+					<a href="javascript: void(0)" data-toggle="modal" data-target="#fltr-prefeitura" class="btn btn-sm link-agiliza mgr5 mobile"><i class="fas fa-filter"></i> Orgão</a>
 					<!-- Modal -->
 					<div class="modal fade" id="fltr-prefeitura" tabindex="-1" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title">Prefeituras</h5>
+									<h5 class="modal-title">Orgãos</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -66,7 +76,7 @@
 									</div>
 									{% for prefeitura in choices_prefeitura %}
 										<div class="row">
-											<a class="mod-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}{% relative_url prefeitura.id 'prefeitura' %}">
+											<a class="mod-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url_set_param search=search prefeitura=prefeitura.id situacao=filter_situacao %}">
 												{{ prefeitura.nome }}
 												{% if prefeitura.id == filter_prefeitura %}
 													<i class="fas fa-check"></i>
@@ -84,6 +94,43 @@
 						</div>
 					</div>
 					<!-- Modal -->
+
+					<a href="javascript: void(0)" data-toggle="modal" data-target="#fltr-situacao" class="btn btn-sm link-agiliza mgr5 mobile"><i class="fas fa-filter"></i> Situação</a>
+					<!-- Modal -->
+					<div class="modal fade" id="fltr-situacao" tabindex="-1" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Situação</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<a class="mod-item {% if not filter_situacao %}disabled{% endif %}" href="{% url 'convenios' %}">
+											Todas
+											{% if not filter_situacao %}
+												<i class="fas fa-check"></i>
+											{% endif %}
+										</a>
+									</div>
+									{% for choice_situacao, situacao in choices_situacao %}
+										<div class="row">
+											<a class="mod-item {% if choice_situacao == filter_situacao %}disabled{% endif %}" href="{% url_set_param search=search prefeitura=filter_prefeitura situacao=choice_situacao %}">
+												{{ situacao }}
+												{% if choice_situacao == filter_situacao %}
+													<i class="fas fa-check"></i>
+												{% endif %}
+											</a>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Modal -->
+
 				{% endif %}
 				<a href="{% url 'relatorio-convenios' %}" class="btn btn-sm btn-danger" target="_blank">PDF</a>
 				

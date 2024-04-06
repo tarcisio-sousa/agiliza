@@ -419,6 +419,7 @@
 									<div>Data: {{ protocolo.data_protocolado|date:'d/m/Y' }}</div>
 									
 									<div>{{ protocolo.consideracoes }}</div>
+									<div>Situação: {{ protocolo.get_situacao_display|default:"-" }}</div>
 									
 									<div class="cbrow spb">
 										<div>Previsão: {{ protocolo.data_prevista|date:'d/m/Y' }}</div>

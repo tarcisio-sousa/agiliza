@@ -307,6 +307,7 @@ def valida_data_previsao(data_prevista):
 
 @login_required
 def convenios(request):
+    RESOLVIDO = 'resolvido'
     search = request.GET['search'] if 'search' in request.GET else None
     [order_by, order] = request.GET['order_by'].split(',') if 'order_by' in request.GET else [None, None]
     filter_situacao = request.GET['situacao'] if 'situacao' in request.GET else False
@@ -343,6 +344,10 @@ def convenios(request):
             if order == 'desc':
                 order_description = '-' + order_by
             convenios = convenios.order_by(order_description)
+
+    lista_convenio_id = convenios.values_list('id', flat=False)
+    quantidade_protocolos_nao_resolvidos = Protocolo.objects.\
+        filter(convenio__id__in=lista_convenio_id, data_prevista__lt=date.today()).exclude(situacao=RESOLVIDO).count()
 
     for convenio in convenios:
         protocolo = Protocolo.objects.filter(convenio_id=convenio.id)
@@ -381,6 +386,7 @@ def convenios(request):
             'filter_situacao': filter_situacao,
             'user_prefeitura': prefeitura,
             'convenios': convenios,
+            'quantidade_protocolos_nao_resolvidos': quantidade_protocolos_nao_resolvidos,
             'orgaos': orgaos,
             'search': search,
             'order_by': order_by,
