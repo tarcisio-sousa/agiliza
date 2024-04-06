@@ -21,3 +21,27 @@ a:hover {
 .dropdown-toggle::after {
 	content: none !important;
 }
+
+.red {
+	color: #E74C3C;
+}
+
+.bg-red {
+	background-color: #E74C3C;
+}
+
+.yellow {
+	color: #F7DC6F;
+}
+
+.bg-yellow {
+	background-color: #F7DC6F;
+}
+
+.blue {
+	color: #3498DB;
+}
+
+.bg-blue {
+	background-color: #3498DB;
+}

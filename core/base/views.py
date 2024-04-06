@@ -117,8 +117,8 @@ def propostas(request):
     propostas = Proposta.objects.filter(status=True).order_by('-data__year', '-id')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
-        prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
-        propostas = propostas.filter(prefeitura=prefeitura)
+        prefeituras = Prefeitura.objects.filter(prefeito=request.user.profissional)
+        propostas = propostas.filter(prefeitura__in=prefeituras)
 
     if request.method == 'GET':
         if 'search' in request.GET:
@@ -292,8 +292,22 @@ def declaracoes(request):
     return render(request, 'base/declaracoes.html')
 
 
+_DENTRO_DO_PRAZO = 1
+_EM_TEMPO = 0
+_FORA_DO_PRAZO = -1
+
+
+def valida_data_previsao(data_prevista):
+    if data_prevista < date.today():
+        return _DENTRO_DO_PRAZO
+    if data_prevista == date.today():
+        return _EM_TEMPO
+    return _FORA_DO_PRAZO
+
+
 @login_required
 def convenios(request):
+    RESOLVIDO = 'resolvido'
     search = request.GET['search'] if 'search' in request.GET else None
     [order_by, order] = request.GET['order_by'].split(',') if 'order_by' in request.GET else [None, None]
     filter_situacao = request.GET['situacao'] if 'situacao' in request.GET else False
@@ -304,8 +318,8 @@ def convenios(request):
     convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
-        prefeitura = Prefeitura.objects.get(prefeito=request.user.profissional)
-        convenios = convenios.filter(proposta__prefeitura=prefeitura)
+        prefeituras = Prefeitura.objects.filter(prefeito=request.user.profissional)
+        convenios = convenios.filter(proposta__prefeitura__in=prefeituras)
 
     if request.method == 'GET':
         if 'prefeitura' in request.GET:
@@ -325,25 +339,36 @@ def convenios(request):
                 Q(numero__contains=search) |
                 Q(orgao__descricao=search) |
                 Q(proposta__objeto__icontains=search))
-        if order_by and order_by != 'dias':
+        if order_by and order_by not in ('dias', 'data_prevista'):
             order_description = order_by
             if order == 'desc':
                 order_description = '-' + order_by
             convenios = convenios.order_by(order_description)
 
+    lista_convenio_id = convenios.values_list('id', flat=False)
+    quantidade_protocolos_nao_resolvidos = Protocolo.objects.\
+        filter(convenio__id__in=lista_convenio_id, data_prevista__lt=date.today()).exclude(situacao=RESOLVIDO).count()
+
     for convenio in convenios:
-        protocolo = Protocolo.objects.filter(convenio_id=convenio.id)\
-            .order_by('-data_criacao', '-data_protocolado').first()
-        convenio.protocolo = protocolo
-        if protocolo:
-            data = protocolo.data_protocolado
+        protocolo = Protocolo.objects.filter(convenio_id=convenio.id)
+        protocolo_movimentacao = protocolo.order_by('-data_protocolado').first()
+        convenio.protocolo = protocolo_movimentacao
+        protocolo_previsao = protocolo.last()
+        if protocolo_movimentacao:
+            data = protocolo_movimentacao.data_protocolado
         else:
             data = convenio.data_criacao
         convenio.dias = abs((date.today() - data).days)
+        convenio.data_prevista = protocolo_previsao.data_prevista
+        convenio.status_movimentacao = valida_data_previsao(convenio.data_prevista)
 
     if (order_by == 'dias'):
         option = False if order == 'asc' else True
         convenios = sorted(convenios, key=lambda x: x.dias, reverse=option)
+
+    if (order_by == 'data_prevista'):
+        option = False if order == 'asc' else True
+        convenios = sorted(convenios, key=lambda x: x.data_prevista, reverse=option)
 
     paginator = Paginator(convenios, 50)
 
@@ -361,6 +386,7 @@ def convenios(request):
             'filter_situacao': filter_situacao,
             'user_prefeitura': prefeitura,
             'convenios': convenios,
+            'quantidade_protocolos_nao_resolvidos': quantidade_protocolos_nao_resolvidos,
             'orgaos': orgaos,
             'search': search,
             'order_by': order_by,

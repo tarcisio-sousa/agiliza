@@ -49,3 +49,12 @@ def url_set_param(context, **kwargs):
     encoded_querystring = '&'.join(filtered_querystring)
     url = '{}?{}'.format(context.request.path, encoded_querystring)
     return url
+
+
+@register.filter(name='get_color_status')
+def get_color_status(color):
+    if (color > 0):
+        return 'red'
+    if (color == 0):
+        return 'yellow'
+    return 'blue'
