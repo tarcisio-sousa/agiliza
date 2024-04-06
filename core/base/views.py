@@ -292,6 +292,19 @@ def declaracoes(request):
     return render(request, 'base/declaracoes.html')
 
 
+_DENTRO_DO_PRAZO = 1
+_EM_TEMPO = 0
+_FORA_DO_PRAZO = -1
+
+
+def valida_data_previsao(data_prevista):
+    if data_prevista < date.today():
+        return _DENTRO_DO_PRAZO
+    if data_prevista == date.today():
+        return _EM_TEMPO
+    return _FORA_DO_PRAZO
+
+
 @login_required
 def convenios(request):
     search = request.GET['search'] if 'search' in request.GET else None
@@ -325,25 +338,32 @@ def convenios(request):
                 Q(numero__contains=search) |
                 Q(orgao__descricao=search) |
                 Q(proposta__objeto__icontains=search))
-        if order_by and order_by != 'dias':
+        if order_by and order_by not in ('dias', 'data_prevista'):
             order_description = order_by
             if order == 'desc':
                 order_description = '-' + order_by
             convenios = convenios.order_by(order_description)
 
     for convenio in convenios:
-        protocolo = Protocolo.objects.filter(convenio_id=convenio.id)\
-            .order_by('-data_criacao', '-data_protocolado').first()
-        convenio.protocolo = protocolo
-        if protocolo:
-            data = protocolo.data_protocolado
+        protocolo = Protocolo.objects.filter(convenio_id=convenio.id)
+        protocolo_movimentacao = protocolo.order_by('-data_protocolado').first()
+        convenio.protocolo = protocolo_movimentacao
+        protocolo_previsao = protocolo.last()
+        if protocolo_movimentacao:
+            data = protocolo_movimentacao.data_protocolado
         else:
             data = convenio.data_criacao
         convenio.dias = abs((date.today() - data).days)
+        convenio.data_prevista = protocolo_previsao.data_prevista
+        convenio.status_movimentacao = valida_data_previsao(convenio.data_prevista)
 
     if (order_by == 'dias'):
         option = False if order == 'asc' else True
         convenios = sorted(convenios, key=lambda x: x.dias, reverse=option)
+
+    if (order_by == 'data_prevista'):
+        option = False if order == 'asc' else True
+        convenios = sorted(convenios, key=lambda x: x.data_prevista, reverse=option)
 
     paginator = Paginator(convenios, 50)
 

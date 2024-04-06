@@ -422,6 +422,8 @@ class Protocolo(models.Model):
         AGILIZA = 'agiliza', _('AGILIZA')
         FUNASA = 'funasa', _('FUNASA')
         PREFEITURA = 'prefeitura', _('PREFEITURA')
+        # ASSESSORIA = 'assessoria', _('ASSESSORIA')
+        # ORGAO_CONVENENTE = 'orgao_convenente', _('ORGAO_CONVENENTE')
 
     class SituacaoChoice(models.TextChoices):
         ENVIADO_ANALISE = 'enviado_analise', _('Enviado p/ análise')
@@ -440,6 +442,7 @@ class Protocolo(models.Model):
         max_length=150, choices=SituacaoChoice.choices, default=None, blank=True, null=True)
     anexo = models.FileField(upload_to='uploads/protocolos/%Y/%m/%d', max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
+    # data_criacao = models.DateTimeField(_('Data de Criação'), auto_now=True, blank=False, null=False)
 
     def __str__(self):
         return f'{self.data} - {self.convenio}'
