@@ -361,7 +361,7 @@ def convenios(request):
         convenio.dias = abs((date.today() - data).days)
 
         protocolo_previsto = protocolo.last()
-        convenio.data_prevista = protocolo_previsto.data_prevista if protocolo_previsto else False
+        convenio.data_prevista = protocolo_previsto.data_prevista if protocolo_previsto else None
         convenio.status_movimentacao = valida_data_previsao(convenio.data_prevista)\
             if convenio.data_prevista else DENTO_DO_PRAZO
 
@@ -371,7 +371,7 @@ def convenios(request):
 
     if (order_by == 'data_prevista'):
         option = False if order == 'asc' else True
-        convenios = sorted(convenios, key=lambda x: x.data_prevista, reverse=option)
+        convenios = sorted(convenios, key=lambda x: (x.data_prevista is not None, x.data_prevista), reverse=option)
 
     paginator = Paginator(convenios, QUANTIDADE_REGISTROS_POR_PAGINA)
 
