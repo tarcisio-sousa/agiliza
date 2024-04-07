@@ -292,17 +292,17 @@ def declaracoes(request):
     return render(request, 'base/declaracoes.html')
 
 
-DENTRO_DO_PRAZO = 1
+FORA_DO_PRAZO = 1
 VIGENTE = 0
-FORA_DO_PRAZO = -1
+DENTO_DO_PRAZO = -1
 
 
 def valida_data_previsao(data_prevista):
     if data_prevista < date.today():
-        return DENTRO_DO_PRAZO
+        return FORA_DO_PRAZO
     if data_prevista == date.today():
         return VIGENTE
-    return FORA_DO_PRAZO
+    return DENTO_DO_PRAZO
 
 
 @login_required
@@ -361,9 +361,9 @@ def convenios(request):
         convenio.dias = abs((date.today() - data).days)
 
         protocolo_previsto = protocolo.last()
-        convenio.data_prevista = protocolo_previsto.data_prevista if protocolo_previsto else None
+        convenio.data_prevista = protocolo_previsto.data_prevista if protocolo_previsto else False
         convenio.status_movimentacao = valida_data_previsao(convenio.data_prevista)\
-            if convenio.data_prevista else DENTRO_DO_PRAZO
+            if convenio.data_prevista else DENTO_DO_PRAZO
 
     if (order_by == 'dias'):
         option = False if order == 'asc' else True
