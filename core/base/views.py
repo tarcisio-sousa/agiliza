@@ -292,22 +292,23 @@ def declaracoes(request):
     return render(request, 'base/declaracoes.html')
 
 
-_DENTRO_DO_PRAZO = 1
-_EM_TEMPO = 0
-_FORA_DO_PRAZO = -1
+DENTRO_DO_PRAZO = 1
+VIGENTE = 0
+FORA_DO_PRAZO = -1
 
 
 def valida_data_previsao(data_prevista):
     if data_prevista < date.today():
-        return _DENTRO_DO_PRAZO
+        return DENTRO_DO_PRAZO
     if data_prevista == date.today():
-        return _EM_TEMPO
-    return _FORA_DO_PRAZO
+        return VIGENTE
+    return FORA_DO_PRAZO
 
 
 @login_required
 def convenios(request):
     RESOLVIDO = 'resolvido'
+    QUANTIDADE_REGISTROS_POR_PAGINA = 50
     search = request.GET['search'] if 'search' in request.GET else None
     [order_by, order] = request.GET['order_by'].split(',') if 'order_by' in request.GET else [None, None]
     filter_situacao = request.GET['situacao'] if 'situacao' in request.GET else False
@@ -353,14 +354,16 @@ def convenios(request):
         protocolo = Protocolo.objects.filter(convenio_id=convenio.id)
         protocolo_movimentacao = protocolo.order_by('-data_protocolado').first()
         convenio.protocolo = protocolo_movimentacao
-        protocolo_previsao = protocolo.last()
         if protocolo_movimentacao:
             data = protocolo_movimentacao.data_protocolado
         else:
             data = convenio.data_criacao
         convenio.dias = abs((date.today() - data).days)
-        convenio.data_prevista = protocolo_previsao.data_prevista
-        convenio.status_movimentacao = valida_data_previsao(convenio.data_prevista)
+
+        protocolo_previsto = protocolo.last()
+        convenio.data_prevista = protocolo_previsto.data_prevista if protocolo_previsto else None
+        convenio.status_movimentacao = valida_data_previsao(convenio.data_prevista)\
+            if convenio.data_prevista else DENTRO_DO_PRAZO
 
     if (order_by == 'dias'):
         option = False if order == 'asc' else True
@@ -370,7 +373,7 @@ def convenios(request):
         option = False if order == 'asc' else True
         convenios = sorted(convenios, key=lambda x: x.data_prevista, reverse=option)
 
-    paginator = Paginator(convenios, 50)
+    paginator = Paginator(convenios, QUANTIDADE_REGISTROS_POR_PAGINA)
 
     page_number = request.GET.get('page')
     convenios = paginator.get_page(page_number)
