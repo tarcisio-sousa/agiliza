@@ -144,13 +144,13 @@
 			{% for convenio in convenios %}
 				<div class="tp-item">
 					<div class="tp-prefeitura">
-						<div style="flex: 3;">
+						<div style="flex: 3; display: flex; align-items: center;">
 							{{ convenio.proposta.prefeitura }}
 						</div>
-						<div style="flex: 1;">
-							{{ convenio.data_prevista|date:'d/m/Y' }}
+						<div style="flex: 2; display: flex; align-items: center;">
+							<i class="fas fa-circle mr-2 {{ convenio.status_movimentacao|get_color_status }}"></i>{{ convenio.data_prevista|date:'d/m/Y' }}
 						</div>
-						<div style="flex: 0;">
+						<div style="flex: 0; display: flex; align-items: center;">
 							<a href="{% url 'protocolo' convenio.id %}" class="medicon" target="_blank">
 								<i class="fas fa-history"></i>
 							</a>
