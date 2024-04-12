@@ -117,8 +117,8 @@ def propostas(request):
     propostas = Proposta.objects.filter(status=True).order_by('-data__year', '-id')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
-        prefeituras = Prefeitura.objects.filter(prefeito=request.user.profissional)
-        propostas = propostas.filter(prefeitura__in=prefeituras)
+        choices_prefeitura = choices_prefeitura.filter(prefeito=request.user.profissional)
+        propostas = propostas.filter(prefeitura__in=choices_prefeitura)
 
     if request.method == 'GET':
         if 'search' in request.GET:
@@ -319,8 +319,8 @@ def convenios(request):
     convenios = Convenio.objects.filter(status=True).order_by('-proposta__data')
 
     if not request.user.is_superuser and request.user.profissional.cargo.descricao == 'PREFEITO':
-        prefeituras = Prefeitura.objects.filter(prefeito=request.user.profissional)
-        convenios = convenios.filter(proposta__prefeitura__in=prefeituras)
+        choices_prefeitura = choices_prefeitura.filter(prefeito=request.user.profissional)
+        convenios = convenios.filter(proposta__prefeitura__in=choices_prefeitura)
 
     if request.method == 'GET':
         if 'prefeitura' in request.GET:
