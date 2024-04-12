@@ -26,7 +26,7 @@ class Cliente(models.Model):
 
 class Prefeitura(Cliente):
     # campo do tipo imagem, com o modelo de papel timbrado da prefeitura
-    timbre = models.ImageField(upload_to='uploads/%Y/%m/%d', max_length=150)
+    timbre = models.ImageField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
 
     prefeito = models.ForeignKey('Prefeito', on_delete=models.CASCADE, blank=False, null=False)
     secretario_obras = models.ForeignKey('SecretarioDeObras', on_delete=models.CASCADE, blank=True, null=True)
@@ -155,6 +155,7 @@ class Convenio(models.Model):
     arquivo_extrato = models.FileField(upload_to='uploads/%Y/%m/%d', max_length=150, blank=True, null=True)
     numero = models.CharField(_('Número convênio (SICONV)'), max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
+    # data_criacao = models.DateTimeField(_('Data de Criação'), auto_now=True, blank=False, null=False)
     data_suspensiva = models.DateField(_('Data de Cláusula Suspensiva'), blank=True, null=True)
     data_vigencia = models.DateField(_('Data da Vigência'), blank=True, null=True)
     tecnico_orgao = models.ForeignKey('TecnicoOrgao', on_delete=models.CASCADE, blank=True, null=True)
@@ -422,8 +423,11 @@ class Protocolo(models.Model):
         AGILIZA = 'agiliza', _('AGILIZA')
         FUNASA = 'funasa', _('FUNASA')
         PREFEITURA = 'prefeitura', _('PREFEITURA')
-        # ASSESSORIA = 'assessoria', _('ASSESSORIA')
-        # ORGAO_CONVENENTE = 'orgao_convenente', _('ORGAO_CONVENENTE')
+        ASSESSORIA = 'assessoria', _('ASSESSORIA')
+        GABINETE_PARLAMENTAR = 'gabinete_parlamentar', _('GABINETE PARLAMENTAR')
+        ORGAO_CONVENENTE = 'orgao_convenente', _('ORGAO CONVENENTE')
+        CONCEDENTE = 'concedente', _('CONCEDENTE')
+        OUTROS = 'outros', _('OUTROS')
 
     class SituacaoChoice(models.TextChoices):
         ENVIADO_ANALISE = 'enviado_analise', _('Enviado p/ análise')
