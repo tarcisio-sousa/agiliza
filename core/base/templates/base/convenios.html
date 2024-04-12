@@ -211,13 +211,11 @@
 										</a>
 									</li>
 								{% for prefeitura in choices_prefeitura %}
-									{% if perms.auth.is_super or prefeitura.id == user_prefeitura.id %}
 									<li>
 										<a class="dropdown-item {% if prefeitura.id == filter_prefeitura %}disabled{% endif %}" href="{% url 'convenios' %}{% relative_url prefeitura.id 'prefeitura' %}">
 											{{ prefeitura.nome }}
 										</a>
 									</li>
-									{% endif %}
 								{% endfor %}
 								</ul>
 							</li>
