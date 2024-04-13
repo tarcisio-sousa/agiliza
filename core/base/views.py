@@ -1267,3 +1267,16 @@ def licenciamento_resolver(request, id):
     licenciamento.situacao = 'resolvido'
     licenciamento.save()
     return redirect(reverse('protocolo', args=[licenciamento.convenio.id]))
+
+
+@login_required
+def atualiza_data_hora_criacao(request):
+    protocolos = Protocolo.objects.all()
+    for protocolo in protocolos:
+        old = protocolo.data_criacao
+        protocolo.data_hora_criacao = datetime(old.year, old.month, old.day, 0, 0, 0, 0)
+        protocolo.save(update_fields=['data_hora_criacao'])
+
+    return render(request, 'base/atualiza_data_hora_criacao.html', {
+        'protocolos': protocolos,
+    })

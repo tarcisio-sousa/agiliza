@@ -423,6 +423,8 @@
 									
 									<div class="cbrow spb">
 										<div>Previsão: {{ protocolo.data_prevista|date:'d/m/Y' }}</div>
+										
+										<div>Data hora criação: {{ protocolo.data_hora_criacao }}</div>
 
 										<div>{{ protocolo.get_responsavel_display|default:"-" }}</div>
 									</div>
