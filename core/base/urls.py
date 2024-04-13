@@ -163,4 +163,7 @@ urlpatterns = [
         views.licenciamento_resolver, name='licenciamento_resolver'),
 
     path('declaracoes/', views.declaracoes, name='declaracoes'),
+
+    path('atualiza_data_hora_criacao/', views.atualiza_data_hora_criacao, name='atualiza_data_hora_criacao'),
+
 ]

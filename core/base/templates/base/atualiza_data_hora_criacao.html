@@ -1,0 +1,16 @@
+<table>
+    <tr>
+        <th>codigo</th>
+        <th>data</th>
+        <th>data criação</th>
+        <th>data hora criação</th>
+    </tr>
+{% for protocolo in protocolos %}
+    <tr>
+        <td>{{ protocolo.numero }}</td>
+        <td>{{ protocolo.data }}</td>
+        <td>{{ protocolo.data_criacao }}</td>
+        <td>{{ protocolo.data_hora_criacao }}</td>
+    </tr>
+{% endfor %}
+</table>
