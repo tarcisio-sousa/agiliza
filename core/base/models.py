@@ -447,7 +447,7 @@ class Protocolo(models.Model):
     anexo = models.FileField(upload_to='uploads/protocolos/%Y/%m/%d', max_length=150, blank=True, null=True)
     data_criacao = models.DateField(_('Data de Criação'), auto_now=True, blank=False, null=False)
     data_hora_criacao = models.DateTimeField(
-        _('Data hora de criação'), auto_now=False, blank=False, null=True)
+        _('Data hora de criação'), auto_now=True, blank=False, null=True)
 
     def __str__(self):
         return f'{self.data} - {self.convenio}'
